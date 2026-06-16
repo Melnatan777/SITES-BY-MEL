@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sites by Mel — Professional Websites for Real Businesses</title>
+  <meta name="description" content="Beautiful, hand-coded websites built by Mel Billingsley. Templates you can buy today, or hire Mel to build your full custom site. Real quality. Real results.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #1B2F4E;
+      --navy-dark:  #0F1E33;
+      --navy-mid:   #2A4670;
+      --gold:       #C9922B;
+      --gold-light: #E8B84B;
+      --gold-pale:  #FDF6E3;
+      --cream:      #FAFAF7;
+      --cream-dark: #F2EFE8;
+      --text:       #1C1C2E;
+      --text-mid:   #4B5563;
+      --text-light: #9CA3AF;
+      --white:      #FFFFFF;
+      --shadow:     0 4px 24px rgba(27,47,78,.10);
+      --shadow-lg:  0 12px 48px rgba(27,47,78,.16);
+      --radius:     14px;
+      --font-head:  'Playfair Display', Georgia, serif;
+      --font-body:  'Inter', system-ui, sans-serif;
+      --section:    100px 0;
+    }
+
+    body { font-family: var(--font-body); color: var(--text); background: var(--white); line-height: 1.6; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: rgba(255,255,255,.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(27,47,78,.08);
+      padding: 0 32px; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo .logo-mark {
+      width: 38px; height: 38px; background: var(--navy); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); color: var(--gold); font-size: 1.2rem; font-weight: 700;
+    }
+    .nav-logo span { font-family: var(--font-head); font-size: 1.1rem; color: var(--navy); font-weight: 700; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { color: var(--text-mid); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--navy); }
+    .btn-nav {
+      background: var(--navy); color: white; padding: 10px 22px; border-radius: 10px;
+      font-size: .88rem; font-weight: 600; text-decoration: none; transition: background .2s;
+    }
+    .btn-nav:hover { background: var(--gold); color: white; }
+    .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--navy); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 140px 32px 90px;
+      background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(201,146,43,.12) 0%, transparent 60%);
+    }
+    .hero-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; position: relative; }
+    .hero-label { font-size: .75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .hero h1 {
+      font-family: var(--font-head); font-size: clamp(2.2rem, 4vw, 3.4rem);
+      color: white; line-height: 1.15; margin-bottom: 22px;
+    }
+    .hero h1 em { color: var(--gold-light); font-style: normal; }
+    .hero p { color: rgba(255,255,255,.75); font-size: 1.05rem; line-height: 1.8; margin-bottom: 36px; max-width: 480px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold); color: white; padding: 15px 30px; border-radius: 12px;
+      font-size: .95rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: all .2s; box-shadow: 0 4px 20px rgba(201,146,43,.4);
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: white; padding: 15px 30px; border-radius: 12px;
+      font-size: .95rem; font-weight: 600; text-decoration: none; border: 2px solid rgba(255,255,255,.35);
+      transition: all .2s;
+    }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,.08); }
+
+    .hero-visual { position: relative; }
+    .hero-browser {
+      background: #1e2530; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,.5); transform: perspective(1000px) rotateY(-4deg);
+    }
+    .browser-bar {
+      background: #2a3142; padding: 12px 16px; display: flex; align-items: center; gap: 8px;
+    }
+    .browser-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .browser-dot:nth-child(1) { background: #ff5f57; }
+    .browser-dot:nth-child(2) { background: #febc2e; }
+    .browser-dot:nth-child(3) { background: #28c840; }
+    .browser-url {
+      flex: 1; background: #353d52; border-radius: 6px; padding: 5px 12px;
+      font-family: monospace; font-size: .72rem; color: rgba(255,255,255,.5); margin-left: 8px;
+    }
+    .browser-screen {
+      background: linear-gradient(160deg, #2C1654, #1A0F2E);
+      padding: 24px; min-height: 260px; display: flex; flex-direction: column;
+    }
+    .mock-nav { background: rgba(255,255,255,.06); border-radius: 8px; padding: 10px 16px; display: flex; gap: 12px; margin-bottom: 20px; }
+    .mock-nav-dot { height: 6px; background: rgba(255,255,255,.2); border-radius: 4px; }
+    .mock-hero-text { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 10px 0; }
+    .mock-h1 { height: 18px; background: white; border-radius: 4px; width: 70%; opacity: .9; }
+    .mock-h2 { height: 14px; background: rgba(212,162,39,.8); border-radius: 4px; width: 50%; }
+    .mock-p { height: 8px; background: rgba(255,255,255,.25); border-radius: 4px; }
+    .mock-btn { height: 32px; background: var(--gold); border-radius: 8px; width: 130px; margin-top: 8px; }
+    .hero-badge {
+      position: absolute; bottom: -12px; right: -8px;
+      background: white; border-radius: 12px; padding: 12px 18px;
+      box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 10px;
+    }
+    .hero-badge .emoji { font-size: 1.4rem; }
+    .hero-badge strong { display: block; font-size: .82rem; color: var(--navy); }
+    .hero-badge span { font-size: .72rem; color: var(--text-light); }
+
+    /* ── TRUST BAR ── */
+    .trust-bar { background: var(--cream-dark); padding: 24px 32px; border-bottom: 1px solid rgba(27,47,78,.08); }
+    .trust-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 10px; font-size: .88rem; font-weight: 600; color: var(--text-mid); }
+    .trust-item .dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+    /* ── SECTIONS ── */
+    .section { padding: var(--section); }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+    .section-tag { font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .section-heading { font-family: var(--font-head); font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--navy); line-height: 1.2; margin-bottom: 16px; }
+    .section-sub { font-size: 1rem; color: var(--text-mid); line-height: 1.8; max-width: 580px; }
+    .section-head-block { margin-bottom: 56px; }
+    .section-head-block.center { text-align: center; }
+    .section-head-block.center .section-sub { margin: 0 auto; }
+
+    /* ── WHAT I BUILD (SERVICES) ── */
+    .services-bg { background: var(--cream); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .service-card {
+      background: white; border-radius: var(--radius); padding: 36px 30px;
+      box-shadow: var(--shadow); border: 1px solid rgba(27,47,78,.06);
+      position: relative; overflow: hidden; transition: transform .2s, box-shadow .2s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .service-card.featured { border: 2px solid var(--gold); }
+    .featured-badge {
+      position: absolute; top: 18px; right: 18px;
+      background: var(--gold); color: white; font-size: .68rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .service-icon { font-size: 2.4rem; margin-bottom: 18px; }
+    .service-tier { font-size: .72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .service-card h3 { font-family: var(--font-head); font-size: 1.4rem; color: var(--navy); margin-bottom: 12px; }
+    .service-price { font-size: 1.6rem; font-weight: 800; color: var(--navy); margin-bottom: 16px; }
+    .service-price span { font-size: .85rem; font-weight: 400; color: var(--text-light); }
+    .service-card p { font-size: .9rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 20px; }
+    .service-includes { list-style: none; margin-bottom: 28px; }
+    .service-includes li { font-size: .85rem; color: var(--text-mid); padding: 4px 0; display: flex; gap: 10px; align-items: flex-start; }
+    .service-includes li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+    .btn-service {
+      display: block; text-align: center; padding: 12px 20px; border-radius: 10px;
+      font-size: .88rem; font-weight: 600; text-decoration: none; transition: all .2s;
+      background: var(--navy); color: white;
+    }
+    .btn-service:hover { background: var(--gold); }
+    .btn-service.outline { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+    .btn-service.outline:hover { background: var(--navy); color: white; }
+
+    /* ── PORTFOLIO ── */
+    .portfolio-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+    .portfolio-screen {
+      background: #1A0F2E; border-radius: 16px; overflow: hidden;
+      box-shadow: var(--shadow-lg); border: 4px solid rgba(255,255,255,.08);
+    }
+    .portfolio-top { background: #2C1654; padding: 12px 16px; display: flex; align-items: center; gap: 6px; }
+    .portfolio-top .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .portfolio-top .url { flex: 1; background: rgba(255,255,255,.08); border-radius: 5px; padding: 4px 12px; font-size: .7rem; color: rgba(255,255,255,.4); margin-left: 8px; font-family: monospace; }
+    .portfolio-body { padding: 0; }
+    .mock-site-hero { background: linear-gradient(160deg, #2C1654, #1A0F2E); padding: 28px; }
+    .mock-site-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+    .mock-logo { width: 100px; height: 10px; background: rgba(255,255,255,.5); border-radius: 3px; }
+    .mock-navlinks { display: flex; gap: 12px; }
+    .mock-navlink { width: 40px; height: 6px; background: rgba(255,255,255,.2); border-radius: 3px; }
+    .mock-hero-content { padding: 10px 0; }
+    .mock-hl { height: 22px; background: white; border-radius: 4px; width: 65%; margin-bottom: 10px; }
+    .mock-hl2 { height: 16px; background: rgba(212,162,39,.9); border-radius: 4px; width: 40%; margin-bottom: 16px; }
+    .mock-body-line { height: 7px; background: rgba(255,255,255,.2); border-radius: 4px; margin-bottom: 7px; }
+    .mock-body-line.short { width: 60%; }
+    .mock-cta-row { display: flex; gap: 10px; margin-top: 18px; }
+    .mock-cta { height: 30px; background: var(--gold); border-radius: 8px; width: 110px; }
+    .mock-cta.ghost { background: rgba(255,255,255,.15); }
+    .mock-cards-row { background: #F9F7FF; padding: 20px; display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    .mock-card { background: white; border-radius: 8px; padding: 12px; }
+    .mock-card-icon { width: 24px; height: 24px; background: #ede9fe; border-radius: 6px; margin-bottom: 8px; }
+    .mock-card-line { height: 6px; background: #f0eef5; border-radius: 4px; margin-bottom: 5px; }
+    .mock-card-line.short { width: 60%; }
+
+    .portfolio-info { }
+    .portfolio-info .section-tag { margin-bottom: 8px; }
+    .portfolio-info h2 { font-family: var(--font-head); font-size: 2rem; color: var(--navy); margin-bottom: 16px; line-height: 1.3; }
+    .portfolio-info p { color: var(--text-mid); line-height: 1.8; margin-bottom: 24px; font-size: .95rem; }
+    .portfolio-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+    .portfolio-stat { background: var(--cream); border-radius: 10px; padding: 16px; }
+    .portfolio-stat strong { display: block; font-size: 1.5rem; font-weight: 800; color: var(--navy); }
+    .portfolio-stat span { font-size: .75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+    .portfolio-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--navy); font-weight: 700; text-decoration: none; font-size: .95rem;
+      border-bottom: 2px solid var(--gold); padding-bottom: 2px; transition: color .2s;
+    }
+    .portfolio-link:hover { color: var(--gold); }
+
+    /* ── TEMPLATES ── */
+    .templates-bg { background: var(--cream); }
+    .templates-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .template-card {
+      background: white; border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow); border: 1px solid rgba(27,47,78,.06);
+      transition: transform .2s, box-shadow .2s; display: flex; flex-direction: column;
+    }
+    .template-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .template-preview {
+      height: 160px; display: flex; flex-direction: column; padding: 16px;
+      position: relative; overflow: hidden;
+    }
+    .template-preview .tp-nav { height: 8px; background: rgba(255,255,255,.15); border-radius: 4px; margin-bottom: 14px; }
+    .template-preview .tp-h { height: 18px; background: rgba(255,255,255,.85); border-radius: 4px; width: 70%; margin-bottom: 8px; }
+    .template-preview .tp-sub { height: 10px; background: rgba(255,255,255,.4); border-radius: 4px; width: 50%; margin-bottom: 12px; }
+    .template-preview .tp-btn { height: 24px; border-radius: 6px; width: 90px; }
+    .template-body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; }
+    .template-cat { font-size: .7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+    .template-card h3 { font-family: var(--font-head); font-size: 1.05rem; color: var(--navy); margin-bottom: 8px; }
+    .template-card p { font-size: .82rem; color: var(--text-mid); line-height: 1.65; flex: 1; margin-bottom: 16px; }
+    .template-footer { display: flex; align-items: center; justify-content: space-between; }
+    .template-price { font-size: 1.1rem; font-weight: 800; color: var(--navy); }
+    .btn-buy {
+      background: var(--gold); color: white; padding: 8px 16px; border-radius: 8px;
+      font-size: .8rem; font-weight: 700; text-decoration: none; transition: background .2s;
+    }
+    .btn-buy:hover { background: var(--navy); }
+    .btn-coming-soon {
+      background: var(--cream-dark); color: var(--text-light); padding: 8px 16px; border-radius: 8px;
+      font-size: .78rem; font-weight: 600; cursor: default;
+    }
+    .template-available-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: #10B981; color: white; font-size: .65rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .template-soon-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(0,0,0,.3); color: rgba(255,255,255,.8); font-size: .65rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* Template color schemes */
+    .t-blue   { background: linear-gradient(135deg, #1e3a5f, #2a5298); }
+    .t-green  { background: linear-gradient(135deg, #134e2a, #1a6b3a); }
+    .t-red    { background: linear-gradient(135deg, #7b1a1a, #a52828); }
+    .t-purple { background: linear-gradient(135deg, #2C1654, #4a1fa0); }
+    .t-brown  { background: linear-gradient(135deg, #3d2208, #6b3a12); }
+    .t-teal   { background: linear-gradient(135deg, #0f3d3e, #1a6b6c); }
+    .t-cat-blue   { color: #2563EB; }
+    .t-cat-green  { color: #059669; }
+    .t-cat-red    { color: #DC2626; }
+    .t-cat-purple { color: #7C3AED; }
+    .t-cat-brown  { color: #92400E; }
+    .t-cat-teal   { color: #0891B2; }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: center; }
+    .about-photo-wrap { position: relative; }
+    .about-photo {
+      background: linear-gradient(160deg, var(--navy), var(--navy-mid));
+      border-radius: 20px; aspect-ratio: 4/5; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-lg);
+    }
+    .about-photo-inner {
+      text-align: center; padding: 40px;
+    }
+    .about-photo-initial {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: rgba(201,146,43,.2); border: 3px solid var(--gold);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+      font-family: var(--font-head); font-size: 2.5rem; color: var(--gold); font-weight: 700;
+    }
+    .about-photo p { color: rgba(255,255,255,.6); font-size: .85rem; line-height: 1.6; }
+    .about-badge {
+      position: absolute; bottom: -16px; right: -16px;
+      background: var(--gold); color: white; border-radius: 14px; padding: 16px 20px;
+      box-shadow: var(--shadow-lg); text-align: center;
+    }
+    .about-badge strong { display: block; font-size: 1.6rem; font-weight: 800; }
+    .about-badge span { font-size: .72rem; font-weight: 600; opacity: .85; }
+    .about-content h2 { font-family: var(--font-head); font-size: 2.2rem; color: var(--navy); margin-bottom: 20px; line-height: 1.25; }
+    .about-content p { color: var(--text-mid); line-height: 1.85; margin-bottom: 18px; font-size: .95rem; }
+    .about-values { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+    .about-value { display: flex; gap: 14px; align-items: flex-start; }
+    .about-value-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--gold-pale); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .about-value-text strong { display: block; font-size: .9rem; color: var(--navy); margin-bottom: 3px; }
+    .about-value-text span { font-size: .82rem; color: var(--text-mid); }
+
+    /* ── PRICING ── */
+    .pricing-bg { background: var(--navy-dark); }
+    .pricing-bg .section-tag { color: var(--gold); }
+    .pricing-bg .section-heading { color: white; }
+    .pricing-bg .section-sub { color: rgba(255,255,255,.65); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .pricing-card {
+      background: rgba(255,255,255,.05); border-radius: var(--radius); padding: 32px 28px;
+      border: 1px solid rgba(255,255,255,.1); transition: border-color .2s;
+    }
+    .pricing-card:hover { border-color: rgba(201,146,43,.4); }
+    .pricing-card.featured-pricing {
+      background: var(--gold); border-color: var(--gold);
+      transform: scale(1.03);
+    }
+    .pricing-card h3 { font-family: var(--font-head); font-size: 1.3rem; color: white; margin-bottom: 8px; }
+    .pricing-card .price { font-size: 2.4rem; font-weight: 800; color: white; margin: 16px 0 8px; }
+    .pricing-card .price sub { font-size: .85rem; font-weight: 400; opacity: .7; }
+    .pricing-card > p { color: rgba(255,255,255,.65); font-size: .85rem; margin-bottom: 24px; }
+    .pricing-card.featured-pricing > p { color: rgba(255,255,255,.85); }
+    .pricing-list { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; }
+    .pricing-list li { font-size: .85rem; color: rgba(255,255,255,.75); display: flex; gap: 10px; }
+    .pricing-list li::before { content: '✓'; color: var(--gold-light); font-weight: 700; }
+    .pricing-card.featured-pricing .pricing-list li { color: rgba(255,255,255,.9); }
+    .pricing-card.featured-pricing .pricing-list li::before { color: white; }
+    .btn-pricing {
+      display: block; text-align: center; padding: 13px; border-radius: 10px;
+      font-size: .88rem; font-weight: 700; text-decoration: none;
+      background: rgba(255,255,255,.1); color: white; border: 1px solid rgba(255,255,255,.2);
+      transition: all .2s;
+    }
+    .btn-pricing:hover { background: var(--gold); border-color: var(--gold); }
+    .pricing-card.featured-pricing .btn-pricing { background: var(--navy); border-color: var(--navy); }
+    .pricing-card.featured-pricing .btn-pricing:hover { background: var(--navy-dark); }
+
+    /* ── FAQ ── */
+    .faq-grid { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 2px; }
+    .faq-item { border: 1px solid rgba(27,47,78,.1); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+    .faq-q {
+      width: 100%; text-align: left; padding: 18px 22px; background: white;
+      font-size: .95rem; font-weight: 600; color: var(--navy); cursor: pointer; border: none;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      font-family: var(--font-body);
+    }
+    .faq-q::after { content: '+'; font-size: 1.3rem; color: var(--gold); flex-shrink: 0; transition: transform .2s; }
+    .faq-item.open .faq-q::after { content: '−'; }
+    .faq-a { display: none; padding: 0 22px 18px; background: white; color: var(--text-mid); font-size: .9rem; line-height: 1.8; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── CONTACT ── */
+    .contact-bg { background: var(--cream); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
+    .contact-info h2 { font-family: var(--font-head); font-size: 2.2rem; color: var(--navy); margin-bottom: 16px; }
+    .contact-info p { color: var(--text-mid); line-height: 1.8; margin-bottom: 28px; }
+    .contact-points { display: flex; flex-direction: column; gap: 18px; }
+    .contact-point { display: flex; gap: 14px; align-items: flex-start; }
+    .contact-point-icon { width: 44px; height: 44px; background: var(--navy); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .contact-point-text strong { display: block; font-size: .88rem; color: var(--navy); font-weight: 700; margin-bottom: 3px; }
+    .contact-point-text span { font-size: .85rem; color: var(--text-mid); }
+    .contact-form { background: white; border-radius: 20px; padding: 36px; box-shadow: var(--shadow); }
+    .contact-form h3 { font-family: var(--font-head); font-size: 1.4rem; color: var(--navy); margin-bottom: 24px; }
+    .form-row { margin-bottom: 18px; }
+    .form-row label { display: block; font-size: .82rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
+    .form-row input, .form-row select, .form-row textarea {
+      width: 100%; padding: 13px 16px; border: 2px solid #E8E4F0; border-radius: 10px;
+      font-size: .95rem; font-family: var(--font-body); color: var(--text); outline: none;
+      transition: border-color .2s; background: white;
+    }
+    .form-row input:focus, .form-row select:focus, .form-row textarea:focus { border-color: var(--navy); }
+    .form-row textarea { min-height: 140px; resize: vertical; }
+    .form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn-submit {
+      width: 100%; background: var(--navy); color: white; padding: 15px; border-radius: 12px;
+      font-size: .95rem; font-weight: 700; border: none; cursor: pointer; font-family: var(--font-body);
+      transition: background .2s; margin-top: 8px;
+    }
+    .btn-submit:hover { background: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-dark); padding: 60px 32px 32px; color: rgba(255,255,255,.65);
+    }
+    .footer-inner { max-width: 1120px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand .logo-mark { width: 44px; height: 44px; font-size: 1.3rem; margin-bottom: 14px; }
+    .footer-brand h3 { font-family: var(--font-head); color: white; font-size: 1.1rem; margin-bottom: 10px; }
+    .footer-brand p { font-size: .85rem; line-height: 1.8; max-width: 280px; }
+    .footer-col h4 { color: white; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(255,255,255,.55); text-decoration: none; font-size: .85rem; margin-bottom: 10px; transition: color .2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: .82rem; }
+    .footer-bottom a { color: rgba(255,255,255,.4); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--gold); }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      padding: 80px 32px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,146,43,.15) 0%, transparent 60%);
+    }
+    .cta-banner h2 { font-family: var(--font-head); font-size: clamp(1.8rem, 3vw, 2.8rem); color: white; margin-bottom: 16px; position: relative; }
+    .cta-banner p { color: rgba(255,255,255,.7); font-size: 1rem; margin-bottom: 36px; position: relative; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .hero-inner, .portfolio-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .services-grid, .templates-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card.featured-pricing { transform: none; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .portfolio-stats { grid-template-columns: 1fr 1fr; }
+      .form-2col { grid-template-columns: 1fr; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; flex-direction: column; position: fixed; inset: 70px 0 0 0; background: white; padding: 32px; z-index: 998; gap: 24px; }
+      .nav-toggle { display: block; }
+      .container { padding: 0 20px; }
+      .section { padding: 64px 0; }
+      .about-badge { position: static; margin-top: 16px; display: inline-flex; gap: 12px; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <div class="logo-mark">M</div>
+    <span>Sites by Mel</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#templates">Templates</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="btn-nav">Let's Work Together</a>
+  </div>
+  <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-label">Professional Website Builder</div>
+      <h1>Websites that are <em>beautiful</em> and actually work.</h1>
+      <p>I build clean, fast, hand-coded websites — from ready-to-use templates you can buy today to full custom sites built from the ground up. No page builders. No bloat. Just real quality.</p>
+      <div class="hero-btns">
+        <a href="#templates" class="btn-primary">🛒 Browse Templates</a>
+        <a href="#contact" class="btn-outline">Hire Mel →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-browser">
+        <div class="browser-bar">
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="browser-url">enduringbranches.com</div>
+        </div>
+        <div class="browser-screen">
+          <div class="mock-nav">
+            <div class="mock-nav-dot" style="width:80px"></div>
+            <div class="mock-nav-dot" style="width:40px"></div>
+            <div class="mock-nav-dot" style="width:40px"></div>
+            <div class="mock-nav-dot" style="width:40px"></div>
+            <div class="mock-nav-dot" style="width:70px;background:#D4A227;margin-left:auto"></div>
+          </div>
+          <div class="mock-hero-text">
+            <div class="mock-h1"></div>
+            <div class="mock-h2"></div>
+            <div class="mock-p"></div>
+            <div class="mock-p short" style="width:80%"></div>
+            <div class="mock-p" style="width:50%"></div>
+            <div class="mock-btn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="emoji">✝</div>
+        <div>
+          <strong>enduringbranches.com</strong>
+          <span>Built by Mel — live right now</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><div class="dot"></div>Hand-coded HTML, CSS & JavaScript</div>
+    <div class="trust-item"><div class="dot"></div>Mobile-first & fully responsive</div>
+    <div class="trust-item"><div class="dot"></div>Fast-loading — no bloated page builders</div>
+    <div class="trust-item"><div class="dot"></div>Real results for real businesses</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section services-bg" id="services">
+  <div class="container">
+    <div class="section-head-block center">
+      <div class="section-tag">What I Build</div>
+      <h2 class="section-heading">One builder. Three ways to work together.</h2>
+      <p class="section-sub">Whether you want a ready-made template or a fully custom site with everything built in — I've got you covered.</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">📄</div>
+        <div class="service-tier">Tier 1</div>
+        <h3>Website Template</h3>
+        <div class="service-price">$37–$67 <span>one-time download</span></div>
+        <p>Buy a beautifully designed, hand-coded HTML template, customize it with your business info, and go live the same day.</p>
+        <ul class="service-includes">
+          <li>Complete HTML, CSS & JavaScript files</li>
+          <li>Mobile-responsive on all devices</li>
+          <li>Clearly labeled — swap your info in minutes</li>
+          <li>Step-by-step setup instructions included</li>
+          <li>Yours to keep and customize forever</li>
+        </ul>
+        <a href="#templates" class="btn-service outline">Browse Templates</a>
+      </div>
+
+      <div class="service-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="service-icon">🛠️</div>
+        <div class="service-tier">Tier 2</div>
+        <h3>Done-For-You Setup</h3>
+        <div class="service-price">$200–$400 <span>one-time</span></div>
+        <p>Buy a template and I'll do everything for you — customize it with your content, connect your domain, and get you live.</p>
+        <ul class="service-includes">
+          <li>Everything in Tier 1</li>
+          <li>I personalize it with your business info</li>
+          <li>Domain connected & hosting set up</li>
+          <li>Your colors, logo & photos added</li>
+          <li>Live and ready within 3–5 business days</li>
+        </ul>
+        <a href="#contact" class="btn-service">Get Started →</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🏗️</div>
+        <div class="service-tier">Tier 3</div>
+        <h3>Full Custom Site</h3>
+        <div class="service-price">$1,000–$3,000 <span>custom quote</span></div>
+        <p>The full package — a completely custom-designed website with a content management system so you can edit everything yourself.</p>
+        <ul class="service-includes">
+          <li>Custom design built for your brand</li>
+          <li>Full CMS — edit your own content easily</li>
+          <li>Blog, store, contact forms & more</li>
+          <li>Domain, hosting & email setup</li>
+          <li>The same quality as enduringbranches.com</li>
+        </ul>
+        <a href="#contact" class="btn-service outline">Request a Quote</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="section" id="portfolio">
+  <div class="container">
+    <div class="portfolio-grid">
+      <div class="portfolio-visual">
+        <div class="portfolio-screen">
+          <div class="portfolio-top">
+            <div class="dot" style="background:#ff5f57"></div>
+            <div class="dot" style="background:#febc2e"></div>
+            <div class="dot" style="background:#28c840"></div>
+            <div class="url">enduringbranches.com</div>
+          </div>
+          <div class="portfolio-body">
+            <div class="mock-site-hero">
+              <div class="mock-site-nav">
+                <div class="mock-logo"></div>
+                <div class="mock-navlinks">
+                  <div class="mock-navlink"></div>
+                  <div class="mock-navlink"></div>
+                  <div class="mock-navlink"></div>
+                  <div class="mock-navlink" style="background:rgba(212,162,39,.6)"></div>
+                </div>
+              </div>
+              <div class="mock-hero-content">
+                <div class="mock-hl"></div>
+                <div class="mock-hl2"></div>
+                <div class="mock-body-line"></div>
+                <div class="mock-body-line"></div>
+                <div class="mock-body-line short"></div>
+                <div class="mock-cta-row">
+                  <div class="mock-cta"></div>
+                  <div class="mock-cta ghost"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mock-cards-row">
+              <div class="mock-card"><div class="mock-card-icon"></div><div class="mock-card-line"></div><div class="mock-card-line short"></div></div>
+              <div class="mock-card"><div class="mock-card-icon" style="background:#fdf6e3"></div><div class="mock-card-line"></div><div class="mock-card-line short"></div></div>
+              <div class="mock-card"><div class="mock-card-icon" style="background:#fef0f0"></div><div class="mock-card-line"></div><div class="mock-card-line short"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="portfolio-info">
+        <div class="section-tag">Featured Work</div>
+        <h2>Enduring Branches Ministry</h2>
+        <p>A full-stack web application built entirely from scratch — blog with email subscriptions, prison testimony submissions, family concern reporting, Texas legislation tracker, and an online book store with Stripe payments. All managed from a custom admin panel.</p>
+        <div class="portfolio-stats">
+          <div class="portfolio-stat"><strong>12+</strong><span>pages built</span></div>
+          <div class="portfolio-stat"><strong>Full CMS</strong><span>admin dashboard</span></div>
+          <div class="portfolio-stat"><strong>Email</strong><span>automated notifications</span></div>
+          <div class="portfolio-stat"><strong>Stripe</strong><span>payment integration</span></div>
+        </div>
+        <a href="https://www.enduringbranches.com" target="_blank" class="portfolio-link">View live site →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section class="section templates-bg" id="templates">
+  <div class="container">
+    <div class="section-head-block center">
+      <div class="section-tag">Template Shop</div>
+      <h2 class="section-heading">Ready-to-use website templates</h2>
+      <p class="section-sub">Hand-coded HTML/CSS templates for real businesses. Download, customize with your info, and go live. No coding experience needed.</p>
+    </div>
+    <div class="templates-grid">
+
+      <!-- Template 1: Local Service -->
+      <div class="template-card">
+        <div class="template-preview t-blue">
+          <div class="tp-nav"></div>
+          <div class="tp-h"></div>
+          <div class="tp-sub"></div>
+          <div class="tp-btn" style="background:#F59E0B"></div>
+          <div class="template-available-badge">Available Now</div>
+        </div>
+        <div class="template-body">
+          <div class="template-cat t-cat-blue">Local Service Business</div>
+          <h3>ServicePro Template</h3>
+          <p>Perfect for pressure washing, lawn care, HVAC, plumbing, painting & more. Bold hero, services, gallery, reviews, quote form.</p>
+          <div class="template-footer">
+            <div class="template-price">$47</div>
+            <a href="#contact" class="btn-buy">Buy Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 2: Restaurant -->
+      <div class="template-card">
+        <div class="template-preview t-red">
+          <div class="tp-nav"></div>
+          <div class="tp-h"></div>
+          <div class="tp-sub"></div>
+          <div class="tp-btn" style="background:#D4A227"></div>
+          <div class="template-soon-badge">Coming Soon</div>
+        </div>
+        <div class="template-body">
+          <div class="template-cat t-cat-red">Restaurant & Food</div>
+          <h3>TableReady Template</h3>
+          <p>Built for restaurants, food trucks, bakeries & caterers. Menu display, hours, location, photo gallery & reservation link.</p>
+          <div class="template-footer">
+            <div class="template-price">$47</div>
+            <span class="btn-coming-soon">Notify Me</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 3: Real Estate -->
+      <div class="template-card">
+        <div class="template-preview t-green">
+          <div class="tp-nav"></div>
+          <div class="tp-h"></div>
+          <div class="tp-sub"></div>
+          <div class="tp-btn" style="background:#10B981"></div>
+          <div class="template-soon-badge">Coming Soon</div>
+        </div>
+        <div class="template-body">
+          <div class="template-cat t-cat-green">Real Estate Agent</div>
+          <h3>KeyReady Template</h3>
+          <p>For realtors and property managers. Featured listings, agent bio, testimonials, contact form & market area highlights.</p>
+          <div class="template-footer">
+            <div class="template-price">$57</div>
+            <span class="btn-coming-soon">Notify Me</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 4: Retail -->
+      <div class="template-card">
+        <div class="template-preview t-brown">
+          <div class="tp-nav"></div>
+          <div class="tp-h"></div>
+          <div class="tp-sub"></div>
+          <div class="tp-btn" style="background:#F59E0B"></div>
+          <div class="template-soon-badge">Coming Soon</div>
+        </div>
+        <div class="template-body">
+          <div class="template-cat t-cat-brown">Retail & Storefront</div>
+          <h3>ShopFront Template</h3>
+          <p>For boutiques, retail shops & local stores. Featured products, brand story, hours, location & customer reviews.</p>
+          <div class="template-footer">
+            <div class="template-price">$47</div>
+            <span class="btn-coming-soon">Notify Me</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 5: Blogger -->
+      <div class="template-card">
+        <div class="template-preview t-teal">
+          <div class="tp-nav"></div>
+          <div class="tp-h"></div>
+          <div class="tp-sub"></div>
+          <div class="tp-btn" style="background:#06B6D4"></div>
+          <div class="template-soon-badge">Coming Soon</div>
+        </div>
+        <div class="template-body">
+          <div class="template-cat t-cat-teal">Blogger & Creator</div>
+          <h3>VoiceFirst Template</h3>
+          <p>For writers, podcasters & content creators. Clean blog layout, newsletter signup, about section & social links.</p>
+          <div class="template-footer">
+            <div class="template-price">$37</div>
+            <span class="btn-coming-soon">Notify Me</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 6: Church -->
+      <div class="template-card">
+        <div class="template-preview t-purple">
+          <div class="tp-nav"></div>
+          <div class="tp-h"></div>
+          <div class="tp-sub"></div>
+          <div class="tp-btn" style="background:#D4A227"></div>
+          <div class="template-soon-badge">Coming Soon</div>
+        </div>
+        <div class="template-body">
+          <div class="template-cat t-cat-purple">Church & Ministry</div>
+          <h3>GatherHere Template</h3>
+          <p>For churches, ministries & faith-based organizations. Service times, sermons, prayer requests & giving links.</p>
+          <div class="template-footer">
+            <div class="template-price">$47</div>
+            <span class="btn-coming-soon">Notify Me</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <p style="color:var(--text-mid);font-size:.9rem;margin-bottom:16px">Don't see your industry? I build on request — you pay once and I add it to the shop.</p>
+      <a href="#contact" class="btn-primary">Request a Custom Template</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo-wrap">
+        <div class="about-photo">
+          <div class="about-photo-inner">
+            <div class="about-photo-initial">M</div>
+            <p>Mel Billingsley<br>Website Builder &<br>Ministry Leader</p>
+          </div>
+        </div>
+        <div class="about-badge">
+          <strong>Real work.</strong>
+          <span>Real results.</span>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="section-tag">About Mel</div>
+        <h2>Built by someone who actually cares about your business.</h2>
+        <p>I'm Mel Billingsley — a website builder, ministry leader, and real person who got tired of watching small businesses get ripped off by overpriced agencies or stuck with ugly template builders that don't actually convert.</p>
+        <p>I hand-code every site from scratch. That means fast, clean, professional websites that actually work on every device — no drag-and-drop bloat, no monthly subscription to a page builder you don't understand.</p>
+        <p>You've probably already seen my work. <a href="https://www.enduringbranches.com" target="_blank" style="color:var(--navy);font-weight:700">Enduring Branches</a> — a full-stack ministry site with a blog, store, prayer request system, and admin dashboard — was built right here. That's what I build for you.</p>
+        <div class="about-values">
+          <div class="about-value">
+            <div class="about-value-icon">✍️</div>
+            <div class="about-value-text">
+              <strong>Hand-coded, not drag-and-dropped</strong>
+              <span>Every line of code written with your site in mind — fast, clean, and yours.</span>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="about-value-icon">🤝</div>
+            <div class="about-value-text">
+              <strong>You're not just a ticket number</strong>
+              <span>Real communication. I actually respond. You know exactly what's happening.</span>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="about-value-icon">📈</div>
+            <div class="about-value-text">
+              <strong>Built to convert, not just look pretty</strong>
+              <span>Every section designed to get visitors to call, buy, or book.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-bg" id="pricing">
+  <div class="container">
+    <div class="section-head-block center">
+      <div class="section-tag">Pricing</div>
+      <h2 class="section-heading">No hidden fees. No surprises.</h2>
+      <p class="section-sub">Simple, honest pricing. Pick the level that fits where you are right now — and you can always upgrade later.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Template Download</h3>
+        <div class="price">$37–$67 <sub>one-time</sub></div>
+        <p>Buy, download, and customize yourself. Detailed instructions included.</p>
+        <ul class="pricing-list">
+          <li>Complete HTML/CSS/JS files</li>
+          <li>Mobile responsive</li>
+          <li>Labeled placeholders throughout</li>
+          <li>Setup README included</li>
+          <li>Yours to use forever</li>
+        </ul>
+        <a href="#templates" class="btn-pricing">Browse Templates</a>
+      </div>
+      <div class="pricing-card featured-pricing">
+        <h3>Done-For-You Setup</h3>
+        <div class="price">$200–$400 <sub>one-time</sub></div>
+        <p>I customize everything and get your site live. You do nothing.</p>
+        <ul class="pricing-list">
+          <li>Everything in Template tier</li>
+          <li>Customized with your content</li>
+          <li>Domain & hosting connected</li>
+          <li>Your logo, colors & photos</li>
+          <li>Live in 3–5 business days</li>
+        </ul>
+        <a href="#contact" class="btn-pricing">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Full Custom Site</h3>
+        <div class="price">$1k–$3k <sub>custom</sub></div>
+        <p>Complete custom build — everything from design to launch.</p>
+        <ul class="pricing-list">
+          <li>Fully custom design</li>
+          <li>CMS so you can edit content</li>
+          <li>Blog, store, forms & more</li>
+          <li>Domain, hosting & email setup</li>
+          <li>Ongoing support available</li>
+        </ul>
+        <a href="#contact" class="btn-pricing">Request a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head-block center">
+      <div class="section-tag">Questions</div>
+      <h2 class="section-heading">Things people ask before they buy</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need to know how to code to use your templates?</button>
+        <div class="faq-a">Not at all. Every template comes with a clear setup guide and clearly labeled placeholder text throughout the code — things like YOUR BUSINESS NAME, YOUR PHONE NUMBER, YOUR CITY. You just find and replace. If you can use Microsoft Word, you can set up my templates.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What do I need to go live with a template?</button>
+        <div class="faq-a">You need a domain name (about $12/year from Namecheap or Google Domains) and free hosting (I recommend Netlify — completely free). The setup guide walks you through both step by step. Or choose the Done-For-You option and I handle everything.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How is this different from Wix, Squarespace, or WordPress?</button>
+        <div class="faq-a">Those platforms charge you monthly forever — usually $16–$45/month — and your site gets slower because it's loaded with code you don't need. My templates are yours to own. You pay once, host for free on Netlify, and never pay again. Plus they're hand-coded to be fast and clean.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How long does a Done-For-You setup take?</button>
+        <div class="faq-a">Typically 3–5 business days from when I receive your content (logo, photos, text, colors). I'll send you a simple form to fill out — you don't need to write code or send files in any special format.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can I see an example of your full custom work?</button>
+        <div class="faq-a">Yes — visit <a href="https://www.enduringbranches.com" target="_blank" style="color:var(--navy);font-weight:700">enduringbranches.com</a>. That's a full-stack custom site I built — complete with blog, store, prayer request system, email notifications, and a full admin dashboard where the owner manages all content without touching any code.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What if I need an industry that's not in your template shop?</button>
+        <div class="faq-a">Just reach out and request it. I build on demand — you pay for the custom build, and then I add it to the shop so others can benefit too. It's a win for everyone.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Ready for a website that actually works?</h2>
+  <p>Whether you buy a template today or hire me for the full package — let's get you online and looking good.</p>
+  <div class="cta-btns">
+    <a href="#templates" class="btn-primary">🛒 Browse Templates</a>
+    <a href="#contact" class="btn-outline">💬 Let's Talk</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="section contact-bg" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-tag">Get in Touch</div>
+        <h2>Let's build something great together.</h2>
+        <p>Whether you have a project in mind, a question about a template, or you just want to talk through what your business needs — I'm here. Real person. Real response.</p>
+        <div class="contact-points">
+          <div class="contact-point">
+            <div class="contact-point-icon">✉️</div>
+            <div class="contact-point-text">
+              <strong>Email Me Directly</strong>
+              <span>mbillingsley31@gmail.com</span>
+            </div>
+          </div>
+          <div class="contact-point">
+            <div class="contact-point-icon">⏱️</div>
+            <div class="contact-point-text">
+              <strong>Response Time</strong>
+              <span>Usually within 24 hours, often same day</span>
+            </div>
+          </div>
+          <div class="contact-point">
+            <div class="contact-point-icon">🌐</div>
+            <div class="contact-point-text">
+              <strong>See My Work Live</strong>
+              <span><a href="https://www.enduringbranches.com" target="_blank" style="color:var(--navy);font-weight:600">enduringbranches.com</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3>Send me a message</h3>
+        <!-- Netlify form -->
+        <form id="contactForm">
+          <input type="hidden" name="access_key" value="35552d28-d243-4b52-ae53-f98aac3d50de">
+          <input type="hidden" name="subject" value="New Contact from SitesByMel.com">
+          <input type="hidden" name="redirect" value="false">
+          <p style="display:none"><input name="botcheck"></p>
+          <div class="form-2col">
+            <div class="form-row">
+              <label>Your Name</label>
+              <input type="text" name="name" placeholder="Jane Smith" required>
+            </div>
+            <div class="form-row">
+              <label>Email</label>
+              <input type="email" name="email" placeholder="jane@yourbusiness.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>What are you interested in?</label>
+            <select name="interest" required>
+              <option value="">Select one…</option>
+              <option value="template">Buying a template</option>
+              <option value="setup">Done-for-you setup ($200–$400)</option>
+              <option value="custom">Full custom website ($1k–$3k)</option>
+              <option value="request">Request a template for my industry</option>
+              <option value="question">Just a question</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Your Business / Website (if you have one)</label>
+            <input type="text" name="business" placeholder="My Business or mysite.com">
+          </div>
+          <div class="form-row">
+            <label>Tell me about your project</label>
+            <textarea name="message" placeholder="What kind of site do you need? What does your business do? Any questions?" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">Send Message →</button>
+          <div id="formSuccess" style="display:none;margin-top:16px;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:10px;padding:14px 18px;color:#065f46;font-size:.9rem;font-weight:600">
+            ✅ Message sent! I'll get back to you within 24 hours.
+          </div>
+          <div id="formError" style="display:none;margin-top:16px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;color:#991b1b;font-size:.9rem">
+            Something went wrong. Please email me directly at mbillingsley31@gmail.com
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo-mark nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:14px">
+          <div class="logo-mark" style="width:44px;height:44px;background:rgba(255,255,255,.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);color:var(--gold);font-size:1.3rem;font-weight:700">M</div>
+          <span style="font-family:var(--font-head);color:white;font-size:1.1rem;font-weight:700">Sites by Mel</span>
+        </div>
+        <p>Hand-coded websites for real businesses. Professional quality, honest pricing, personal service.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#templates">Template Downloads</a>
+        <a href="#contact">Done-For-You Setup</a>
+        <a href="#contact">Full Custom Sites</a>
+        <a href="#contact">Build on Request</a>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About Mel</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+        <a href="https://www.enduringbranches.com" target="_blank">See My Work →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Sites by Mel · sitesbymel.com · All rights reserved</span>
+      <span>Built by Mel — hand-coded, not dragged-and-dropped.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { t.scrollIntoView({ behavior: 'smooth' }); document.getElementById('navLinks').classList.remove('open'); }
+    });
+  });
+
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+
+  // Nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow = window.scrollY > 10 ? '0 4px 24px rgba(0,0,0,.10)' : 'none';
+  });
+
+  // Web3Forms contact form
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    const data = new FormData(this);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const json = await res.json();
+      if (json.success) {
+        document.getElementById('formSuccess').style.display = 'block';
+        document.getElementById('formError').style.display = 'none';
+        this.reset();
+      } else { throw new Error(); }
+    } catch {
+      document.getElementById('formError').style.display = 'block';
+    }
+    btn.textContent = 'Send Message →'; btn.disabled = false;
+  });
+</script>
+
+</body>
+</html>
