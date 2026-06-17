@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quote Requests — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'quotes' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Quote Requests</h1>
+      <form action="/admin/logout" method="POST" style="margin:0;">
+        <button class="btn btn-outline btn-sm">Sign Out</button>
+      </form>
+    </div>
+    <div class="admin-content">
+      <% if (quotes.length === 0) { %>
+        <div class="admin-table-wrap" style="padding:40px;text-align:center;">
+          <p style="color:var(--gray);">No quote requests yet.</p>
+        </div>
+      <% } else { %>
+        <% quotes.forEach(function(q) { %>
+        <div class="admin-table-wrap" style="margin-bottom:24px;">
+          <div class="admin-table-header" style="flex-wrap:wrap;gap:12px;">
+            <div>
+              <h2 style="font-size:1rem;margin-bottom:4px;"><%= q.name %> — <%= q.business_name || 'No business' %></h2>
+              <span style="font-size:0.78rem;color:var(--gray);"><%= q.email %> &bull; <%= q.created_at ? q.created_at.substring(0,10) : '' %></span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span class="badge <%= q.status==='won' ? 'badge-green' : q.status==='new' ? 'badge-blue' : q.status==='lost' ? 'badge-red' : 'badge-gray' %>"><%= q.status %></span>
+              <form action="/admin/quotes/<%= q.id %>/status" method="POST" style="margin:0;display:flex;gap:6px;align-items:center;">
+                <select name="status" class="status-select" style="font-size:0.82rem;">
+                  <option value="new" <%= q.status==='new'?'selected':'' %>>new</option>
+                  <option value="contacted" <%= q.status==='contacted'?'selected':'' %>>contacted</option>
+                  <option value="quoted" <%= q.status==='quoted'?'selected':'' %>>quoted</option>
+                  <option value="won" <%= q.status==='won'?'selected':'' %>>won</option>
+                  <option value="lost" <%= q.status==='lost'?'selected':'' %>>lost</option>
+                </select>
+                <button class="btn btn-navy btn-sm">Update</button>
+              </form>
+            </div>
+          </div>
+
+          <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:1px solid var(--border);">
+            <div>
+              <p style="font-size:0.78rem;font-weight:600;color:var(--gray);margin-bottom:6px;">CONTACT</p>
+              <p style="font-size:0.88rem;">📧 <a href="mailto:<%= q.email %>"><%= q.email %></a></p>
+              <% if (q.phone) { %><p style="font-size:0.88rem;">📞 <%= q.phone %></p><% } %>
+              <% if (q.business_url) { %><p style="font-size:0.88rem;">🌐 <a href="<%= q.business_url %>" target="_blank" rel="noopener"><%= q.business_url %></a></p><% } %>
+            </div>
+            <div>
+              <p style="font-size:0.78rem;font-weight:600;color:var(--gray);margin-bottom:6px;">PROJECT DETAILS</p>
+              <% if (q.project_type) { %><p style="font-size:0.88rem;">Type: <strong><%= q.project_type %></strong></p><% } %>
+              <% if (q.budget) { %><p style="font-size:0.88rem;">Budget: <strong><%= q.budget %></strong></p><% } %>
+              <% if (q.timeline) { %><p style="font-size:0.88rem;">Timeline: <strong><%= q.timeline %></strong></p><% } %>
+            </div>
+            <div style="grid-column:1/-1;">
+              <p style="font-size:0.78rem;font-weight:600;color:var(--gray);margin-bottom:6px;">PROJECT DESCRIPTION</p>
+              <p style="font-size:0.88rem;color:var(--gray);line-height:1.7;"><%- q.description.replace(/\n/g,'<br/>') %></p>
+            </div>
+            <div style="grid-column:1/-1;">
+              <p style="font-size:0.78rem;font-weight:600;color:var(--gray);margin-bottom:6px;">ADMIN NOTES</p>
+              <form action="/admin/quotes/<%= q.id %>/notes" method="POST" style="display:flex;gap:8px;">
+                <textarea name="admin_notes" rows="2" style="flex:1;padding:8px;border:1px solid var(--border);border-radius:4px;font-size:0.85rem;resize:vertical;"><%= q.admin_notes || '' %></textarea>
+                <button class="btn btn-outline btn-sm" style="align-self:flex-start;">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

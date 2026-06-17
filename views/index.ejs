@@ -1,0 +1,147 @@
+<%- include('partials/head', { title: 'Affordable Websites for Small Businesses', metaDesc: 'Professional website templates and done-for-you web design starting at $47. Built for small businesses by Mel.' }) %>
+<%- include('partials/nav', { activePage: 'home' }) %>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-badge">Websites That Work as Hard as You Do</span>
+    <h1>Professional Websites for <span>Small Businesses</span></h1>
+    <p>Grab a polished template for $47, get it set up for you for $200, or let's build something fully custom. No bloat. No confusion. Just a site that works.</p>
+    <div class="hero-buttons">
+      <a href="/templates" class="btn btn-gold">Browse Templates</a>
+      <a href="/services" class="btn btn-outline-gold">Done-For-You Setup</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="container">
+  <div class="trust-bar">
+    <div class="trust-item"><strong>$47</strong><span>Templates start at</span></div>
+    <div class="trust-item"><strong>$200</strong><span>Setup deposit</span></div>
+    <div class="trust-item"><strong>48h</strong><span>Download link valid</span></div>
+    <div class="trust-item"><strong>6</strong><span>Niche-specific templates</span></div>
+  </div>
+</div>
+
+<!-- FEATURED TEMPLATES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Ready-Made Templates</h2>
+      <p>Built for specific industries so they look right from day one. Buy it, customize it, launch it.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="cards-grid">
+      <% products.forEach(function(p) { %>
+      <div class="card">
+        <div class="card-img">
+          <% if (p.thumbnail) { %>
+            <img src="/images/<%= p.thumbnail %>" alt="<%= p.name %> preview" />
+          <% } else { %>
+            <div style="height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--light);color:var(--gray);">
+              <span style="font-size:2rem;">🌐</span>
+              <span><%= p.category %></span>
+            </div>
+          <% } %>
+        </div>
+        <div class="card-body">
+          <div class="card-category"><%= p.category %></div>
+          <h3 class="card-title"><%= p.name %></h3>
+          <p class="card-desc"><%= p.description %></p>
+          <div class="card-price">$<%= (p.price / 100).toFixed(0) %></div>
+          <div class="card-footer">
+            <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">View Details</a>
+            <% if (p.preview_url) { %>
+              <a href="<%= p.preview_url %>" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Live Preview</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+      <% if (products.length === 0) { %>
+      <p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:40px 0;">Templates coming soon — check back shortly!</p>
+      <% } %>
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="/templates" class="btn btn-outline-gold">See All Templates</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <h2>Three Ways to Get Online</h2>
+      <p>Pick the path that fits your budget and comfort level.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-step-num">1</div>
+        <h3>Buy a Template</h3>
+        <p>$37–$57. Download a fully coded HTML/CSS site built for your industry. Customize the text and colors yourself.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">2</div>
+        <h3>Done-For-You Setup</h3>
+        <p>$200 deposit. Choose a template and I'll customize it with your info, branding, and get it live on your domain.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">3</div>
+        <h3>Custom Site</h3>
+        <p>Something unique? Tell me about your project and I'll put together a custom quote. No commitment to inquire.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="/services" class="btn btn-navy">See All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Why Sites by Mel?</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>Fast & Lightweight</h3>
+        <p>Plain HTML and CSS — no WordPress, no plugins, no bloat. Pages load in under a second.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile-First</h3>
+        <p>Every template looks great on phones, tablets, and desktops right out of the box.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <h3>Built for Your Niche</h3>
+        <p>Not a generic template. Each design is purpose-built for a specific industry.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛠️</div>
+        <h3>Yours to Keep</h3>
+        <p>Buy once, own forever. No subscriptions, no monthly fees for the template itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="section section-navy">
+  <div class="container" style="text-align:center;">
+    <h2 style="color:var(--white);margin-bottom:16px;">Ready to get your business online?</h2>
+    <p style="color:rgba(255,255,255,0.8);max-width:500px;margin:0 auto 32px;">Start with a template or get a free custom quote. Either way, I'll make sure you end up with something you're proud of.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="/templates" class="btn btn-gold">Browse Templates</a>
+      <a href="/quote" class="btn btn-outline-gold">Request a Quote</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

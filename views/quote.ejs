@@ -1,0 +1,93 @@
+<%- include('partials/head', { title: 'Request a Quote', metaDesc: 'Tell me about your project and I'll put together a free custom quote for your new website.' }) %>
+<%- include('partials/nav', { activePage: 'contact' }) %>
+
+<div class="page-header">
+  <h1>Request a Free Quote</h1>
+  <p>Tell me about your project and I'll get back to you within 24 hours with pricing and a plan.</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="form-card" style="max-width:700px;">
+
+      <% if (success) { %>
+        <div class="alert alert-success" style="margin-bottom:0;">
+          <strong>Quote request received!</strong> I'll review your project details and get back to you within 24 hours with pricing and next steps. Talk soon!
+        </div>
+      <% } else { %>
+
+        <% if (error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <form action="/quote" method="POST">
+          <div class="form-2col">
+            <div class="form-group">
+              <label for="name">Your Name *</label>
+              <input type="text" id="name" name="name" required placeholder="Jane Smith" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+            </div>
+          </div>
+          <div class="form-2col">
+            <div class="form-group">
+              <label for="phone">Phone (optional)</label>
+              <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label for="business_name">Business Name</label>
+              <input type="text" id="business_name" name="business_name" placeholder="Smith Pressure Washing LLC" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="business_url">Current Website (if any)</label>
+            <input type="url" id="business_url" name="business_url" placeholder="https://..." />
+          </div>
+          <div class="form-2col">
+            <div class="form-group">
+              <label for="project_type">Project Type</label>
+              <select id="project_type" name="project_type">
+                <option value="">Select one...</option>
+                <option value="New website from scratch">New website from scratch</option>
+                <option value="Template customization">Template customization</option>
+                <option value="Redesign existing site">Redesign existing site</option>
+                <option value="Add features to existing site">Add features to existing site</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="budget">Rough Budget</label>
+              <select id="budget" name="budget">
+                <option value="">Not sure yet</option>
+                <option value="Under $500">Under $500</option>
+                <option value="$500–$1,000">$500–$1,000</option>
+                <option value="$1,000–$2,500">$1,000–$2,500</option>
+                <option value="$2,500+">$2,500+</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="timeline">Timeline</label>
+            <select id="timeline" name="timeline">
+              <option value="">Flexible</option>
+              <option value="ASAP (within 1–2 weeks)">ASAP (within 1–2 weeks)</option>
+              <option value="Within a month">Within a month</option>
+              <option value="1–3 months">1–3 months</option>
+              <option value="Just exploring">Just exploring</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Tell me about your project *</label>
+            <textarea id="description" name="description" required rows="6" placeholder="What does your business do? What pages do you need? Any features like a contact form, booking system, photo gallery? What do you like or dislike about your current site?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">Submit Quote Request &rarr;</button>
+          <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:10px;">No commitment required. I'll respond within 24 hours.</p>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

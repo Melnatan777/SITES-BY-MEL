@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messages — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'messages' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Contact Messages</h1>
+      <form action="/admin/logout" method="POST" style="margin:0;">
+        <button class="btn btn-outline btn-sm">Sign Out</button>
+      </form>
+    </div>
+    <div class="admin-content">
+      <% if (messages.length === 0) { %>
+        <div class="admin-table-wrap" style="padding:40px;text-align:center;">
+          <p style="color:var(--gray);">No messages yet.</p>
+        </div>
+      <% } else { %>
+        <% messages.forEach(function(m) { %>
+        <div class="admin-table-wrap" style="margin-bottom:16px;">
+          <div style="padding:20px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+              <div>
+                <strong style="font-size:0.95rem;"><%= m.name %></strong>
+                <span style="color:var(--gray);font-size:0.85rem;margin-left:10px;">
+                  <a href="mailto:<%= m.email %>"><%= m.email %></a>
+                </span>
+              </div>
+              <span style="font-size:0.78rem;color:var(--gray);">
+                <%= m.created_at ? m.created_at.substring(0,16).replace('T',' ') : '' %>
+              </span>
+            </div>
+            <% if (m.subject) { %>
+              <p style="font-size:0.82rem;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;"><%= m.subject %></p>
+            <% } %>
+            <p style="font-size:0.9rem;color:var(--gray);line-height:1.7;"><%- m.message.replace(/\n/g,'<br/>') %></p>
+            <div style="margin-top:12px;">
+              <a href="mailto:<%= m.email %>?subject=Re: <%= encodeURIComponent(m.subject || 'Your message to Sites by Mel') %>" class="btn btn-navy btn-sm">Reply via Email</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

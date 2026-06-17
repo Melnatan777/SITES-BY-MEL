@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — Sites by Mel</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-login">
+  <div class="admin-login-card">
+    <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Sites by <span style="color:var(--gold);">Mel</span></div>
+    <h1>Admin</h1>
+    <p>Enter your password to continue.</p>
+
+    <% if (error) { %>
+      <div class="alert alert-error" style="text-align:left;"><%= error %></div>
+    <% } %>
+
+    <form action="/admin/login" method="POST">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autofocus />
+      </div>
+      <button type="submit" class="btn btn-navy btn-full">Sign In</button>
+    </form>
+    <div style="margin-top:20px;">
+      <a href="/" style="font-size:0.82rem;color:var(--gray);">&larr; Back to site</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

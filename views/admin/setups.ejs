@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setup Requests — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'setups' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Done-For-You Setup Requests</h1>
+      <form action="/admin/logout" method="POST" style="margin:0;">
+        <button class="btn btn-outline btn-sm">Sign Out</button>
+      </form>
+    </div>
+    <div class="admin-content">
+      <% if (setups.length === 0) { %>
+        <div class="admin-table-wrap" style="padding:40px;text-align:center;">
+          <p style="color:var(--gray);">No setup requests yet.</p>
+        </div>
+      <% } else { %>
+        <% setups.forEach(function(s) { %>
+        <div class="admin-table-wrap" style="margin-bottom:24px;">
+          <div class="admin-table-header" style="flex-wrap:wrap;gap:12px;">
+            <div>
+              <h2 style="font-size:1rem;margin-bottom:4px;"><%= s.name %> — <%= s.business_name || 'No business name' %></h2>
+              <span style="font-size:0.78rem;color:var(--gray);"><%= s.email %> &bull; <%= s.created_at ? s.created_at.substring(0,10) : '' %></span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span class="badge <%= s.status === 'completed' ? 'badge-green' : s.status === 'in_progress' ? 'badge-blue' : s.status === 'paid' ? 'badge-yellow' : 'badge-gray' %>"><%= s.status.replace('_', ' ') %></span>
+              <form action="/admin/setups/<%= s.id %>/status" method="POST" style="margin:0;display:flex;gap:6px;align-items:center;">
+                <select name="status" class="status-select" style="font-size:0.82rem;">
+                  <option value="pending" <%= s.status==='pending'?'selected':'' %>>pending</option>
+                  <option value="paid" <%= s.status==='paid'?'selected':'' %>>paid</option>
+                  <option value="in_progress" <%= s.status==='in_progress'?'selected':'' %>>in_progress</option>
+                  <option value="completed" <%= s.status==='completed'?'selected':'' %>>completed</option>
+                </select>
+                <button class="btn btn-navy btn-sm">Update</button>
+              </form>
+            </div>
+          </div>
+
+          <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:1px solid var(--border);">
+            <div>
+              <p style="font-size:0.78rem;font-weight:600;color:var(--gray);margin-bottom:6px;">CONTACT INFO</p>
+              <p style="font-size:0.88rem;">📧 <a href="mailto:<%= s.email %>"><%= s.email %></a></p>
+              <% if (s.phone) { %><p style="font-size:0.88rem;">📞 <%= s.phone %></p><% } %>
+              <% if (s.business_url) { %><p style="font-size:0.88rem;">🌐 <a href="<%= s.business_url %>" target="_blank"><%= s.business_url %></a></p><% } %>
+            </div>
+            <div>
+              <p style="font-size:0.78rem;font-weight:600;color:var(--gray);margin-bottom:6px;">ORDER DETAILS</p>
+              <p style="font-size:0.88rem;">Template: <strong><%= s.product_name || 'Not specified' %></strong></p>
+              <p style="font-size:0.88rem;">Deposit: <strong>$<%= ((s.amount||0)/100).toFixed(2) %></strong></p>
+            </div>
+            <% if (s.notes) { %>
+            <div style="grid-column:1/-1;">
+              <p style="font-size:0.78rem;font-weight:600;color:var(--gray);margin-bottom:6px;">CUSTOMER NOTES</p>
+              <p style="font-size:0.88rem;color:var(--gray);"><%- s.notes.replace(/\n/g,'<br/>') %></p>
+            </div>
+            <% } %>
+            <div style="grid-column:1/-1;">
+              <p style="font-size:0.78rem;font-weight:600;color:var(--gray);margin-bottom:6px;">ADMIN NOTES</p>
+              <form action="/admin/setups/<%= s.id %>/notes" method="POST" style="display:flex;gap:8px;">
+                <textarea name="admin_notes" rows="2" style="flex:1;padding:8px;border:1px solid var(--border);border-radius:4px;font-size:0.85rem;resize:vertical;"><%= s.admin_notes || '' %></textarea>
+                <button class="btn btn-outline btn-sm" style="align-self:flex-start;">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

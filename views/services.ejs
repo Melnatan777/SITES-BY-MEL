@@ -1,0 +1,138 @@
+<%- include('partials/head', { title: 'Services', metaDesc: 'Done-for-you website setup and custom site builds for small businesses. Starting at $200.' }) %>
+<%- include('partials/nav', { activePage: 'services' }) %>
+
+<div class="page-header">
+  <h1>Services</h1>
+  <p>Whether you want a hands-off setup or a fully custom build, I've got you covered.</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="pricing-grid" style="max-width:900px;margin:0 auto;">
+
+      <!-- OPTION 1: Template only -->
+      <div class="pricing-card">
+        <div class="pricing-name">DIY</div>
+        <div class="pricing-price">$37<small>–$57</small></div>
+        <p class="pricing-desc">Buy a template and customize it yourself. Perfect if you're comfortable editing HTML.</p>
+        <ul class="pricing-features">
+          <li>Niche-specific HTML/CSS template</li>
+          <li>Mobile-responsive layout</li>
+          <li>Instant download after purchase</li>
+          <li>Customization guide included</li>
+          <li>48-hour download link</li>
+        </ul>
+        <a href="/templates" class="btn btn-navy btn-full">Browse Templates</a>
+      </div>
+
+      <!-- OPTION 2: Done-for-you -->
+      <div class="pricing-card featured">
+        <div class="pricing-name">Done-For-You</div>
+        <div class="pricing-price">$200<small> deposit</small></div>
+        <p class="pricing-desc">Choose a template, I'll customize it with your info and get it live. You handle nothing technical.</p>
+        <ul class="pricing-features">
+          <li>Everything in DIY</li>
+          <li>Customized with your content</li>
+          <li>Your colors, logo &amp; photos</li>
+          <li>Domain &amp; hosting setup</li>
+          <li>Contact form wired up</li>
+          <li>Live within 5–7 business days</li>
+          <li>$200 deposit, balance due at delivery</li>
+        </ul>
+        <a href="#setup-form" class="btn btn-gold btn-full">Get Started — $200 Deposit</a>
+      </div>
+
+      <!-- OPTION 3: Custom quote -->
+      <div class="pricing-card">
+        <div class="pricing-name">Custom Build</div>
+        <div class="pricing-price">Quote</div>
+        <p class="pricing-desc">Need something beyond a template? I'll design and build a fully custom site from scratch.</p>
+        <ul class="pricing-features">
+          <li>Fully custom design</li>
+          <li>Any features you need</li>
+          <li>E-commerce, booking, blog</li>
+          <li>Ongoing maintenance available</li>
+          <li>Free consultation call</li>
+        </ul>
+        <a href="/quote" class="btn btn-outline btn-full">Request a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SETUP PROCESS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <h2>How the Done-For-You Setup Works</h2>
+      <p>From deposit to live site in less than a week.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="process-steps" style="max-width:800px;margin:0 auto;">
+      <div class="process-step">
+        <div class="process-step-num">1</div>
+        <h3>Pick a Template</h3>
+        <p>Browse the templates and choose the one that fits your business. Or tell me your industry and I'll recommend one.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">2</div>
+        <h3>Pay $200 Deposit</h3>
+        <p>Secure checkout via Stripe. I'll reach out within 24 hours to collect your content — logo, photos, text.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">3</div>
+        <h3>I Build It</h3>
+        <p>I customize the template with your branding and content. You get a preview link to approve before it goes live.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">4</div>
+        <h3>We Launch</h3>
+        <p>Once you approve, I connect your domain and flip the switch. Your site is live — you own every file.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SETUP FORM -->
+<section class="section" id="setup-form">
+  <div class="container">
+    <div class="form-card">
+      <h2 style="font-size:1.4rem;margin-bottom:6px;">Start Your Done-For-You Setup</h2>
+      <p style="color:var(--gray);font-size:0.9rem;margin-bottom:28px;">Fill out the form below and you'll be taken to a secure $200 deposit checkout. I'll be in touch within 24 hours.</p>
+      <form action="/setup/none" method="POST">
+        <div class="form-2col">
+          <div class="form-group">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="name" required placeholder="Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+          </div>
+        </div>
+        <div class="form-2col">
+          <div class="form-group">
+            <label for="phone">Phone (optional)</label>
+            <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
+          </div>
+          <div class="form-group">
+            <label for="business_name">Business Name</label>
+            <input type="text" id="business_name" name="business_name" placeholder="Smith Pressure Washing" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="business_url">Current Website (if any)</label>
+          <input type="url" id="business_url" name="business_url" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label for="notes">Anything else I should know?</label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Which template are you interested in? Any specific colors or style notes?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">Pay $200 Deposit &amp; Get Started &rarr;</button>
+        <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:10px;">Secure checkout via Stripe. Deposit is applied toward the total project cost.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,55 @@
+<%- include('partials/head', { title: 'Website Templates', metaDesc: 'Browse our collection of affordable, niche-specific website templates for small businesses.' }) %>
+<%- include('partials/nav', { activePage: 'templates' }) %>
+
+<div class="page-header">
+  <h1>Website Templates</h1>
+  <p>Hand-coded HTML/CSS templates built for specific industries. Buy once, own forever.</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="cards-grid">
+      <% products.forEach(function(p) { %>
+      <div class="card">
+        <div class="card-img">
+          <% if (p.thumbnail) { %>
+            <img src="/images/<%= p.thumbnail %>" alt="<%= p.name %> preview" style="height:200px;width:100%;object-fit:cover;" />
+          <% } else { %>
+            <div style="height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--light);color:var(--gray);">
+              <span style="font-size:2.5rem;">🌐</span>
+              <span style="font-size:0.85rem;"><%= p.category %></span>
+            </div>
+          <% } %>
+        </div>
+        <div class="card-body">
+          <div class="card-category"><%= p.category %></div>
+          <h3 class="card-title"><%= p.name %></h3>
+          <p class="card-desc"><%= p.description %></p>
+          <div class="card-price">$<%= (p.price / 100).toFixed(0) %></div>
+          <div class="card-footer">
+            <% if (p.active) { %>
+              <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">Buy Now</a>
+            <% } else { %>
+              <span class="btn btn-sm" style="background:var(--border);color:var(--gray);cursor:default;">Coming Soon</span>
+            <% } %>
+            <% if (p.preview_url) { %>
+              <a href="<%= p.preview_url %>" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Live Preview</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+
+    <!-- Also available: setup service -->
+    <div style="background:var(--light);border:1px solid var(--border);border-radius:8px;padding:36px 32px;margin-top:48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <h3 style="margin-bottom:8px;">Want it set up for you?</h3>
+        <p style="color:var(--gray);font-size:0.95rem;">Pick any template and I'll customize it with your content, branding, and get it live. $200 deposit to get started.</p>
+      </div>
+      <a href="/services" class="btn btn-gold">See Done-For-You Setup</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

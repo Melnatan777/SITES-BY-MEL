@@ -1,0 +1,42 @@
+<%- include('partials/head', { title: 'Setup Request Received', metaDesc: 'Your done-for-you setup deposit has been received.' }) %>
+<%- include('partials/nav') %>
+
+<section class="section">
+  <div class="container">
+    <div class="success-box">
+      <div class="success-icon">✅</div>
+      <h1>Deposit received — let's get to work!</h1>
+      <p style="font-size:1.05rem;">Your $200 deposit has been processed. I'll reach out within <strong>24 hours</strong> to collect your content and kick things off.</p>
+      <p style="color:var(--gray);margin-top:8px;">Keep an eye on your inbox — I'll send you a short content questionnaire so I can get everything I need to build your site.</p>
+
+      <div style="margin-top:36px;padding:24px;background:var(--light);border-radius:8px;text-align:left;max-width:480px;margin-left:auto;margin-right:auto;">
+        <h3 style="font-size:0.95rem;margin-bottom:14px;">What happens next:</h3>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <span style="background:var(--gold);color:var(--white);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">1</span>
+            <p style="font-size:0.88rem;color:var(--gray);">I email you a content form — logo, photos, text, colors.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <span style="background:var(--gold);color:var(--white);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">2</span>
+            <p style="font-size:0.88rem;color:var(--gray);">You send me your content. I build and customize your site.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <span style="background:var(--gold);color:var(--white);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">3</span>
+            <p style="font-size:0.88rem;color:var(--gray);">You review a preview link and request any tweaks.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <span style="background:var(--gold);color:var(--white);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">4</span>
+            <p style="font-size:0.88rem;color:var(--gray);">We go live. Balance due at delivery.</p>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:32px;font-size:0.88rem;color:var(--gray);">Questions in the meantime? <a href="/contact">Send me a message</a> or email <a href="mailto:mel@sitesbymel.com">mel@sitesbymel.com</a>.</p>
+      <div style="margin-top:20px;">
+        <a href="/" class="btn btn-outline">Back to Home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

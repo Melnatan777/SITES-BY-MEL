@@ -1,0 +1,26 @@
+<aside class="admin-sidebar">
+  <div class="admin-sidebar-logo">Sites by <span>Mel</span></div>
+  <nav class="admin-nav">
+    <a href="/admin" class="<%= typeof activePage !== 'undefined' && activePage === 'dashboard' ? 'active' : '' %>">
+      <span class="nav-icon">📊</span> <span>Dashboard</span>
+    </a>
+    <a href="/admin/products" class="<%= typeof activePage !== 'undefined' && activePage === 'products' ? 'active' : '' %>">
+      <span class="nav-icon">🗂️</span> <span>Products</span>
+    </a>
+    <a href="/admin/orders" class="<%= typeof activePage !== 'undefined' && activePage === 'orders' ? 'active' : '' %>">
+      <span class="nav-icon">🛒</span> <span>Orders</span>
+    </a>
+    <a href="/admin/setups" class="<%= typeof activePage !== 'undefined' && activePage === 'setups' ? 'active' : '' %>">
+      <span class="nav-icon">🛠️</span> <span>Setups</span>
+    </a>
+    <a href="/admin/quotes" class="<%= typeof activePage !== 'undefined' && activePage === 'quotes' ? 'active' : '' %>">
+      <span class="nav-icon">💬</span> <span>Quotes</span>
+    </a>
+    <a href="/admin/messages" class="<%= typeof activePage !== 'undefined' && activePage === 'messages' ? 'active' : '' %>">
+      <span class="nav-icon">✉️</span> <span>Messages</span>
+    </a>
+    <a href="/" style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;">
+      <span class="nav-icon">🌐</span> <span>View Site</span>
+    </a>
+  </nav>
+</aside>

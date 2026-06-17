@@ -1,0 +1,73 @@
+<%- include('partials/head', { title: 'Contact', metaDesc: 'Get in touch with Mel. Questions about templates, setup, or custom projects.' }) %>
+<%- include('partials/nav', { activePage: 'contact' }) %>
+
+<div class="page-header">
+  <h1>Get in Touch</h1>
+  <p>Questions, ideas, or just want to say hi — I read every message.</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:48px;align-items:start;max-width:900px;margin:0 auto;">
+
+      <!-- FORM -->
+      <div class="form-card" style="max-width:none;">
+        <% if (success) { %>
+          <div class="alert alert-success">
+            <strong>Message sent!</strong> Thanks for reaching out. I'll get back to you within 24 hours.
+          </div>
+        <% } %>
+        <% if (error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <% if (!success) { %>
+        <form action="/contact" method="POST">
+          <div class="form-2col">
+            <div class="form-group">
+              <label for="name">Name *</label>
+              <input type="text" id="name" name="name" required placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="What's this about?" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required rows="6" placeholder="Tell me what's on your mind..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold btn-full">Send Message &rarr;</button>
+        </form>
+        <% } %>
+      </div>
+
+      <!-- ASIDE INFO -->
+      <div>
+        <h3 style="font-size:1.1rem;margin-bottom:16px;">Other Ways to Reach Me</h3>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="padding:16px;background:var(--light);border-radius:6px;">
+            <p style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray);margin-bottom:4px;">Email</p>
+            <a href="mailto:mel@sitesbymel.com" style="color:var(--navy);font-weight:500;">mel@sitesbymel.com</a>
+          </div>
+          <div style="padding:16px;background:var(--light);border-radius:6px;">
+            <p style="font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray);margin-bottom:4px;">Response Time</p>
+            <p style="font-size:0.9rem;">Usually within 24 hours, Monday–Friday.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:28px;padding:20px;border:1px solid var(--border);border-radius:6px;">
+          <h4 style="font-size:0.95rem;margin-bottom:10px;">Need a website?</h4>
+          <p style="font-size:0.87rem;color:var(--gray);margin-bottom:14px;">For project inquiries, the quote form gives me the details I need to respond with a real answer.</p>
+          <a href="/quote" class="btn btn-gold btn-sm btn-full">Request a Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
