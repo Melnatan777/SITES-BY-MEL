@@ -173,4 +173,16 @@ const previewUrls = [
 const backfill = db.prepare("UPDATE products SET preview_url=? WHERE slug=?");
 for (const [slug, url] of previewUrls) backfill.run(url, slug);
 
+// Wire up thumbnail images
+const thumbnails = [
+  ['service-pro', 'service-pro.jpg'],
+  ['table-ready',  'Tables.jpg'],
+  ['key-ready',    'KeyReady.jpg'],
+  ['shop-front',   'ShopReady.jpg'],
+  ['voice-first',  'ThoughtfulCreator.jpg'],
+  ['gather-here',  'Cornerstone.jpg'],
+];
+const setThumb = db.prepare("UPDATE products SET thumbnail=? WHERE slug=?");
+for (const [slug, file] of thumbnails) setThumb.run(file, slug);
+
 module.exports = db;
