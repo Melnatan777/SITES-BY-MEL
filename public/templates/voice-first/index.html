@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VoiceFirst — Blogger & Creator Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1A1A2E;--purple:#6B4FA0;--purple-light:#9B7DD4;--lavender:#EDE8F8;--cream:#FAFAF7;--white:#fff;--gray:#6B6B80;--border:#E8E4F0;--accent:#4A3580}
+body{font-family:'Inter',sans-serif;color:var(--ink);line-height:1.6}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600}
+a{color:var(--purple);text-decoration:none}
+.container{max-width:1060px;margin:0 auto;padding:0 24px}
+.container-narrow{max-width:720px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:11px 26px;font-family:'Inter',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;border:none;transition:all 0.2s;border-radius:100px}
+.btn-purple{background:var(--purple);color:var(--white)}
+.btn-purple:hover{background:var(--accent)}
+.btn-outline{background:transparent;color:var(--purple);border:1.5px solid var(--purple)}
+.btn-outline:hover{background:var(--purple);color:var(--white)}
+.btn-white{background:var(--white);color:var(--purple)}
+.btn-white:hover{background:var(--lavender)}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px;max-width:1060px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--ink)}
+.nav-logo span{color:var(--purple)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.88rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--purple)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--lavender),#f0eafa);padding:80px 24px 70px;text-align:center}
+.hero-tag{display:inline-block;background:var(--purple);color:var(--white);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);line-height:1.2;max-width:640px;margin:0 auto 20px;color:var(--ink)}
+.hero h1 em{color:var(--purple);font-style:italic;font-weight:300}
+.hero p{font-size:1.05rem;color:var(--gray);max-width:480px;margin:0 auto 36px;line-height:1.75;font-weight:300}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-social{margin-top:36px;display:flex;gap:20px;justify-content:center;align-items:center}
+.hero-social span{font-size:0.8rem;color:var(--gray)}
+.social-pill{display:flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:0.8rem;color:var(--gray);background:var(--white)}
+.social-pill:hover{border-color:var(--purple);color:var(--purple)}
+
+/* FEATURED POST */
+.section{padding:72px 0}
+.section-cream{background:var(--cream)}
+.section-lavender{background:var(--lavender)}
+.section-ink{background:var(--ink);color:var(--white)}
+.section-header{margin-bottom:40px}
+.section-header .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+.section-header p{color:var(--gray);margin-top:8px}
+.section-header.center{text-align:center}
+.purple-line{width:40px;height:2px;background:var(--purple);margin:12px auto 0}
+
+.featured-grid{display:grid;grid-template-columns:3fr 2fr;gap:40px;align-items:start}
+.featured-post{cursor:pointer}
+.featured-img{height:340px;background:linear-gradient(135deg,#6B4FA0,#9B7DD4);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(255,255,255,0.35);font-size:0.82rem;margin-bottom:20px}
+.post-cat{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:8px}
+.featured-post h2{font-size:clamp(1.4rem,2.5vw,1.9rem);margin-bottom:10px;line-height:1.3;color:var(--ink)}
+.featured-post p{color:var(--gray);font-size:0.92rem;line-height:1.75;margin-bottom:16px}
+.post-meta{font-size:0.78rem;color:var(--gray);display:flex;gap:12px;align-items:center}
+.post-meta span{display:flex;align-items:center;gap:4px}
+
+.sidebar-posts{display:flex;flex-direction:column;gap:24px}
+.sidebar-post{display:grid;grid-template-columns:100px 1fr;gap:14px;cursor:pointer}
+.sidebar-post-img{height:80px;background:linear-gradient(135deg,#9B7DD4,#6B4FA0);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:rgba(255,255,255,0.3)}
+.sidebar-post .post-cat{margin-bottom:4px}
+.sidebar-post h4{font-size:0.92rem;line-height:1.4;color:var(--ink);font-family:'Fraunces',serif;font-weight:600}
+.sidebar-post h4:hover{color:var(--purple)}
+.sidebar-post .post-meta{margin-top:4px}
+
+/* TOPICS */
+.topics-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.topic-tag{padding:9px 20px;border:1.5px solid var(--border);border-radius:100px;font-size:0.85rem;color:var(--gray);cursor:pointer;transition:all 0.2s;background:var(--white)}
+.topic-tag:hover,.topic-tag.active{background:var(--purple);color:var(--white);border-color:var(--purple)}
+
+/* LATEST POSTS */
+.posts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
+.post-card{cursor:pointer}
+.post-card-img{height:200px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:rgba(255,255,255,0.3);margin-bottom:16px;background:linear-gradient(135deg,#6B4FA0,#9B7DD4)}
+.post-card h3{font-size:1.1rem;margin-bottom:8px;line-height:1.4;color:var(--ink)}
+.post-card h3:hover{color:var(--purple)}
+.post-card p{color:var(--gray);font-size:0.88rem;line-height:1.7;margin-bottom:12px}
+.read-more{font-size:0.82rem;font-weight:600;color:var(--purple)}
+
+/* PODCAST */
+.podcast-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.podcast-art{height:320px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.podcast-art h3{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--white);text-align:center;padding:0 24px}
+.podcast-art p{font-size:0.82rem;color:rgba(255,255,255,0.65);text-align:center}
+.podcast-content .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple-light);margin-bottom:10px}
+.podcast-content h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--white);margin-bottom:16px}
+.podcast-content p{color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:24px;font-size:0.95rem}
+.episode-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.episode{display:flex;gap:14px;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.07);border-radius:6px;border:1px solid rgba(255,255,255,0.1)}
+.ep-num{width:36px;height:36px;background:var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--white);flex-shrink:0}
+.ep-title{font-size:0.88rem;font-weight:500;color:var(--white)}
+.ep-dur{font-size:0.78rem;color:rgba(255,255,255,0.5)}
+
+/* NEWSLETTER */
+.nl-section{background:linear-gradient(135deg,var(--purple),var(--accent));padding:72px 24px;text-align:center}
+.nl-section h2{font-size:clamp(1.8rem,3vw,2.4rem);color:var(--white);margin-bottom:12px}
+.nl-section p{color:rgba(255,255,255,0.8);max-width:480px;margin:0 auto 32px;font-size:0.97rem}
+.nl-form{display:flex;gap:0;max-width:420px;margin:0 auto;border-radius:100px;overflow:hidden;border:1.5px solid rgba(255,255,255,0.4)}
+.nl-form input{flex:1;padding:13px 22px;border:none;outline:none;font-size:0.92rem;font-family:'Inter',sans-serif;background:rgba(255,255,255,0.15);color:var(--white)}
+.nl-form input::placeholder{color:rgba(255,255,255,0.6)}
+.nl-form button{padding:13px 24px;background:var(--white);color:var(--purple);border:none;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.nl-perks{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.nl-perk{font-size:0.8rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:6px}
+
+/* ABOUT SIDEBAR */
+.about-box{background:var(--lavender);border-radius:10px;padding:28px;text-align:center;margin-top:32px}
+.about-avatar{width:80px;height:80px;border-radius:50%;background:var(--purple-light);margin:0 auto 14px;display:flex;align-items:center;justify-content:center}
+.about-box h4{font-size:1rem;margin-bottom:6px}
+.about-box p{font-size:0.84rem;color:var(--gray);line-height:1.6}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--purple-light)}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:color 0.2s}
+footer a:hover{color:var(--purple-light)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:800px){
+  .featured-grid{grid-template-columns:1fr}
+  .podcast-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .nav-links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .nl-form{flex-direction:column;border-radius:8px}
+  .nl-form input{border-radius:6px 6px 0 0}
+  .nl-form button{border-radius:0 0 6px 6px}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">The <span>Thoughtful</span> Creator</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#podcast">Podcast</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+      <li><a href="#newsletter" class="btn btn-purple" style="padding:8px 18px">Subscribe</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="hero-tag">Writing &bull; Podcasting &bull; Creating</span>
+  <h1>Words &amp; Ideas for <em>Intentional</em> Creators</h1>
+  <p>A weekly newsletter, blog, and podcast exploring creativity, productivity, and living with purpose in the digital age.</p>
+  <div class="hero-btns">
+    <a href="#newsletter" class="btn btn-purple">Join 8,400+ Subscribers</a>
+    <a href="#blog" class="btn btn-outline">Read the Blog</a>
+  </div>
+  <div class="hero-social">
+    <span>Also on</span>
+    <a href="#" class="social-pill">&#127911; Spotify</a>
+    <a href="#" class="social-pill">&#127908; Apple</a>
+    <a href="#" class="social-pill">&#128247; Instagram</a>
+  </div>
+</section>
+
+<section class="section" id="blog">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Latest Writing</p>
+      <h2>From the Blog</h2>
+    </div>
+    <div class="featured-grid">
+      <div class="featured-post">
+        <div class="featured-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Add featured image</span>
+        </div>
+        <p class="post-cat">Creativity</p>
+        <h2>Why Your Creative Block Isn&rsquo;t What You Think It Is</h2>
+        <p>Most creators mistake resistance for lack of inspiration. But the real issue runs deeper &mdash; and it has a surprisingly simple fix that has nothing to do with motivation.</p>
+        <div class="post-meta"><span>&#128337; 8 min read</span><span>June 14, 2025</span></div>
+        <a href="#" class="read-more" style="display:inline-block;margin-top:14px">Read more &rarr;</a>
+      </div>
+      <div>
+        <div class="sidebar-posts">
+          <div class="sidebar-post">
+            <div class="sidebar-post-img">photo</div>
+            <div>
+              <p class="post-cat">Productivity</p>
+              <h4>The 3-Block Day: A Simpler Way to Structure Your Creative Work</h4>
+              <div class="post-meta"><span>&#128337; 5 min</span></div>
+            </div>
+          </div>
+          <div class="sidebar-post">
+            <div class="sidebar-post-img" style="background:linear-gradient(135deg,#9B7DD4,#c5a8f0)">photo</div>
+            <div>
+              <p class="post-cat">Mindset</p>
+              <h4>Letting Go of the Content Calendar (And What I Do Instead)</h4>
+              <div class="post-meta"><span>&#128337; 6 min</span></div>
+            </div>
+          </div>
+          <div class="sidebar-post">
+            <div class="sidebar-post-img" style="background:linear-gradient(135deg,#c5a8f0,#6B4FA0)">photo</div>
+            <div>
+              <p class="post-cat">Business</p>
+              <h4>How I Monetized My Newsletter Without Feeling Gross About It</h4>
+              <div class="post-meta"><span>&#128337; 7 min</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="about-box">
+          <div class="about-avatar">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h4>Hi, I&rsquo;m Alex</h4>
+          <p>Writer, podcaster, and recovering perfectionist. I write about creative work, clear thinking, and building something that lasts.</p>
+          <a href="#" class="btn btn-outline" style="margin-top:14px;font-size:0.8rem;padding:8px 18px">About Me</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-cream" id="topics">
+  <div class="container">
+    <div class="section-header center">
+      <p class="label">Browse by Topic</p>
+      <h2>What Are You Into?</h2>
+      <div class="purple-line"></div>
+    </div>
+    <div class="topics-grid">
+      <span class="topic-tag active">All Posts</span>
+      <span class="topic-tag">Creativity</span>
+      <span class="topic-tag">Productivity</span>
+      <span class="topic-tag">Mindset</span>
+      <span class="topic-tag">Business</span>
+      <span class="topic-tag">Writing</span>
+      <span class="topic-tag">Podcasting</span>
+      <span class="topic-tag">Tools &amp; Tech</span>
+      <span class="topic-tag">Personal</span>
+    </div>
+    <div class="posts-grid" style="margin-top:40px">
+      <div class="post-card">
+        <div class="post-card-img">Add image</div>
+        <p class="post-cat">Mindset</p>
+        <h3>Stop Optimizing Your Morning Routine</h3>
+        <p>The best morning routine is one you actually do. Here&rsquo;s what I learned after three years of experimenting.</p>
+        <a href="#" class="read-more">Read more &rarr;</a>
+      </div>
+      <div class="post-card">
+        <div class="post-card-img" style="background:linear-gradient(135deg,#9B7DD4,#EDE8F8)">Add image</div>
+        <p class="post-cat">Tools &amp; Tech</p>
+        <h3>The Only Tools I Actually Use After 5 Years</h3>
+        <p>Forget the shiny new app. These are the five tools that have stood the test of time in my creative workflow.</p>
+        <a href="#" class="read-more">Read more &rarr;</a>
+      </div>
+      <div class="post-card">
+        <div class="post-card-img" style="background:linear-gradient(135deg,#4A3580,#9B7DD4)">Add image</div>
+        <p class="post-cat">Business</p>
+        <h3>From 0 to 8k Subscribers: What Actually Worked</h3>
+        <p>No viral moments, no big launches. Just slow, steady growth — and the three things I kept doing every week.</p>
+        <a href="#" class="read-more">Read more &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-ink" id="podcast">
+  <div class="container">
+    <div class="podcast-grid">
+      <div class="podcast-art">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        <h3>The Thoughtful Creator Podcast</h3>
+        <p>New episodes every Tuesday</p>
+      </div>
+      <div class="podcast-content">
+        <p class="label">Now Listening</p>
+        <h2>The Podcast</h2>
+        <p>Weekly conversations with creators, writers, and builders about the real work behind creative careers — no highlight reels, just honest stories.</p>
+        <div class="episode-list">
+          <div class="episode"><div class="ep-num">142</div><div><div class="ep-title">How to Ship Work You&rsquo;re Proud Of (Not Just Fast)</div><div class="ep-dur">&#128337; 48 min</div></div></div>
+          <div class="episode"><div class="ep-num">141</div><div><div class="ep-title">Building a Second Brain with Tiago Forte</div><div class="ep-dur">&#128337; 54 min</div></div></div>
+          <div class="episode"><div class="ep-num">140</div><div><div class="ep-title">The Fear Behind the Blank Page</div><div class="ep-dur">&#128337; 36 min</div></div></div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#" class="btn btn-white">Listen on Spotify</a>
+          <a href="#" class="btn btn-outline" style="color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.35)">Apple Podcasts</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nl-section" id="newsletter">
+  <div class="container">
+    <h2>The Weekly Letter</h2>
+    <p>One idea, one story, one thing worth your attention &mdash; every Thursday morning. Read in under 5 minutes.</p>
+    <div class="nl-form">
+      <input type="email" placeholder="your@email.com"/>
+      <button>Subscribe Free</button>
+    </div>
+    <div class="nl-perks">
+      <span class="nl-perk">&#10003; Free forever</span>
+      <span class="nl-perk">&#10003; No spam</span>
+      <span class="nl-perk">&#10003; Unsubscribe anytime</span>
+      <span class="nl-perk">&#10003; 8,400+ readers</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">The <span>Thoughtful</span> Creator</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">A newsletter and podcast for creative people building intentional careers. Published weekly since 2020.</p>
+      </div>
+      <div>
+        <h4>Read</h4>
+        <ul>
+          <li><a href="#blog">Latest Posts</a></li>
+          <li><a href="#topics">Topics</a></li>
+          <li><a href="#podcast">Podcast</a></li>
+          <li><a href="#">Archives</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">Work With Me</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 The Thoughtful Creator. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.3)">Template by <a href="https://sitesbymel.com" style="color:var(--purple-light)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

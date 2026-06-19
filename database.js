@@ -100,27 +100,42 @@ db.exec(`
 const count = db.prepare('SELECT COUNT(*) as n FROM products').get();
 if (count.n === 0) {
   const insert = db.prepare(`
-    INSERT INTO products (name, slug, category, description, price, active, sort_order)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO products (name, slug, category, description, price, preview_url, active, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `);
   insert.run('ServicePro Template', 'service-pro', 'Local Service Business',
     'Perfect for pressure washing, lawn care, HVAC, plumbing & more. Bold hero, services grid, gallery, reviews, and quote form.',
-    4700, 1, 1);
+    4700, '/templates/service-pro/', 1, 1);
   insert.run('TableReady Template', 'table-ready', 'Restaurant & Food',
     'Built for restaurants, food trucks, bakeries & caterers. Menu display, hours, location, photo gallery & reservation link.',
-    4700, 0, 2);
+    4700, '/templates/table-ready/', 1, 2);
   insert.run('KeyReady Template', 'key-ready', 'Real Estate Agent',
     'For realtors and property managers. Featured listings, agent bio, testimonials, and contact form.',
-    5700, 0, 3);
+    5700, '/templates/key-ready/', 1, 3);
   insert.run('ShopFront Template', 'shop-front', 'Retail & Storefront',
     'For boutiques, retail shops & local stores. Featured products, brand story, hours, location & reviews.',
-    4700, 0, 4);
+    4700, '/templates/shop-front/', 1, 4);
   insert.run('VoiceFirst Template', 'voice-first', 'Blogger & Creator',
     'For writers, podcasters & content creators. Clean blog layout, newsletter signup, about section & social links.',
-    3700, 0, 5);
+    3700, '/templates/voice-first/', 1, 5);
   insert.run('GatherHere Template', 'gather-here', 'Church & Ministry',
     'For churches, ministries & faith-based organizations. Service times, sermons, prayer requests & giving links.',
-    4700, 0, 6);
+    4700, '/templates/gather-here/', 1, 6);
 }
+
+// Activate all templates if any are still inactive from old seed
+db.prepare("UPDATE products SET active=1 WHERE active=0").run();
+
+// Backfill preview_url for existing records that don't have one
+const previewUrls = [
+  ['service-pro', '/templates/service-pro/'],
+  ['table-ready', '/templates/table-ready/'],
+  ['key-ready',   '/templates/key-ready/'],
+  ['shop-front',  '/templates/shop-front/'],
+  ['voice-first', '/templates/voice-first/'],
+  ['gather-here', '/templates/gather-here/'],
+];
+const backfill = db.prepare("UPDATE products SET preview_url=? WHERE slug=? AND (preview_url IS NULL OR preview_url='')");
+for (const [slug, url] of previewUrls) backfill.run(url, slug);
 
 module.exports = db;

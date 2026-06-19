@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>KeyReady — Real Estate Agent Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B3252;--navy-dark:#0f1f33;--gold:#C9922B;--gold-light:#e8b04a;--white:#fff;--light:#F7F9FC;--gray:#6B7280;--border:#E2E8F0;--dark:#0f1a26}
+body{font-family:'Inter',sans-serif;color:var(--navy);line-height:1.6}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600}
+a{color:var(--navy);text-decoration:none}
+img{max-width:100%}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:3px;font-family:'Inter',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;border:none;transition:all 0.2s}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-dark)}
+.btn-gold{background:var(--gold);color:var(--white)}
+.btn-gold:hover{background:#b8821f}
+.btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.6)}
+.btn-outline:hover{background:rgba(255,255,255,0.1);border-color:var(--white)}
+.btn-outline-navy{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+.btn-outline-navy:hover{background:var(--navy);color:var(--white)}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--navy)}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.88rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--navy)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--navy)}
+
+/* HERO */
+.hero{background:linear-gradient(rgba(15,26,38,0.65),rgba(15,26,38,0.65)),linear-gradient(135deg,#1B3252,#254070);color:var(--white);padding:100px 24px 80px;min-height:600px;display:flex;align-items:center}
+.hero-inner{width:100%;max-width:700px}
+.hero-label{font-size:0.75rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:16px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.15;margin-bottom:20px}
+.hero p{font-size:1.05rem;opacity:0.85;max-width:520px;margin-bottom:36px;font-weight:300}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.search-bar{background:var(--white);border-radius:4px;padding:8px;display:flex;gap:8px;margin-top:40px;max-width:560px}
+.search-bar input{flex:1;border:none;outline:none;padding:8px 12px;font-size:0.92rem;font-family:'Inter',sans-serif;color:var(--navy)}
+.search-bar select{border:none;outline:none;padding:8px 12px;font-size:0.88rem;color:var(--gray);background:var(--light);border-radius:3px;font-family:'Inter',sans-serif}
+.search-bar button{background:var(--gold);color:var(--white);border:none;padding:10px 20px;border-radius:3px;font-weight:600;font-size:0.88rem;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+
+/* STATS */
+.stats-bar{background:var(--navy);color:var(--white);padding:28px 0}
+.stats-inner{display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px}
+.stat{text-align:center}
+.stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold-light)}
+.stat span{font-size:0.8rem;opacity:0.7;letter-spacing:0.06em;text-transform:uppercase}
+
+/* LISTINGS */
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:520px;margin:0 auto}
+.gold-line{width:48px;height:2px;background:var(--gold);margin:14px auto 0}
+
+.listings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.listing-card{background:var(--white);border-radius:6px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);transition:transform 0.2s,box-shadow 0.2s}
+.listing-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.12)}
+.listing-img{height:200px;background:linear-gradient(135deg,#1B3252,#254070);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.82rem;position:relative}
+.listing-badge{position:absolute;top:14px;left:14px;background:var(--gold);color:var(--white);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:2px}
+.listing-body{padding:20px}
+.listing-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+.listing-address{font-size:0.9rem;font-weight:500;margin-bottom:4px}
+.listing-city{color:var(--gray);font-size:0.84rem;margin-bottom:14px}
+.listing-specs{display:flex;gap:16px;font-size:0.82rem;color:var(--gray);padding-top:14px;border-top:1px solid var(--border)}
+.listing-specs span{display:flex;align-items:center;gap:4px}
+
+/* AGENT BIO */
+.bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.bio-img{height:440px;background:linear-gradient(135deg,var(--navy),var(--navy-dark));border-radius:6px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.bio-img svg{opacity:0.25}
+.bio-img span{color:rgba(255,255,255,0.35);font-size:0.82rem}
+.bio-content .label{font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.bio-content h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:6px}
+.bio-content .title{color:var(--gray);font-size:0.9rem;margin-bottom:24px}
+.bio-content p{color:var(--gray);line-height:1.8;margin-bottom:16px;font-size:0.95rem}
+.bio-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0}
+.bio-stat{text-align:center;padding:16px;background:var(--light);border-radius:4px}
+.bio-stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--navy)}
+.bio-stat span{font-size:0.75rem;color:var(--gray)}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.testimonial-card{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:28px}
+.quote-mark{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--gold);line-height:1;margin-bottom:8px}
+.testimonial-card p{color:var(--gray);font-size:0.9rem;line-height:1.8;margin-bottom:20px;font-style:italic}
+.reviewer strong{display:block;font-size:0.9rem}
+.reviewer span{color:var(--gray);font-size:0.8rem}
+.stars{color:var(--gold);font-size:0.85rem;margin-bottom:12px}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.contact-info h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:16px}
+.contact-info p{color:var(--gray);line-height:1.8;margin-bottom:28px}
+.contact-detail{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px}
+.contact-icon{width:40px;height:40px;background:var(--light);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-detail strong{display:block;font-size:0.85rem;margin-bottom:2px}
+.contact-detail span{color:var(--gray);font-size:0.88rem}
+.contact-form{background:var(--light);border-radius:6px;padding:36px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.8rem;font-weight:600;margin-bottom:6px;color:var(--navy)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:3px;font-size:0.92rem;font-family:'Inter',sans-serif;outline:none;background:var(--white);transition:border 0.2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--navy)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn-full{width:100%;display:block;text-align:center;padding:13px}
+
+/* FOOTER */
+footer{background:var(--dark);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--gold)}
+footer h4{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.6);font-size:0.88rem;transition:color 0.2s}
+footer a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .search-bar{flex-direction:column}
+  .bio-grid,.contact-grid{grid-template-columns:1fr}
+  .bio-img{height:220px}
+  .footer-grid{grid-template-columns:1fr}
+  .form-2col{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Sarah <span>Mitchell</span> Realty</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#listings">Listings</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="btn btn-gold" style="padding:8px 18px;font-size:0.85rem;">Buy or Sell</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <p class="hero-label">Houston&rsquo;s Trusted Real Estate Professional</p>
+      <h1>Find Your<br/>Perfect Home</h1>
+      <p>Guiding buyers and sellers through every step with expertise, honesty, and genuine care.</p>
+      <div class="hero-btns">
+        <a href="#listings" class="btn btn-gold">View Listings</a>
+        <a href="#contact" class="btn btn-outline">Free Consultation</a>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search by city, ZIP, or neighborhood..."/>
+        <select><option>Any Price</option><option>Under $300k</option><option>$300k&ndash;$500k</option><option>$500k&ndash;$800k</option><option>$800k+</option></select>
+        <button>Search</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat"><strong>$42M+</strong><span>In Sales Volume</span></div>
+      <div class="stat"><strong>180+</strong><span>Homes Sold</span></div>
+      <div class="stat"><strong>12</strong><span>Years Experience</span></div>
+      <div class="stat"><strong>5★</strong><span>Client Rating</span></div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="listings">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Featured Properties</p>
+      <h2>Current Listings</h2>
+      <p>Carefully selected homes across Houston and surrounding areas.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="listings-grid">
+      <div class="listing-card">
+        <div class="listing-img"><span>Add property photo</span><span class="listing-badge">For Sale</span></div>
+        <div class="listing-body">
+          <div class="listing-price">$485,000</div>
+          <div class="listing-address">4218 Magnolia Creek Drive</div>
+          <div class="listing-city">Sugar Land, TX 77479</div>
+          <div class="listing-specs"><span>&#9632; 4 Beds</span><span>&#9632; 3 Baths</span><span>&#9632; 2,840 sqft</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#254070,#1B3252)"><span>Add property photo</span><span class="listing-badge">New</span></div>
+        <div class="listing-body">
+          <div class="listing-price">$319,000</div>
+          <div class="listing-address">812 Cypress Bend Court</div>
+          <div class="listing-city">Katy, TX 77450</div>
+          <div class="listing-specs"><span>&#9632; 3 Beds</span><span>&#9632; 2 Baths</span><span>&#9632; 1,960 sqft</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#1B3252,#0f1f33)"><span>Add property photo</span><span class="listing-badge">Price Reduced</span></div>
+        <div class="listing-body">
+          <div class="listing-price">$728,000</div>
+          <div class="listing-address">2901 River Oaks Boulevard</div>
+          <div class="listing-city">Houston, TX 77019</div>
+          <div class="listing-specs"><span>&#9632; 5 Beds</span><span>&#9632; 4 Baths</span><span>&#9632; 3,650 sqft</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px"><a href="#" class="btn btn-outline-navy">View All Listings</a></div>
+  </div>
+</section>
+
+<section class="section section-light" id="about">
+  <div class="container">
+    <div class="bio-grid">
+      <div class="bio-img">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Add your photo here</span>
+      </div>
+      <div class="bio-content">
+        <p class="label">About Your Agent</p>
+        <h2>Sarah Mitchell</h2>
+        <p class="title">Licensed Realtor &mdash; Greater Houston Area</p>
+        <p>With over 12 years of experience in the Houston real estate market, I've helped hundreds of families find the home that fits their life &mdash; not just their budget. I know this market inside and out.</p>
+        <p>Whether you're buying your first home, upsizing for a growing family, or selling to move on to your next chapter, I'll be with you every step of the way &mdash; with honest guidance, strong negotiation, and no pressure.</p>
+        <div class="bio-stats">
+          <div class="bio-stat"><strong>180+</strong><span>Homes Sold</span></div>
+          <div class="bio-stat"><strong>98%</strong><span>Client Satisfaction</span></div>
+          <div class="bio-stat"><strong>12 yrs</strong><span>Experience</span></div>
+        </div>
+        <a href="#contact" class="btn btn-navy">Work With Me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Client Reviews</p>
+      <h2>What My Clients Say</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="quote-mark">&ldquo;</div>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>Sarah found us the perfect home in three weeks. She listened to exactly what we needed and never pushed us toward anything outside our budget. We couldn't be happier.</p>
+        <div class="reviewer"><strong>Marcus &amp; Alicia J.</strong><span>First-time buyers &mdash; Katy, TX</span></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-mark">&ldquo;</div>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>We sold our home in 8 days over asking price. Sarah priced it perfectly, the photos were stunning, and she handled every negotiation with confidence. Truly the best.</p>
+        <div class="reviewer"><strong>Robert T.</strong><span>Home seller &mdash; Sugar Land, TX</span></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="quote-mark">&ldquo;</div>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>As a relocating buyer from out of state, I needed someone I could trust completely. Sarah made the whole process easy and kept me informed every single day. Highly recommend.</p>
+        <div class="reviewer"><strong>Christine W.</strong><span>Relocation buyer &mdash; Houston, TX</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-light" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="label" style="font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Get in Touch</p>
+        <h2>Let&rsquo;s Find Your Next Home</h2>
+        <p>Ready to buy or sell? I offer a free, no-pressure consultation. Tell me about your goals and I&rsquo;ll put together a plan that works for you.</p>
+        <div class="contact-detail"><div class="contact-icon">&#128222;</div><div><strong>Phone</strong><span>(555) 123-4567</span></div></div>
+        <div class="contact-detail"><div class="contact-icon">&#9993;</div><div><strong>Email</strong><span>sarah@mitchellrealty.com</span></div></div>
+        <div class="contact-detail"><div class="contact-icon">&#128205;</div><div><strong>Office</strong><span>1234 Main St, Suite 200<br/>Houston, TX 77002</span></div></div>
+      </div>
+      <div class="contact-form">
+        <h3 style="font-size:1.2rem;margin-bottom:20px">Send a Message</h3>
+        <form>
+          <div class="form-2col">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"/></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"/></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="jane@email.com"/></div>
+          <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 000-0000"/></div>
+          <div class="form-group"><label>I'm Looking To</label><select><option>Buy a Home</option><option>Sell My Home</option><option>Buy &amp; Sell</option><option>Just Exploring</option></select></div>
+          <div class="form-group"><label>Message</label><textarea rows="3" placeholder="Tell me about what you're looking for..."></textarea></div>
+          <button type="submit" class="btn btn-navy btn-full">Send Message &rarr;</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Sarah <span>Mitchell</span></div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">Licensed Realtor serving Houston, Katy, Sugar Land, and surrounding communities. Helping families find home since 2012.</p>
+        <a href="#contact" class="btn btn-gold" style="font-size:0.82rem;padding:9px 20px">Contact Me</a>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#listings">Current Listings</a></li>
+          <li><a href="#about">About Sarah</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:sarah@mitchellrealty.com">sarah@mitchellrealty.com</a></li>
+          <li style="color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:4px">Houston Metro Area</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Sarah Mitchell Realty. All rights reserved. Licensed in Texas.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:var(--gold)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

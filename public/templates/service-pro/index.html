@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ServicePro — Local Service Business Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#1a5c2c;--green-dark:#124020;--gold:#e8a020;--white:#fff;--light:#f5f7f5;--gray:#5a6470;--border:#e0e5e0}
+body{font-family:'Open Sans',sans-serif;color:#2a3228;line-height:1.6}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:700}
+a{color:var(--green);text-decoration:none}
+img{max-width:100%}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+nav{background:var(--green-dark);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white)}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.85);font-size:0.9rem;font-weight:600;transition:color 0.2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--green-dark)!important;padding:8px 20px;border-radius:4px;font-weight:700!important}
+.nav-cta:hover{background:#d4901a!important;color:var(--green-dark)!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 100%);color:var(--white);padding:100px 24px 80px;text-align:center}
+.hero-badge{display:inline-block;background:rgba(232,160,32,0.2);border:1px solid rgba(232,160,32,0.5);color:var(--gold);font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 16px;border-radius:100px;margin-bottom:24px}
+.hero h1{font-size:clamp(2rem,5vw,3.4rem);margin-bottom:20px;line-height:1.2}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:1.1rem;opacity:0.88;max-width:560px;margin:0 auto 36px}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 30px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.92rem;cursor:pointer;border:none;transition:all 0.2s}
+.btn-gold{background:var(--gold);color:var(--green-dark)}
+.btn-gold:hover{background:#d4901a;transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,160,32,0.4)}
+.btn-outline-white{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.6)}
+.btn-outline-white:hover{background:rgba(255,255,255,0.1);border-color:var(--white)}
+.btn-green{background:var(--green);color:var(--white)}
+.btn-green:hover{background:var(--green-dark)}
+
+/* TRUST BAR */
+.trust-bar{display:flex;gap:0;border-radius:8px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.1);margin:-32px auto 0;max-width:800px;position:relative;z-index:10}
+.trust-item{flex:1;background:var(--white);padding:24px 16px;text-align:center;border-right:1px solid var(--border)}
+.trust-item:last-child{border-right:none}
+.trust-item strong{display:block;font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:800;color:var(--green)}
+.trust-item span{font-size:0.8rem;color:var(--gray)}
+
+/* SECTIONS */
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-header{text-align:center;margin-bottom:52px}
+.section-header h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:12px}
+.section-header p{color:var(--gray);max-width:560px;margin:0 auto}
+.gold-bar{width:52px;height:4px;background:var(--gold);margin:14px auto 0;border-radius:2px}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.service-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:28px;transition:box-shadow 0.2s,transform 0.2s}
+.service-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.1);transform:translateY(-2px)}
+.service-icon{width:52px;height:52px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.service-icon svg{stroke:var(--white)}
+.service-card h3{font-size:1.05rem;margin-bottom:8px}
+.service-card p{color:var(--gray);font-size:0.9rem;line-height:1.7}
+.service-price{display:inline-block;margin-top:12px;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--green);font-size:0.95rem}
+
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.why-list{display:flex;flex-direction:column;gap:20px}
+.why-item{display:flex;gap:16px;align-items:flex-start}
+.why-check{width:28px;height:28px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.why-check svg{stroke:var(--white)}
+.why-item h4{font-size:0.95rem;margin-bottom:4px}
+.why-item p{color:var(--gray);font-size:0.88rem;line-height:1.6}
+.why-img{background:linear-gradient(135deg,var(--green),var(--green-dark));border-radius:12px;height:380px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.why-img svg{opacity:0.4}
+.why-img span{color:rgba(255,255,255,0.5);font-size:0.85rem}
+
+/* REVIEWS */
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.review-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:24px}
+.stars{color:var(--gold);font-size:1rem;margin-bottom:12px}
+.review-card p{color:var(--gray);font-size:0.9rem;line-height:1.7;margin-bottom:16px;font-style:italic}
+.reviewer strong{display:block;font-size:0.9rem}
+.reviewer span{color:var(--gray);font-size:0.82rem}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:200px 200px;gap:12px}
+.gallery-item{background:linear-gradient(135deg,var(--green),#2d8f48);border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:0.8rem}
+.gallery-item:first-child{grid-row:span 2;grid-column:span 1}
+
+/* QUOTE FORM */
+.quote-section{background:var(--green-dark);color:var(--white);padding:80px 0}
+.form-card{background:var(--white);border-radius:12px;padding:40px;max-width:640px;margin:0 auto}
+.form-card h2{color:var(--green-dark);margin-bottom:6px}
+.form-card p{color:var(--gray);font-size:0.9rem;margin-bottom:28px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;color:#2a3228}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:4px;font-size:0.92rem;font-family:'Open Sans',sans-serif;outline:none;transition:border 0.2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--green)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn-full{width:100%;display:block;text-align:center;padding:14px}
+
+/* FOOTER */
+footer{background:#0d1f12;color:rgba(255,255,255,0.75);padding:56px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--gold)}
+.footer-tagline{font-size:0.88rem;line-height:1.7;margin-bottom:16px}
+footer h4{color:var(--white);font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer ul a{color:rgba(255,255,255,0.65);font-size:0.88rem;transition:color 0.2s}
+footer ul a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--green-dark);flex-direction:column;padding:20px 24px;gap:16px}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .trust-bar{flex-direction:column;margin-top:0;border-radius:0}
+  .trust-item{border-right:none;border-bottom:1px solid var(--border)}
+  .why-grid{grid-template-columns:1fr}
+  .why-img{height:200px}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gallery-item:first-child{grid-row:span 1}
+  .footer-grid{grid-template-columns:1fr}
+  .form-2col{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Pro<span>Clean</span> Services</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#quote" class="nav-cta">Free Quote</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-badge">Licensed &amp; Insured — Houston, TX</span>
+    <h1>Your Property, <span>Spotless.</span></h1>
+    <p>Professional pressure washing, soft washing, and exterior cleaning that restores curb appeal and protects your investment.</p>
+    <div class="hero-btns">
+      <a href="#quote" class="btn btn-gold">Get a Free Quote</a>
+      <a href="#services" class="btn btn-outline-white">See Our Services</a>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="trust-bar">
+    <div class="trust-item"><strong>500+</strong><span>Jobs Completed</span></div>
+    <div class="trust-item"><strong>5★</strong><span>Google Rating</span></div>
+    <div class="trust-item"><strong>Same Day</strong><span>Quotes Available</span></div>
+    <div class="trust-item"><strong>Insured</strong><span>$1M Liability</span></div>
+  </div>
+</div>
+
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header">
+      <h2>What We Clean</h2>
+      <p>From driveways to rooftops, we handle every exterior surface with the right equipment and technique.</p>
+      <div class="gold-bar"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3>Driveway &amp; Concrete</h3>
+        <p>High-pressure cleaning removes oil stains, mold, and years of built-up grime from driveways, sidewalks, and patios.</p>
+        <span class="service-price">Starting at $99</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>House Washing</h3>
+        <p>Soft wash technique safely removes algae, mildew, and dirt from siding, brick, and stucco without damage.</p>
+        <span class="service-price">Starting at $199</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7h20L12 2z"/><path d="M2 7v2a10 10 0 0 0 20 0V7"/></svg>
+        </div>
+        <h3>Roof Cleaning</h3>
+        <p>Low-pressure soft wash removes black streaks, moss, and lichen that shorten your roof's lifespan.</p>
+        <span class="service-price">Starting at $299</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+        </div>
+        <h3>Commercial Properties</h3>
+        <p>Storefronts, parking lots, loading docks, and building exteriors. Flexible scheduling around your business hours.</p>
+        <span class="service-price">Custom Quote</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+        </div>
+        <h3>Fence &amp; Deck</h3>
+        <p>Restore wood, vinyl, and metal fencing and decking. Prep for staining or sealing, or just make it look new again.</p>
+        <span class="service-price">Starting at $149</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Gutter Cleaning</h3>
+        <p>Clear blockages, flush downspouts, and inspect for damage. Prevents water damage and foundation issues.</p>
+        <span class="service-price">Starting at $129</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-light" id="about">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-list">
+        <span class="hero-badge" style="background:rgba(26,92,44,0.1);border-color:rgba(26,92,44,0.3);color:var(--green);align-self:flex-start;margin-bottom:8px;">Why Choose Us</span>
+        <h2 style="font-size:clamp(1.5rem,3vw,2rem);margin-bottom:24px;">The Right Way, Every Time</h2>
+        <div class="why-item">
+          <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><h4>Fully Licensed &amp; Insured</h4><p>$1M general liability coverage. You're protected on every job, no exceptions.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><h4>Right Equipment for Every Surface</h4><p>Hot water, cold water, high-pressure and soft wash systems — we match the method to the material.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><h4>Upfront Pricing</h4><p>No surprise charges. Your quote is your price — we stand behind it in writing.</p></div>
+        </div>
+        <div class="why-item">
+          <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><h4>Satisfaction Guaranteed</h4><p>Not happy with the results? We'll come back and make it right — free of charge.</p></div>
+        </div>
+        <a href="#quote" class="btn btn-green" style="align-self:flex-start;margin-top:12px;">Get Your Free Quote</a>
+      </div>
+      <div class="why-img">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Add your photo here</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="gallery">
+  <div class="container">
+    <div class="section-header">
+      <h2>Before &amp; After</h2>
+      <p>Real results from real jobs. Add your own photos here.</p>
+      <div class="gold-bar"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">Photo 1</div>
+      <div class="gallery-item">Photo 2</div>
+      <div class="gallery-item">Photo 3</div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#2d8f48,#1a5c2c)">Photo 4</div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#124020,#1a5c2c)">Photo 5</div>
+    </div>
+    <p style="text-align:center;margin-top:24px;color:var(--gray);font-size:0.88rem;">Replace placeholder boxes with your before/after photos</p>
+  </div>
+</section>
+
+<section class="section section-light" id="reviews">
+  <div class="container">
+    <div class="section-header">
+      <h2>What Our Customers Say</h2>
+      <p>Hundreds of happy homeowners across the Houston area.</p>
+      <div class="gold-bar"></div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"My driveway looks brand new. They showed up on time, worked fast, and the price was exactly what they quoted. Will use again for sure."</p>
+        <div class="reviewer"><strong>Michael T.</strong><span>Homeowner — Katy, TX</span></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"The roof cleaning was incredible. Those black streaks had been there for years and now it looks like it was just installed. Highly recommend."</p>
+        <div class="reviewer"><strong>Sandra R.</strong><span>Homeowner — Sugar Land, TX</span></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"They did our storefront and parking lot. Professional crew, fast work, and our property looks so much more welcoming to customers now."</p>
+        <div class="reviewer"><strong>David K.</strong><span>Business Owner — Houston, TX</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-section" id="quote">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px;">
+      <h2 style="color:var(--white);font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:12px;">Get Your Free Quote</h2>
+      <p style="color:rgba(255,255,255,0.75);max-width:500px;margin:0 auto;">Tell us about your property and we'll get back to you within a few hours with a fast, accurate quote.</p>
+    </div>
+    <div class="form-card">
+      <h2>Request a Free Estimate</h2>
+      <p>No pressure. No obligation. Just an honest price.</p>
+      <form>
+        <div class="form-2col">
+          <div class="form-group"><label>Your Name *</label><input type="text" placeholder="John Smith" required/></div>
+          <div class="form-group"><label>Phone Number *</label><input type="tel" placeholder="(555) 000-0000" required/></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="john@email.com"/></div>
+        <div class="form-group"><label>Property Address *</label><input type="text" placeholder="123 Main St, Houston TX" required/></div>
+        <div class="form-group">
+          <label>Service Needed *</label>
+          <select required>
+            <option value="">Select a service...</option>
+            <option>Driveway / Concrete</option>
+            <option>House Washing</option>
+            <option>Roof Cleaning</option>
+            <option>Fence / Deck</option>
+            <option>Gutter Cleaning</option>
+            <option>Commercial Property</option>
+            <option>Multiple Services</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Additional Notes</label><textarea rows="3" placeholder="Describe the area, any staining issues, or special requests..."></textarea></div>
+        <button type="submit" class="btn btn-gold btn-full">Request My Free Quote &rarr;</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Pro<span>Clean</span> Services</div>
+        <p class="footer-tagline">Professional exterior cleaning for homes and businesses throughout the Houston metro area.</p>
+        <a href="#quote" class="btn btn-gold" style="font-size:0.85rem;padding:9px 20px;">Get a Free Quote</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Driveway Cleaning</a></li>
+          <li><a href="#services">House Washing</a></li>
+          <li><a href="#services">Roof Cleaning</a></li>
+          <li><a href="#services">Commercial</a></li>
+          <li><a href="#services">Gutter Cleaning</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:hello@proclean.com">hello@proclean.com</a></li>
+          <li style="color:rgba(255,255,255,0.5);font-size:0.88rem;margin-top:4px;">Mon–Sat: 7am–6pm</li>
+          <li style="color:rgba(255,255,255,0.5);font-size:0.88rem;">Houston, TX &amp; surrounding</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ProClean Services. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.4);">Template by <a href="https://sitesbymel.com" style="color:var(--gold);">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

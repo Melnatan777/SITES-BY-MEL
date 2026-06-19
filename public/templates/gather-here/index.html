@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GatherHere — Church & Ministry Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--burgundy:#6B2737;--burgundy-dark:#4a1827;--gold:#C9922B;--gold-light:#e8b04a;--cream:#FBF9F5;--white:#fff;--gray:#6B6560;--border:#E8E0D5;--dark:#1C1208;--green:#2D5016}
+body{font-family:'Source Sans 3',sans-serif;color:var(--dark);line-height:1.65}
+h1,h2,h3,h4{font-family:'Libre Baskerville',serif;font-weight:700;line-height:1.25}
+a{color:var(--burgundy);text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;border:none;transition:all 0.2s;letter-spacing:0.02em}
+.btn-burgundy{background:var(--burgundy);color:var(--white)}
+.btn-burgundy:hover{background:var(--burgundy-dark)}
+.btn-gold{background:var(--gold);color:var(--white)}
+.btn-gold:hover{background:#b8821f}
+.btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.6)}
+.btn-outline:hover{background:rgba(255,255,255,0.1);border-color:var(--white)}
+.btn-outline-dark{background:transparent;color:var(--dark);border:2px solid var(--dark)}
+.btn-outline-dark:hover{background:var(--dark);color:var(--white)}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1080px;margin:0 auto;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.nav-logo-mark{width:40px;height:40px;background:var(--burgundy);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-family:'Libre Baskerville',serif;font-size:1rem}
+.nav-logo-text{font-family:'Libre Baskerville',serif;font-size:1.1rem;font-weight:700;color:var(--dark);line-height:1.2}
+.nav-logo-sub{font-size:0.72rem;color:var(--gray);font-family:'Source Sans 3',sans-serif;font-weight:400}
+.nav-links{display:flex;gap:24px;list-style:none;align-items:center}
+.nav-links a{color:var(--dark);font-size:0.88rem;font-weight:600;transition:color 0.2s}
+.nav-links a:hover{color:var(--burgundy)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--dark)}
+
+/* HERO */
+.hero{background:linear-gradient(rgba(27,8,8,0.68),rgba(27,8,8,0.68)),linear-gradient(135deg,var(--burgundy-dark),#2a0e14);color:var(--white);padding:100px 24px 80px;text-align:center;min-height:560px;display:flex;align-items:center}
+.hero-inner{width:100%}
+.hero-cross{font-size:2.4rem;color:var(--gold-light);margin-bottom:16px;opacity:0.85}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);margin-bottom:18px;max-width:640px;margin-left:auto;margin-right:auto}
+.hero p{font-size:1.05rem;opacity:0.85;max-width:520px;margin:0 auto 36px;font-weight:300;line-height:1.8}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.service-times{margin-top:44px;display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
+.service-time{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:16px 24px;text-align:center;border-radius:4px}
+.service-time strong{display:block;font-size:0.88rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px}
+.service-time span{font-size:1rem}
+
+/* SECTION */
+.section{padding:76px 0}
+.section-cream{background:var(--cream)}
+.section-dark{background:var(--dark);color:var(--white)}
+.section-burgundy{background:var(--burgundy);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:520px;margin:0 auto}
+.section-header.white .label{color:var(--gold-light)}
+.section-header.white h2{color:var(--white)}
+.section-header.white p{color:rgba(255,255,255,0.7)}
+.gold-rule{width:56px;height:2px;background:var(--gold);margin:14px auto 0}
+
+/* WELCOME */
+.welcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.welcome-img{height:400px;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));border-radius:4px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,0.3);font-size:0.82rem}
+.welcome-text .label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.welcome-text h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:16px}
+.welcome-text p{color:var(--gray);line-height:1.85;margin-bottom:14px;font-size:0.97rem}
+.welcome-text blockquote{border-left:3px solid var(--gold);padding-left:20px;font-style:italic;font-family:'Libre Baskerville',serif;color:var(--burgundy);margin:24px 0;font-size:1rem;line-height:1.7}
+
+/* SERMONS */
+.sermons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.sermon-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:24px}
+.sermon-series{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+.sermon-card h3{font-size:1.05rem;color:var(--white);margin-bottom:8px;line-height:1.4}
+.sermon-card p{color:rgba(255,255,255,0.6);font-size:0.85rem;line-height:1.6;margin-bottom:16px}
+.sermon-meta{display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:rgba(255,255,255,0.45)}
+.sermon-meta a{color:var(--gold-light);font-weight:600;font-size:0.82rem}
+
+/* MINISTRIES */
+.min-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.min-card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:24px;text-align:center}
+.min-icon{font-size:2rem;margin-bottom:12px}
+.min-card h3{font-size:1rem;margin-bottom:8px;color:var(--dark)}
+.min-card p{color:var(--gray);font-size:0.85rem;line-height:1.6}
+.min-card a{display:inline-block;margin-top:12px;font-size:0.82rem;font-weight:700;color:var(--burgundy)}
+
+/* EVENTS */
+.events-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.event-row{display:grid;grid-template-columns:100px 1fr auto;gap:20px;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--white)}
+.event-row:last-child{border-bottom:none}
+.event-date{text-align:center;background:var(--burgundy);color:var(--white);border-radius:4px;padding:10px}
+.event-date strong{display:block;font-size:1.3rem}
+.event-date span{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.8}
+.event-info h4{font-size:0.97rem;margin-bottom:4px}
+.event-info p{color:var(--gray);font-size:0.85rem}
+.event-time{font-size:0.82rem;font-weight:700;color:var(--burgundy);white-space:nowrap}
+
+/* GIVE / PRAYER */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.give-box{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:36px;text-align:center}
+.give-box h3{font-size:1.3rem;color:var(--white);margin-bottom:12px}
+.give-box p{color:rgba(255,255,255,0.7);font-size:0.9rem;line-height:1.7;margin-bottom:24px}
+.give-box .btn{display:block;width:100%}
+
+/* PRAYER FORM */
+.prayer-form{background:var(--cream);border-radius:4px;padding:36px}
+.prayer-form h3{font-size:1.2rem;margin-bottom:16px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:0.8rem;font-weight:700;margin-bottom:5px;color:#444}
+.form-group input,.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:3px;font-size:0.92rem;font-family:'Source Sans 3',sans-serif;outline:none}
+.form-group input:focus{border-color:var(--burgundy)}
+.form-check{display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--gray)}
+
+/* FOOTER */
+footer{background:#110608;color:rgba(255,255,255,0.65);padding:60px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Libre Baskerville',serif;font-size:1.2rem;color:var(--white);margin-bottom:4px}
+.footer-sub{font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:12px}
+footer h4{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:color 0.2s}
+footer a:hover{color:var(--gold-light)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .welcome-grid,.two-col{grid-template-columns:1fr}
+  .welcome-img{height:220px}
+  .event-row{grid-template-columns:80px 1fr}
+  .event-time{display:none}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="nav-logo-mark">&#10013;</div>
+      <div>
+        <div class="nav-logo-text">Grace Community Church</div>
+        <div class="nav-logo-sub">Houston, Texas</div>
+      </div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#welcome">About</a></li>
+      <li><a href="#sermons">Sermons</a></li>
+      <li><a href="#ministries">Ministries</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#give" class="btn btn-burgundy" style="padding:8px 18px;font-size:0.85rem;">Give</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner container">
+    <div class="hero-cross">&#10013;</div>
+    <h1>You Are Welcome Here</h1>
+    <p>A community of faith rooted in grace, growing in love, and sent to serve. Wherever you are on your journey &mdash; there&rsquo;s a place for you here.</p>
+    <div class="hero-btns">
+      <a href="#welcome" class="btn btn-gold">Plan Your Visit</a>
+      <a href="#sermons" class="btn btn-outline">Watch Online</a>
+    </div>
+    <div class="service-times">
+      <div class="service-time"><strong>Sunday Services</strong><span>9:00 AM &amp; 11:00 AM</span></div>
+      <div class="service-time"><strong>Wednesday Night</strong><span>7:00 PM Bible Study</span></div>
+      <div class="service-time"><strong>Location</strong><span>1234 Elm Street, Houston TX</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="welcome">
+  <div class="container">
+    <div class="welcome-grid">
+      <div class="welcome-img">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Add church photo here</span>
+      </div>
+      <div class="welcome-text">
+        <p class="label">Welcome</p>
+        <h2>A Place to Belong</h2>
+        <p>Grace Community Church has been serving the Houston community since 1998. We believe that every person is known and loved by God &mdash; and we&rsquo;re here to help people discover that truth for themselves.</p>
+        <p>Whether you&rsquo;re returning to faith, exploring for the first time, or looking for a spiritual home, we want to walk that road with you.</p>
+        <blockquote>&ldquo;Come to me, all who are weary and burdened, and I will give you rest.&rdquo;<br/><em style="font-size:0.85rem;color:var(--gray)">Matthew 11:28</em></blockquote>
+        <a href="#" class="btn btn-burgundy" style="margin-top:8px">Plan Your Visit &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" id="sermons">
+  <div class="container">
+    <div class="section-header white">
+      <p class="label">Recent Messages</p>
+      <h2>Sermons &amp; Teaching</h2>
+      <p>Miss a Sunday? Catch up online. All messages are available to watch, listen, or read.</p>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="sermons-grid">
+      <div class="sermon-card">
+        <p class="sermon-series">Series: The Sermon on the Mount</p>
+        <h3>Blessed Are the Peacemakers</h3>
+        <p>What does it mean to pursue peace in a divided world? Pastor James explores the radical call of Matthew 5.</p>
+        <div class="sermon-meta"><span>June 8, 2025</span><a href="#">Watch &rarr;</a></div>
+      </div>
+      <div class="sermon-card">
+        <p class="sermon-series">Series: The Sermon on the Mount</p>
+        <h3>Pure in Heart</h3>
+        <p>Purity of heart isn&rsquo;t about perfection &mdash; it&rsquo;s about a whole and undivided focus on God.</p>
+        <div class="sermon-meta"><span>June 1, 2025</span><a href="#">Watch &rarr;</a></div>
+      </div>
+      <div class="sermon-card">
+        <p class="sermon-series">Series: The Sermon on the Mount</p>
+        <h3>Hunger and Thirst for Righteousness</h3>
+        <p>What does it look like to truly hunger for what God says is right? A message for our moment.</p>
+        <div class="sermon-meta"><span>May 25, 2025</span><a href="#">Watch &rarr;</a></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px"><a href="#" class="btn btn-gold">View All Sermons</a></div>
+  </div>
+</section>
+
+<section class="section section-cream" id="ministries">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Get Involved</p>
+      <h2>Ministries &amp; Groups</h2>
+      <p>There&rsquo;s a place for everyone here. Find where you belong.</p>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="min-grid">
+      <div class="min-card">
+        <div class="min-icon">&#128104;&#8205;&#128105;&#8205;&#128103;&#8205;&#128102;</div>
+        <h3>Family Ministry</h3>
+        <p>Programs for every age — nursery, kids church, and teen groups meeting weekly.</p>
+        <a href="#">Learn More &rarr;</a>
+      </div>
+      <div class="min-card">
+        <div class="min-icon">&#128218;</div>
+        <h3>Life Groups</h3>
+        <p>Small groups meeting in homes across Houston for Bible study, prayer, and community.</p>
+        <a href="#">Find a Group &rarr;</a>
+      </div>
+      <div class="min-card">
+        <div class="min-icon">&#127926;</div>
+        <h3>Worship Team</h3>
+        <p>Singers, musicians, and tech volunteers who lead our congregation into worship each week.</p>
+        <a href="#">Join the Team &rarr;</a>
+      </div>
+      <div class="min-card">
+        <div class="min-icon">&#10024;</div>
+        <h3>Outreach &amp; Serve</h3>
+        <p>Volunteering, food pantry, community events, and local missions opportunities.</p>
+        <a href="#">Get Involved &rarr;</a>
+      </div>
+      <div class="min-card">
+        <div class="min-icon">&#128148;</div>
+        <h3>Women&rsquo;s Ministry</h3>
+        <p>Bible studies, retreats, and connection events designed for women in every season of life.</p>
+        <a href="#">Learn More &rarr;</a>
+      </div>
+      <div class="min-card">
+        <div class="min-icon">&#127944;</div>
+        <h3>Men&rsquo;s Ministry</h3>
+        <p>Monthly gatherings, accountability groups, and service projects for men of all ages.</p>
+        <a href="#">Learn More &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="events">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Coming Up</p>
+      <h2>Upcoming Events</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="events-list">
+      <div class="event-row">
+        <div class="event-date"><strong>22</strong><span>Jun</span></div>
+        <div class="event-info"><h4>Men&rsquo;s Breakfast</h4><p>Fellowship Hall &mdash; All men welcome. No RSVP required.</p></div>
+        <div class="event-time">8:00 AM</div>
+      </div>
+      <div class="event-row">
+        <div class="event-date" style="background:var(--gold)"><strong>29</strong><span>Jun</span></div>
+        <div class="event-info"><h4>Summer Family Picnic</h4><p>Grace Community Park &mdash; Bring a dish to share. Games for all ages.</p></div>
+        <div class="event-time">12:00 PM</div>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><strong>12</strong><span>Jul</span></div>
+        <div class="event-info"><h4>Women&rsquo;s Retreat Registration Opens</h4><p>Annual weekend retreat &mdash; Limited spots available.</p></div>
+        <div class="event-time">Online</div>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><strong>19</strong><span>Jul</span></div>
+        <div class="event-info"><h4>Baptism Sunday</h4><p>Main Auditorium &mdash; Contact the office to sign up.</p></div>
+        <div class="event-time">Both Services</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px"><a href="#" class="btn btn-outline-dark">View Full Calendar</a></div>
+  </div>
+</section>
+
+<section class="section section-burgundy" id="give">
+  <div class="container">
+    <div class="two-col">
+      <div class="give-box">
+        <div style="font-size:2rem;margin-bottom:12px">&#128141;</div>
+        <h3>Give Online</h3>
+        <p>Your generosity makes ministry possible. Give securely online &mdash; one-time or recurring. Every gift makes a difference in our community and beyond.</p>
+        <a href="#" class="btn btn-gold">Give Now &rarr;</a>
+        <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:16px">Secure giving via Stripe. Receipt emailed automatically.</p>
+      </div>
+      <div class="prayer-form">
+        <h3>Submit a Prayer Request</h3>
+        <p style="color:var(--gray);font-size:0.88rem;margin-bottom:20px">Our pastoral team prays over every request received.</p>
+        <form>
+          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Smith"/></div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="jane@email.com"/></div>
+          <div class="form-group"><label>Prayer Request</label><textarea rows="4" placeholder="Share what&apos;s on your heart..."></textarea></div>
+          <label class="form-check" style="margin-bottom:16px"><input type="checkbox" style="margin-right:4px"/> Keep my request confidential</label>
+          <button type="submit" class="btn btn-burgundy" style="width:100%;display:block;text-align:center;padding:13px">Submit Request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Grace Community Church</div>
+        <div class="footer-sub">Houston, Texas &mdash; Est. 1998</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:8px">1234 Elm Street, Houston TX 77002<br/><a href="tel:5551234567">(555) 123-4567</a> &nbsp;&bull;&nbsp; <a href="mailto:info@gracecchouston.com">info@gracecchouston.com</a></p>
+        <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:8px">Sun 9am &amp; 11am &nbsp;&bull;&nbsp; Wed 7pm</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#welcome">About Us</a></li>
+          <li><a href="#sermons">Sermons</a></li>
+          <li><a href="#ministries">Ministries</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#give">Give</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">Prayer Request</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Grace Community Church. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.3)">Template by <a href="https://sitesbymel.com" style="color:var(--gold-light)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

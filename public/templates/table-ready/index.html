@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TableReady — Restaurant & Food Business Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#8B1A1A;--red-dark:#5c1010;--gold:#c9922b;--cream:#faf7f2;--white:#fff;--gray:#6b6560;--border:#e8e0d5;--dark:#1a1208}
+body{font-family:'Lato',sans-serif;color:var(--dark);line-height:1.6}
+h1,h2,h3,h4{font-family:'Playfair Display',serif}
+a{color:var(--red);text-decoration:none}
+img{max-width:100%}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:2px;font-family:'Lato',sans-serif;font-weight:700;font-size:0.92rem;cursor:pointer;border:none;transition:all 0.2s;letter-spacing:0.05em;text-transform:uppercase}
+.btn-red{background:var(--red);color:var(--white)}
+.btn-red:hover{background:var(--red-dark)}
+.btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.7)}
+.btn-outline:hover{background:rgba(255,255,255,0.1);border-color:var(--white)}
+.btn-gold{background:var(--gold);color:var(--white)}
+.btn-gold:hover{background:#b8821f}
+
+/* NAV */
+nav{background:var(--dark);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white)}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.8);font-size:0.88rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--gold)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white)}
+
+/* HERO */
+.hero{background:linear-gradient(rgba(26,18,8,0.72),rgba(26,18,8,0.72)),linear-gradient(135deg,#3d1a08,#1a1208);color:var(--white);padding:120px 24px 100px;text-align:center;min-height:580px;display:flex;align-items:center}
+.hero-inner{width:100%}
+.hero-subtitle{font-size:0.82rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.hero h1{font-size:clamp(2.4rem,6vw,4rem);margin-bottom:20px;line-height:1.15}
+.hero p{font-size:1.1rem;opacity:0.85;max-width:500px;margin:0 auto 36px;font-weight:300}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.hero-hours{margin-top:40px;font-size:0.85rem;color:rgba(255,255,255,0.6);letter-spacing:0.06em}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:16px;padding:24px 0}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-icon{color:var(--gold);font-size:1.2rem}
+
+/* MENU */
+.section{padding:80px 0}
+.section-cream{background:var(--cream)}
+.section-dark{background:var(--dark);color:var(--white)}
+.section-header{text-align:center;margin-bottom:52px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:500px;margin:0 auto}
+.section-header .sub{font-size:0.78rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.gold-rule{width:60px;height:2px;background:var(--gold);margin:16px auto 0}
+
+.menu-cats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.menu-cat-btn{padding:8px 20px;border:2px solid var(--border);border-radius:2px;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:var(--dark);transition:all 0.2s;font-family:'Lato',sans-serif}
+.menu-cat-btn.active,.menu-cat-btn:hover{background:var(--red);border-color:var(--red);color:var(--white)}
+
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0}
+.menu-item{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--border);gap:16px}
+.menu-item-info h4{font-size:1rem;margin-bottom:4px}
+.menu-item-info p{color:var(--gray);font-size:0.85rem;line-height:1.5}
+.menu-item-price{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--red);white-space:nowrap;padding-top:2px}
+
+/* SPECIALS */
+.specials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.special-card{background:var(--white);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.special-img{height:180px;background:linear-gradient(135deg,#8B1A1A,#c9922b);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:0.82rem}
+.special-body{padding:20px}
+.special-tag{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.special-body h3{font-size:1.1rem;margin-bottom:6px}
+.special-body p{color:var(--gray);font-size:0.88rem;line-height:1.6}
+.special-price{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--red);margin-top:10px}
+
+/* INFO */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border)}
+.info-block{padding:40px 32px;text-align:center;border-right:1px solid var(--border)}
+.info-block:last-child{border-right:none}
+.info-icon{font-size:2rem;margin-bottom:12px}
+.info-block h3{font-size:1.1rem;margin-bottom:10px}
+.info-block p{color:var(--gray);font-size:0.88rem;line-height:1.7}
+
+/* RESERVATION */
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.res-text h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:16px;color:var(--white)}
+.res-text p{color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:24px}
+.res-form{background:var(--white);border-radius:4px;padding:36px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;color:#444}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:2px;font-size:0.92rem;font-family:'Lato',sans-serif;outline:none;transition:border 0.2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--red)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn-full{width:100%;display:block;text-align:center;padding:14px}
+
+/* FOOTER */
+footer{background:#0d0a04;color:rgba(255,255,255,0.65);padding:60px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--gold)}
+footer h4{font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.6);font-size:0.88rem;transition:color 0.2s}
+footer a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:72px;left:0;right:0;background:var(--dark);flex-direction:column;padding:20px 24px;gap:16px}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .info-grid{grid-template-columns:1fr}
+  .info-block{border-right:none;border-bottom:1px solid var(--border)}
+  .res-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .form-2col{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">La <span>Mesa</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#specials">Specials</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#reserve">Reserve</a></li>
+      <li><a href="#reserve" style="color:var(--gold)">Order Online</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner container">
+    <p class="hero-subtitle">Authentic Cuisine &mdash; Houston, TX</p>
+    <h1>Where Every Meal<br/>Tells a Story</h1>
+    <p>Fresh ingredients, family recipes, and a dining experience you'll want to return to again and again.</p>
+    <div class="hero-btns">
+      <a href="#reserve" class="btn btn-red">Reserve a Table</a>
+      <a href="#menu" class="btn btn-outline">View Our Menu</a>
+    </div>
+    <p class="hero-hours">Open Tue&ndash;Sun &nbsp;|&nbsp; Lunch 11am&ndash;3pm &nbsp;|&nbsp; Dinner 5pm&ndash;10pm</p>
+  </div>
+</section>
+
+<section class="section" id="menu">
+  <div class="container">
+    <div class="section-header">
+      <p class="sub">Our Menu</p>
+      <h2>Made Fresh Daily</h2>
+      <p>Locally sourced ingredients, prepared from scratch every morning.</p>
+      <div class="gold-rule"></div>
+    </div>
+
+    <div class="menu-cats">
+      <button class="menu-cat-btn active">Starters</button>
+      <button class="menu-cat-btn">Entrees</button>
+      <button class="menu-cat-btn">Sides</button>
+      <button class="menu-cat-btn">Desserts</button>
+      <button class="menu-cat-btn">Drinks</button>
+    </div>
+
+    <div class="menu-grid">
+      <div style="padding-right:32px">
+        <div class="menu-item"><div class="menu-item-info"><h4>Roasted Tomato Soup</h4><p>Fire-roasted tomatoes, fresh basil, house-made croutons</p></div><div class="menu-item-price">$9</div></div>
+        <div class="menu-item"><div class="menu-item-info"><h4>Crispy Calamari</h4><p>Lemon aioli, marinara, fresh parsley</p></div><div class="menu-item-price">$14</div></div>
+        <div class="menu-item"><div class="menu-item-info"><h4>Charcuterie Board</h4><p>Seasonal meats, aged cheeses, local honey, crostini</p></div><div class="menu-item-price">$22</div></div>
+        <div class="menu-item"><div class="menu-item-info"><h4>Bruschetta Classica</h4><p>Heirloom tomatoes, fresh mozzarella, balsamic glaze</p></div><div class="menu-item-price">$12</div></div>
+      </div>
+      <div>
+        <div class="menu-item"><div class="menu-item-info"><h4>Shrimp Cocktail</h4><p>Chilled gulf shrimp, house cocktail sauce, lemon</p></div><div class="menu-item-price">$16</div></div>
+        <div class="menu-item"><div class="menu-item-info"><h4>Caesar Salad</h4><p>Romaine, house dressing, parmesan, anchovy optional</p></div><div class="menu-item-price">$13</div></div>
+        <div class="menu-item"><div class="menu-item-info"><h4>Spinach &amp; Artichoke Dip</h4><p>Warm, served with toasted pita and fresh vegetables</p></div><div class="menu-item-price">$11</div></div>
+        <div class="menu-item"><div class="menu-item-info"><h4>Beef Empanadas</h4><p>House-spiced ground beef, peppers, onions &mdash; 4 per order</p></div><div class="menu-item-price">$13</div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <a href="#" class="btn btn-red">View Full Menu</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-cream" id="specials">
+  <div class="container">
+    <div class="section-header">
+      <p class="sub">Chef's Picks</p>
+      <h2>Weekly Specials</h2>
+      <p>New featured dishes every week — always worth coming back for.</p>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="specials-grid">
+      <div class="special-card">
+        <div class="special-img">Add food photo here</div>
+        <div class="special-body">
+          <p class="special-tag">Tuesday Special</p>
+          <h3>Pan-Seared Salmon</h3>
+          <p>Wild-caught salmon, lemon caper butter, roasted asparagus, herb risotto.</p>
+          <p class="special-price">$28</p>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="special-img" style="background:linear-gradient(135deg,#5c1010,#8B1A1A)">Add food photo here</div>
+        <div class="special-body">
+          <p class="special-tag">Weekend Special</p>
+          <h3>Braised Short Rib</h3>
+          <p>12-hour braised prime rib, red wine reduction, truffle mashed potatoes.</p>
+          <p class="special-price">$36</p>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="special-img" style="background:linear-gradient(135deg,#c9922b,#8B1A1A)">Add food photo here</div>
+        <div class="special-body">
+          <p class="special-tag">Happy Hour Daily 3&ndash;6pm</p>
+          <h3>House Margarita + Tacos</h3>
+          <p>Two house margaritas and a trio of street tacos — the perfect afternoon combo.</p>
+          <p class="special-price">$22</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <div class="divider"><div class="divider-line"></div><div class="divider-icon">&#10022;</div><div class="divider-line"></div></div>
+    <div class="info-grid">
+      <div class="info-block">
+        <div class="info-icon">&#128205;</div>
+        <h3>Find Us</h3>
+        <p>1234 Main Street<br/>Houston, TX 77002<br/><br/><a href="#">Get Directions &rarr;</a></p>
+      </div>
+      <div class="info-block">
+        <div class="info-icon">&#128336;</div>
+        <h3>Hours</h3>
+        <p>Tuesday &ndash; Thursday<br/>11am &ndash; 9pm<br/><br/>Friday &ndash; Sunday<br/>11am &ndash; 10pm</p>
+      </div>
+      <div class="info-block">
+        <div class="info-icon">&#128222;</div>
+        <h3>Contact</h3>
+        <p><a href="tel:5551234567">(555) 123-4567</a><br/><a href="mailto:hello@lamesa.com">hello@lamesa.com</a><br/><br/>Walk-ins welcome</p>
+      </div>
+    </div>
+    <div class="divider"><div class="divider-line"></div><div class="divider-icon">&#10022;</div><div class="divider-line"></div></div>
+  </div>
+</section>
+
+<section class="section section-dark" id="reserve">
+  <div class="container">
+    <div class="res-grid">
+      <div class="res-text">
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Reservations</p>
+        <h2>Join Us for Dinner</h2>
+        <p>Reserve your table online and we'll have everything ready when you arrive. Large party? Call us directly and we'll take care of you.</p>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.88rem;margin-top:16px">&#128222; (555) 123-4567 for parties of 8+</p>
+      </div>
+      <div class="res-form">
+        <h3 style="font-family:'Playfair Display',serif;margin-bottom:20px;font-size:1.2rem">Make a Reservation</h3>
+        <form>
+          <div class="form-2col">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"/></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"/></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="jane@email.com"/></div>
+          <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 000-0000"/></div>
+          <div class="form-2col">
+            <div class="form-group"><label>Date</label><input type="date"/></div>
+            <div class="form-group"><label>Time</label><select><option>5:00 PM</option><option>5:30 PM</option><option>6:00 PM</option><option>6:30 PM</option><option>7:00 PM</option><option>7:30 PM</option><option>8:00 PM</option></select></div>
+          </div>
+          <div class="form-group"><label>Party Size</label><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7+</option></select></div>
+          <div class="form-group"><label>Special Requests</label><textarea rows="2" placeholder="Dietary needs, anniversary, etc."></textarea></div>
+          <button type="submit" class="btn btn-red btn-full">Reserve My Table &rarr;</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">La <span>Mesa</span></div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">Authentic cuisine crafted with fresh ingredients and family tradition. Serving Houston since 2015.</p>
+        <a href="#reserve" class="btn btn-gold" style="font-size:0.82rem;padding:9px 20px">Reserve a Table</a>
+      </div>
+      <div>
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="#menu">Starters</a></li>
+          <li><a href="#menu">Entrees</a></li>
+          <li><a href="#menu">Desserts</a></li>
+          <li><a href="#specials">Daily Specials</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit Us</h4>
+        <ul>
+          <li><a href="#">1234 Main St, Houston TX</a></li>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li style="color:rgba(255,255,255,0.45);font-size:0.88rem;margin-top:4px">Tue&ndash;Thu: 11am&ndash;9pm</li>
+          <li style="color:rgba(255,255,255,0.45);font-size:0.88rem">Fri&ndash;Sun: 11am&ndash;10pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 La Mesa Restaurant. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:var(--gold)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
