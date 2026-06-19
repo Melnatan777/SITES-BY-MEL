@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing Guide — Sites by Mel Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .pg-section { background:#fff; border:1px solid #E5E0D8; border-radius:10px; margin-bottom:24px; overflow:hidden; }
+    .pg-section-head { background:#1B2F4E; color:#fff; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; }
+    .pg-section-head h2 { font-size:1rem; font-weight:700; }
+    .pg-section-head .price-tag { background:#C9922B; color:#fff; font-size:0.85rem; font-weight:700; padding:4px 14px; border-radius:100px; }
+    .pg-body { padding:24px; }
+    .pg-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px; }
+    .pg-grid-2 { grid-template-columns:1fr 1fr; }
+    .pg-stat { background:#F4F2EE; border-radius:8px; padding:14px 16px; }
+    .pg-stat-label { font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#6B7280; margin-bottom:4px; }
+    .pg-stat-value { font-size:1.1rem; font-weight:700; color:#1B2F4E; }
+    .pg-stat.gold .pg-stat-value { color:#C9922B; }
+    .pg-stat.green .pg-stat-value { color:#1a7a3c; }
+    .step-list { display:flex; flex-direction:column; gap:0; }
+    .step { display:flex; gap:16px; align-items:flex-start; padding:12px 0; border-bottom:1px solid #F4F2EE; }
+    .step:last-child { border-bottom:none; }
+    .step-num { width:28px; height:28px; border-radius:50%; background:#1B2F4E; color:#fff; font-size:0.78rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+    .step-num.gold { background:#C9922B; }
+    .step-title { font-size:0.9rem; font-weight:600; margin-bottom:2px; }
+    .step-desc { font-size:0.82rem; color:#6B7280; line-height:1.5; }
+    .tool-tag { display:inline-block; background:#e8f0fe; color:#1a56a8; font-size:0.72rem; font-weight:600; padding:2px 8px; border-radius:4px; margin:2px 2px 0 0; }
+    .tool-tag.free { background:#e6f4ec; color:#1a7a3c; }
+    .tool-tag.paid { background:#fdf0ed; color:#922b21; }
+    .note-box { background:#fdf6e3; border:1px solid #e8d5a3; border-radius:6px; padding:14px 16px; font-size:0.85rem; color:#7d5a00; line-height:1.6; margin-top:16px; }
+    .cost-table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+    .cost-table th { text-align:left; font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#6B7280; padding:8px 12px; border-bottom:2px solid #E5E0D8; }
+    .cost-table td { padding:10px 12px; border-bottom:1px solid #F4F2EE; vertical-align:top; }
+    .cost-table tr:last-child td { border-bottom:none; }
+    .cost-table .price { font-weight:700; color:#1B2F4E; white-space:nowrap; }
+    .cost-table .your-cost { color:#c0392b; font-weight:600; white-space:nowrap; }
+    .cost-table .profit { color:#1a7a3c; font-weight:700; white-space:nowrap; }
+    .cms-feature { display:flex; gap:10px; padding:10px 0; border-bottom:1px solid #F4F2EE; align-items:flex-start; }
+    .cms-feature:last-child { border-bottom:none; }
+    .cms-check { color:#1a7a3c; font-weight:700; font-size:0.9rem; margin-top:1px; }
+    .cms-feature-text strong { display:block; font-size:0.88rem; margin-bottom:2px; }
+    .cms-feature-text span { font-size:0.8rem; color:#6B7280; line-height:1.5; }
+    .divider-label { font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#9CA3AF; margin:20px 0 10px; }
+    @media(max-width:900px) { .pg-grid { grid-template-columns:1fr 1fr; } }
+    @media(max-width:600px) { .pg-grid, .pg-grid-2 { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'pricing' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Pricing &amp; Services Guide</h1>
+      <span style="font-size:0.82rem;color:#6B7280;">Your internal reference — what each service includes and what to charge</span>
+    </div>
+    <div class="admin-content">
+
+      <!-- YOUR MONTHLY COSTS -->
+      <div class="pg-section">
+        <div class="pg-section-head">
+          <h2>Your Monthly Business Costs</h2>
+          <span class="price-tag">Know your overhead</span>
+        </div>
+        <div class="pg-body">
+          <div class="pg-grid">
+            <div class="pg-stat">
+              <div class="pg-stat-label">Claude Pro / API</div>
+              <div class="pg-stat-value">~$20–$60/mo</div>
+            </div>
+            <div class="pg-stat">
+              <div class="pg-stat-label">Railway (sitesbymel.com)</div>
+              <div class="pg-stat-value">~$5–$10/mo</div>
+            </div>
+            <div class="pg-stat">
+              <div class="pg-stat-label">Resend (email)</div>
+              <div class="pg-stat-value">Free tier</div>
+            </div>
+            <div class="pg-stat">
+              <div class="pg-stat-label">Stripe fees (per sale)</div>
+              <div class="pg-stat-value">2.9% + $0.30</div>
+            </div>
+            <div class="pg-stat">
+              <div class="pg-stat-label">GitHub</div>
+              <div class="pg-stat-value">Free</div>
+            </div>
+            <div class="pg-stat">
+              <div class="pg-stat-label">Cloudflare Pages</div>
+              <div class="pg-stat-value">Free</div>
+            </div>
+          </div>
+          <div class="note-box">
+            Every project you complete needs to cover a portion of these costs PLUS your time. A $20/mo Claude subscription across 3 projects = ~$7/project. Factor in your time at whatever hourly rate you decide on (suggest $50–$75/hr to start).
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 1: DIY TEMPLATE -->
+      <div class="pg-section">
+        <div class="pg-section-head">
+          <h2>Tier 1 — DIY Template Download</h2>
+          <span class="price-tag">$197 suggested</span>
+        </div>
+        <div class="pg-body">
+          <div class="pg-grid">
+            <div class="pg-stat">
+              <div class="pg-stat-label">Your time (ongoing)</div>
+              <div class="pg-stat-value">0 hrs after built</div>
+            </div>
+            <div class="pg-stat gold">
+              <div class="pg-stat-label">Suggested price</div>
+              <div class="pg-stat-value">$197</div>
+            </div>
+            <div class="pg-stat green">
+              <div class="pg-stat-label">Profit per sale (after Stripe)</div>
+              <div class="pg-stat-value">~$191</div>
+            </div>
+          </div>
+
+          <div class="divider-label">What the customer gets</div>
+          <div class="step-list">
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>Complete niche website — not just a homepage</strong><span>Hero section, services/menu/product grid, about, gallery or portfolio, reviews, contact form, footer. Mobile-responsive and fast-loading.</span></div></div>
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>HTML + CSS files they own forever</strong><span>No Squarespace. No monthly platform fee. They download a zip, open the files, edit their text and images.</span></div></div>
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>Customization guide</strong><span>Simple instructions for swapping logo, colors, text, and photos.</span></div></div>
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>48-hour download link</strong><span>Delivered automatically via Stripe after purchase.</span></div></div>
+          </div>
+
+          <div class="divider-label">Tools involved</div>
+          <span class="tool-tag free">GitHub (free)</span>
+          <span class="tool-tag free">Cloudflare Pages (free hosting)</span>
+          <span class="tool-tag paid">Stripe (2.9% + $0.30/sale)</span>
+          <span class="tool-tag free">Client buys their own domain (~$12/yr)</span>
+        </div>
+      </div>
+
+      <!-- TIER 2: DONE FOR YOU -->
+      <div class="pg-section">
+        <div class="pg-section-head">
+          <h2>Tier 2 — Done-For-You HTML Site</h2>
+          <span class="price-tag">$797 total / $300 deposit</span>
+        </div>
+        <div class="pg-body">
+          <div class="pg-grid">
+            <div class="pg-stat">
+              <div class="pg-stat-label">Your time per project</div>
+              <div class="pg-stat-value">4–6 hours</div>
+            </div>
+            <div class="pg-stat gold">
+              <div class="pg-stat-label">Total price</div>
+              <div class="pg-stat-value">$797</div>
+            </div>
+            <div class="pg-stat green">
+              <div class="pg-stat-label">Effective hourly rate</div>
+              <div class="pg-stat-value">~$130/hr</div>
+            </div>
+          </div>
+
+          <div class="divider-label">What you do (step by step)</div>
+          <div class="step-list">
+            <div class="step"><div class="step-num">1</div><div><div class="step-title">Client pays $300 deposit via Stripe</div><div class="step-desc">Stripe collects it, you get notified. This confirms they're serious.</div></div></div>
+            <div class="step"><div class="step-num">2</div><div><div class="step-title">Collect their content</div><div class="step-desc">Logo, photos, business name, phone, hours, services list, any text they have. Use a simple Google Form or email.</div></div></div>
+            <div class="step"><div class="step-num">3</div><div><div class="step-title">Customize the template with Claude's help</div><div class="step-desc">Swap their colors, logo, text, and photos into the chosen template. Claude helps write copy if they don't have it.</div></div></div>
+            <div class="step"><div class="step-num">4</div><div><div class="step-title">Create GitHub repo + deploy to Cloudflare Pages</div><div class="step-desc">New GitHub repo for their project → connect to Cloudflare Pages → live preview URL within minutes.</div></div></div>
+            <div class="step"><div class="step-num">5</div><div><div class="step-title">Send preview link for approval</div><div class="step-desc">They review, you make any small adjustments. One round of revisions included.</div></div></div>
+            <div class="step"><div class="step-num">6</div><div><div class="step-num gold">6</div></div></div>
+            <div class="step"><div class="step-num gold">6</div><div><div class="step-title">Point their domain to Cloudflare — collect $497 balance</div><div class="step-desc">2 DNS records in their domain registrar. Takes 5 minutes. Propagates in 0–24 hours. Collect balance at delivery.</div></div></div>
+          </div>
+
+          <div class="divider-label">Tools involved</div>
+          <span class="tool-tag free">GitHub (free)</span>
+          <span class="tool-tag free">Cloudflare Pages (free)</span>
+          <span class="tool-tag paid">Stripe (2.9% + $0.30)</span>
+          <span class="tool-tag">Client's domain registrar (GoDaddy, Namecheap, etc.)</span>
+
+          <div class="note-box">
+            The client can also host on Cloudflare Pages free — no server costs for them ever. Their only ongoing cost is ~$12/yr for the domain.
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 3: FULL CMS -->
+      <div class="pg-section">
+        <div class="pg-section-head">
+          <h2>Tier 3 — Full CMS Site with Admin Dashboard</h2>
+          <span class="price-tag">$1,500–$3,500</span>
+        </div>
+        <div class="pg-body">
+          <div class="pg-grid">
+            <div class="pg-stat">
+              <div class="pg-stat-label">Your time per project</div>
+              <div class="pg-stat-value">15–40 hours</div>
+            </div>
+            <div class="pg-stat gold">
+              <div class="pg-stat-label">Price range</div>
+              <div class="pg-stat-value">$1,500–$3,500</div>
+            </div>
+            <div class="pg-stat green">
+              <div class="pg-stat-label">Deposit to start</div>
+              <div class="pg-stat-value">50% upfront</div>
+            </div>
+          </div>
+
+          <div class="divider-label">The full tech stack (what you build)</div>
+          <table class="cost-table">
+            <thead><tr><th>Layer</th><th>Technology</th><th>What It Does</th><th>Client Cost</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Server</strong></td><td>Node.js + Express</td><td>Handles every page request, form, and login</td><td class="price">Free</td></tr>
+              <tr><td><strong>Pages</strong></td><td>EJS templates</td><td>HTML pages rendered server-side with real data</td><td class="price">Free</td></tr>
+              <tr><td><strong>Database</strong></td><td>SQLite</td><td>Stores all content, leads, orders, users</td><td class="price">Free</td></tr>
+              <tr><td><strong>Payments</strong></td><td>Stripe</td><td>Online checkout if they sell anything</td><td class="price">2.9% + $0.30</td></tr>
+              <tr><td><strong>Email</strong></td><td>Resend</td><td>Notifies them when forms are submitted</td><td class="price">Free–$20/mo</td></tr>
+              <tr><td><strong>Auth</strong></td><td>express-session</td><td>Password-protected admin login</td><td class="price">Free</td></tr>
+              <tr><td><strong>Hosting</strong></td><td>Railway</td><td>Runs the Node.js server 24/7</td><td class="price">~$5–$10/mo</td></tr>
+              <tr><td><strong>Code storage</strong></td><td>GitHub</td><td>Version control, triggers auto-deploys</td><td class="price">Free</td></tr>
+              <tr><td><strong>Domain/DNS</strong></td><td>Cloudflare</td><td>Points domain to Railway, free SSL</td><td class="price">Free</td></tr>
+            </tbody>
+          </table>
+
+          <div class="divider-label">What the admin dashboard includes</div>
+          <div class="step-list">
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>Content management</strong><span>Edit pages, services, blog posts, images without touching code.</span></div></div>
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>Leads &amp; inquiries inbox</strong><span>Every contact form and quote request stored, searchable, with status tracking (new / replied / closed).</span></div></div>
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>Orders &amp; payments</strong><span>If they sell anything — every order, payment status, customer email, and revenue total.</span></div></div>
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>Password-protected login</strong><span>Only they can access it. Session-based auth, no third-party login required.</span></div></div>
+            <div class="cms-feature"><span class="cms-check">✓</span><div class="cms-feature-text"><strong>Email notifications</strong><span>Auto-email to client when someone submits a form or places an order.</span></div></div>
+          </div>
+
+          <div class="note-box">
+            <strong>Real example: Enduring Branches.</strong> That site has a blog, sermon archive, store with Stripe, prayer requests, a giving/donation section, and a full admin panel managing all of it. That is a Tier 3 build. It runs on Railway for ~$7/month. The client owns every file.
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 4: DATA ANALYTICS ADD-ON -->
+      <div class="pg-section">
+        <div class="pg-section-head">
+          <h2>Tier 4 — Data Analytics Dashboard (Add-On to CMS)</h2>
+          <span class="price-tag">+$400–$800 on top of Tier 3</span>
+        </div>
+        <div class="pg-body">
+          <div class="pg-grid">
+            <div class="pg-stat">
+              <div class="pg-stat-label">Your time (add-on)</div>
+              <div class="pg-stat-value">8–15 hours</div>
+            </div>
+            <div class="pg-stat gold">
+              <div class="pg-stat-label">Add-on price</div>
+              <div class="pg-stat-value">$400–$800</div>
+            </div>
+            <div class="pg-stat green">
+              <div class="pg-stat-label">This is SEPARATE from CMS</div>
+              <div class="pg-stat-value">Quote it alone</div>
+            </div>
+          </div>
+
+          <p style="font-size:0.88rem;color:#6B7280;margin-bottom:16px;line-height:1.6;">This is not included in the CMS build. It is a separate deliverable — an analytics section inside the admin dashboard that reads from their own database and shows them business metrics in plain English.</p>
+
+          <div class="divider-label">What you build for this add-on</div>
+          <div class="step-list">
+            <div class="step"><div class="step-num gold">1</div><div><div class="step-title">Visitor tracking script</div><div class="step-desc">A small script embedded on every page that records: page URL, timestamp, referrer (Google, Facebook, direct, etc.). Stored in a <code>page_views</code> table in their SQLite database. No Google Analytics needed.</div></div></div>
+            <div class="step"><div class="step-num gold">2</div><div><div class="step-title">Lead analytics</div><div class="step-desc">Queries the existing <code>quotes</code> table: total leads this week/month, how many replied, conversion rate, busiest day for inquiries.</div></div></div>
+            <div class="step"><div class="step-num gold">3</div><div><div class="step-title">Revenue reporting</div><div class="step-desc">Queries the <code>orders</code> table: revenue by week/month, average order value, top products, week-over-week comparison.</div></div></div>
+            <div class="step"><div class="step-num gold">4</div><div><div class="step-title">Custom KPI dashboard page</div><div class="step-desc">One admin page that shows all of the above in number cards and simple bar charts. Built with Chart.js or pure CSS bars — no heavy libraries needed.</div></div></div>
+          </div>
+
+          <div class="divider-label">Example of what the client sees</div>
+          <div style="background:#1B2F4E;border-radius:8px;padding:20px;margin-top:8px;">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;">
+              <div style="background:rgba(255,255,255,0.07);border-radius:6px;padding:12px;"><div style="color:rgba(255,255,255,0.4);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;">Revenue (30d)</div><div style="color:#fff;font-size:1.3rem;font-weight:700;margin-top:4px;">$4,820</div><div style="color:#4ade80;font-size:0.72rem;margin-top:3px;">▲ 18% vs last month</div></div>
+              <div style="background:rgba(255,255,255,0.07);border-radius:6px;padding:12px;"><div style="color:rgba(255,255,255,0.4);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;">New Leads</div><div style="color:#fff;font-size:1.3rem;font-weight:700;margin-top:4px;">34</div><div style="color:#4ade80;font-size:0.72rem;margin-top:3px;">▲ 6 more than last month</div></div>
+              <div style="background:rgba(255,255,255,0.07);border-radius:6px;padding:12px;"><div style="color:rgba(255,255,255,0.4);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;">Site Visitors</div><div style="color:#fff;font-size:1.3rem;font-weight:700;margin-top:4px;">1,204</div><div style="color:rgba(255,255,255,0.4);font-size:0.72rem;margin-top:3px;">Avg 2m 14s on site</div></div>
+              <div style="background:rgba(255,255,255,0.07);border-radius:6px;padding:12px;"><div style="color:rgba(255,255,255,0.4);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;">Top Page</div><div style="color:#fff;font-size:1rem;font-weight:600;margin-top:4px;">/services</div><div style="color:rgba(255,255,255,0.4);font-size:0.72rem;margin-top:3px;">412 visits · 38% converted</div></div>
+            </div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.3);text-align:center;font-style:italic;">This is what you build for the client's admin dashboard — their real data, not generic Google metrics</div>
+          </div>
+
+          <div class="note-box" style="margin-top:16px;">
+            <strong>Important:</strong> Always quote this separately from the CMS build. Say: "I can also add a data analytics dashboard to your admin panel — that's an additional $X and I can build it after the main site is live." This protects your time and gives you a clear upsell path on every CMS project.
+          </div>
+        </div>
+      </div>
+
+      <!-- PRICING SUMMARY TABLE -->
+      <div class="pg-section">
+        <div class="pg-section-head">
+          <h2>Quick Reference — What to Charge</h2>
+          <span class="price-tag">Your price sheet</span>
+        </div>
+        <div class="pg-body">
+          <table class="cost-table">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Your Time</th>
+                <th>Your Cost (est.)</th>
+                <th>Charge</th>
+                <th>Profit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>DIY Template</strong><br><span style="font-size:0.78rem;color:#6B7280;">Complete niche HTML site, instant download</span></td>
+                <td>0 hrs (after built)</td>
+                <td class="your-cost">$0.30 Stripe fee</td>
+                <td class="price">$197</td>
+                <td class="profit">~$191</td>
+              </tr>
+              <tr>
+                <td><strong>Done-For-You HTML</strong><br><span style="font-size:0.78rem;color:#6B7280;">Template customized, domain live</span></td>
+                <td>4–6 hrs</td>
+                <td class="your-cost">~$10–20</td>
+                <td class="price">$797</td>
+                <td class="profit">~$750</td>
+              </tr>
+              <tr>
+                <td><strong>Full CMS Site (basic)</strong><br><span style="font-size:0.78rem;color:#6B7280;">Node.js, admin dashboard, forms, Railway</span></td>
+                <td>15–25 hrs</td>
+                <td class="your-cost">~$25–50</td>
+                <td class="price">$1,500–$2,000</td>
+                <td class="profit">~$1,450+</td>
+              </tr>
+              <tr>
+                <td><strong>Full CMS Site (complex)</strong><br><span style="font-size:0.78rem;color:#6B7280;">Store, blog, members, streaming, etc.</span></td>
+                <td>25–40 hrs</td>
+                <td class="your-cost">~$40–70</td>
+                <td class="price">$2,500–$3,500</td>
+                <td class="profit">~$2,430+</td>
+              </tr>
+              <tr>
+                <td><strong>Analytics Add-On</strong><br><span style="font-size:0.78rem;color:#6B7280;">Data dashboard added to existing CMS</span></td>
+                <td>8–15 hrs</td>
+                <td class="your-cost">~$15–25</td>
+                <td class="price">$400–$800</td>
+                <td class="profit">~$375–775</td>
+              </tr>
+              <tr style="background:#fdf6e3;">
+                <td><strong>Maintenance Retainer</strong><br><span style="font-size:0.78rem;color:#6B7280;">Monthly updates, backups, small changes</span></td>
+                <td>1–3 hrs/mo</td>
+                <td class="your-cost">~$5–10/mo</td>
+                <td class="price">$75–$150/mo</td>
+                <td class="profit">~$65–140/mo</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="note-box">
+            <strong>Remember:</strong> You're not just selling code — you're selling your time, your expertise, and your ability to use tools like Claude to build faster than a traditional developer. That's worth charging for. These prices are <em>below</em> market rate for a professional web developer. As you build your portfolio and confidence, raise them.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end admin-content -->
+  </div><!-- end admin-main -->
+</div>
+</body>
+</html>

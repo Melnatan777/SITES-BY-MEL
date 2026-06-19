@@ -332,6 +332,9 @@ app.post('/admin/setups/:id/notes', requireAuth, (req, res) => {
   res.redirect('/admin/setups');
 });
 
+// Admin — Pricing Reference
+app.get('/admin/pricing', requireAuth, (req, res) => res.render('admin/pricing'));
+
 // Admin — Quotes
 app.get('/admin/quotes', requireAuth, (req, res) => {
   const quotes = db.prepare('SELECT * FROM quotes ORDER BY created_at DESC').all();
