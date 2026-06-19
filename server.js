@@ -20,8 +20,12 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 // ── MIDDLEWARE ────────────────────────────────────────────────────────────────
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
-// Serve template previews under /preview/ so they don't conflict with /templates/:slug routes
+// Serve static files but block /templates/* so Express routes handle those
+app.use((req, res, next) => {
+  if (req.path.startsWith('/templates/') && !req.path.match(/\.[a-z]{2,4}$/i)) return next();
+  express.static(path.join(__dirname, 'public'))(req, res, next);
+});
+// Serve template previews under /preview/
 app.use('/preview', express.static(path.join(__dirname, 'public', 'templates')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
