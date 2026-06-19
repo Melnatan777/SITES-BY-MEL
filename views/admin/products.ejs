@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Products — Admin</title>
+  <title>Products — Admin | Sites by Mel</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
@@ -19,26 +19,88 @@
     <div class="admin-content">
 
       <% if (success) { %>
-        <div class="alert alert-success" style="margin-bottom:20px;">Product updated successfully.</div>
+        <div class="alert alert-success" style="margin-bottom:20px;">Changes saved successfully.</div>
       <% } %>
+
+      <!-- ADD NEW PRODUCT -->
+      <div class="admin-table-wrap" style="margin-bottom:32px;">
+        <div class="admin-table-header">
+          <h2>Add New Product</h2>
+        </div>
+        <div style="padding:24px;">
+          <form action="/admin/products/new" method="POST" enctype="multipart/form-data">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div class="form-group" style="margin:0;">
+                <label style="font-size:0.78rem;">Product Name *</label>
+                <input type="text" name="name" placeholder="e.g. CleanPro Template" required />
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label style="font-size:0.78rem;">URL Slug *</label>
+                <input type="text" name="slug" placeholder="e.g. clean-pro" required />
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label style="font-size:0.78rem;">Category *</label>
+                <select name="category" required>
+                  <option value="">Select category...</option>
+                  <option>Local Service Business</option>
+                  <option>Restaurant &amp; Food</option>
+                  <option>Real Estate Agent</option>
+                  <option>Retail &amp; Storefront</option>
+                  <option>Blogger &amp; Creator</option>
+                  <option>Church &amp; Ministry</option>
+                  <option>Health &amp; Wellness</option>
+                  <option>Professional Services</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+              <div class="form-group" style="margin:0;">
+                <label style="font-size:0.78rem;">Price ($) *</label>
+                <input type="number" name="price" placeholder="47.00" step="0.01" min="0" required />
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label style="font-size:0.78rem;">Live Preview URL</label>
+                <input type="url" name="preview_url" placeholder="https://..." />
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:16px;">
+              <label style="font-size:0.78rem;">Description</label>
+              <textarea name="description" rows="2" placeholder="What does this template include?"></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom:20px;">
+              <label style="font-size:0.78rem;">ZIP File (optional - can upload later)</label>
+              <input type="file" name="file" accept=".zip" style="padding:8px;border:1.5px solid var(--border);border-radius:4px;width:100%;font-size:0.88rem;" />
+            </div>
+            <button type="submit" class="btn btn-gold">Add Product</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- EXISTING PRODUCTS -->
+      <h2 style="font-size:0.82rem;font-family:'Inter',sans-serif;font-weight:700;margin-bottom:16px;color:var(--gray);text-transform:uppercase;letter-spacing:0.06em;">Existing Products</h2>
 
       <% products.forEach(function(p) { %>
       <div class="admin-table-wrap" style="margin-bottom:24px;">
         <div class="admin-table-header" style="align-items:flex-start;flex-wrap:wrap;gap:12px;">
           <div>
             <h2 style="font-size:1rem;margin-bottom:4px;"><%= p.name %></h2>
-            <span style="font-size:0.78rem;color:var(--gray);">/<%= p.slug %> &mdash; <%= p.category %></span>
+            <span style="font-size:0.78rem;color:var(--gray);">/<%= p.slug %> &mdash; <%= p.category %> &mdash; $<%= (p.price/100).toFixed(0) %></span>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
             <span class="badge <%= p.active ? 'badge-green' : 'badge-gray' %>"><%= p.active ? 'Active' : 'Inactive' %></span>
+            <% if (p.file_path) { %><span class="badge badge-blue">File Ready</span><% } else { %><span class="badge badge-yellow">No File</span><% } %>
             <form action="/admin/products/<%= p.id %>/toggle" method="POST" style="margin:0;">
               <button class="btn btn-outline btn-sm"><%= p.active ? 'Deactivate' : 'Activate' %></button>
+            </form>
+            <form action="/admin/products/<%= p.id %>/delete" method="POST" style="margin:0;" onsubmit="return confirm('Delete <%= p.name %>? This cannot be undone.');">
+              <button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none;cursor:pointer;border-radius:4px;padding:7px 14px;font-size:0.8rem;font-weight:600;">Delete</button>
             </form>
           </div>
         </div>
 
-        <!-- Edit form -->
         <div style="padding:20px;border-top:1px solid var(--border);background:#fafafa;">
+          <!-- Edit details -->
           <form action="/admin/products/<%= p.id %>/edit" method="POST">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
               <div class="form-group" style="margin:0;">
@@ -59,6 +121,17 @@
               <input type="url" name="preview_url" value="<%= p.preview_url || '' %>" placeholder="https://..." />
             </div>
             <button type="submit" class="btn btn-navy btn-sm">Save Changes</button>
+          </form>
+
+          <!-- Upload ZIP -->
+          <form action="/admin/products/<%= p.id %>/upload" method="POST" enctype="multipart/form-data" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+            <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:6px;">
+              Upload ZIP File <% if (p.file_path) { %><span style="color:var(--gray);font-weight:400;">(replace existing file)</span><% } else { %><span style="color:#b45309;font-weight:400;">(needed for customer downloads)</span><% } %>
+            </label>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <input type="file" name="file" accept=".zip" required style="padding:6px;border:1.5px solid var(--border);border-radius:4px;font-size:0.82rem;flex:1;min-width:200px;" />
+              <button type="submit" class="btn btn-outline btn-sm">Upload</button>
+            </div>
           </form>
         </div>
       </div>

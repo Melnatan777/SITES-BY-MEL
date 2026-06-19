@@ -3,7 +3,10 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const crypto = require('crypto');
+const multer = require('multer');
 const db = require('./database');
+
+const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -67,6 +70,9 @@ app.get('/templates/:slug', (req, res) => {
 
 // Services page
 app.get('/services', (req, res) => res.render('services'));
+
+// Portfolio page
+app.get('/portfolio', (req, res) => res.render('portfolio'));
 
 // About page
 app.get('/about', (req, res) => res.render('about'));
@@ -253,6 +259,16 @@ app.get('/admin/products', requireAuth, (req, res) => {
   const products = db.prepare('SELECT * FROM products ORDER BY sort_order').all();
   res.render('admin/products', { products, success: req.query.success });
 });
+// Add new product
+app.post('/admin/products/new', requireAuth, upload.single('file'), (req, res) => {
+  const { name, slug, category, description, price, preview_url } = req.body;
+  if (!name || !slug || !category || !price) return res.redirect('/admin/products');
+  const file_path = req.file ? req.file.path : null;
+  const maxOrder = db.prepare('SELECT MAX(sort_order) as m FROM products').get().m || 0;
+  db.prepare(`INSERT INTO products (name, slug, category, description, price, preview_url, file_path, active, sort_order)
+    VALUES (?,?,?,?,?,?,?,1,?)`).run(name, slug.toLowerCase().replace(/\s+/g,'-'), category, description||'', Math.round(parseFloat(price)*100), preview_url||'', file_path||'', maxOrder+1);
+  res.redirect('/admin/products?success=1');
+});
 app.post('/admin/products/:id/toggle', requireAuth, (req, res) => {
   const p = db.prepare('SELECT active FROM products WHERE id=?').get(req.params.id);
   db.prepare('UPDATE products SET active=? WHERE id=?').run(p.active ? 0 : 1, req.params.id);
@@ -263,6 +279,16 @@ app.post('/admin/products/:id/edit', requireAuth, (req, res) => {
   db.prepare('UPDATE products SET name=?, description=?, price=?, preview_url=? WHERE id=?')
     .run(name, description, Math.round(parseFloat(price) * 100), preview_url||'', req.params.id);
   res.redirect('/admin/products?success=1');
+});
+// Upload ZIP file for product
+app.post('/admin/products/:id/upload', requireAuth, upload.single('file'), (req, res) => {
+  if (req.file) db.prepare('UPDATE products SET file_path=? WHERE id=?').run(req.file.path, req.params.id);
+  res.redirect('/admin/products?success=1');
+});
+// Delete product
+app.post('/admin/products/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM products WHERE id=?').run(req.params.id);
+  res.redirect('/admin/products');
 });
 
 // Admin — Orders
