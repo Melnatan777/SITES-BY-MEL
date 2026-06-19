@@ -242,16 +242,37 @@ app.post('/admin/logout', (req, res) => { req.session.destroy(); res.redirect('/
 
 // Admin dashboard
 app.get('/admin', requireAuth, (req, res) => {
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0,10);
+
   const stats = {
-    revenue: db.prepare("SELECT COALESCE(SUM(amount),0) as t FROM orders WHERE status='paid'").get().t,
-    orders: db.prepare("SELECT COUNT(*) as n FROM orders WHERE status='paid'").get().n,
-    setups: db.prepare("SELECT COUNT(*) as n FROM setup_requests WHERE status='paid'").get().n,
-    quotes: db.prepare("SELECT COUNT(*) as n FROM quotes WHERE status='new'").get().n,
-    messages: db.prepare("SELECT COUNT(*) as n FROM messages WHERE read=0").get().n
+    // Revenue
+    total_revenue: db.prepare("SELECT COALESCE(SUM(amount),0) as t FROM orders WHERE status='paid'").get().t
+      + db.prepare("SELECT COALESCE(SUM(amount),0) as t FROM setup_requests WHERE status IN ('paid','in_progress','completed')").get().t,
+    month_revenue: db.prepare("SELECT COALESCE(SUM(amount),0) as t FROM orders WHERE status='paid' AND created_at>=?").get(monthStart).t
+      + db.prepare("SELECT COALESCE(SUM(amount),0) as t FROM setup_requests WHERE status IN ('paid','in_progress','completed') AND created_at>=?").get(monthStart).t,
+    // Counts
+    template_sales: db.prepare("SELECT COUNT(*) as n FROM orders WHERE status='paid'").get().n,
+    active_setups: db.prepare("SELECT COUNT(*) as n FROM setup_requests WHERE status='in_progress'").get().n,
+    new_quotes: db.prepare("SELECT COUNT(*) as n FROM quotes WHERE status='new'").get().n,
+    unread_messages: db.prepare("SELECT COUNT(*) as n FROM messages WHERE read=0").get().n,
+    pending_setups: db.prepare("SELECT COUNT(*) as n FROM setup_requests WHERE status='paid'").get().n,
   };
-  const recent_orders = db.prepare("SELECT * FROM orders ORDER BY created_at DESC LIMIT 5").all();
-  const recent_quotes = db.prepare("SELECT * FROM quotes ORDER BY created_at DESC LIMIT 5").all();
-  res.render('admin/dashboard', { stats, recent_orders, recent_quotes });
+
+  // Active & pending setups
+  const active_setups = db.prepare("SELECT * FROM setup_requests WHERE status IN ('paid','in_progress') ORDER BY created_at ASC").all();
+
+  // Quote pipeline
+  const quotes_new = db.prepare("SELECT * FROM quotes WHERE status='new' ORDER BY created_at DESC").all();
+  const quotes_pipeline = db.prepare("SELECT * FROM quotes WHERE status IN ('contacted','quoted') ORDER BY created_at DESC LIMIT 5").all();
+
+  // Recent orders
+  const recent_orders = db.prepare("SELECT * FROM orders ORDER BY created_at DESC LIMIT 6").all();
+
+  // Unread messages
+  const unread_messages = db.prepare("SELECT * FROM messages WHERE read=0 ORDER BY created_at DESC LIMIT 5").all();
+
+  res.render('admin/dashboard', { stats, active_setups, quotes_new, quotes_pipeline, recent_orders, unread_messages });
 });
 
 // Admin — Products

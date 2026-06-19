@@ -3,103 +3,358 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — Admin</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <title>Dashboard — Sites by Mel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#F4F2EE;color:#1B2F4E;min-height:100vh;display:flex}
+
+    /* SIDEBAR */
+    .sidebar{width:240px;background:#1B2F4E;min-height:100vh;flex-shrink:0;position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column}
+    .sb-logo{padding:26px 22px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .sb-logo-text{font-family:'Playfair Display',serif;font-size:1.1rem;color:white}
+    .sb-logo-text span{color:#C9922B}
+    .sb-logo-sub{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:3px;letter-spacing:.5px;text-transform:uppercase}
+    .sb-nav{flex:1;padding:12px 0;overflow-y:auto}
+    .sb-section{padding:14px 22px 4px;font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+    .sb-nav a{display:flex;align-items:center;gap:10px;padding:10px 22px;color:rgba(255,255,255,.7);font-size:.875rem;font-weight:500;text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+    .sb-nav a:hover{background:rgba(255,255,255,.06);color:white}
+    .sb-nav a.active{background:rgba(201,146,43,.15);color:#E8B04A;border-left-color:#C9922B}
+    .sb-nav a .icon{font-size:.95rem;width:18px;text-align:center}
+    .sb-badge{margin-left:auto;background:#C9922B;color:white;font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:100px}
+    .sb-badge.red{background:#c0392b}
+    .sb-footer{padding:18px 22px;border-top:1px solid rgba(255,255,255,.1)}
+
+    /* MAIN */
+    .main{flex:1;margin-left:240px;min-height:100vh;display:flex;flex-direction:column}
+    .topbar{background:white;padding:16px 32px;border-bottom:1px solid #E5E0D8;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+    .topbar-left h1{font-size:1.15rem;font-weight:700;color:#1B2F4E}
+    .topbar-left .date{font-size:.8rem;color:#6B7280;margin-top:2px}
+    .topbar-right{display:flex;align-items:center;gap:10px}
+    .content{padding:28px 32px;flex:1}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:6px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:all .15s;white-space:nowrap}
+    .btn-gold{background:#C9922B;color:white}.btn-gold:hover{background:#b07d22;color:white}
+    .btn-navy{background:#1B2F4E;color:white}.btn-navy:hover{background:#122240;color:white}
+    .btn-ghost{background:#F4F2EE;color:#1B2F4E;border:1.5px solid #E5E0D8}.btn-ghost:hover{border-color:#1B2F4E}
+    .btn-sm{padding:6px 13px;font-size:.78rem;border-radius:5px}
+
+    /* ALERTS */
+    .alerts{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+    .alert{display:flex;align-items:center;gap:12px;padding:12px 18px;border-radius:8px;font-size:.875rem;font-weight:500}
+    .alert-red{background:#fdf0ed;border:1px solid #e8b4aa;color:#922b21}
+    .alert-gold{background:#fdf6e3;border:1px solid #e8d5a3;color:#7d5a00}
+    .alert a{color:inherit;font-weight:700;text-decoration:underline}
+
+    /* STATS */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    .stat{background:white;border-radius:10px;padding:20px 22px;box-shadow:0 1px 6px rgba(0,0,0,.06);border-top:3px solid #1B2F4E}
+    .stat.gold{border-top-color:#C9922B}
+    .stat.green{border-top-color:#1a7a3c}
+    .stat.red{border-top-color:#c0392b}
+    .stat-label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#6B7280;margin-bottom:8px}
+    .stat-value{font-size:1.8rem;font-weight:800;color:#1B2F4E;line-height:1}
+    .stat-sub{font-size:.75rem;color:#6B7280;margin-top:5px}
+
+    /* GRIDS */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:22px}
+    .grid-3{display:grid;grid-template-columns:2fr 1fr;gap:22px;margin-bottom:22px}
+    .card{background:white;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,.06);overflow:hidden}
+    .card-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #F4F2EE}
+    .card-head h2{font-size:.95rem;font-weight:700;color:#1B2F4E}
+
+    /* SETUP ITEMS */
+    .setup-item{display:flex;align-items:flex-start;gap:14px;padding:14px 20px;border-bottom:1px solid #F4F2EE}
+    .setup-item:last-child{border-bottom:none}
+    .setup-avatar{width:38px;height:38px;border-radius:50%;background:#1B2F4E;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
+    .setup-info{flex:1;min-width:0}
+    .setup-name{font-weight:600;font-size:.9rem;margin-bottom:2px}
+    .setup-meta{font-size:.78rem;color:#6B7280}
+
+    /* PIPELINE */
+    .pipeline-item{display:flex;align-items:center;gap:12px;padding:13px 20px;border-bottom:1px solid #F4F2EE}
+    .pipeline-item:last-child{border-bottom:none}
+    .pipeline-info{flex:1;min-width:0}
+    .pipeline-name{font-weight:600;font-size:.875rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pipeline-meta{font-size:.75rem;color:#6B7280;margin-top:2px}
+
+    /* ORDERS */
+    .order-row{display:flex;align-items:center;padding:12px 20px;border-bottom:1px solid #F4F2EE;gap:12px}
+    .order-row:last-child{border-bottom:none}
+    .order-product{flex:1;font-size:.875rem;font-weight:600}
+    .order-email{flex:1;font-size:.78rem;color:#6B7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .order-amount{font-weight:700;font-size:.875rem;color:#1a7a3c;white-space:nowrap}
+    .order-date{font-size:.75rem;color:#9CA3AF;white-space:nowrap}
+
+    /* MESSAGES */
+    .msg-item{padding:13px 20px;border-bottom:1px solid #F4F2EE}
+    .msg-item:last-child{border-bottom:none}
+    .msg-sender{font-weight:600;font-size:.875rem}
+    .msg-preview{font-size:.8rem;color:#6B7280;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .msg-date{font-size:.72rem;color:#9CA3AF;margin-top:3px}
+
+    /* BADGES */
+    .badge{display:inline-block;padding:3px 9px;border-radius:100px;font-size:.7rem;font-weight:700}
+    .badge-green{background:#e6f4ec;color:#1a7a3c}
+    .badge-gold{background:#fdf6e3;color:#7d5a00}
+    .badge-red{background:#fdf0ed;color:#922b21}
+    .badge-blue{background:#e8f0fe;color:#1a56a8}
+    .badge-gray{background:#F4F2EE;color:#6B7280}
+
+    /* EMPTY */
+    .empty{text-align:center;padding:36px 20px;color:#9CA3AF;font-size:.875rem}
+    .empty .ei{font-size:2rem;margin-bottom:8px}
+
+    /* QUICK ACTIONS */
+    .quick-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+
+    /* MOBILE NAV */
+    .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#1B2F4E;z-index:200;padding:6px 0 env(safe-area-inset-bottom,6px);border-top:1px solid rgba(255,255,255,.1)}
+    .mobile-nav-inner{display:flex;justify-content:space-around}
+    .mobile-nav a{display:flex;flex-direction:column;align-items:center;gap:2px;color:rgba(255,255,255,.6);text-decoration:none;font-size:.58rem;font-weight:600;padding:6px 8px;min-width:50px;text-align:center;position:relative}
+    .mobile-nav a .mi{font-size:1.25rem;line-height:1}
+    .mobile-nav a.active,.mobile-nav a:hover{color:#E8B04A}
+    .m-dot{position:absolute;top:2px;right:6px;width:8px;height:8px;background:#c0392b;border-radius:50%}
+
+    @media(max-width:900px){
+      .sidebar{display:none}
+      .main{margin-left:0;padding-bottom:72px}
+      .topbar{padding:12px 16px}
+      .content{padding:16px}
+      .stats{grid-template-columns:1fr 1fr}
+      .grid-2,.grid-3{grid-template-columns:1fr}
+      .mobile-nav{display:block}
+      .order-email{display:none}
+    }
+  </style>
 </head>
 <body>
-<div class="admin-wrap">
-  <%- include('../partials/admin-nav', { activePage: 'dashboard' }) %>
-  <div class="admin-main">
-    <div class="admin-topbar">
-      <h1>Dashboard</h1>
-      <form action="/admin/logout" method="POST" style="margin:0;">
-        <button class="btn btn-outline btn-sm">Sign Out</button>
-      </form>
-    </div>
-    <div class="admin-content">
 
-      <!-- STATS -->
-      <div class="admin-cards">
-        <div class="stat-card">
-          <div class="stat-label">Total Revenue</div>
-          <div class="stat-value">$<%= ((stats.revenue || 0) / 100).toFixed(0) %></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Template Sales</div>
-          <div class="stat-value"><%= stats.orders || 0 %></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Setup Deposits</div>
-          <div class="stat-value"><%= stats.setups || 0 %></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">New Quotes</div>
-          <div class="stat-value"><%= stats.quotes || 0 %></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Unread Messages</div>
-          <div class="stat-value"><%= stats.messages || 0 %></div>
-        </div>
-      </div>
+<div class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-text">Sites by <span>Mel</span></div>
+    <div class="sb-logo-sub">Admin Dashboard</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Overview</div>
+    <a href="/admin" class="active"><span class="icon">📊</span> Dashboard</a>
 
-      <!-- RECENT ORDERS -->
-      <div class="admin-table-wrap">
-        <div class="admin-table-header">
-          <h2>Recent Template Orders</h2>
-          <a href="/admin/orders" class="btn btn-outline btn-sm">View All</a>
-        </div>
-        <% if (recent_orders.length === 0) { %>
-          <p style="padding:24px;color:var(--gray);font-size:0.9rem;">No orders yet.</p>
-        <% } else { %>
-        <table>
-          <thead>
-            <tr><th>Date</th><th>Product</th><th>Customer</th><th>Amount</th><th>Status</th></tr>
-          </thead>
-          <tbody>
-            <% recent_orders.forEach(function(o) { %>
-            <tr>
-              <td style="color:var(--gray);font-size:0.82rem;"><%= o.created_at ? o.created_at.substring(0,10) : '—' %></td>
-              <td><%= o.product_name %></td>
-              <td><%= o.customer_email || '—' %></td>
-              <td>$<%= ((o.amount || 0) / 100).toFixed(2) %></td>
-              <td><span class="badge <%= o.status === 'paid' ? 'badge-green' : o.status === 'refunded' ? 'badge-red' : 'badge-yellow' %>"><%= o.status %></span></td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-        <% } %>
-      </div>
+    <div class="sb-section">Business</div>
+    <a href="/admin/quotes">
+      <span class="icon">💬</span> Quote Requests
+      <% if(stats.new_quotes > 0){ %><span class="sb-badge red"><%= stats.new_quotes %></span><% } %>
+    </a>
+    <a href="/admin/setups">
+      <span class="icon">🛠️</span> Active Setups
+      <% if(stats.active_setups > 0){ %><span class="sb-badge"><%= stats.active_setups %></span><% } %>
+    </a>
+    <a href="/admin/orders"><span class="icon">🛒</span> Template Orders</a>
+    <a href="/admin/messages">
+      <span class="icon">✉️</span> Messages
+      <% if(stats.unread_messages > 0){ %><span class="sb-badge red"><%= stats.unread_messages %></span><% } %>
+    </a>
 
-      <!-- RECENT QUOTES -->
-      <div class="admin-table-wrap">
-        <div class="admin-table-header">
-          <h2>Recent Quote Requests</h2>
-          <a href="/admin/quotes" class="btn btn-outline btn-sm">View All</a>
-        </div>
-        <% if (recent_quotes.length === 0) { %>
-          <p style="padding:24px;color:var(--gray);font-size:0.9rem;">No quote requests yet.</p>
-        <% } else { %>
-        <table>
-          <thead>
-            <tr><th>Date</th><th>Name</th><th>Business</th><th>Type</th><th>Status</th></tr>
-          </thead>
-          <tbody>
-            <% recent_quotes.forEach(function(q) { %>
-            <tr>
-              <td style="color:var(--gray);font-size:0.82rem;"><%= q.created_at ? q.created_at.substring(0,10) : '—' %></td>
-              <td><%= q.name %></td>
-              <td><%= q.business_name || '—' %></td>
-              <td style="font-size:0.82rem;color:var(--gray);"><%= q.project_type || '—' %></td>
-              <td><span class="badge <%= q.status === 'new' ? 'badge-blue' : q.status === 'won' ? 'badge-green' : 'badge-gray' %>"><%= q.status %></span></td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-        <% } %>
-      </div>
+    <div class="sb-section">Catalog</div>
+    <a href="/admin/products"><span class="icon">🗂️</span> Templates</a>
 
-    </div>
+    <div class="sb-section">Site</div>
+    <a href="/" target="_blank"><span class="icon">🌐</span> View Live Site</a>
+  </nav>
+  <div class="sb-footer">
+    <form action="/admin/logout" method="POST" style="margin:0">
+      <button style="background:none;border:none;cursor:pointer;color:rgba(255,255,255,.45);font-size:.82rem;display:flex;align-items:center;gap:8px;font-family:inherit;padding:0" type="submit">🚪 Sign Out</button>
+    </form>
   </div>
 </div>
+
+<div class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <a href="/admin" class="active"><span class="mi">📊</span>Home</a>
+    <a href="/admin/quotes">
+      <span class="mi">💬</span>Quotes
+      <% if(stats.new_quotes>0){ %><span class="m-dot"></span><% } %>
+    </a>
+    <a href="/admin/setups"><span class="mi">🛠️</span>Setups</a>
+    <a href="/admin/orders"><span class="mi">🛒</span>Orders</a>
+    <a href="/admin/messages">
+      <span class="mi">✉️</span>Msgs
+      <% if(stats.unread_messages>0){ %><span class="m-dot"></span><% } %>
+    </a>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1>Good <%= (new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening') %>, Mel 👋</h1>
+      <div class="date"><%= new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'}) %></div>
+    </div>
+    <div class="topbar-right">
+      <a href="/" target="_blank" class="btn btn-ghost btn-sm">🌐 View Site</a>
+      <form action="/admin/logout" method="POST" style="margin:0">
+        <button class="btn btn-ghost btn-sm" type="submit">Sign Out</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ALERTS -->
+    <% if(stats.new_quotes > 0 || stats.unread_messages > 0 || stats.pending_setups > 0){ %>
+    <div class="alerts">
+      <% if(stats.new_quotes > 0){ %>
+      <div class="alert alert-red">
+        🔔 You have <strong><%= stats.new_quotes %> new quote request<%= stats.new_quotes>1?'s':'' %></strong> waiting. <a href="/admin/quotes">Review now &rarr;</a>
+      </div>
+      <% } %>
+      <% if(stats.pending_setups > 0){ %>
+      <div class="alert alert-gold">
+        🛠️ <strong><%= stats.pending_setups %> setup deposit<%= stats.pending_setups>1?'s':'' %></strong> received and ready to start. <a href="/admin/setups">View setups &rarr;</a>
+      </div>
+      <% } %>
+      <% if(stats.unread_messages > 0){ %>
+      <div class="alert alert-gold">
+        ✉️ <strong><%= stats.unread_messages %> unread message<%= stats.unread_messages>1?'s':'' %></strong> in your inbox. <a href="/admin/messages">Read now &rarr;</a>
+      </div>
+      <% } %>
+    </div>
+    <% } %>
+
+    <!-- QUICK ACTIONS -->
+    <div class="quick-actions">
+      <a href="/admin/quotes" class="btn btn-gold">+ Respond to Quote</a>
+      <a href="/admin/products" class="btn btn-navy">Manage Templates</a>
+      <a href="/admin/messages" class="btn btn-ghost">📥 Messages</a>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat green">
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-value">$<%= Math.round((stats.total_revenue||0)/100).toLocaleString() %></div>
+        <div class="stat-sub">All time earned</div>
+      </div>
+      <div class="stat gold">
+        <div class="stat-label">This Month</div>
+        <div class="stat-value">$<%= Math.round((stats.month_revenue||0)/100).toLocaleString() %></div>
+        <div class="stat-sub"><%= new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'}) %></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Template Sales</div>
+        <div class="stat-value"><%= stats.template_sales||0 %></div>
+        <div class="stat-sub">Paid downloads</div>
+      </div>
+      <div class="stat <%= stats.new_quotes>0?'red':'' %>">
+        <div class="stat-label">Open Quotes</div>
+        <div class="stat-value"><%= stats.new_quotes||0 %></div>
+        <div class="stat-sub">Need your response</div>
+      </div>
+    </div>
+
+    <!-- ACTIVE SETUPS + MESSAGES -->
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-head">
+          <h2>🛠️ Active Client Setups</h2>
+          <a href="/admin/setups" class="btn btn-ghost btn-sm">All</a>
+        </div>
+        <% if(active_setups.length === 0){ %>
+        <div class="empty"><div class="ei">✅</div>No active setups right now</div>
+        <% } else { %>
+        <% active_setups.forEach(function(s){ %>
+        <div class="setup-item">
+          <div class="setup-avatar"><%= ((s.name||'?')[0]).toUpperCase() %></div>
+          <div class="setup-info">
+            <div class="setup-name"><%= s.name %></div>
+            <div class="setup-meta"><%= s.product_name||'Done-For-You Setup' %></div>
+            <div class="setup-meta"><%= s.business_name||s.email %> &bull; <%= s.created_at ? s.created_at.substring(0,10) : '' %></div>
+          </div>
+          <span class="badge <%= s.status==='in_progress'?'badge-blue':'badge-gold' %>"><%= s.status==='in_progress'?'Building':'Deposit Paid' %></span>
+        </div>
+        <% }) %>
+        <% } %>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>✉️ Unread Messages<% if(stats.unread_messages>0){ %> <span class="badge badge-red"><%= stats.unread_messages %></span><% } %></h2>
+          <a href="/admin/messages" class="btn btn-ghost btn-sm">All</a>
+        </div>
+        <% if(unread_messages.length === 0){ %>
+        <div class="empty"><div class="ei">📭</div>All caught up</div>
+        <% } else { %>
+        <% unread_messages.forEach(function(m){ %>
+        <div class="msg-item">
+          <div class="msg-sender"><%= m.name %></div>
+          <div class="msg-preview"><%= m.subject || m.message.substring(0,60) %>...</div>
+          <div class="msg-date"><%= m.created_at ? m.created_at.substring(0,10) : '' %></div>
+        </div>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- QUOTES + RECENT ORDERS -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head">
+          <h2>💬 Quote Pipeline</h2>
+          <a href="/admin/quotes" class="btn btn-ghost btn-sm">All Quotes</a>
+        </div>
+        <% if(quotes_new.length === 0 && quotes_pipeline.length === 0){ %>
+        <div class="empty"><div class="ei">🎉</div>No open quotes right now</div>
+        <% } %>
+        <% if(quotes_new.length > 0){ %>
+        <div style="padding:8px 20px 4px;font-size:.72rem;font-weight:700;color:#922b21;text-transform:uppercase;letter-spacing:.5px">Needs Response</div>
+        <% quotes_new.forEach(function(q){ %>
+        <div class="pipeline-item">
+          <div class="pipeline-info">
+            <div class="pipeline-name"><%= q.name %><% if(q.business_name){ %> &mdash; <%= q.business_name %><% } %></div>
+            <div class="pipeline-meta"><%= q.project_type||'General inquiry' %> &bull; Budget: <%= q.budget||'Not specified' %> &bull; <%= q.created_at ? q.created_at.substring(0,10) : '' %></div>
+          </div>
+          <span class="badge badge-red">New</span>
+        </div>
+        <% }) %>
+        <% } %>
+        <% if(quotes_pipeline.length > 0){ %>
+        <div style="padding:8px 20px 4px;font-size:.72rem;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px;border-top:1px solid #F4F2EE">In Progress</div>
+        <% quotes_pipeline.forEach(function(q){ %>
+        <div class="pipeline-item">
+          <div class="pipeline-info">
+            <div class="pipeline-name"><%= q.name %><% if(q.business_name){ %> &mdash; <%= q.business_name %><% } %></div>
+            <div class="pipeline-meta"><%= q.project_type||'General' %> &bull; <%= q.created_at ? q.created_at.substring(0,10) : '' %></div>
+          </div>
+          <span class="badge <%= q.status==='quoted'?'badge-blue':'badge-gold' %>"><%= q.status %></span>
+        </div>
+        <% }) %>
+        <% } %>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>🛒 Recent Template Sales</h2>
+          <a href="/admin/orders" class="btn btn-ghost btn-sm">All Orders</a>
+        </div>
+        <% if(recent_orders.length === 0){ %>
+        <div class="empty"><div class="ei">🛒</div>No template orders yet</div>
+        <% } else { %>
+        <% recent_orders.forEach(function(o){ %>
+        <div class="order-row">
+          <div class="order-product"><%= o.product_name||'Template' %></div>
+          <div class="order-email"><%= o.customer_email||'—' %></div>
+          <div class="order-amount">$<%= ((o.amount||0)/100).toFixed(0) %></div>
+          <div class="order-date"><%= o.created_at ? o.created_at.substring(0,10) : '' %></div>
+          <span class="badge <%= o.status==='paid'?'badge-green':o.status==='refunded'?'badge-red':'badge-gray' %>"><%= o.status %></span>
+        </div>
+        <% }) %>
+        <% } %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>
