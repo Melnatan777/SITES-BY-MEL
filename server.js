@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const multer = require('multer');
 const db = require('./database');
 const { buildAllDownloads } = require('./scripts/build-downloads');
+const { buildPersonalizedZip, PLACEHOLDERS } = require('./scripts/personalize');
 
 // Build zips on startup (skips any already built)
 buildAllDownloads().catch(e => console.error('[downloads] startup error:', e.message));
@@ -299,10 +300,55 @@ app.get('/order/success', async (req, res) => {
       text: `Hi! Thanks for purchasing ${order.product_name}.\n\nYour download link (valid 48 hours):\n${BASE_URL}/download/${token}\n\nQuestions? Reply to this email or visit sitesbymel.com\n\nMel`
     });
   }
-  res.render('order-success', { order, downloadUrl: `${BASE_URL}/download/${order.download_token}` });
+  res.redirect(`/personalize/${order.download_token}`);
 });
 
 app.get('/order/setup-success', (req, res) => res.render('setup-success'));
+
+// Personalization form — shown after purchase before download
+app.get('/personalize/:token', (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
+  if (!order) return res.status(404).send('Order not found.');
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+  if (!product) return res.status(404).send('Product not found.');
+  const placeholder = PLACEHOLDERS[product.slug] || {};
+  res.render('personalize', { token: req.params.token, product, placeholder });
+});
+
+// Build personalized zip and deliver it
+app.post('/personalize/:token', async (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
+  if (!order) return res.status(404).send('Order not found.');
+  if (new Date(order.download_expires_at) < new Date()) return res.status(410).send('Download link expired. Contact mel@sitesbymel.com');
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+  if (!product) return res.status(404).send('Product not found.');
+
+  const data = {
+    businessName: req.body.businessName || '',
+    phone: req.body.phone || '',
+    email: req.body.email || '',
+    address: req.body.address || '',
+    tagline: req.body.tagline || '',
+    city: req.body.city || '',
+  };
+
+  const tmpPath = path.join(__dirname, 'downloads', `custom-${order.id}-${Date.now()}.zip`);
+  const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
+
+  try {
+    await buildPersonalizedZip(product.slug, product.name, niche, data, tmpPath);
+    db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
+    res.download(tmpPath, `${product.slug}-sitesbymel.zip`, () => {
+      // Clean up temp file after delivery
+      const fs = require('fs');
+      try { fs.unlinkSync(tmpPath); } catch(e) {}
+    });
+  } catch(e) {
+    console.error('[personalize]', e.message);
+    // Fall back to generic zip
+    res.redirect(`/download/${req.params.token}`);
+  }
+});
 
 // File download
 app.get('/download/:token', (req, res) => {
