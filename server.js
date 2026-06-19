@@ -239,13 +239,16 @@ app.post('/buy/:slug', async (req, res) => {
         unit_amount: product.price
       }, quantity: 1 }],
       mode: 'payment',
+      billing_address_collection: 'auto',
+      customer_email: req.body.email || undefined,
       success_url: `${BASE_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${BASE_URL}/templates/${product.slug}`,
-      metadata: { product_id: product.id, product_name: product.name, type: 'template' }
+      metadata: { product_id: product.id, product_name: product.name, type: 'template', selected_addon: req.body.selected_addon || 'none' }
     });
     // Create pending order
-    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status)
-      VALUES (?,?,?,?,'pending')`).run(product.id, product.name, product.price, session.id);
+    const selectedAddon = req.body.selected_addon || 'none';
+    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, admin_notes)
+      VALUES (?,?,?,?,'pending',?)`).run(product.id, product.name, product.price, session.id, `selected_addon:${selectedAddon}`);
     res.redirect(303, session.url);
   } catch (e) {
     console.error(e);
@@ -289,22 +292,46 @@ app.post('/setup/:slug', async (req, res) => {
 app.get('/order/success', async (req, res) => {
   const { session_id } = req.query;
   if (!session_id) return res.redirect('/');
-  const order = db.prepare('SELECT * FROM orders WHERE stripe_session_id=?').get(session_id);
+
+  let order = db.prepare('SELECT * FROM orders WHERE stripe_session_id=?').get(session_id);
   if (!order) return res.render('order-success', { order: null, downloadUrl: null });
+
+  // If customer_email not yet set by webhook, fetch directly from Stripe
+  if (!order.customer_email && stripe) {
+    try {
+      const stripeSession = await stripe.checkout.sessions.retrieve(session_id);
+      const email = stripeSession.customer_details?.email || '';
+      const name  = stripeSession.customer_details?.name  || '';
+      if (email) {
+        db.prepare("UPDATE orders SET customer_email=?, customer_name=?, status='paid' WHERE id=?")
+          .run(email, name, order.id);
+        order.customer_email = email;
+        order.customer_name  = name;
+      }
+    } catch (e) { console.error('[success] stripe fetch error:', e.message); }
+  }
 
   // Generate download token if not already done
   if (!order.download_token) {
     const token = crypto.randomBytes(32).toString('hex');
-    const expires = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(); // 48 hours
+    const expires = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
     db.prepare("UPDATE orders SET status='paid', download_token=?, download_expires_at=? WHERE id=?")
       .run(token, expires, order.id);
     order.download_token = token;
-    // Email the customer
-    await sendEmail({
-      to: order.customer_email || '',
-      subject: `Your download is ready — ${order.product_name}`,
-      text: `Hi! Thanks for purchasing ${order.product_name}.\n\nYour download link (valid 48 hours):\n${BASE_URL}/download/${token}\n\nQuestions? Reply to this email or visit sitesbymel.com\n\nMel`
-    });
+    // Email the customer their download link
+    if (order.customer_email) {
+      await sendEmail({
+        to: order.customer_email,
+        subject: `Your download is ready — ${order.product_name}`,
+        html: autoReplyHtml(
+          order.customer_name || 'there',
+          `Thank you for purchasing <strong>${order.product_name}</strong>!`,
+          `Your personalization page and download link is ready. Click below to personalize your template with your business details and download your files.<br><br>Your link is valid for <strong>48 hours</strong>.`,
+          `${BASE_URL}/personalize/${token}`,
+          'Personalize & Download My Template'
+        )
+      });
+    }
   }
   res.redirect(`/personalize/${order.download_token}`);
 });
