@@ -162,12 +162,12 @@ db.prepare("UPDATE products SET price=19700").run();
 
 // Backfill preview_url for existing records that don't have one
 const previewUrls = [
-  ['service-pro', '/templates/service-pro/index.html'],
-  ['table-ready', '/templates/table-ready/index.html'],
-  ['key-ready',   '/templates/key-ready/index.html'],
-  ['shop-front',  '/templates/shop-front/index.html'],
-  ['voice-first', '/templates/voice-first/index.html'],
-  ['gather-here', '/templates/gather-here/index.html'],
+  ['service-pro', '/preview/service-pro/index.html'],
+  ['table-ready', '/preview/table-ready/index.html'],
+  ['key-ready',   '/preview/key-ready/index.html'],
+  ['shop-front',  '/preview/shop-front/index.html'],
+  ['voice-first', '/preview/voice-first/index.html'],
+  ['gather-here', '/preview/gather-here/index.html'],
 ];
 // Always update preview_url to correct paths (fixes trailing slash issue)
 const backfill = db.prepare("UPDATE products SET preview_url=? WHERE slug=?");

@@ -21,6 +21,8 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+// Serve template previews under /preview/ so they don't conflict with /templates/:slug routes
+app.use('/preview', express.static(path.join(__dirname, 'public', 'templates')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
