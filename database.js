@@ -83,6 +83,25 @@ db.exec(`
   )
 `);
 
+// ── TEMPLATE ADD-ONS ─────────────────────────────────────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS template_addons (
+    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id          INTEGER REFERENCES orders(id),
+    customer_name     TEXT,
+    customer_email    TEXT,
+    product_name      TEXT,
+    addon_type        TEXT,  -- drive_link | photo_upload | white_glove
+    addon_amount      INTEGER,
+    drive_link        TEXT,
+    photo_paths       TEXT,  -- JSON array of uploaded file paths
+    stripe_session_id TEXT UNIQUE,
+    status            TEXT DEFAULT 'pending',  -- pending | paid | in_progress | completed
+    admin_notes       TEXT,
+    created_at        DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
 // ── PAGE VIEWS (analytics) ───────────────────────────────────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS page_views (

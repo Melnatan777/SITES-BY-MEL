@@ -315,8 +315,8 @@ app.get('/personalize/:token', (req, res) => {
   res.render('personalize', { token: req.params.token, product, placeholder });
 });
 
-// Build personalized zip and deliver it
-app.post('/personalize/:token', async (req, res) => {
+// Build personalized zip and deliver it (or route to Stripe for add-ons)
+app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
   const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
   if (!order) return res.status(404).send('Order not found.');
   if (new Date(order.download_expires_at) < new Date()) return res.status(410).send('Download link expired. Contact mel@sitesbymel.com');
@@ -332,22 +332,108 @@ app.post('/personalize/:token', async (req, res) => {
     city: req.body.city || '',
   };
 
+  // Check add-ons
+  const wantsDrive  = req.body.addon_drive === '1';
+  const wantsUpload = req.body.addon_upload === '1';
+  const wantsGlove  = req.body.addon_glove === '1';
+  const addonTotal  = (wantsDrive ? 4900 : 0) + (wantsUpload ? 9700 : 0) + (wantsGlove ? 14900 : 0);
+
+  // Build the personalized zip first regardless
   const tmpPath = path.join(__dirname, 'downloads', `custom-${order.id}-${Date.now()}.zip`);
   const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
-
-  try {
-    await buildPersonalizedZip(product.slug, product.name, niche, data, tmpPath);
-    db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
-    res.download(tmpPath, `${product.slug}-sitesbymel.zip`, () => {
-      // Clean up temp file after delivery
-      const fs = require('fs');
-      try { fs.unlinkSync(tmpPath); } catch(e) {}
-    });
-  } catch(e) {
+  try { await buildPersonalizedZip(product.slug, product.name, niche, data, tmpPath); } catch(e) {
     console.error('[personalize]', e.message);
-    // Fall back to generic zip
-    res.redirect(`/download/${req.params.token}`);
+    return res.redirect(`/download/${req.params.token}`);
   }
+
+  // Save add-on request to DB if any selected
+  if (addonTotal > 0 && stripe) {
+    const photoPaths = (req.files || []).map(f => f.path);
+    const addonTypes = [wantsDrive && 'drive_link', wantsUpload && 'photo_upload', wantsGlove && 'white_glove'].filter(Boolean).join(',');
+
+    const addonRecord = db.prepare(`INSERT INTO template_addons
+      (order_id, customer_name, customer_email, product_name, addon_type, addon_amount, drive_link, photo_paths)
+      VALUES (?,?,?,?,?,?,?,?)`).run(
+      order.id, order.customer_name || '', order.customer_email || '',
+      product.name, addonTypes, addonTotal,
+      req.body.drive_link || '', JSON.stringify(photoPaths)
+    );
+
+    const addonLineItems = [];
+    if (wantsDrive)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Photo Swap via Google Drive' }, unit_amount:4900 }, quantity:1 });
+    if (wantsUpload) addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Direct Photo Upload' }, unit_amount:9700 }, quantity:1 });
+    if (wantsGlove)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'White-Glove Finish' }, unit_amount:14900 }, quantity:1 });
+
+    try {
+      const stripeSession = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: addonLineItems,
+        mode: 'payment',
+        success_url: `${BASE_URL}/order/addon-success?addon_id=${addonRecord.lastInsertRowid}&token=${req.params.token}`,
+        cancel_url: `${BASE_URL}/personalize/${req.params.token}`,
+        customer_email: order.customer_email || undefined,
+        metadata: { addon_id: addonRecord.lastInsertRowid, order_id: order.id, type: 'addon' }
+      });
+      db.prepare('UPDATE template_addons SET stripe_session_id=? WHERE id=?').run(stripeSession.id, addonRecord.lastInsertRowid);
+
+      // Store zip path temporarily so we can deliver after payment
+      db.prepare('UPDATE template_addons SET admin_notes=? WHERE id=?').run(tmpPath, addonRecord.lastInsertRowid);
+
+      // Notify Mel
+      await sendEmail({
+        to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
+        subject: `New add-on order — ${product.name} — ${addonTypes} — $${(addonTotal/100).toFixed(0)}`,
+        text: `Customer: ${order.customer_name || 'unknown'}\nEmail: ${order.customer_email || 'unknown'}\nProduct: ${product.name}\nAdd-ons: ${addonTypes}\nAmount: $${(addonTotal/100).toFixed(0)}\nDrive link: ${req.body.drive_link || 'none'}\nPhotos uploaded: ${photoPaths.length}\nCheck dashboard for details.`
+      });
+
+      return res.redirect(303, stripeSession.url);
+    } catch(e) {
+      console.error('[addon stripe]', e.message);
+    }
+  }
+
+  // No add-ons or Stripe not configured — deliver zip directly
+  db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
+  res.download(tmpPath, `${product.slug}-sitesbymel.zip`, () => {
+    const fs = require('fs');
+    try { fs.unlinkSync(tmpPath); } catch(e) {}
+  });
+});
+
+// Add-on payment success
+app.get('/order/addon-success', async (req, res) => {
+  const { addon_id, token } = req.query;
+  if (addon_id) {
+    db.prepare("UPDATE template_addons SET status='paid' WHERE id=?").run(addon_id);
+    const addon = db.prepare('SELECT * FROM template_addons WHERE id=?').get(addon_id);
+    if (addon) {
+      await sendEmail({
+        to: addon.customer_email || '',
+        subject: `Add-on confirmed — Sites by Mel`,
+        html: autoReplyHtml(addon.customer_name || 'there',
+          `Your add-on payment went through. Here is what happens next:`,
+          `<div style="background:#f5f4f2;border-radius:8px;padding:16px 20px;margin:16px 0;font-size:.9rem;color:#333;line-height:1.8">
+            <strong>Add-ons purchased:</strong> ${addon.addon_type}<br>
+            <strong>Mel will start within:</strong> 1 business day<br>
+            <strong>Delivery:</strong> 2 business days via email<br><br>
+            You will receive an email with your completed file when it is ready. No action needed from you.
+          </div>`)
+      });
+    }
+  }
+  // Deliver the personalized zip
+  if (token) {
+    const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(token);
+    if (order) {
+      const addon = addon_id ? db.prepare('SELECT * FROM template_addons WHERE id=?').get(addon_id) : null;
+      const zipPath = addon && addon.admin_notes && require('fs').existsSync(addon.admin_notes) ? addon.admin_notes : null;
+      if (zipPath) {
+        db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
+        return res.download(zipPath, `${order.product_name || 'template'}-sitesbymel.zip`);
+      }
+    }
+  }
+  res.render('order-success', { order: null, downloadUrl: null, addonPaid: true });
 });
 
 // File download
@@ -559,6 +645,20 @@ app.post('/admin/quotes/:id/status', requireAuth, (req, res) => {
 app.post('/admin/quotes/:id/notes', requireAuth, (req, res) => {
   db.prepare('UPDATE quotes SET admin_notes=? WHERE id=?').run(req.body.admin_notes, req.params.id);
   res.redirect('/admin/quotes');
+});
+
+// Admin — Add-ons
+app.get('/admin/addons', requireAuth, (req, res) => {
+  const addons = db.prepare('SELECT * FROM template_addons ORDER BY created_at DESC').all();
+  res.render('admin/addons', { addons });
+});
+app.post('/admin/addons/:id/status', requireAuth, (req, res) => {
+  db.prepare('UPDATE template_addons SET status=? WHERE id=?').run(req.body.status, req.params.id);
+  res.redirect('/admin/addons');
+});
+app.post('/admin/addons/:id/notes', requireAuth, (req, res) => {
+  db.prepare('UPDATE template_addons SET admin_notes=? WHERE id=?').run(req.body.admin_notes, req.params.id);
+  res.redirect('/admin/addons');
 });
 
 // Admin — Messages

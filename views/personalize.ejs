@@ -2,62 +2,199 @@
 <%- include('partials/nav') %>
 
 <section style="padding:60px 0 80px;background:#F4F2EE;min-height:80vh">
-  <div style="max-width:620px;margin:0 auto;padding:0 24px">
+  <div style="max-width:660px;margin:0 auto;padding:0 24px">
 
-    <div style="text-align:center;margin-bottom:36px">
-      <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;background:#1B2F4E;border-radius:50%;margin-bottom:16px">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9922B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      </div>
-      <h1 style="font-size:1.8rem;font-weight:800;color:#1B2F4E;margin-bottom:8px">One last step</h1>
-      <p style="color:#6B7280;line-height:1.7;max-width:480px;margin:0 auto">Enter your business details below and I will pre-fill your website with your real information before you download. The less you have to change, the better.</p>
+    <div style="text-align:center;margin-bottom:32px">
+      <h1 style="font-size:1.8rem;font-weight:800;color:#1B2F4E;margin-bottom:8px">Personalize Your Template</h1>
+      <p style="color:#6B7280;line-height:1.7;max-width:480px;margin:0 auto">Fill in your business details and we will pre-fill your site before you download. Add optional services below — you will see the full price before paying anything extra.</p>
     </div>
 
-    <div style="background:#fff;border:1px solid #E5E0D8;border-radius:12px;padding:32px">
-      <div style="background:#F4F2EE;border-radius:8px;padding:12px 16px;margin-bottom:24px;font-size:.85rem;color:#374151">
-        <strong>Template:</strong> <%= product.name %> &nbsp;&bull;&nbsp; <strong>All fields are optional</strong> — skip any you don't have yet.
-      </div>
+    <form method="POST" action="/personalize/<%= token %>" enctype="multipart/form-data">
 
-      <form method="POST" action="/personalize/<%= token %>">
-
-        <div style="margin-bottom:16px">
-          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Business Name</label>
-          <input type="text" name="businessName" placeholder="<%= placeholder.businessName %>" style="width:100%;padding:11px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.92rem">
-          <p style="font-size:.74rem;color:#9CA3AF;margin-top:4px">We'll replace "<%= placeholder.businessName %>" with yours everywhere in the file.</p>
+      <!-- BUSINESS DETAILS -->
+      <div style="background:#fff;border:1px solid #E5E0D8;border-radius:12px;padding:28px;margin-bottom:16px">
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:18px">Your Business Details</h2>
+        <div style="background:#F4F2EE;border-radius:8px;padding:10px 14px;margin-bottom:18px;font-size:.82rem;color:#374151">
+          Template: <strong><%= product.name %></strong> &nbsp;&bull;&nbsp; All fields optional — skip what you don't have yet.
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Name</label>
+          <input type="text" name="businessName" placeholder="<%= placeholder.businessName %>" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces "<%= placeholder.businessName %>" everywhere in your file</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
           <div>
-            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Phone Number</label>
-            <input type="tel" name="phone" placeholder="<%= placeholder.phone || '(555) 000-0000' %>" style="width:100%;padding:11px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.92rem">
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Phone Number</label>
+            <input type="tel" name="phone" placeholder="<%= placeholder.phone || '(555) 000-0000' %>" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
           </div>
           <div>
-            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Business Email</label>
-            <input type="email" name="email" placeholder="<%= placeholder.email %>" style="width:100%;padding:11px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.92rem">
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Email</label>
+            <input type="email" name="email" placeholder="<%= placeholder.email %>" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
           </div>
         </div>
 
-        <div style="margin-bottom:16px">
-          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Address / City</label>
-          <input type="text" name="address" placeholder="<%= placeholder.address || 'Your City, State' %>" style="width:100%;padding:11px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.92rem">
+        <div style="margin-bottom:14px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Address / City</label>
+          <input type="text" name="address" placeholder="<%= placeholder.address || 'Your City, State' %>" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
         </div>
 
-        <div style="margin-bottom:24px">
-          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Tagline / Slogan <span style="font-weight:400;color:#9CA3AF">(optional)</span></label>
-          <input type="text" name="tagline" placeholder="<%= placeholder.tagline %>" style="width:100%;padding:11px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.92rem">
-          <p style="font-size:.74rem;color:#9CA3AF;margin-top:4px">A short phrase that describes what you do. Can change it later.</p>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Tagline / Slogan <span style="font-weight:400;color:#9CA3AF">(optional)</span></label>
+          <input type="text" name="tagline" placeholder="<%= placeholder.tagline %>" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
         </div>
-
-        <button type="submit" style="width:100%;background:#1B2F4E;color:#fff;padding:14px;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer">
-          Build My Personalized Download &rarr;
-        </button>
-        <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:10px">Your zip file will generate and download automatically.</p>
-      </form>
-
-      <div style="border-top:1px solid #E5E0D8;margin-top:20px;padding-top:16px;text-align:center">
-        <a href="/download/<%= token %>" style="font-size:.82rem;color:#9CA3AF;text-decoration:none">Skip this step — download the generic version instead</a>
       </div>
-    </div>
+
+      <!-- ADD-ONS -->
+      <div style="background:#fff;border:1px solid #E5E0D8;border-radius:12px;padding:28px;margin-bottom:16px">
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:4px">Optional Add-Ons</h2>
+        <p style="font-size:.82rem;color:#6B7280;margin-bottom:18px">All extra work is done by Mel personally. Select what you need — price updates below before you pay.</p>
+
+        <!-- Option 3 — INCLUDED -->
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:10px;background:#F9F8F6">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:20px;height:20px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:.9rem;font-weight:700;color:#1B2F4E">Named Image Folder <span style="background:#e6f4ec;color:#15803d;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:6px">Included Free</span></div>
+              <div style="font-size:.8rem;color:#6B7280;margin-top:2px">Your zip includes an <code style="background:#f0f0f0;padding:1px 5px;border-radius:3px;font-size:.78rem">images/</code> folder with files named exactly what the template expects — <code style="background:#f0f0f0;padding:1px 5px;border-radius:3px;font-size:.78rem">hero.jpg</code>, <code style="background:#f0f0f0;padding:1px 5px;border-radius:3px;font-size:.78rem">about.jpg</code> etc. Just drop your photos in and rename to match.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option 1 — Drive Link -->
+        <div style="border:2px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:10px;cursor:pointer;transition:border-color .15s" id="addon-drive-wrap" onclick="toggleAddon('drive')">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <input type="checkbox" name="addon_drive" id="addon-drive" value="1" style="margin-top:3px;width:18px;height:18px;cursor:pointer" onclick="event.stopPropagation();toggleAddon('drive')">
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+                <div style="font-size:.9rem;font-weight:700;color:#1B2F4E">Photo Swap via Google Drive</div>
+                <div style="font-size:1rem;font-weight:800;color:#C9922B">+ $49</div>
+              </div>
+              <div style="font-size:.8rem;color:#6B7280;margin-top:4px">Paste a link to a Google Drive or Dropbox folder with your photos. Mel will swap them into your template and send you the updated file within 2 business days.</div>
+              <div id="drive-input" style="display:none;margin-top:12px">
+                <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:5px;color:#374151">Your Google Drive / Dropbox link</label>
+                <input type="url" name="drive_link" placeholder="https://drive.google.com/..." style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.85rem" onclick="event.stopPropagation()">
+                <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Make sure the folder is set to "Anyone with the link can view"</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option 2 — Photo Upload -->
+        <div style="border:2px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:10px;cursor:pointer" id="addon-upload-wrap" onclick="toggleAddon('upload')">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <input type="checkbox" name="addon_upload" id="addon-upload" value="1" style="margin-top:3px;width:18px;height:18px;cursor:pointer" onclick="event.stopPropagation();toggleAddon('upload')">
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+                <div style="font-size:.9rem;font-weight:700;color:#1B2F4E">Direct Photo Upload</div>
+                <div style="font-size:1rem;font-weight:800;color:#C9922B">+ $97</div>
+              </div>
+              <div style="font-size:.8rem;color:#6B7280;margin-top:4px">Upload up to 5 photos directly (5MB max each). Mel embeds them into your template and delivers the finished file within 2 business days.</div>
+              <div id="upload-input" style="display:none;margin-top:12px" onclick="event.stopPropagation()">
+                <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:5px;color:#374151">Upload your photos (up to 5, max 5MB each)</label>
+                <input type="file" name="photos" multiple accept="image/*" style="width:100%;font-size:.82rem">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option 4 — White Glove -->
+        <div style="border:2px solid #E5E0D8;border-radius:8px;padding:16px 18px;cursor:pointer" id="addon-glove-wrap" onclick="toggleAddon('glove')">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <input type="checkbox" name="addon_glove" id="addon-glove" value="1" style="margin-top:3px;width:18px;height:18px;cursor:pointer" onclick="event.stopPropagation();toggleAddon('glove')">
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+                <div style="font-size:.9rem;font-weight:700;color:#1B2F4E">Full White-Glove Finish <span style="background:#fdf0ed;color:#c0392b;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:6px">Best Value</span></div>
+                <div style="font-size:1rem;font-weight:800;color:#C9922B">+ $149</div>
+              </div>
+              <div style="font-size:.8rem;color:#6B7280;margin-top:4px">Send your photos via Drive AND upload direct. Mel handles photos, any remaining text tweaks, and a final review pass. You get a file that is essentially done.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NO REFUND NOTICE -->
+      <div style="background:#fdf2f2;border:1px solid #fca5a5;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:.82rem;color:#991b1b;line-height:1.6">
+        <strong>No refund policy:</strong> Once add-on work has begun, no refunds are issued for that service. The base template purchase ($197) is also non-refundable once downloaded. By proceeding you agree to these terms.
+      </div>
+
+      <!-- ORDER TOTAL -->
+      <div style="background:#1B2F4E;border-radius:12px;padding:20px 24px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <span style="color:rgba(255,255,255,.6);font-size:.85rem">Template (already paid)</span>
+          <span style="color:rgba(255,255,255,.4);font-size:.85rem;text-decoration:line-through">$197</span>
+        </div>
+        <div id="addon-drive-line" style="display:none;justify-content:space-between;margin-bottom:6px">
+          <span style="color:rgba(255,255,255,.8);font-size:.85rem">Photo Swap (Drive)</span>
+          <span style="color:#C9922B;font-size:.85rem;font-weight:700">$49</span>
+        </div>
+        <div id="addon-upload-line" style="display:none;justify-content:space-between;margin-bottom:6px">
+          <span style="color:rgba(255,255,255,.8);font-size:.85rem">Direct Photo Upload</span>
+          <span style="color:#C9922B;font-size:.85rem;font-weight:700">$97</span>
+        </div>
+        <div id="addon-glove-line" style="display:none;justify-content:space-between;margin-bottom:6px">
+          <span style="color:rgba(255,255,255,.8);font-size:.85rem">White-Glove Finish</span>
+          <span style="color:#C9922B;font-size:.85rem;font-weight:700">$149</span>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.15);padding-top:12px;margin-top:6px;display:flex;align-items:center;justify-content:space-between">
+          <span style="color:#fff;font-weight:700">Due today</span>
+          <span id="total-display" style="color:#C9922B;font-size:1.3rem;font-weight:800">$0</span>
+        </div>
+        <p id="total-note" style="color:rgba(255,255,255,.4);font-size:.75rem;margin-top:6px">No add-ons selected — your download is free after personalization.</p>
+      </div>
+
+      <button type="submit" id="submit-btn" style="width:100%;background:#C9922B;color:#fff;padding:14px;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer">
+        Download My Template — Free
+      </button>
+      <p style="text-align:center;font-size:.75rem;color:#9CA3AF;margin-top:8px">Add-ons are charged separately via Stripe before Mel starts work.</p>
+
+      <div style="text-align:center;margin-top:14px">
+        <a href="/download/<%= token %>" style="font-size:.8rem;color:#9CA3AF;text-decoration:none">Skip personalization — download generic version</a>
+      </div>
+    </form>
   </div>
 </section>
+
+<script>
+  const prices = { drive: 49, upload: 97, glove: 149 };
+
+  function toggleAddon(key) {
+    const cb = document.getElementById('addon-' + key);
+    cb.checked = !cb.checked;
+    updateUI();
+  }
+
+  function updateUI() {
+    let total = 0;
+    ['drive','upload','glove'].forEach(function(k) {
+      const checked = document.getElementById('addon-' + k).checked;
+      const line = document.getElementById('addon-' + k + '-line');
+      if (line) line.style.display = checked ? 'flex' : 'none';
+      if (checked) total += prices[k];
+      const input = document.getElementById(k + '-input');
+      if (input) input.style.display = checked ? 'block' : 'none';
+      const wrap = document.getElementById('addon-' + k + '-wrap');
+      if (wrap) wrap.style.borderColor = checked ? '#C9922B' : '#E5E0D8';
+    });
+    document.getElementById('total-display').textContent = '$' + total;
+    const btn = document.getElementById('submit-btn');
+    const note = document.getElementById('total-note');
+    if (total > 0) {
+      btn.textContent = 'Continue to Payment — $' + total;
+      note.textContent = 'Add-on payment processed via Stripe. Mel will start work within 1 business day.';
+    } else {
+      btn.textContent = 'Download My Template — Free';
+      note.textContent = 'No add-ons selected — your download is free after personalization.';
+    }
+  }
+
+  // Wire up checkboxes directly too
+  ['drive','upload','glove'].forEach(function(k) {
+    document.getElementById('addon-' + k).addEventListener('change', updateUI);
+  });
+</script>
 
 <%- include('partials/footer') %>

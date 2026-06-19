@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Add-On Orders — Sites by Mel Admin</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'addons' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Add-On Orders</h1>
+      <span style="font-size:.82rem;color:#6B7280;">Work you need to complete for customers</span>
+    </div>
+    <div class="admin-content">
+      <% if (addons.length === 0) { %>
+        <div style="background:#fff;border:1px solid #E5E0D8;border-radius:10px;padding:48px;text-align:center;color:#9CA3AF">
+          No add-on orders yet. They will appear here when customers purchase photo services.
+        </div>
+      <% } else { %>
+        <% addons.forEach(function(a) {
+          const photos = (() => { try { return JSON.parse(a.photo_paths || '[]'); } catch(e) { return []; } })();
+          const statusColor = a.status === 'paid' ? '#dc2626' : a.status === 'in_progress' ? '#d97706' : a.status === 'completed' ? '#16a34a' : '#6B7280';
+        %>
+        <div style="background:#fff;border:1px solid #E5E0D8;border-radius:10px;margin-bottom:16px;overflow:hidden">
+          <div style="padding:16px 20px;border-bottom:1px solid #E5E0D8;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div style="font-size:.95rem;font-weight:700;color:#1B2F4E"><%= a.customer_name || 'Customer' %> — <%= a.product_name %></div>
+              <div style="font-size:.78rem;color:#6B7280;margin-top:2px"><%= a.customer_email %> &bull; <%= a.created_at ? a.created_at.substring(0,10) : '' %></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:.8rem;font-weight:700;color:<%= statusColor %>;background:<%= statusColor %>18;padding:4px 12px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em"><%= a.status %></span>
+              <span style="font-size:.95rem;font-weight:800;color:#C9922B">$<%= (a.addon_amount/100).toFixed(0) %></span>
+            </div>
+          </div>
+
+          <div style="padding:16px 20px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+              <div>
+                <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#9CA3AF;margin-bottom:4px">Add-ons purchased</div>
+                <div style="font-size:.88rem;color:#374151"><%= a.addon_type %></div>
+              </div>
+              <% if (a.drive_link) { %>
+              <div>
+                <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#9CA3AF;margin-bottom:4px">Google Drive / Dropbox link</div>
+                <a href="<%= a.drive_link %>" target="_blank" style="font-size:.85rem;color:#C9922B;word-break:break-all"><%= a.drive_link %></a>
+              </div>
+              <% } %>
+            </div>
+
+            <% if (photos.length > 0) { %>
+            <div style="margin-bottom:16px">
+              <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#9CA3AF;margin-bottom:8px">Uploaded photos (<%= photos.length %>)</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <% photos.forEach(function(p, i) { %>
+                  <div style="background:#F4F2EE;border-radius:6px;padding:8px 12px;font-size:.78rem;color:#374151">
+                    Photo <%= i+1 %>: <code style="font-size:.72rem"><%= p.split('/').pop() || p.split('\\').pop() %></code>
+                  </div>
+                <% }); %>
+              </div>
+            </div>
+            <% } %>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <form method="POST" action="/admin/addons/<%= a.id %>/status" style="display:flex;gap:6px;align-items:center">
+                <select name="status" style="padding:6px 10px;border:1px solid #D1D5DB;border-radius:6px;font-size:.82rem;background:#fff">
+                  <option value="pending" <%= a.status==='pending'?'selected':'' %>>Pending</option>
+                  <option value="paid" <%= a.status==='paid'?'selected':'' %>>Paid — Not Started</option>
+                  <option value="in_progress" <%= a.status==='in_progress'?'selected':'' %>>In Progress</option>
+                  <option value="completed" <%= a.status==='completed'?'selected':'' %>>Completed</option>
+                </select>
+                <button type="submit" style="padding:6px 14px;background:#1B2F4E;color:#fff;border:none;border-radius:6px;font-size:.82rem;cursor:pointer">Update</button>
+              </form>
+            </div>
+
+            <form method="POST" action="/admin/addons/<%= a.id %>/notes" style="margin-top:12px;display:flex;gap:8px">
+              <input type="text" name="admin_notes" value="<%= a.addon_type && a.addon_type.includes('drive') ? '' : (a.admin_notes || '') %>" placeholder="Add a note (e.g. photos swapped, file sent)" style="flex:1;padding:7px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.82rem">
+              <button type="submit" style="padding:7px 14px;background:#F4F2EE;border:1px solid #D1D5DB;border-radius:6px;font-size:.82rem;cursor:pointer">Save Note</button>
+            </form>
+          </div>
+        </div>
+        <% }); %>
+      <% } %>
+    </div>
+  </div>
+</div>
+</body>
+</html>
