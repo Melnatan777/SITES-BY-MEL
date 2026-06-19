@@ -136,22 +136,22 @@ if (count.n === 0) {
   `);
   insert.run('ServicePro Template', 'service-pro', 'Local Service Business',
     'Perfect for pressure washing, lawn care, HVAC, plumbing & more. Bold hero, services grid, gallery, reviews, and quote form.',
-    19700, '/templates/service-pro/', 1, 1);
+    19700, '/templates/service-pro/index.html', 1, 1);
   insert.run('TableReady Template', 'table-ready', 'Restaurant & Food',
     'Built for restaurants, food trucks, bakeries & caterers. Menu display, hours, location, photo gallery & reservation link.',
-    19700, '/templates/table-ready/', 1, 2);
+    19700, '/templates/table-ready/index.html', 1, 2);
   insert.run('KeyReady Template', 'key-ready', 'Real Estate Agent',
     'For realtors and property managers. Featured listings, agent bio, testimonials, and contact form.',
-    19700, '/templates/key-ready/', 1, 3);
+    19700, '/templates/key-ready/index.html', 1, 3);
   insert.run('ShopFront Template', 'shop-front', 'Retail & Storefront',
     'For boutiques, retail shops & local stores. Featured products, brand story, hours, location & reviews.',
-    19700, '/templates/shop-front/', 1, 4);
+    19700, '/templates/shop-front/index.html', 1, 4);
   insert.run('VoiceFirst Template', 'voice-first', 'Blogger & Creator',
     'For writers, podcasters & content creators. Clean blog layout, newsletter signup, about section & social links.',
-    19700, '/templates/voice-first/', 1, 5);
+    19700, '/templates/voice-first/index.html', 1, 5);
   insert.run('GatherHere Template', 'gather-here', 'Church & Ministry',
     'For churches, ministries & faith-based organizations. Service times, sermons, prayer requests & giving links.',
-    19700, '/templates/gather-here/', 1, 6);
+    19700, '/templates/gather-here/index.html', 1, 6);
 }
 
 // Activate all templates if any are still inactive from old seed
@@ -162,14 +162,15 @@ db.prepare("UPDATE products SET price=19700").run();
 
 // Backfill preview_url for existing records that don't have one
 const previewUrls = [
-  ['service-pro', '/templates/service-pro/'],
-  ['table-ready', '/templates/table-ready/'],
-  ['key-ready',   '/templates/key-ready/'],
-  ['shop-front',  '/templates/shop-front/'],
-  ['voice-first', '/templates/voice-first/'],
-  ['gather-here', '/templates/gather-here/'],
+  ['service-pro', '/templates/service-pro/index.html'],
+  ['table-ready', '/templates/table-ready/index.html'],
+  ['key-ready',   '/templates/key-ready/index.html'],
+  ['shop-front',  '/templates/shop-front/index.html'],
+  ['voice-first', '/templates/voice-first/index.html'],
+  ['gather-here', '/templates/gather-here/index.html'],
 ];
-const backfill = db.prepare("UPDATE products SET preview_url=? WHERE slug=? AND (preview_url IS NULL OR preview_url='')");
+// Always update preview_url to correct paths (fixes trailing slash issue)
+const backfill = db.prepare("UPDATE products SET preview_url=? WHERE slug=?");
 for (const [slug, url] of previewUrls) backfill.run(url, slug);
 
 module.exports = db;
