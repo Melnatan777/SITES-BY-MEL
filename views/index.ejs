@@ -51,7 +51,7 @@
           <p class="card-desc"><%= p.description %></p>
           <div class="card-price">$<%= (p.price / 100).toFixed(0) %></div>
           <div class="card-footer">
-            <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">View Details</a>
+            <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">View & Buy</a>
             <% if (p.preview_url) { %>
               <a href="<%= p.preview_url %>" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Live Preview</a>
             <% } %>
