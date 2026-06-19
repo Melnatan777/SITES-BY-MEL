@@ -105,26 +105,29 @@ if (count.n === 0) {
   `);
   insert.run('ServicePro Template', 'service-pro', 'Local Service Business',
     'Perfect for pressure washing, lawn care, HVAC, plumbing & more. Bold hero, services grid, gallery, reviews, and quote form.',
-    4700, '/templates/service-pro/', 1, 1);
+    9700, '/templates/service-pro/', 1, 1);
   insert.run('TableReady Template', 'table-ready', 'Restaurant & Food',
     'Built for restaurants, food trucks, bakeries & caterers. Menu display, hours, location, photo gallery & reservation link.',
-    4700, '/templates/table-ready/', 1, 2);
+    9700, '/templates/table-ready/', 1, 2);
   insert.run('KeyReady Template', 'key-ready', 'Real Estate Agent',
     'For realtors and property managers. Featured listings, agent bio, testimonials, and contact form.',
-    5700, '/templates/key-ready/', 1, 3);
+    9700, '/templates/key-ready/', 1, 3);
   insert.run('ShopFront Template', 'shop-front', 'Retail & Storefront',
     'For boutiques, retail shops & local stores. Featured products, brand story, hours, location & reviews.',
-    4700, '/templates/shop-front/', 1, 4);
+    9700, '/templates/shop-front/', 1, 4);
   insert.run('VoiceFirst Template', 'voice-first', 'Blogger & Creator',
     'For writers, podcasters & content creators. Clean blog layout, newsletter signup, about section & social links.',
-    3700, '/templates/voice-first/', 1, 5);
+    9700, '/templates/voice-first/', 1, 5);
   insert.run('GatherHere Template', 'gather-here', 'Church & Ministry',
     'For churches, ministries & faith-based organizations. Service times, sermons, prayer requests & giving links.',
-    4700, '/templates/gather-here/', 1, 6);
+    9700, '/templates/gather-here/', 1, 6);
 }
 
 // Activate all templates if any are still inactive from old seed
 db.prepare("UPDATE products SET active=1 WHERE active=0").run();
+
+// Update template prices to $97 (was $37-$57 in old seed)
+db.prepare("UPDATE products SET price=9700 WHERE price < 9700").run();
 
 // Backfill preview_url for existing records that don't have one
 const previewUrls = [
