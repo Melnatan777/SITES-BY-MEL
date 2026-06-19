@@ -1,34 +1,40 @@
 <footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-logo">Sites by <span>Mel</span></div>
-        <p class="footer-tagline">Affordable, professional websites for small businesses that mean business.</p>
-        <a href="/quote" class="btn btn-outline-gold btn-sm">Get a Free Quote</a>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <div class="footer-logo-mark">M</div>
+          <span class="footer-logo-text">Sites by Mel</span>
+        </div>
+        <p>Hand-coded websites for real businesses. Professional quality, honest pricing, personal service.</p>
       </div>
       <div class="footer-col">
-        <h4>Shop</h4>
-        <ul>
-          <li><a href="/templates">All Templates</a></li>
-          <li><a href="/services">Done-For-You Setup</a></li>
-          <li><a href="/quote">Custom Site Quote</a></li>
-        </ul>
+        <h4>Services</h4>
+        <a href="/templates">Template Downloads</a>
+        <a href="/services">Done-For-You Setup</a>
+        <a href="/quote">Custom Site Quote</a>
+        <a href="/contact">Build on Request</a>
       </div>
       <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="/portfolio">Portfolio</a></li>
-          <li><a href="/about">About Mel</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/admin/login">Admin</a></li>
-        </ul>
+        <h4>Quick Links</h4>
+        <a href="/portfolio">Portfolio</a>
+        <a href="/about">About Mel</a>
+        <a href="/contact">Contact</a>
+        <a href="https://www.enduringbranches.com" target="_blank" rel="noopener">See My Work &rarr;</a>
+        <a href="/admin/login">Admin</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; <%= new Date().getFullYear() %> Sites by Mel. All rights reserved.</p>
-      <p>Questions? <a href="mailto:mel@sitesbymel.com">mel@sitesbymel.com</a></p>
+      <span>&copy; <%= new Date().getFullYear() %> Sites by Mel &middot; All rights reserved</span>
+      <span>Built by Mel &mdash; hand-coded, not dragged-and-dropped.</span>
     </div>
   </div>
 </footer>
+<script>
+  window.addEventListener('scroll', function() {
+    var nav = document.getElementById('navbar');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
 </body>
 </html>

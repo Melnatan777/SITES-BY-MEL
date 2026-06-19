@@ -1,16 +1,17 @@
-<nav class="site-nav">
+<nav class="site-nav" id="navbar">
   <div class="nav-inner">
-    <a href="/" class="nav-logo">Sites by <span>Mel</span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="/templates" class="<%= typeof activePage !== 'undefined' && activePage === 'templates' ? 'active' : '' %>">Templates</a></li>
-      <li><a href="/services" class="<%= typeof activePage !== 'undefined' && activePage === 'services' ? 'active' : '' %>">Services</a></li>
-      <li><a href="/portfolio" class="<%= typeof activePage !== 'undefined' && activePage === 'portfolio' ? 'active' : '' %>">Portfolio</a></li>
-      <li><a href="/about" class="<%= typeof activePage !== 'undefined' && activePage === 'about' ? 'active' : '' %>">About</a></li>
-      <li><a href="/contact" class="<%= typeof activePage !== 'undefined' && activePage === 'contact' ? 'active' : '' %>">Contact</a></li>
-      <li class="nav-cta"><a href="/quote" class="btn btn-gold btn-sm">Get a Quote</a></li>
-    </ul>
-    <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="/" class="nav-logo-wrap">
+      <div class="nav-logo-mark">M</div>
+      <span class="nav-logo-text">Sites by Mel</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/templates" class="<%= typeof activePage !== 'undefined' && activePage === 'templates' ? 'active' : '' %>">Templates</a>
+      <a href="/services" class="<%= typeof activePage !== 'undefined' && activePage === 'services' ? 'active' : '' %>">Services</a>
+      <a href="/portfolio" class="<%= typeof activePage !== 'undefined' && activePage === 'portfolio' ? 'active' : '' %>">Portfolio</a>
+      <a href="/about" class="<%= typeof activePage !== 'undefined' && activePage === 'about' ? 'active' : '' %>">About</a>
+      <a href="/contact" class="<%= typeof activePage !== 'undefined' && activePage === 'contact' ? 'active' : '' %>">Contact</a>
+      <a href="/quote" class="btn-nav">Get a Quote</a>
+    </div>
+    <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">&#9776;</button>
   </div>
 </nav>

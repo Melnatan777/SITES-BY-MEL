@@ -1,187 +1,393 @@
-<%- include('partials/head', { title: 'Affordable Websites for Small Businesses', metaDesc: 'Professional website templates and done-for-you web design starting at $47. Built for small businesses by Mel.' }) %>
+<%- include('partials/head', { title: 'Professional Websites for Small Businesses', metaDesc: 'Beautiful, hand-coded websites built by Mel. Templates from $47, done-for-you setup, or a fully custom site. Real quality for real businesses.' }) %>
 <%- include('partials/nav', { activePage: 'home' }) %>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container">
-    <span class="hero-badge">Websites That Work as Hard as You Do</span>
-    <h1>Professional Websites for <span>Small Businesses</span></h1>
-    <p>Grab a polished template for $47, get it set up for you for $200, or let's build something fully custom. No bloat. No confusion. Just a site that works.</p>
-    <div class="hero-buttons">
-      <a href="/templates" class="btn btn-gold">Browse Templates</a>
-      <a href="/services" class="btn btn-outline-gold">Done-For-You Setup</a>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-label">Professional Website Builder</div>
+      <h1>Websites that are <em>beautiful</em> and actually work.</h1>
+      <p class="hero-desc">I build clean, fast, hand-coded websites &mdash; from ready-to-use templates you can buy today to full custom sites built from the ground up. No page builders. No bloat. Just real quality.</p>
+      <div class="hero-btns">
+        <a href="/templates" class="btn btn-gold">&#x1F6D2; Browse Templates</a>
+        <a href="/quote" class="btn btn-outline-white">Hire Mel &rarr;</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-browser">
+        <div class="browser-bar">
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="browser-dot"></div>
+          <div class="browser-url">enduringbranches.com</div>
+        </div>
+        <div class="browser-screen">
+          <div class="mock-nav-bar">
+            <div class="mock-nav-dot" style="width:80px"></div>
+            <div class="mock-nav-dot" style="width:40px"></div>
+            <div class="mock-nav-dot" style="width:40px"></div>
+            <div class="mock-nav-dot" style="width:70px;background:#D4A227;margin-left:auto"></div>
+          </div>
+          <div class="mock-hero-text">
+            <div class="mock-h1"></div>
+            <div class="mock-h2"></div>
+            <div class="mock-p"></div>
+            <div class="mock-p" style="width:80%"></div>
+            <div class="mock-p" style="width:50%"></div>
+            <div class="mock-btn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-float-badge">
+        <div class="hfb-emoji">&#x271D;</div>
+        <div>
+          <strong>enduringbranches.com</strong>
+          <span>Built by Mel &mdash; live right now</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TRUST BAR -->
-<div class="container">
-  <div class="trust-bar">
-    <div class="trust-item"><strong>$47</strong><span>Templates start at</span></div>
-    <div class="trust-item"><strong>$200</strong><span>Setup deposit</span></div>
-    <div class="trust-item"><strong>48h</strong><span>Download link valid</span></div>
-    <div class="trust-item"><strong>6</strong><span>Niche-specific templates</span></div>
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><div class="trust-dot"></div>Hand-coded HTML, CSS &amp; JavaScript</div>
+    <div class="trust-item"><div class="trust-dot"></div>Mobile-first &amp; fully responsive</div>
+    <div class="trust-item"><div class="trust-dot"></div>Fast-loading &mdash; no bloated page builders</div>
+    <div class="trust-item"><div class="trust-dot"></div>Real results for real businesses</div>
   </div>
 </div>
 
-<!-- FEATURED TEMPLATES -->
-<section class="section">
+<!-- SERVICES -->
+<section class="section" style="background:var(--cream)">
   <div class="container">
     <div class="section-header">
-      <h2>Ready-Made Templates</h2>
-      <p>Built for specific industries so they look right from day one. Buy it, customize it, launch it.</p>
-      <div class="gold-line"></div>
+      <div class="section-tag">What I Build</div>
+      <h2>One builder. Three ways to work together.</h2>
+      <p>Whether you want a ready-made template or a fully custom site &mdash; I&rsquo;ve got you covered.</p>
     </div>
-    <div class="cards-grid">
-      <% products.forEach(function(p) { %>
-      <div class="card">
-        <div class="card-img">
-          <% if (p.thumbnail) { %>
-            <img src="/images/<%= p.thumbnail %>" alt="<%= p.name %> preview" />
-          <% } else { %>
-            <div style="height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:var(--light);color:var(--gray);">
-              <span style="font-size:2rem;">🌐</span>
-              <span><%= p.category %></span>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">&#x1F4C4;</div>
+        <div class="service-tier">Tier 1</div>
+        <h3>Website Template</h3>
+        <div class="service-price">$37&ndash;$67 <span>one-time download</span></div>
+        <p>Buy a beautifully designed, hand-coded HTML template, customize it with your business info, and go live the same day.</p>
+        <ul class="service-includes">
+          <li>Complete HTML, CSS &amp; JavaScript files</li>
+          <li>Mobile-responsive on all devices</li>
+          <li>Clearly labeled &mdash; swap your info in minutes</li>
+          <li>Step-by-step setup instructions included</li>
+          <li>Yours to keep and customize forever</li>
+        </ul>
+        <a href="/templates" class="btn-service outline">Browse Templates</a>
+      </div>
+
+      <div class="service-card featured-service">
+        <div class="featured-badge">Most Popular</div>
+        <div class="service-icon">&#x1F6E0;&#xFE0F;</div>
+        <div class="service-tier">Tier 2</div>
+        <h3>Done-For-You Setup</h3>
+        <div class="service-price">$200&ndash;$400 <span>one-time</span></div>
+        <p>Choose a template and I&rsquo;ll customize it with your content, connect your domain, and get you live.</p>
+        <ul class="service-includes">
+          <li>Everything in Tier 1</li>
+          <li>I personalize it with your business info</li>
+          <li>Domain connected &amp; hosting set up</li>
+          <li>Your colors, logo &amp; photos added</li>
+          <li>Live and ready within 3&ndash;5 business days</li>
+        </ul>
+        <a href="/services" class="btn-service">Get Started &rarr;</a>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">&#x1F3D7;&#xFE0F;</div>
+        <div class="service-tier">Tier 3</div>
+        <h3>Full Custom Site</h3>
+        <div class="service-price">$1,000&ndash;$3,000 <span>custom quote</span></div>
+        <p>A completely custom-designed website with a content management system so you can edit everything yourself.</p>
+        <ul class="service-includes">
+          <li>Custom design built for your brand</li>
+          <li>Full CMS &mdash; edit your own content easily</li>
+          <li>Blog, store, contact forms &amp; more</li>
+          <li>Domain, hosting &amp; email setup</li>
+          <li>The same quality as enduringbranches.com</li>
+        </ul>
+        <a href="/quote" class="btn-service outline">Request a Quote</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO FEATURE -->
+<section class="section">
+  <div class="container">
+    <div class="portfolio-feature-grid">
+      <div>
+        <div class="portfolio-screen-wrap">
+          <div class="portfolio-screen-top">
+            <div class="pf-dot" style="background:#ff5f57"></div>
+            <div class="pf-dot" style="background:#febc2e"></div>
+            <div class="pf-dot" style="background:#28c840"></div>
+            <div class="portfolio-screen-url">enduringbranches.com</div>
+          </div>
+          <div class="mock-site-hero-wrap">
+            <div class="mock-site-nav-row">
+              <div class="mock-logo-bar"></div>
+              <div class="mock-navlinks">
+                <div class="mock-navlink"></div>
+                <div class="mock-navlink"></div>
+                <div class="mock-navlink"></div>
+                <div class="mock-navlink" style="background:rgba(212,162,39,.6)"></div>
+              </div>
             </div>
+            <div class="mock-hero-content">
+              <div class="mock-hl"></div>
+              <div class="mock-hl2"></div>
+              <div class="mock-body-line"></div>
+              <div class="mock-body-line"></div>
+              <div class="mock-body-line short"></div>
+              <div class="mock-cta-row">
+                <div class="mock-cta-btn"></div>
+                <div class="mock-cta-btn ghost"></div>
+              </div>
+            </div>
+          </div>
+          <div class="mock-cards-section">
+            <div class="mock-card"><div class="mock-card-icon"></div><div class="mock-card-line"></div><div class="mock-card-line short"></div></div>
+            <div class="mock-card"><div class="mock-card-icon" style="background:#fdf6e3"></div><div class="mock-card-line"></div><div class="mock-card-line short"></div></div>
+            <div class="mock-card"><div class="mock-card-icon" style="background:#fef0f0"></div><div class="mock-card-line"></div><div class="mock-card-line short"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-feature-info">
+        <div class="section-tag">Featured Work</div>
+        <h2>Enduring Branches Ministry</h2>
+        <p>A full-stack web application built entirely from scratch &mdash; blog with email subscriptions, prison testimony submissions, family concern reporting, Texas legislation tracker, and an online book store with Stripe payments. All managed from a custom admin panel.</p>
+        <div class="portfolio-stats">
+          <div class="portfolio-stat"><strong>12+</strong><span>Pages Built</span></div>
+          <div class="portfolio-stat"><strong>Full CMS</strong><span>Admin Dashboard</span></div>
+          <div class="portfolio-stat"><strong>Email</strong><span>Automated Notifications</span></div>
+          <div class="portfolio-stat"><strong>Stripe</strong><span>Payment Integration</span></div>
+        </div>
+        <a href="https://www.enduringbranches.com" target="_blank" rel="noopener" class="portfolio-cta-link">View live site &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section class="section" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Template Shop</div>
+      <h2>Ready-to-use website templates</h2>
+      <p>Hand-coded HTML/CSS templates for real businesses. Download, customize with your info, and go live. No coding experience needed.</p>
+    </div>
+    <%
+    var colorMap = {
+      'service-pro': { bg: 't-blue',   cat: 't-cat-blue',   btn: '#F59E0B' },
+      'table-ready': { bg: 't-red',    cat: 't-cat-red',    btn: '#D4A227' },
+      'key-ready':   { bg: 't-green',  cat: 't-cat-green',  btn: '#10B981' },
+      'shop-front':  { bg: 't-brown',  cat: 't-cat-brown',  btn: '#F59E0B' },
+      'voice-first': { bg: 't-teal',   cat: 't-cat-teal',   btn: '#06B6D4' },
+      'gather-here': { bg: 't-purple', cat: 't-cat-purple', btn: '#D4A227' },
+    };
+    %>
+    <div class="templates-grid-new">
+      <% products.forEach(function(p) {
+        var c = colorMap[p.slug] || { bg: 't-blue', cat: 't-cat-blue', btn: '#F59E0B' };
+      %>
+      <div class="template-card-new">
+        <div class="template-preview-area <%= c.bg %>">
+          <div class="tp-nav"></div>
+          <div class="tp-h"></div>
+          <div class="tp-sub"></div>
+          <div class="tp-btn" style="background:<%= c.btn %>"></div>
+          <% if (p.active) { %>
+            <div class="template-available-badge">Available Now</div>
+          <% } else { %>
+            <div class="template-soon-badge">Coming Soon</div>
           <% } %>
         </div>
-        <div class="card-body">
-          <div class="card-category"><%= p.category %></div>
-          <h3 class="card-title"><%= p.name %></h3>
-          <p class="card-desc"><%= p.description %></p>
-          <div class="card-price">$<%= (p.price / 100).toFixed(0) %></div>
-          <div class="card-footer">
-            <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">View Details</a>
-            <% if (p.preview_url) { %>
-              <a href="<%= p.preview_url %>" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Live Preview</a>
+        <div class="template-card-body">
+          <div class="template-cat-tag <%= c.cat %>"><%= p.category %></div>
+          <h3><%= p.name %></h3>
+          <p><%= p.description %></p>
+          <div class="template-card-footer">
+            <div class="template-price-tag">$<%= (p.price / 100).toFixed(0) %></div>
+            <% if (p.active) { %>
+              <a href="/templates/<%= p.slug %>" class="btn-buy-now">View Details</a>
+            <% } else { %>
+              <span class="btn-coming-soon-tag">Coming Soon</span>
             <% } %>
           </div>
         </div>
       </div>
-      <% }) %>
-      <% if (products.length === 0) { %>
-      <p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:40px 0;">Templates coming soon — check back shortly!</p>
-      <% } %>
+      <% }); %>
     </div>
-    <div style="text-align:center;margin-top:36px;">
-      <a href="/templates" class="btn btn-outline-gold">See All Templates</a>
+    <div style="text-align:center;margin-top:40px">
+      <p style="color:var(--text-mid);font-size:.9rem;margin-bottom:16px">Don&rsquo;t see your industry? I build on request &mdash; you pay once and I add it to the shop.</p>
+      <a href="/contact" class="btn btn-gold">Request a Custom Template</a>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="section section-light">
+<!-- ABOUT -->
+<section class="section">
+  <div class="container">
+    <div class="about-grid-new">
+      <div class="about-photo-col">
+        <div class="about-photo-box">
+          <div class="about-photo-inner">
+            <div class="about-photo-initial">M</div>
+            <p>Mel Billingsley<br>Website Builder &amp;<br>Ministry Leader</p>
+          </div>
+        </div>
+        <div class="about-float-badge">
+          <strong>Real work.</strong>
+          <span>Real results.</span>
+        </div>
+      </div>
+      <div class="about-content-col">
+        <div class="section-tag">About Mel</div>
+        <h2>Built by someone who actually cares about your business.</h2>
+        <p>I&rsquo;m Mel Billingsley &mdash; a website builder, ministry leader, and real person who got tired of watching small businesses get ripped off by overpriced agencies or stuck with ugly template builders that don&rsquo;t actually convert.</p>
+        <p>I hand-code every site from scratch. That means fast, clean, professional websites that actually work on every device &mdash; no drag-and-drop bloat, no monthly subscription to a page builder you don&rsquo;t understand.</p>
+        <p>You&rsquo;ve probably already seen my work. <a href="https://www.enduringbranches.com" target="_blank" rel="noopener" style="color:var(--navy);font-weight:700">Enduring Branches</a> &mdash; a full-stack ministry site with a blog, store, prayer request system, and admin dashboard &mdash; was built right here.</p>
+        <div class="about-values">
+          <div class="about-value">
+            <div class="about-value-icon">&#x270D;&#xFE0F;</div>
+            <div class="about-value-text">
+              <strong>Hand-coded, not drag-and-dropped</strong>
+              <span>Every line of code written with your site in mind &mdash; fast, clean, and yours.</span>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="about-value-icon">&#x1F91D;</div>
+            <div class="about-value-text">
+              <strong>You&rsquo;re not just a ticket number</strong>
+              <span>Real communication. I actually respond. You know exactly what&rsquo;s happening.</span>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="about-value-icon">&#x1F4C8;</div>
+            <div class="about-value-text">
+              <strong>Built to convert, not just look pretty</strong>
+              <span>Every section designed to get visitors to call, buy, or book.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-dark">
   <div class="container">
     <div class="section-header">
-      <h2>Three Ways to Get Online</h2>
-      <p>Pick the path that fits your budget and comfort level.</p>
-      <div class="gold-line"></div>
+      <div class="section-tag">Pricing</div>
+      <h2>No hidden fees. No surprises.</h2>
+      <p>Simple, honest pricing. Pick the level that fits where you are right now.</p>
     </div>
-    <div class="process-steps">
-      <div class="process-step">
-        <div class="process-step-num">1</div>
-        <h3>Buy a Template</h3>
-        <p>$37–$57. Download a fully coded HTML/CSS site built for your industry. Customize the text and colors yourself.</p>
+    <div class="pricing-grid-dark">
+      <div class="pricing-card-dark">
+        <h3>Template Download</h3>
+        <div class="price-big">$37&ndash;$67 <sub>one-time</sub></div>
+        <p>Buy, download, and customize yourself. Detailed instructions included.</p>
+        <ul class="pricing-list-dark">
+          <li>Complete HTML/CSS/JS files</li>
+          <li>Mobile responsive</li>
+          <li>Labeled placeholders throughout</li>
+          <li>Setup README included</li>
+          <li>Yours to use forever</li>
+        </ul>
+        <a href="/templates" class="btn-pricing-dark">Browse Templates</a>
       </div>
-      <div class="process-step">
-        <div class="process-step-num">2</div>
+      <div class="pricing-card-dark featured-price">
         <h3>Done-For-You Setup</h3>
-        <p>$200 deposit. Choose a template and I'll customize it with your info, branding, and get it live on your domain.</p>
+        <div class="price-big">$200&ndash;$400 <sub>one-time</sub></div>
+        <p>I customize everything and get your site live. You do nothing.</p>
+        <ul class="pricing-list-dark">
+          <li>Everything in Template tier</li>
+          <li>Customized with your content</li>
+          <li>Domain &amp; hosting connected</li>
+          <li>Your logo, colors &amp; photos</li>
+          <li>Live in 3&ndash;5 business days</li>
+        </ul>
+        <a href="/services" class="btn-pricing-dark">Get Started</a>
       </div>
-      <div class="process-step">
-        <div class="process-step-num">3</div>
-        <h3>Custom Site</h3>
-        <p>Something unique? Tell me about your project and I'll put together a custom quote. No commitment to inquire.</p>
+      <div class="pricing-card-dark">
+        <h3>Full Custom Site</h3>
+        <div class="price-big">$1k&ndash;$3k <sub>custom</sub></div>
+        <p>Complete custom build &mdash; everything from design to launch.</p>
+        <ul class="pricing-list-dark">
+          <li>Fully custom design</li>
+          <li>CMS so you can edit content</li>
+          <li>Blog, store, forms &amp; more</li>
+          <li>Domain, hosting &amp; email setup</li>
+          <li>Ongoing support available</li>
+        </ul>
+        <a href="/quote" class="btn-pricing-dark">Request a Quote</a>
       </div>
-    </div>
-    <div style="text-align:center;margin-top:40px;">
-      <a href="/services" class="btn btn-navy">See All Services</a>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
+<!-- FAQ -->
 <section class="section">
   <div class="container">
     <div class="section-header">
-      <h2>Why Sites by Mel?</h2>
-      <div class="gold-line"></div>
+      <div class="section-tag">Questions</div>
+      <h2>Things people ask before they buy</h2>
     </div>
-    <div class="features-grid">
-      <div class="feature">
-        <div class="feature-icon">⚡</div>
-        <h3>Fast & Lightweight</h3>
-        <p>Plain HTML and CSS — no WordPress, no plugins, no bloat. Pages load in under a second.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need to know how to code to use your templates?</button>
+        <div class="faq-a">Not at all. Every template comes with a clear setup guide and clearly labeled placeholder text throughout the code. If you can use Microsoft Word, you can set up my templates.</div>
       </div>
-      <div class="feature">
-        <div class="feature-icon">📱</div>
-        <h3>Mobile-First</h3>
-        <p>Every template looks great on phones, tablets, and desktops right out of the box.</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What do I need to go live with a template?</button>
+        <div class="faq-a">A domain name (about $12/year from Namecheap or Google Domains) and free hosting on Netlify. The setup guide walks you through both. Or choose Done-For-You and I handle everything.</div>
       </div>
-      <div class="feature">
-        <div class="feature-icon">🎯</div>
-        <h3>Built for Your Niche</h3>
-        <p>Not a generic template. Each design is purpose-built for a specific industry.</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How is this different from Wix, Squarespace, or WordPress?</button>
+        <div class="faq-a">Those platforms charge $16&ndash;$45/month forever. My templates are yours to own. Pay once, host free on Netlify, never pay again. Plus they&rsquo;re hand-coded to be fast and clean &mdash; no bloat.</div>
       </div>
-      <div class="feature">
-        <div class="feature-icon">🛠️</div>
-        <h3>Yours to Keep</h3>
-        <p>Buy once, own forever. No subscriptions, no monthly fees for the template itself.</p>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How long does a Done-For-You setup take?</button>
+        <div class="faq-a">Typically 3&ndash;5 business days from when I receive your content (logo, photos, text, colors). I&rsquo;ll send you a simple form to fill out &mdash; no coding or special formats required.</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section section-light">
-  <div class="container">
-    <div class="section-header">
-      <h2>What Clients Are Saying</h2>
-      <p>Real feedback from real small business owners.</p>
-      <div class="gold-line"></div>
-    </div>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-text">"Mel built our site fast and it looks better than anything I could have done myself. Our customers actually comment on how professional it looks."</p>
-        <div class="testimonial-author">
-          <strong>James K.</strong>
-          <span>Kingdom Exterior Solutions</span>
-        </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can I see an example of your full custom work?</button>
+        <div class="faq-a">Yes &mdash; visit <a href="https://www.enduringbranches.com" target="_blank" rel="noopener" style="color:var(--navy);font-weight:700">enduringbranches.com</a>. Blog, store, prayer request system, email notifications, full admin dashboard &mdash; all built from scratch.</div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-text">"I didn't know anything about websites and Mel made it completely painless. She handled everything and explained it clearly. I'm so glad I reached out."</p>
-        <div class="testimonial-author">
-          <strong>Ministry Client</strong>
-          <span>Faith-Based Organization</span>
-        </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What if I need an industry that&rsquo;s not in your template shop?</button>
+        <div class="faq-a">Just reach out and request it. I build on demand &mdash; you pay for the custom build, and I add it to the shop so others can benefit too.</div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-text">"The template was worth every dollar. I had it customized and live within a week. No subscription fees, no confusion — just a clean site I'm proud of."</p>
-        <div class="testimonial-author">
-          <strong>Template Customer</strong>
-          <span>Local Business Owner</span>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:36px;">
-      <a href="/portfolio" class="btn btn-outline">See My Work</a>
     </div>
   </div>
 </section>
 
-<!-- CTA BAND -->
-<section class="section section-navy">
-  <div class="container" style="text-align:center;">
-    <h2 style="color:var(--white);margin-bottom:16px;">Ready to get your business online?</h2>
-    <p style="color:rgba(255,255,255,0.8);max-width:500px;margin:0 auto 32px;">Start with a template or get a free custom quote. Either way, I'll make sure you end up with something you're proud of.</p>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <a href="/templates" class="btn btn-gold">Browse Templates</a>
-      <a href="/quote" class="btn btn-outline-gold">Request a Quote</a>
-    </div>
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Ready for a website that actually works?</h2>
+  <p>Whether you buy a template today or hire me for the full package &mdash; let&rsquo;s get you online and looking good.</p>
+  <div class="cta-btns">
+    <a href="/templates" class="btn btn-gold">&#x1F6D2; Browse Templates</a>
+    <a href="/contact" class="btn btn-outline-white">&#x1F4AC; Let&rsquo;s Talk</a>
   </div>
-</section>
+</div>
+
+<script>
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
+</script>
 
 <%- include('partials/footer') %>
