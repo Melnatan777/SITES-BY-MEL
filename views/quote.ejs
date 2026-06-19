@@ -1,92 +1,54 @@
-<%- include('partials/head', { title: 'Request a Quote', metaDesc: "Tell me about your project and I'll put together a free custom quote for your new website." }) %>
+<%- include('partials/head', { title: 'Get a Quote — Sites by Mel', metaDesc: "Tell me what you need and I will put together a custom quote for your new website." }) %>
 <%- include('partials/nav', { activePage: 'contact' }) %>
 
-<div class="page-header">
-  <h1>Request a Free Quote</h1>
-  <p>Tell me about your project and I'll get back to you within 24 hours with pricing and a plan.</p>
-</div>
+<section style="padding:80px 0 60px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;text-align:center">
+    <h1 style="font-size:2.2rem;font-weight:800;color:var(--navy);margin-bottom:12px">What kind of site do you need?</h1>
+    <p style="color:#6B7280;line-height:1.7;max-width:520px;margin:0 auto 48px">Choose the option that fits your situation. Both include a free quote with no obligation.</p>
 
-<section class="section">
-  <div class="container">
-    <div class="form-card" style="max-width:700px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:left">
 
-      <% if (success) { %>
-        <div class="alert alert-success" style="margin-bottom:0;">
-          <strong>Quote request received!</strong> I'll review your project details and get back to you within 24 hours with pricing and next steps. Talk soon!
+      <!-- Simple site option -->
+      <div style="background:#fff;border:1px solid #E5E0D8;border-radius:14px;padding:32px;display:flex;flex-direction:column">
+        <div style="width:48px;height:48px;background:#F4F2EE;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
         </div>
-      <% } else { %>
+        <h2 style="font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:8px">Simple Website</h2>
+        <p style="font-size:.88rem;color:#6B7280;line-height:1.7;flex:1">A beautiful, fast, mobile-friendly website for your business. No login, no database — just a great site that loads instantly and converts visitors.</p>
+        <div style="background:#F4F2EE;border-radius:8px;padding:12px 14px;margin:18px 0;font-size:.82rem;color:#374151;line-height:1.7">
+          <strong style="display:block;margin-bottom:4px">Good for:</strong>
+          Service businesses, restaurants, shops, realtors, churches, creators
+        </div>
+        <div style="font-size:.82rem;color:#9CA3AF;margin-bottom:20px">
+          Starting at <strong style="color:var(--navy)">$497</strong> &bull; Delivered in 3–5 days
+        </div>
+        <a href="/quote/simple" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem">Get a Simple Site Quote &rarr;</a>
+      </div>
 
-        <% if (error) { %>
-          <div class="alert alert-error"><%= error %></div>
-        <% } %>
-
-        <form action="/quote" method="POST">
-          <div class="form-2col">
-            <div class="form-group">
-              <label for="name">Your Name *</label>
-              <input type="text" id="name" name="name" required placeholder="Jane Smith" />
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address *</label>
-              <input type="email" id="email" name="email" required placeholder="jane@example.com" />
-            </div>
-          </div>
-          <div class="form-2col">
-            <div class="form-group">
-              <label for="phone">Phone (optional)</label>
-              <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
-            </div>
-            <div class="form-group">
-              <label for="business_name">Business Name</label>
-              <input type="text" id="business_name" name="business_name" placeholder="Smith Pressure Washing LLC" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="business_url">Current Website (if any)</label>
-            <input type="url" id="business_url" name="business_url" placeholder="https://..." />
-          </div>
-          <div class="form-2col">
-            <div class="form-group">
-              <label for="project_type">Project Type</label>
-              <select id="project_type" name="project_type">
-                <option value="">Select one...</option>
-                <option value="New website from scratch">New website from scratch</option>
-                <option value="Template customization">Template customization</option>
-                <option value="Redesign existing site">Redesign existing site</option>
-                <option value="Add features to existing site">Add features to existing site</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="budget">Rough Budget</label>
-              <select id="budget" name="budget">
-                <option value="">Not sure yet</option>
-                <option value="Under $500">Under $500</option>
-                <option value="$500–$1,000">$500–$1,000</option>
-                <option value="$1,000–$2,500">$1,000–$2,500</option>
-                <option value="$2,500+">$2,500+</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="timeline">Timeline</label>
-            <select id="timeline" name="timeline">
-              <option value="">Flexible</option>
-              <option value="ASAP (within 1–2 weeks)">ASAP (within 1–2 weeks)</option>
-              <option value="Within a month">Within a month</option>
-              <option value="1–3 months">1–3 months</option>
-              <option value="Just exploring">Just exploring</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="description">Tell me about your project *</label>
-            <textarea id="description" name="description" required rows="6" placeholder="What does your business do? What pages do you need? Any features like a contact form, booking system, photo gallery? What do you like or dislike about your current site?"></textarea>
-          </div>
-          <button type="submit" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">Submit Quote Request &rarr;</button>
-          <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:10px;">No commitment required. I'll respond within 24 hours.</p>
-        </form>
-      <% } %>
+      <!-- Full CMS option -->
+      <div style="background:#1B2F4E;border-radius:14px;padding:32px;display:flex;flex-direction:column;position:relative;overflow:hidden">
+        <div style="position:absolute;top:16px;right:16px;background:#C9922B;color:#fff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:100px;letter-spacing:.05em;text-transform:uppercase">Most Powerful</div>
+        <div style="width:48px;height:48px;background:rgba(255,255,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9922B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h2 style="font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:8px">Full Custom Site + Admin Dashboard</h2>
+        <p style="font-size:.88rem;color:rgba(255,255,255,.65);line-height:1.7;flex:1">A fully custom-built website with your own admin panel. Manage content, view leads, track orders, run analytics — all from a private dashboard only you can access.</p>
+        <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:12px 14px;margin:18px 0;font-size:.82rem;color:rgba(255,255,255,.75);line-height:1.7">
+          <strong style="display:block;margin-bottom:4px;color:#C9922B">Good for:</strong>
+          Online stores, booking systems, churches with giving/sermons, blogs, businesses with complex needs
+        </div>
+        <div style="font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:20px">
+          Starting at <strong style="color:#C9922B">$1,500</strong> &bull; Custom timeline
+        </div>
+        <a href="/quote/full" style="display:block;text-align:center;background:#C9922B;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem">Get a Full Site Quote &rarr;</a>
+      </div>
     </div>
+
+    <p style="margin-top:32px;font-size:.85rem;color:#9CA3AF">Not sure which one? <a href="/contact" style="color:var(--gold);text-decoration:none">Send me a message</a> and I will help you figure it out.</p>
   </div>
 </section>
 

@@ -83,6 +83,18 @@ db.exec(`
   )
 `);
 
+// ── PAGE VIEWS (analytics) ───────────────────────────────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS page_views (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    path       TEXT NOT NULL,
+    referrer   TEXT,
+    source     TEXT,  -- direct | google | facebook | instagram | other
+    session_id TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
 // ── CONTACT MESSAGES ─────────────────────────────────────────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS messages (

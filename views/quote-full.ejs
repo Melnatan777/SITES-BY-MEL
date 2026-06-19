@@ -1,0 +1,111 @@
+<%
+  const title = 'Get a Full CMS Site Quote — Sites by Mel';
+  const metaDesc = "Tell me what you need and I will put together a custom quote for a full website with admin dashboard.";
+%>
+<%- include('partials/head', { title, metaDesc }) %>
+<%- include('partials/nav') %>
+
+<section style="padding:80px 0 60px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:720px;margin:0 auto;padding:0 24px">
+
+    <div style="margin-bottom:32px">
+      <a href="/quote" style="font-size:.85rem;color:var(--gold);text-decoration:none;">&larr; Back to quote options</a>
+      <h1 style="font-size:2rem;font-weight:800;margin:12px 0 8px;color:var(--navy)">Full Custom Website + Admin Dashboard</h1>
+      <p style="color:#6B7280;line-height:1.6">This is for businesses that need more than a static site — online store, booking system, blog, member portal, lead management, or data analytics. You get a fully custom-built site with a password-protected admin panel. You own everything.</p>
+    </div>
+
+    <% if (success) { %>
+      <div style="background:#e6f4ec;border:1px solid #a3d9b1;border-radius:10px;padding:28px 32px;text-align:center">
+        <div style="font-size:1.3rem;font-weight:700;color:#15803d;margin-bottom:8px">Request received!</div>
+        <p style="color:#166534;line-height:1.6">I will review your project requirements and send a detailed quote within 48 hours. Check your email — a confirmation just went out.</p>
+        <a href="/" style="display:inline-block;margin-top:20px;background:var(--navy);color:#fff;padding:10px 24px;border-radius:6px;text-decoration:none;font-weight:600">Back to Home</a>
+      </div>
+    <% } else { %>
+
+    <% if (error) { %>
+      <div style="background:#fdf2f2;border:1px solid #fca5a5;border-radius:8px;padding:14px 18px;margin-bottom:20px;color:#991b1b;font-size:.9rem"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/quote/full" style="background:#fff;border:1px solid #E5E0D8;border-radius:12px;padding:32px">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Your Name *</label>
+          <input type="text" name="name" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+        </div>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Email *</label>
+          <input type="email" name="email" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Phone</label>
+          <input type="tel" name="phone" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+        </div>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Business Name *</label>
+          <input type="text" name="business_name" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+        </div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Current Website (if any)</label>
+        <input type="url" name="business_url" placeholder="https://..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+      </div>
+
+      <div style="background:#F4F2EE;border-radius:8px;padding:18px 20px;margin-bottom:16px">
+        <div style="font-size:.82rem;font-weight:700;color:#374151;margin-bottom:12px">What features do you need? (check all that apply)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Online store / product sales"> Online store / product sales</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Appointment / booking system"> Appointment / booking system</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Blog or news section"> Blog or news section</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Member login / portal"> Member login / portal</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Lead / quote request management"> Lead / quote request management</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Data analytics dashboard"> Data analytics dashboard</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Email notifications"> Email notifications</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Event calendar"> Event calendar</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Donations / giving page"> Donations / giving page</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Photo / portfolio gallery"> Photo / portfolio gallery</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Podcast or sermon archive"> Podcast or sermon archive</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer"><input type="checkbox" name="features" value="Contact / inquiry forms"> Contact / inquiry forms</label>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Budget Range</label>
+          <select name="budget" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;background:#fff">
+            <option value="">Not sure yet</option>
+            <option value="Under $1,500">Under $1,500</option>
+            <option value="$1,500–$2,500">$1,500 – $2,500</option>
+            <option value="$2,500–$4,000">$2,500 – $4,000</option>
+            <option value="$4,000+">$4,000+</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Ideal Timeline</label>
+          <select name="timeline" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;background:#fff">
+            <option value="">Flexible</option>
+            <option value="ASAP">As soon as possible</option>
+            <option value="2–4 weeks">2–4 weeks</option>
+            <option value="1–2 months">1–2 months</option>
+            <option value="3+ months">3+ months</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom:24px">
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Tell me about your project</label>
+        <textarea name="details" rows="5" required placeholder="What does your business do? What problem does this site need to solve? What would make this site a success for you?" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical"></textarea>
+      </div>
+
+      <button type="submit" style="width:100%;background:var(--navy);color:#fff;padding:14px;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer">Submit My Project Request &rarr;</button>
+      <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:10px">I will review your requirements and send a detailed quote within 48 hours.</p>
+    </form>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

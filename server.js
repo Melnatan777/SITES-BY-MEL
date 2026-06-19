@@ -5,6 +5,10 @@ const path = require('path');
 const crypto = require('crypto');
 const multer = require('multer');
 const db = require('./database');
+const { buildAllDownloads } = require('./scripts/build-downloads');
+
+// Build zips on startup (skips any already built)
+buildAllDownloads().catch(e => console.error('[downloads] startup error:', e.message));
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -32,70 +36,111 @@ function requireAuth(req, res, next) {
 }
 
 // ── EMAIL HELPER ──────────────────────────────────────────────────────────────
-async function sendEmail({ to, subject, text }) {
+async function sendEmail({ to, subject, text, html }) {
   if (!process.env.RESEND_API_KEY) return;
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      from: process.env.FROM_ADDRESS || 'Mel <mel@sitesbymel.com>',
-      to, subject, text
-    })
-  });
+  const body = { from: process.env.FROM_ADDRESS || 'Mel <mel@sitesbymel.com>', to, subject };
+  if (html) body.html = html; else body.text = text;
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+  } catch(e) { console.error('[email]', e.message); }
+}
+
+function autoReplyHtml(name, heading, body) {
+  return `<!DOCTYPE html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4f2;padding:32px">
+<div style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e0d8">
+<div style="background:#1B2F4E;padding:28px 32px"><h1 style="color:#C9922B;font-size:1.2rem;margin:0">Sites by Mel</h1></div>
+<div style="padding:28px 32px">
+<p style="color:#1a1a1a;font-size:1rem;margin-bottom:16px">Hi ${name},</p>
+<p style="color:#333;line-height:1.7;margin-bottom:16px">${heading}</p>
+${body}
+<p style="color:#333;margin-top:24px;line-height:1.7">Talk soon,<br><strong>Mel</strong><br><span style="color:#888;font-size:.85rem">sitesbymel.com</span></p>
+</div>
+</div></body></html>`;
+}
+
+// ── ANALYTICS TRACKING ────────────────────────────────────────────────────────
+function trackView(req) {
+  try {
+    const ref = req.get('referer') || '';
+    let source = 'direct';
+    if (ref.includes('google')) source = 'google';
+    else if (ref.includes('facebook') || ref.includes('fb.com')) source = 'facebook';
+    else if (ref.includes('instagram')) source = 'instagram';
+    else if (ref) source = 'other';
+    const session_id = req.session?.id || null;
+    db.prepare('INSERT INTO page_views (path, referrer, source, session_id) VALUES (?,?,?,?)')
+      .run(req.path, ref.slice(0, 500), source, session_id);
+  } catch(e) { /* never crash on analytics */ }
 }
 
 // ── PUBLIC ROUTES ─────────────────────────────────────────────────────────────
 
 // Home
 app.get('/', (req, res) => {
+  trackView(req);
   const products = db.prepare('SELECT * FROM products WHERE active=1 ORDER BY sort_order').all();
   res.render('index', { products });
 });
 
 // Templates shop
 app.get('/templates', (req, res) => {
+  trackView(req);
   const products = db.prepare('SELECT * FROM products ORDER BY sort_order').all();
   res.render('templates', { products });
 });
 
 // Single template page
 app.get('/templates/:slug', (req, res) => {
+  trackView(req);
   const product = db.prepare('SELECT * FROM products WHERE slug=?').get(req.params.slug);
   if (!product) return res.redirect('/templates');
   res.render('template-detail', { product });
 });
 
 // Services page
-app.get('/services', (req, res) => res.render('services'));
+app.get('/services', (req, res) => { trackView(req); res.render('services'); });
 
 // Portfolio page
-app.get('/portfolio', (req, res) => res.render('portfolio'));
+app.get('/portfolio', (req, res) => { trackView(req); res.render('portfolio'); });
 
 // About page
-app.get('/about', (req, res) => res.render('about'));
+app.get('/about', (req, res) => { trackView(req); res.render('about'); });
 
 // Contact page + form
-app.get('/contact', (req, res) => res.render('contact', { success: false, error: false }));
+app.get('/contact', (req, res) => { trackView(req); res.render('contact', { success: false, error: false }); });
 app.post('/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
   if (!name || !email || !message) return res.render('contact', { success: false, error: 'Please fill in all required fields.' });
   db.prepare('INSERT INTO messages (name, email, subject, message) VALUES (?,?,?,?)').run(name, email, subject||'', message);
+  // Notify Mel
   await sendEmail({
     to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
     subject: `New contact from SitesByMel: ${subject || name}`,
     text: `Name: ${name}\nEmail: ${email}\n\n${message}`
   });
+  // Auto-reply to customer
+  await sendEmail({
+    to: email,
+    subject: `Got your message — Sites by Mel`,
+    html: autoReplyHtml(name,
+      `I received your message and I'll be back in touch within 24 hours.`,
+      `<p style="color:#333;line-height:1.7">In the meantime, feel free to browse my <a href="https://sitesbymel.com/templates" style="color:#C9922B">template shop</a> or <a href="https://sitesbymel.com/services" style="color:#C9922B">services page</a> to see what I offer.</p>`)
+  });
   res.render('contact', { success: true, error: false });
 });
 
-// Quote request
-app.get('/quote', (req, res) => res.render('quote', { success: false, error: false }));
+// Quote forms — two paths
+app.get('/quote', (req, res) => { trackView(req); res.render('quote', { success: false, error: false, type: req.query.type || '' }); });
+app.get('/quote/simple', (req, res) => { trackView(req); res.render('quote-simple', { success: false, error: false }); });
+app.get('/quote/full', (req, res) => { trackView(req); res.render('quote-full', { success: false, error: false }); });
+
 app.post('/quote', async (req, res) => {
   const { name, email, phone, business_name, business_url, project_type, budget, timeline, description } = req.body;
-  if (!name || !email || !description) return res.render('quote', { success: false, error: 'Please fill in all required fields.' });
+  if (!name || !email || !description) return res.render('quote', { success: false, error: 'Please fill in all required fields.', type: '' });
   db.prepare(`INSERT INTO quotes (name,email,phone,business_name,business_url,project_type,budget,timeline,description)
     VALUES (?,?,?,?,?,?,?,?,?)`).run(name, email, phone||'', business_name||'', business_url||'', project_type||'', budget||'', timeline||'', description);
   await sendEmail({
@@ -103,7 +148,71 @@ app.post('/quote', async (req, res) => {
     subject: `New quote request from ${name} — ${business_name || 'no business listed'}`,
     text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone||'—'}\nBusiness: ${business_name||'—'}\nSite: ${business_url||'—'}\nType: ${project_type||'—'}\nBudget: ${budget||'—'}\nTimeline: ${timeline||'—'}\n\n${description}`
   });
-  res.render('quote', { success: true, error: false });
+  await sendEmail({
+    to: email,
+    subject: `Your quote request — Sites by Mel`,
+    html: autoReplyHtml(name,
+      `I received your project details and I'm excited to put together a quote for you.`,
+      `<div style="background:#f5f4f2;border-radius:8px;padding:16px 20px;margin:16px 0;font-size:.9rem;color:#333">
+        <strong>What happens next:</strong><br>
+        <p style="margin-top:8px;line-height:1.8">
+        1. I'll review your project details (usually same day)<br>
+        2. I'll send you a custom quote with pricing and timeline<br>
+        3. If it's a fit, we get started — simple as that
+        </p>
+      </div>
+      <p style="color:#555;font-size:.88rem">Questions in the meantime? Just reply to this email.</p>`)
+  });
+  res.render('quote', { success: true, error: false, type: '' });
+});
+
+app.post('/quote/simple', async (req, res) => {
+  const { name, email, phone, business_name, niche, colors, have_logo, have_photos, have_text, domain, notes } = req.body;
+  if (!name || !email || !business_name) return res.render('quote-simple', { success: false, error: 'Please fill in all required fields.' });
+  const description = `SIMPLE SITE REQUEST\nBusiness: ${business_name}\nNiche: ${niche||'—'}\nColors: ${colors||'—'}\nHas logo: ${have_logo||'no'}\nHas photos: ${have_photos||'no'}\nHas text/copy: ${have_text||'no'}\nDomain: ${domain||'—'}\nNotes: ${notes||'—'}`;
+  db.prepare(`INSERT INTO quotes (name,email,phone,business_name,project_type,description) VALUES (?,?,?,?,?,?)`)
+    .run(name, email, phone||'', business_name, 'Done-For-You HTML Site', description);
+  await sendEmail({ to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
+    subject: `Simple site request — ${business_name}`, text: `${name}\n${email}\n${phone||''}\n\n${description}` });
+  await sendEmail({ to: email, subject: `Your website request — Sites by Mel`,
+    html: autoReplyHtml(name, `I got your request for a done-for-you website for ${business_name}!`,
+      `<div style="background:#f5f4f2;border-radius:8px;padding:16px 20px;margin:16px 0;font-size:.9rem;color:#333">
+        <strong>Here's what happens next:</strong>
+        <p style="margin-top:8px;line-height:1.8">
+        1. I'll review your details today<br>
+        2. I'll send you a quote (usually within 24 hours)<br>
+        3. You approve, pay a deposit, and I get started<br>
+        4. Your site is live in 3–5 business days
+        </p>
+      </div>`) });
+  res.render('quote-simple', { success: true, error: false });
+});
+
+app.post('/quote/full', async (req, res) => {
+  const { name, email, phone, business_name, business_url, features, budget, timeline, details } = req.body;
+  if (!name || !email || !business_name) return res.render('quote-full', { success: false, error: 'Please fill in all required fields.' });
+  const featureList = Array.isArray(features) ? features.join(', ') : features||'—';
+  const description = `FULL CMS REQUEST\nBusiness: ${business_name}\nCurrent site: ${business_url||'none'}\nFeatures needed: ${featureList}\nBudget: ${budget||'—'}\nTimeline: ${timeline||'—'}\nDetails: ${details||'—'}`;
+  db.prepare(`INSERT INTO quotes (name,email,phone,business_name,business_url,project_type,budget,timeline,description) VALUES (?,?,?,?,?,?,?,?,?)`)
+    .run(name, email, phone||'', business_name, business_url||'', 'Full CMS Site', budget||'', timeline||'', description);
+  await sendEmail({ to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
+    subject: `FULL CMS request — ${business_name}`, text: `${name}\n${email}\n${phone||''}\n\n${description}` });
+  await sendEmail({ to: email, subject: `Your custom CMS request — Sites by Mel`,
+    html: autoReplyHtml(name, `I received your request for a full custom website with admin dashboard for ${business_name}.`,
+      `<div style="background:#f5f4f2;border-radius:8px;padding:16px 20px;margin:16px 0;font-size:.9rem;color:#333">
+        <strong>What you're getting:</strong>
+        <p style="margin-top:8px;line-height:1.8">A custom-built website with your own admin panel — not a template platform, not Squarespace. You'll own every file and pay no monthly platform fees.</p>
+      </div>
+      <div style="background:#f5f4f2;border-radius:8px;padding:16px 20px;margin:16px 0;font-size:.9rem;color:#333">
+        <strong>Next steps:</strong>
+        <p style="margin-top:8px;line-height:1.8">
+        1. I'll review your requirements (same day)<br>
+        2. I'll send a detailed scope + quote within 48 hours<br>
+        3. We schedule a quick call to align on details<br>
+        4. You approve, pay 50% upfront, and I start building
+        </p>
+      </div>`) });
+  res.render('quote-full', { success: true, error: false });
 });
 
 // ── STRIPE CHECKOUT ───────────────────────────────────────────────────────────
@@ -200,12 +309,26 @@ app.get('/download/:token', (req, res) => {
   const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
   if (!order) return res.status(404).send('Download link not found or expired.');
   if (new Date(order.download_expires_at) < new Date()) return res.status(410).send('This download link has expired. Please contact mel@sitesbymel.com');
-  if (!order.download_file) {
-    const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
-    if (!product || !product.file_path) return res.send('Your file is being prepared. Mel will email it to you shortly.');
-    db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
-    return res.download(path.join(__dirname, product.file_path), `${product.slug}.zip`);
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+  if (!product) return res.status(404).send('Product not found. Please contact mel@sitesbymel.com');
+  // Use generated zip from downloads/ folder
+  const zipPath = path.join(__dirname, 'downloads', `${product.slug}.zip`);
+  const fs = require('fs');
+  if (!fs.existsSync(zipPath)) {
+    // Rebuild on demand if missing
+    const { buildAllDownloads } = require('./scripts/build-downloads');
+    buildAllDownloads(true).then(() => {
+      if (fs.existsSync(zipPath)) {
+        db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
+        res.download(zipPath, `${product.slug}-sitesbymel.zip`);
+      } else {
+        res.send('Your file is being prepared. Please try again in 1 minute or contact mel@sitesbymel.com');
+      }
+    });
+    return;
   }
+  db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
+  res.download(zipPath, `${product.slug}-sitesbymel.zip`);
 });
 
 // ── STRIPE WEBHOOK ────────────────────────────────────────────────────────────
@@ -334,6 +457,49 @@ app.post('/admin/setups/:id/notes', requireAuth, (req, res) => {
 
 // Admin — Pricing Reference
 app.get('/admin/pricing', requireAuth, (req, res) => res.render('admin/pricing'));
+
+// Admin — Analytics
+app.get('/admin/analytics', requireAuth, (req, res) => {
+  const days = parseInt(req.query.days || '30');
+  const since = new Date(Date.now() - days * 86400000).toISOString().slice(0,10);
+
+  // Traffic
+  const total_views = db.prepare('SELECT COUNT(*) as n FROM page_views WHERE created_at>=?').get(since).n;
+  const by_source = db.prepare("SELECT source, COUNT(*) as n FROM page_views WHERE created_at>=? GROUP BY source ORDER BY n DESC").all(since);
+  const top_pages = db.prepare("SELECT path, COUNT(*) as n FROM page_views WHERE created_at>=? GROUP BY path ORDER BY n DESC LIMIT 10").all(since);
+  const views_by_day = db.prepare("SELECT DATE(created_at) as day, COUNT(*) as n FROM page_views WHERE created_at>=? GROUP BY day ORDER BY day").all(since);
+
+  // Template page views (purchase funnel)
+  const template_views = db.prepare("SELECT path, COUNT(*) as n FROM page_views WHERE path LIKE '/templates/%' AND path != '/templates' AND created_at>=? GROUP BY path ORDER BY n DESC").all(since);
+
+  // Revenue & orders
+  const revenue_total = db.prepare("SELECT COALESCE(SUM(amount),0) as t FROM orders WHERE status='paid' AND created_at>=?").get(since).t;
+  const orders_count = db.prepare("SELECT COUNT(*) as n FROM orders WHERE status='paid' AND created_at>=?").get(since).n;
+  const revenue_by_product = db.prepare("SELECT product_name, COUNT(*) as sales, SUM(amount) as revenue FROM orders WHERE status='paid' AND created_at>=? GROUP BY product_name ORDER BY revenue DESC").all(since);
+  const revenue_by_day = db.prepare("SELECT DATE(created_at) as day, SUM(amount) as revenue, COUNT(*) as sales FROM orders WHERE status='paid' AND created_at>=? GROUP BY day ORDER BY day").all(since);
+
+  // Leads
+  const new_quotes = db.prepare("SELECT COUNT(*) as n FROM quotes WHERE created_at>=?").get(since).n;
+  const won_quotes = db.prepare("SELECT COUNT(*) as n FROM quotes WHERE status='won' AND created_at>=?").get(since).n;
+  const quote_types = db.prepare("SELECT project_type, COUNT(*) as n FROM quotes WHERE created_at>=? GROUP BY project_type ORDER BY n DESC").all(since);
+
+  res.render('admin/analytics', {
+    days, since,
+    total_views, by_source, top_pages, views_by_day, template_views,
+    revenue_total, orders_count, revenue_by_product, revenue_by_day,
+    new_quotes, won_quotes, quote_types
+  });
+});
+
+// Admin — Rebuild downloads
+app.post('/admin/rebuild-downloads', requireAuth, async (req, res) => {
+  try {
+    await buildAllDownloads(true);
+    res.redirect('/admin/products?success=1');
+  } catch(e) {
+    res.redirect('/admin/products');
+  }
+});
 
 // Admin — Quotes
 app.get('/admin/quotes', requireAuth, (req, res) => {

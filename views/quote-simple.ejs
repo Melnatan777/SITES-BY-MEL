@@ -1,0 +1,96 @@
+<%
+  const title = 'Get a Simple Site Quote — Sites by Mel';
+  const metaDesc = "Tell me about your business and I will send you a quote for a done-for-you website.";
+%>
+<%- include('partials/head', { title, metaDesc }) %>
+<%- include('partials/nav') %>
+
+<section style="padding:80px 0 60px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:680px;margin:0 auto;padding:0 24px">
+
+    <div style="margin-bottom:32px">
+      <a href="/quote" style="font-size:.85rem;color:var(--gold);text-decoration:none;">&larr; Back to quote options</a>
+      <h1 style="font-size:2rem;font-weight:800;margin:12px 0 8px;color:var(--navy)">Done-For-You Website</h1>
+      <p style="color:#6B7280;line-height:1.6">Fill this out and I will send you a quote within 24 hours. You send me your content, I build and launch your site. No tech skills needed.</p>
+    </div>
+
+    <% if (success) { %>
+      <div style="background:#e6f4ec;border:1px solid #a3d9b1;border-radius:10px;padding:28px 32px;text-align:center">
+        <div style="font-size:1.3rem;font-weight:700;color:#15803d;margin-bottom:8px">Request received!</div>
+        <p style="color:#166534;line-height:1.6">I will review your project details and send you a quote within 24 hours. Check your email for a confirmation.</p>
+        <a href="/" style="display:inline-block;margin-top:20px;background:var(--navy);color:#fff;padding:10px 24px;border-radius:6px;text-decoration:none;font-weight:600">Back to Home</a>
+      </div>
+    <% } else { %>
+
+    <% if (error) { %>
+      <div style="background:#fdf2f2;border:1px solid #fca5a5;border-radius:8px;padding:14px 18px;margin-bottom:20px;color:#991b1b;font-size:.9rem"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/quote/simple" style="background:#fff;border:1px solid #E5E0D8;border-radius:12px;padding:32px">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Your Name *</label>
+          <input type="text" name="name" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+        </div>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Email *</label>
+          <input type="email" name="email" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+        </div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Phone (optional)</label>
+        <input type="tel" name="phone" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Business Name *</label>
+          <input type="text" name="business_name" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+        </div>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Your Industry / Niche</label>
+          <input type="text" name="niche" placeholder="e.g. pressure washing, bakery..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+        </div>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Brand Colors (if you have them)</label>
+        <input type="text" name="colors" placeholder="e.g. navy blue and gold, or just tell me your vibe" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+      </div>
+
+      <div style="background:#F4F2EE;border-radius:8px;padding:16px 18px;margin-bottom:16px">
+        <div style="font-size:.82rem;font-weight:700;color:#374151;margin-bottom:12px">What do you have ready?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer">
+            <input type="checkbox" name="have_logo" value="yes"> Logo
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer">
+            <input type="checkbox" name="have_photos" value="yes"> Photos
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;cursor:pointer">
+            <input type="checkbox" name="have_text" value="yes"> Written copy / text
+          </label>
+        </div>
+        <p style="font-size:.78rem;color:#9CA3AF;margin-top:8px">Don't worry if you don't have these — I can work with what you have or help you get started.</p>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Do you have a domain name yet?</label>
+        <input type="text" name="domain" placeholder="e.g. mybusiness.com, or no not yet" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem">
+      </div>
+
+      <div style="margin-bottom:24px">
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:6px;color:#374151">Anything else I should know?</label>
+        <textarea name="notes" rows="3" placeholder="Competitors you like, things you don't want, special features, timeline..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical"></textarea>
+      </div>
+
+      <button type="submit" style="width:100%;background:var(--navy);color:#fff;padding:14px;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer">Send My Request &rarr;</button>
+      <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:10px">I will respond within 24 hours with pricing and next steps.</p>
+    </form>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
