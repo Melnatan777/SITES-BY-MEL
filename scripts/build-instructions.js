@@ -92,31 +92,30 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     <div class="oyster">🌍</div>
     <h2>Step 2 — The world is your oyster. Make it yours!</h2>
     <p style="font-size:.88rem;color:#555;margin-bottom:16px;">This is the fun part. Every word, price, and photo is yours to change. You don't need to know how to code — just open each page file, find the text you want to change, type something new, and save. Here's exactly how:</p>
-    <div class="fun"><strong>Best tool (free):</strong> Download <a href="https://code.visualstudio.com" target="_blank">VS Code</a>. It's free, highlights your code in color so it's easy to read, and is what most web designers use.</div>
-
-    <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.84rem;color:#7d5a00;">
-      <strong>⚡ First time opening VS Code?</strong> It may ask you to sign in to GitHub or show a welcome screen. <strong>Skip all of it</strong> — click <strong>"Continue without Signing In"</strong> or just close any pop-up that appears. You don't need an account. Go straight to the next step.
+    <div class="fun">
+      <strong>✏️ Best free editor — Notepad++</strong> (Windows) or <strong>CotEditor</strong> (Mac)<br>
+      <span style="font-size:.82rem">Both are simple, free, no account needed, no pop-ups — just install and open. Download Notepad++ at <a href="https://notepad-plus-plus.org" target="_blank">notepad-plus-plus.org</a> &nbsp;|&nbsp; CotEditor at <a href="https://coteditor.com" target="_blank">coteditor.com</a></span>
     </div>
 
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Open a page file in VS Code</strong><span>Go to <strong>File → Open File</strong> at the top of VS Code. Navigate to your website folder and open one file — for example <code>about.html</code> for your About page, or <code>index.html</code> for your Home page. <em>Don't be scared by all the code — just use Ctrl+F to find the words you want to change!</em></span></div>
+      <div class="step-body"><strong>Open a page file in Notepad++</strong><span>Open Notepad++, then go to <strong>File → Open</strong>. Navigate to your website folder and open one file at a time — <code>index.html</code> for your Home page, <code>about.html</code> for your About page, etc. <em>Don't worry about all the code — you only need to find and change the words!</em></span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Find the text you want to change and type your own</strong><span>Press <code>Ctrl+F</code> (Windows) or <code>Cmd+F</code> (Mac) to search for words on the page. Find a placeholder like "DetailPro" or "Over a decade of passion..." and just click on it and type your own words instead.</span></div>
+      <div class="step-body"><strong>Find the text you want to change</strong><span>Press <code>Ctrl+F</code> to search. Type a word that's in the template — like the demo business name or a placeholder phrase. Click on it and type your own words instead. Easy!</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Save — it saves right back to the same file</strong><span>Press <code>Ctrl+S</code> (Windows) or <code>Cmd+S</code> (Mac). VS Code saves your changes directly back to the file in your folder — no "Save As," no moving files. Then press <code>F5</code> in your browser to refresh and see your changes.</span></div>
+      <div class="step-body"><strong>Save — it goes right back to the same file</strong><span>Press <code>Ctrl+S</code> to save. No "Save As," no moving files — it saves right back where it was. Then open <code>index.html</code> in your browser (double-click it) and press <code>F5</code> to refresh and see your changes.</span></div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <div class="step-body"><strong>Repeat for each page</strong><span>Open <code>services.html</code> to edit your services and pricing, <code>about.html</code> for your story, <code>contact.html</code> for your contact info. Each file is its own page — edit, save, done.</span></div>
+      <div class="step-body"><strong>Repeat for each page</strong><span>Open each file one at a time: <code>services.html</code> for your pricing, <code>about.html</code> for your story, <code>contact.html</code> for your contact info. Edit, save, done — one page at a time.</span></div>
     </div>
     <div class="step">
       <div class="step-num">5</div>
-      <div class="step-body"><strong>Replace the business name across all pages at once (shortcut!)</strong><span>In VS Code, press <code>Ctrl+Shift+H</code> (Windows) or <code>Cmd+Shift+H</code> (Mac) to open Find &amp; Replace across ALL files. Type the demo business name in the top box, your name in the bottom — hit Replace All. Every page updated in one click.</span></div>
+      <div class="step-body"><strong>Replace your business name on all pages at once (time-saver!)</strong><span>In Notepad++, press <code>Ctrl+H</code> to open Find &amp; Replace. Type the demo business name in the top box, your business name in the bottom, then click <strong>Replace All</strong>. Do this for each page file and you're done in minutes.</span></div>
     </div>
     <div class="tip">${tipSave}</div>
   </div>
@@ -132,7 +131,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Find the image in the HTML file</strong><span>In VS Code, search (<code>Ctrl+F</code>) for <code>img src</code> to find image tags. They look like this: <code>&lt;img src="images/hero.jpg"&gt;</code></span></div>
+      <div class="step-body"><strong>Find the image in the HTML file</strong><span>In Notepad++, search (<code>Ctrl+F</code>) for <code>img src</code> to find image tags. They look like this: <code>&lt;img src="images/hero.jpg"&gt;</code></span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
@@ -147,7 +146,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     <div class="oyster">🎨</div>
     <h2>Change Your Colors — It's Easier Than You Think!</h2>
     <p style="font-size:.88rem;color:#555;margin-bottom:14px;">Your entire color scheme lives in ONE place at the top of each HTML file. Change it there and every button, heading, and banner on that page updates automatically.</p>
-    <p style="font-size:.88rem;color:#555;margin-bottom:10px;">In VS Code, open <code>index.html</code> and look near the very top for something like this:</p>
+    <p style="font-size:.88rem;color:#555;margin-bottom:10px;">Open <code>index.html</code> in Notepad++ and look near the very top for something like this:</p>
     <div style="background:#1a1a2e;color:#e8e8e8;padding:16px 20px;border-radius:8px;font-family:monospace;font-size:.82rem;line-height:1.8;margin-bottom:14px;">
       <span style="color:#888">/* YOUR BRAND COLORS — change these! */</span><br/>
       :root {<br/>
@@ -169,7 +168,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
       <div class="step-num">3</div>
       <div class="step-body"><strong>Paste your hex code in the file</strong><span>Replace the existing hex code (like <code>${primary}</code>) with your new one. Save, refresh your browser — your whole site changes color instantly. Magic!</span></div>
     </div>
-    <div class="fun">💡 <strong>Pro tip:</strong> Do this on index.html first to preview how your colors look. Once you're happy, use <code>Ctrl+Shift+H</code> to find and replace the old hex codes across all 5 pages at once.</div>
+    <div class="fun">💡 <strong>Pro tip:</strong> Do this on index.html first to preview how your colors look. Once you're happy, use <code>Ctrl+H</code> in Notepad++ to find and replace the old hex codes in each page file.</div>
     <p style="font-size:.83rem;color:#555;margin-top:12px;">Here are some example color combos to get you inspired:</p>
     <div class="color-row">
       <div class="color-chip" style="background:${primary};">Your Primary ${primary}</div>
@@ -192,7 +191,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Paste the link in your HTML file</strong><span>Open index.html in VS Code. Near the top, inside the <code>&lt;head&gt;</code> section, paste the link tag Google gave you.</span></div>
+      <div class="step-body"><strong>Paste the link in your HTML file</strong><span>Open index.html in Notepad++. Near the top, inside the <code>&lt;head&gt;</code> section, paste the link tag Google gave you.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
@@ -249,19 +248,22 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
   <!-- GET ONLINE -->
   <div class="card">
     <div class="oyster">🌐</div>
-    <h2>Step 4 — Get Your Site Online (Free, 2 Minutes)</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:14px;">Ready to see it live? The quickest way is <strong>Netlify Drop</strong> — no account needed, no tech knowledge required.</p>
+    <h2>Step 4 — Get Your Site Online Free (2 Minutes, Just Drag &amp; Drop)</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:14px;">When you're done editing, here's how to put it on the internet for free — no account, no tech knowledge needed.</p>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a></strong><span>You'll see a drop zone. That's the whole thing.</span></div>
+      <div class="step-body"><strong>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a> in your browser</strong><span>You'll see a big dashed box that says "Drag and drop your site folder here." That's it — that's the whole thing.</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Drag your unzipped folder onto that box</strong><span>Drop the folder with all your HTML files onto the page.</span></div>
+      <div class="step-body"><strong>Drag your website folder onto that box and drop it</strong><span>Open File Explorer (Windows) or Finder (Mac), find your website folder, and drag the whole folder onto the Netlify page. Hold the mouse button, drag it over the browser, and let go.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Your site is live instantly</strong><span>Netlify gives you a free address like <code>your-site.netlify.app</code>. Share it with anyone — it's real and it works.</span></div>
+      <div class="step-body"><strong>Your site is live!</strong><span>Netlify gives you a free link like <code>my-business-abc123.netlify.app</code>. Copy it and share it — your site is real, live, and working on the internet right now.</span></div>
+    </div>
+    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.84rem;color:#166534;">
+      <strong>🔄 Made more changes?</strong> Just go back to app.netlify.com/drop and drag your folder again. It updates your live site in seconds.
     </div>
     <div class="fun">${tipNetlify}</div>
     <div class="tip" style="margin-top:14px">Want a real domain (<code>yourbusiness.com</code>), Google to find you, and a site you can update without touching code? That's where Mel comes in — see below.</div>
