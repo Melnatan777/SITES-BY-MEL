@@ -506,8 +506,10 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
   // Check add-ons
   const wantsDrive  = req.body.addon_drive === '1';
   const wantsUpload = req.body.addon_upload === '1';
+  const wantsColors = req.body.addon_colors === '1';
   const wantsGlove  = req.body.addon_glove === '1';
-  const addonTotal  = (wantsDrive ? 4900 : 0) + (wantsUpload ? 9700 : 0) + (wantsGlove ? 14900 : 0);
+  const brandColors = req.body.brand_colors || '';
+  const addonTotal  = (wantsDrive ? 4900 : 0) + (wantsUpload ? 9700 : 0) + (wantsColors ? 5000 : 0) + (wantsGlove ? 14900 : 0);
 
   // Build the personalized zip first regardless
   const tmpPath = path.join(__dirname, 'downloads', `custom-${order.id}-${Date.now()}.zip`);
@@ -520,7 +522,7 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
   // Save add-on request to DB if any selected
   if (addonTotal > 0 && stripe) {
     const photoPaths = (req.files || []).map(f => f.path);
-    const addonTypes = [wantsDrive && 'drive_link', wantsUpload && 'photo_upload', wantsGlove && 'white_glove'].filter(Boolean).join(',');
+    const addonTypes = [wantsDrive && 'drive_link', wantsUpload && 'photo_upload', wantsColors && 'brand_colors', wantsGlove && 'white_glove'].filter(Boolean).join(',');
 
     const addonRecord = db.prepare(`INSERT INTO template_addons
       (order_id, customer_name, customer_email, product_name, addon_type, addon_amount, drive_link, photo_paths)
@@ -533,6 +535,7 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
     const addonLineItems = [];
     if (wantsDrive)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Photo Swap via Google Drive' }, unit_amount:4900 }, quantity:1 });
     if (wantsUpload) addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Direct Photo Upload' }, unit_amount:9700 }, quantity:1 });
+    if (wantsColors) addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Custom Brand Colors' }, unit_amount:5000 }, quantity:1 });
     if (wantsGlove)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'White-Glove Finish' }, unit_amount:14900 }, quantity:1 });
 
     try {
@@ -554,7 +557,7 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
       await sendEmail({
         to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
         subject: `New add-on order — ${product.name} — ${addonTypes} — $${(addonTotal/100).toFixed(0)}`,
-        text: `Customer: ${order.customer_name || 'unknown'}\nEmail: ${order.customer_email || 'unknown'}\nProduct: ${product.name}\nAdd-ons: ${addonTypes}\nAmount: $${(addonTotal/100).toFixed(0)}\nDrive link: ${req.body.drive_link || 'none'}\nPhotos uploaded: ${photoPaths.length}\nCheck dashboard for details.`
+        text: `Customer: ${order.customer_name || 'unknown'}\nEmail: ${order.customer_email || 'unknown'}\nProduct: ${product.name}\nAdd-ons: ${addonTypes}\nAmount: $${(addonTotal/100).toFixed(0)}\nDrive link: ${req.body.drive_link || 'none'}\nBrand colors: ${brandColors || 'none'}\nPhotos uploaded: ${photoPaths.length}\nCheck dashboard for details.`
       });
 
       return res.redirect(303, stripeSession.url);
