@@ -1,7 +1,11 @@
 // Generates INSTRUCTIONS.html for each template zip
 // Called by build-downloads.js
 
+const botScripts = {};
+try { botScripts['fit-life'] = require('./bot-fitlife').getFitLifeBotScript(); } catch(e) {}
+
 function buildInstructions(templateName, templateSlug, niche, primaryColor, accentColor, overrides = {}) {
+  const botScript = botScripts[templateSlug] || '';
   const primary = primaryColor || '#3d5a8a';
   const accent  = accentColor  || '#e8a020';
   const o = overrides;
@@ -337,6 +341,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     <p style="margin-top:12px;font-size:.82rem;opacity:.6;">${tipClosing}</p>
   </div>
 </div>
+${botScript}
 </body>
 </html>`;
 }
