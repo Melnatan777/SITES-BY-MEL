@@ -174,36 +174,67 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     </div>
   </div>
 
+  <!-- WHAT DIY INCLUDES -->
+  <div class="card" style="border-left:4px solid #C9922B">
+    <div class="oyster">📋</div>
+    <h2>What's included in your DIY template — and what's not</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">Your template gives you a real, professional website that visitors can browse, contact you through, and book appointments on. Here's exactly what that means:</p>
+
+    <p style="font-size:.85rem;font-weight:700;color:#1B2F4E;margin-bottom:8px;">✅ What works right out of the box:</p>
+    <ul style="font-size:.84rem;color:#555;line-height:1.9;margin-bottom:18px;padding-left:18px">
+      <li>5 fully designed pages (Home, Services, About, Contact, Gallery)</li>
+      <li>Contact form — activate in 2 minutes with a free <a href="https://formspree.io" target="_blank">Formspree</a> account</li>
+      <li>Online booking — plug in your free <a href="https://calendly.com" target="_blank">Calendly</a> link and customers can schedule appointments directly</li>
+      <li>Your services, prices, photos, and story — all editable by you</li>
+      <li>Mobile-friendly design that looks great on every device</li>
+    </ul>
+
+    <p style="font-size:.85rem;font-weight:700;color:#1B2F4E;margin-bottom:8px;">⚠️ What DIY does <em>not</em> include:</p>
+    <ul style="font-size:.84rem;color:#555;line-height:1.9;margin-bottom:18px;padding-left:18px">
+      <li><strong>Custom domain setup</strong> — your live site will have a free <code>.netlify.app</code> address, not <code>yourbusiness.com</code></li>
+      <li><strong>DNS configuration</strong> — connecting a domain you own requires technical steps not covered here</li>
+      <li><strong>SEO setup</strong> — your site will be live but Google won't know it exists yet (no Google Search Console, no sitemap submission, no meta optimization)</li>
+      <li><strong>Google Analytics</strong> — no visitor tracking or data unless you add it yourself</li>
+      <li><strong>Online payments or a shopping cart</strong> — the services page displays your offerings but does not process payments</li>
+      <li><strong>CMS (content management)</strong> — to update text or photos you'll need to edit the HTML files directly each time</li>
+    </ul>
+
+    <div class="tip"><strong>Bottom line:</strong> Your DIY site is 100% real and functional — people can find you, read about your business, fill out your contact form, and book appointments. It just won't have a custom domain, Google visibility, or built-in analytics until those are added.</div>
+  </div>
+
   <!-- GET ONLINE -->
   <div class="card">
     <div class="oyster">🌐</div>
-    <h2>Step 4 — Get Your Site Online (Free, 2 Minutes — Drag &amp; Drop!)</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:14px;">Ready to go live? The easiest way in the world is <strong>Netlify Drop</strong>. No accounts, no tech knowledge, no code. Just drag and drop.</p>
+    <h2>Step 4 — Get Your Site Online (Free, 2 Minutes)</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:14px;">Ready to see it live? The quickest way is <strong>Netlify Drop</strong> — no account needed, no tech knowledge required.</p>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a></strong><span>You'll see a big box that says "Drag and drop your site folder here." That's it — that's the whole thing.</span></div>
+      <div class="step-body"><strong>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a></strong><span>You'll see a drop zone. That's the whole thing.</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Drag your entire unzipped folder onto that box</strong><span>Select the whole folder (the one with all your HTML files in it) and drag it right onto the Netlify page. Drop it.</span></div>
+      <div class="step-body"><strong>Drag your unzipped folder onto that box</strong><span>Drop the folder with all your HTML files onto the page.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Your site is live — instantly!</strong><span>Netlify gives you a free web address like <code>random-name.netlify.app</code>. You can share that link with anyone right now and they can visit your site. For free. Forever.</span></div>
+      <div class="step-body"><strong>Your site is live instantly</strong><span>Netlify gives you a free address like <code>your-site.netlify.app</code>. Share it with anyone — it's real and it works.</span></div>
     </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body"><strong>Connect your own domain name (optional)</strong><span>If you have a domain like <code>yourbusiness.com</code>, create a free Netlify account, claim your site, then go to Domain Settings → Add custom domain. Netlify walks you through every step. Your only cost is your domain (~$12/yr from GoDaddy or Namecheap).</span></div>
-    </div>
-    <div class="tip">💡 <strong>No domain yet?</strong> No problem — your free <code>.netlify.app</code> address works perfectly while you decide. You can connect a real domain any time later.</div>
-    <div class="fun">🎉 <strong>That's really it.</strong> Drag. Drop. Live. The whole internet can now find your business. You did that!</div>
+    <div class="fun">🎉 You have a live website. People can visit it, contact you, and book appointments. That's real. You did that!</div>
+    <div class="tip" style="margin-top:14px">Want a real domain (<code>yourbusiness.com</code>), Google to find you, and a site you can update without touching code? That's where Mel comes in — see below.</div>
   </div>
 
   <!-- NEED HELP -->
-  <div class="card">
-    <h2>🙋 Rather have someone just do it for you?</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:12px;">Zero judgment — this is exactly what Mel's done-for-you service is for! Send over your logo, photos, colors, and business info, and she'll customize every page, get it live, and connect your domain. Usually done in 3–5 business days.</p>
-    <p style="font-size:.88rem;color:#555;">👉 <a href="https://sitesbymel.com/services" target="_blank">sitesbymel.com/services</a> — see all options and pricing.</p>
+  <div class="card" style="border:2px solid #1B2F4E">
+    <h2>🙋 Ready to take it further? Mel's got you.</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:12px;">Your template gets you live. Mel's done-for-you services get you <em>found</em>. Here's what she handles:</p>
+    <ul style="font-size:.84rem;color:#555;line-height:1.9;margin-bottom:14px;padding-left:18px">
+      <li>Custom domain purchase &amp; DNS setup so your site lives at <code>yourbusiness.com</code></li>
+      <li>Google Search Console + sitemap so Google indexes your site</li>
+      <li>Google Analytics so you can see who's visiting and where they're coming from</li>
+      <li>Full customization — colors, photos, copy — done for you in 3–5 business days</li>
+      <li>Optional: online payment setup, CMS so you can update content yourself, and more</li>
+    </ul>
+    <p style="font-size:.88rem;color:#555;">👉 <a href="https://sitesbymel.com/services" target="_blank" style="font-weight:700">sitesbymel.com/services</a> — see all options and pricing.</p>
   </div>
 
   <div class="contact-box">
