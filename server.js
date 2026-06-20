@@ -1469,10 +1469,36 @@ app.get('/admin/fix-thumbnails', requireAuth, (req, res) => {
   res.redirect('/admin/check-images');
 });
 
+// Admin — Instructions editor
+app.get('/admin/instructions', requireAuth, (req, res) => {
+  const keys = ['tip_unzip','tip_save','tip_photos','tip_formspree','tip_netlify','tip_closing'];
+  const settings = {};
+  keys.forEach(k => {
+    const row = db.prepare('SELECT value FROM settings WHERE key=?').get(k);
+    settings[k] = row ? row.value : '';
+  });
+  res.render('admin/instructions', { settings, saved: req.query.saved });
+});
+app.post('/admin/instructions', requireAuth, (req, res) => {
+  const keys = ['tip_unzip','tip_save','tip_photos','tip_formspree','tip_netlify','tip_closing'];
+  keys.forEach(k => {
+    if (req.body[k] !== undefined) {
+      db.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES (?,?)").run(k, req.body[k]);
+    }
+  });
+  res.redirect('/admin/instructions?saved=1');
+});
+
 // Admin — Rebuild downloads
 app.post('/admin/rebuild-downloads', requireAuth, async (req, res) => {
   try {
-    await buildAllDownloads(true);
+    const keys = ['tip_unzip','tip_save','tip_photos','tip_formspree','tip_netlify','tip_closing'];
+    const overrides = {};
+    keys.forEach(k => {
+      const row = db.prepare('SELECT value FROM settings WHERE key=?').get(k);
+      if (row && row.value) overrides[k] = row.value;
+    });
+    await buildAllDownloads(true, overrides);
     res.redirect('/admin/products?success=1');
   } catch(e) {
     res.redirect('/admin/products');

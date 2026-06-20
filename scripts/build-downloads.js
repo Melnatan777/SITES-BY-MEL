@@ -35,7 +35,7 @@ function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
-function buildZip(template) {
+function buildZip(template, overrides = {}) {
   return new Promise((resolve, reject) => {
     ensureDir(DOWNLOADS_DIR);
 
@@ -54,14 +54,14 @@ function buildZip(template) {
     }
 
     // Generate and add instructions HTML
-    const instructions = buildInstructions(template.name, template.slug, template.niche, template.primary, template.accent);
+    const instructions = buildInstructions(template.name, template.slug, template.niche, template.primary, template.accent, overrides);
     archive.append(instructions, { name: `${template.slug}/INSTRUCTIONS.html` });
 
     archive.finalize();
   });
 }
 
-async function buildAllDownloads(force = false) {
+async function buildAllDownloads(force = false, overrides = {}) {
   const results = [];
   for (const template of TEMPLATES) {
     const zipPath = path.join(DOWNLOADS_DIR, `${template.slug}.zip`);
@@ -70,7 +70,7 @@ async function buildAllDownloads(force = false) {
       continue;
     }
     try {
-      const outputPath = await buildZip(template);
+      const outputPath = await buildZip(template, overrides);
       results.push({ slug: template.slug, path: outputPath, skipped: false });
       console.log(`[downloads] Built ${template.slug}.zip`);
     } catch (e) {

@@ -1,9 +1,16 @@
 // Generates INSTRUCTIONS.html for each template zip
 // Called by build-downloads.js
 
-function buildInstructions(templateName, templateSlug, niche, primaryColor, accentColor) {
+function buildInstructions(templateName, templateSlug, niche, primaryColor, accentColor, overrides = {}) {
   const primary = primaryColor || '#3d5a8a';
   const accent  = accentColor  || '#e8a020';
+  const o = overrides;
+  const tipUnzip    = o.tip_unzip    || 'You\'re looking at your real website. Every page, every button, every link — exactly as your visitors will see it once it\'s live.';
+  const tipSave     = o.tip_save     || '<strong>Nothing gets lost.</strong> Every time you press Ctrl+S, your file is saved in your folder. When you\'re ready to go live, you just upload that same folder — exactly as it is on your computer.';
+  const tipPhotos   = o.tip_photos   || '<strong>Photo tips:</strong> Use JPG or PNG files. For banner/hero images, use a wide landscape photo (at least 1200px wide). Keep file sizes under 500KB for fast loading — you can compress photos free at <a href="https://squoosh.app" target="_blank">squoosh.app</a>.';
+  const tipFormspree= o.tip_formspree|| '';
+  const tipNetlify  = o.tip_netlify  || '🎉 You have a live website. People can visit it, contact you, and book appointments. That\'s real. You did that!';
+  const tipClosing  = o.tip_closing  || 'Thank you so much for your purchase. I built every pixel of this template myself and I genuinely hope it helps your business grow. Now go make it yours — the world is your oyster! 🌍';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +84,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
       <div class="step-num">3</div>
       <div class="step-body"><strong>Preview it right now</strong><span>Open the folder and double-click <code>index.html</code>. It opens in your browser. Click around — all 5 pages work immediately, right on your computer. No internet needed yet!</span></div>
     </div>
-    <div class="tip">You're looking at your real website. Every page, every button, every link — exactly as your visitors will see it once it's live.</div>
+    <div class="tip">${tipUnzip}</div>
   </div>
 
   <!-- STEP 2: MAKE IT YOURS -->
@@ -107,7 +114,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
       <div class="step-num">5</div>
       <div class="step-body"><strong>Replace the business name across all pages at once (shortcut!)</strong><span>In VS Code, press <code>Ctrl+Shift+H</code> (Windows) or <code>Cmd+Shift+H</code> (Mac) to open Find &amp; Replace across ALL files. Type the demo business name in the top box, your name in the bottom — hit Replace All. Every page updated in one click.</span></div>
     </div>
-    <div class="tip"><strong>Nothing gets lost.</strong> Every time you press Ctrl+S, your file is saved in your folder. When you're ready to go live, you just upload that same folder — exactly as it is on your computer.</div>
+    <div class="tip">${tipSave}</div>
   </div>
 
   <!-- STEP 2B: PHOTOS -->
@@ -127,7 +134,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
       <div class="step-num">3</div>
       <div class="step-body"><strong>Replace the filename with your photo's name</strong><span>Change <code>images/hero.jpg</code> to <code>images/your-photo-name.jpg</code> — using the exact filename you saved in the images folder. Save the file and refresh your browser to see your photo appear.</span></div>
     </div>
-    <div class="tip"><strong>Photo tips:</strong> Use JPG or PNG files. For banner/hero images, use a wide landscape photo (at least 1200px wide). Keep file sizes under 500KB for fast loading — you can compress photos free at <a href="https://squoosh.app" target="_blank">squoosh.app</a>.</div>
+    <div class="tip">${tipPhotos}</div>
     <div class="fun">💡 <strong>Not a photographer?</strong> Free high-quality photos at <a href="https://unsplash.com" target="_blank">unsplash.com</a> and <a href="https://www.pexels.com" target="_blank">pexels.com</a> — free to use on your website, no credit required.</div>
   </div>
 
@@ -252,7 +259,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
       <div class="step-num">3</div>
       <div class="step-body"><strong>Your site is live instantly</strong><span>Netlify gives you a free address like <code>your-site.netlify.app</code>. Share it with anyone — it's real and it works.</span></div>
     </div>
-    <div class="fun">🎉 You have a live website. People can visit it, contact you, and book appointments. That's real. You did that!</div>
+    <div class="fun">${tipNetlify}</div>
     <div class="tip" style="margin-top:14px">Want a real domain (<code>yourbusiness.com</code>), Google to find you, and a site you can update without touching code? That's where Mel comes in — see below.</div>
   </div>
 
@@ -274,7 +281,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     <h2>Questions? Just ask.</h2>
     <p>Email: <strong>mel@sitesbymel.com</strong></p>
     <p>Website: <strong><a href="https://sitesbymel.com" target="_blank" style="color:#C9922B">sitesbymel.com</a></strong></p>
-    <p style="margin-top:12px;font-size:.82rem;opacity:.6;">Thank you so much for your purchase. I built every pixel of this template myself and I genuinely hope it helps your business grow. Now go make it yours — the world is your oyster! 🌍</p>
+    <p style="margin-top:12px;font-size:.82rem;opacity:.6;">${tipClosing}</p>
   </div>
 </div>
 </body>
