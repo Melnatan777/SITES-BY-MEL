@@ -11,16 +11,19 @@ const { buildPersonalizedZip, PLACEHOLDERS } = require('./scripts/personalize');
 // Build zips on startup — force rebuild every deploy so templates are always fresh
 buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e.message));
 
-// Ensure detail-pro template exists in DB
+// Ensure detail-pro template exists in DB with preview URL
 (function seedDetailPro() {
   try {
-    const exists = db.prepare('SELECT id FROM products WHERE slug=?').get('detail-pro');
+    const exists = db.prepare('SELECT id, preview_url FROM products WHERE slug=?').get('detail-pro');
     if (!exists) {
       const maxOrder = db.prepare('SELECT MAX(sort_order) as m FROM products').get().m || 0;
-      db.prepare(`INSERT INTO products (name, slug, category, description, price, thumbnail, active, sort_order)
-        VALUES (?,?,?,?,?,?,1,?)`)
-        .run('DetailPro Template', 'detail-pro', 'Automotive', 'Dark & bold auto detailing website — charcoal + red design. 5 pages: Home, Services, About, Gallery, Contact.', 19700, 'detail-pro.jpg', maxOrder + 1);
+      db.prepare(`INSERT INTO products (name, slug, category, description, price, thumbnail, preview_url, active, sort_order)
+        VALUES (?,?,?,?,?,?,?,1,?)`)
+        .run('DetailPro Template', 'detail-pro', 'Automotive', 'Dark & bold auto detailing website — charcoal + red design. 5 pages: Home, Services, About, Gallery, Contact.', 19700, 'detail-pro.jpg', '/preview/detail-pro/', maxOrder + 1);
       console.log('[seed] Added detail-pro template');
+    } else if (!exists.preview_url) {
+      db.prepare('UPDATE products SET preview_url=? WHERE slug=?').run('/preview/detail-pro/', 'detail-pro');
+      console.log('[seed] Fixed detail-pro preview_url');
     }
   } catch(e) { console.error('[seed] detail-pro error:', e.message); }
 })();
