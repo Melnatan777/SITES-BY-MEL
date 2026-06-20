@@ -303,44 +303,39 @@ function upsertPkg(slug,name,tagline,price_display,description,bullets,cta_label
   updatePkg.run(name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes,slug);
 }
 
-// ── PACKAGE 1: DIY TEMPLATE ───────────────────────────────────────────────────
+// ── PACKAGE 1: TEMPLATE PACKAGE ───────────────────────────────────────────────
 upsertPkg(
   'diy',
-  'DIY Template',
-  'Your site, your way — we built the foundation',
-  '$197',
-  'Get a professionally designed, industry-specific website template and make it your own. Built to look great on phones, tablets, and computers right out of the box. No monthly fees — you own it forever.',
+  'Template Package',
+  'Mel builds it for you — you launch it',
+  '$350',
+  'Pick an industry-specific template and fill out a quick intake form. Mel personalizes every page with your business name, photos, and details — then sends you the finished files ready to upload. No tech work on your end.',
   JSON.stringify([
-    'Professionally designed for your industry',
+    'Mel personalizes every page for your business',
+    'Your photos, your colors, your business details',
     'Looks great on phones, tablets & computers',
-    'Just edit the text and photos — no coding needed',
     'Contact form ready to receive messages',
-    'No monthly platform fees — you own the files',
-    'Instant download after purchase',
-    'Add-ons available: photo swap, brand colors, full setup',
+    'No monthly fees — you own the files forever',
+    'Delivered within 48 hours of intake form submission',
+    'Upload to any host (Netlify, Durable, etc.) in minutes',
   ]),
   'Browse Templates', '/templates', 0, 1,
-  `MEL INTERNAL — DIY PACKAGE ($197)
-─────────────────────────────────────
+  `MEL INTERNAL — TEMPLATE PACKAGE ($350)
+─────────────────────────────────────────
 WHAT MEL DOES:
-• Delivers ZIP file via download link (automated)
-• Nothing else — customer self-serves completely
+• Reviews customer intake form
+• Swaps in their photos and business details
+• Updates text across all 5 pages
+• Reviews on mobile + desktop
+• Delivers polished ZIP via download link within 48 hours
 
 CUSTOMER DOES:
-• Opens HTML/CSS files in a text editor
-• Replaces placeholder text with their own
-• Swaps in their photos
-• Finds their own hosting (Netlify free tier, etc.)
+• Fills out intake form (name, photos, colors, copy)
+• Downloads ZIP and uploads to their host (Netlify, Durable, etc.)
 • Registers their own domain
 
-ADD-ONS MEL HANDLES (ordered separately on template page):
-• Photo Swap (+$97): Customer uploads 5 photos → Mel swaps them in → returns ZIP within 2 days
-• Brand Colors (+$97): Customer shares hex codes/description → Mel updates all CSS → returns ZIP within 2 days
-• Done-For-You Template (+$400 = $597 total): See that package below
-
-COST TO MEL: $0 (automated delivery)
-TIME: 0 hours (auto) + 1-2 hrs per add-on
-PROFIT: $197 pure margin on base template`
+COST TO MEL: ~1-2 hrs labor
+PROFIT: $350 per site`
 );
 
 // ── PACKAGE 2: DONE-FOR-YOU TEMPLATE (add-on tier, internal reference) ────────
@@ -565,59 +560,59 @@ if (count.n === 0) {
   `);
   insert.run('ServicePro Template', 'service-pro', 'Local Service Business',
     'Perfect for pressure washing, lawn care, HVAC, plumbing & more. Bold hero, services grid, gallery, reviews, and quote form.',
-    19700, '/templates/service-pro/index.html', 1, 1);
+    35000, '/templates/service-pro/index.html', 1, 1);
   insert.run('TableReady Template', 'table-ready', 'Restaurant & Food',
     'Built for restaurants, food trucks, bakeries & caterers. Menu display, hours, location, photo gallery & reservation link.',
-    19700, '/templates/table-ready/index.html', 1, 2);
+    35000, '/templates/table-ready/index.html', 1, 2);
   insert.run('KeyReady Template', 'key-ready', 'Real Estate Agent',
     'For realtors and property managers. Featured listings, agent bio, testimonials, and contact form.',
-    19700, '/templates/key-ready/index.html', 1, 3);
+    35000, '/templates/key-ready/index.html', 1, 3);
   insert.run('ShopFront Template', 'shop-front', 'Retail & Storefront',
     'For boutiques, retail shops & local stores. Featured products, brand story, hours, location & reviews.',
-    19700, '/templates/shop-front/index.html', 1, 4);
+    35000, '/templates/shop-front/index.html', 1, 4);
   insert.run('VoiceFirst Template', 'voice-first', 'Blogger & Creator',
     'For writers, podcasters & content creators. Clean blog layout, newsletter signup, about section & social links.',
-    19700, '/templates/voice-first/index.html', 1, 5);
+    35000, '/templates/voice-first/index.html', 1, 5);
   insert.run('GatherHere Template', 'gather-here', 'Church & Ministry',
     'For churches, ministries & faith-based organizations. Service times, sermons, prayer requests & giving links.',
-    19700, '/templates/gather-here/index.html', 1, 6);
+    35000, '/templates/gather-here/index.html', 1, 6);
   insert.run('PawPerfect Template', 'pet-shop', 'Pet Grooming & Boarding',
     'For pet groomers, boarders & daycares. Services grid, gallery, pricing tiers, reviews & online booking CTA.',
-    19700, '/templates/pet-shop/index.html', 1, 7);
+    35000, '/templates/pet-shop/index.html', 1, 7);
   insert.run('Glow Studio Template', 'beauty-studio', 'Hair Salon & Beauty',
     'For hair salons, lash studios & beauty pros. Services, stylist bio, gallery, pricing & book now CTA.',
-    19700, '/templates/beauty-studio/index.html', 1, 8);
+    35000, '/templates/beauty-studio/index.html', 1, 8);
   insert.run('Lens & Light Template', 'lens-and-light', 'Photography & Videography',
     'For photographers & videographers. Portfolio grid, packages, about section, testimonials & contact form.',
-    19700, '/templates/lens-and-light/index.html', 1, 9);
+    35000, '/templates/lens-and-light/index.html', 1, 9);
   insert.run('GreenCut Template', 'green-cut', 'Landscaping & Lawn Care',
     'For lawn care & landscaping businesses. Services, service area map, why-choose-us, reviews & free quote form.',
-    19700, '/templates/green-cut/index.html', 1, 10);
+    35000, '/templates/green-cut/index.html', 1, 10);
   insert.run('WellnessPro Template', 'wellness-pro', 'Medical & Dental Practice',
     'For doctors, dentists & chiropractors. Accepting new patients hero, specialties, meet the doctor, insurance badges & booking.',
-    19700, '/templates/wellness-pro/index.html', 1, 11);
+    35000, '/templates/wellness-pro/index.html', 1, 11);
   insert.run('FitLife Template', 'fit-life', 'Personal Trainer & Fitness Studio',
     'For personal trainers & fitness studios. Programs, transformations, trainer bio, pricing tiers & free consult CTA.',
-    19700, '/templates/fit-life/index.html', 1, 12);
+    35000, '/templates/fit-life/index.html', 1, 12);
   insert.run('Sparkle Clean Template', 'sparkle-clean', 'House & Commercial Cleaning',
     'For cleaning services. Services grid, 3-step how-it-works, trust badges, reviews & book a clean form.',
-    19700, '/templates/sparkle-clean/index.html', 1, 13);
+    35000, '/templates/sparkle-clean/index.html', 1, 13);
   insert.run('Bright Minds Template', 'bright-minds', 'Tutoring & Learning Center',
     'For tutors, learning centers & daycares. Programs, age groups, meet the teachers, parent reviews & enroll CTA.',
-    19700, '/templates/bright-minds/index.html', 1, 14);
+    35000, '/templates/bright-minds/index.html', 1, 14);
   insert.run('Forever Events Template', 'forever-events', 'Wedding & Event Planning',
     'For wedding & event planners. Services, real weddings gallery, packages, planner bio, reviews & inquiry form.',
-    19700, '/templates/forever-events/index.html', 1, 15);
+    35000, '/templates/forever-events/index.html', 1, 15);
   insert.run('AutoShine Template', 'auto-shine', 'Auto Detailing & Mechanic',
     'For auto detailers & mechanics. Services, before/after gallery, trust section, reviews & appointment booking.',
-    19700, '/templates/auto-shine/index.html', 1, 16);
+    35000, '/templates/auto-shine/index.html', 1, 16);
 }
 
 // Activate all templates if any are still inactive from old seed
 db.prepare("UPDATE products SET active=1 WHERE active=0").run();
 
 // Update template prices to $197
-db.prepare("UPDATE products SET price=19700").run();
+db.prepare("UPDATE products SET price=35000").run();
 
 // Backfill preview_url for existing records that don't have one
 const previewUrls = [
