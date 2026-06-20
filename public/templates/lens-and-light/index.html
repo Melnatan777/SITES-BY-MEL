@@ -28,8 +28,8 @@
     .mobile-menu.open { display:flex; }
 
     /* HERO */
-    .hero { background:var(--secondary); min-height:auto; display:flex; align-items:center; justify-content:center; text-align:center; padding:3rem 5% 4rem; position:relative; overflow:hidden; }
-    .hero::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,#000 0%,#1a1a1a 50%,#2a2a2a 100%); }
+    .hero { background:linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?w=1600&q=80') center/cover no-repeat; min-height:auto; display:flex; align-items:center; justify-content:center; text-align:center; padding:3rem 5% 4rem; position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:transparent; }
     .hero::after { content:''; position:absolute; top:0; right:0; width:55%; height:100%; background:linear-gradient(135deg,transparent 30%,rgba(212,175,55,0.05) 100%); }
     .hero-content { max-width:700px; position:relative; z-index:1; }
     .hero-badge { display:inline-block; background:rgba(212,175,55,0.12); border:1px solid rgba(212,175,55,0.4); color:var(--accent); font-size:0.78rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; padding:0.35rem 1rem; border-radius:2px; margin-bottom:1.75rem; }
