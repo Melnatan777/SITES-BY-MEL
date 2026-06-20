@@ -343,6 +343,7 @@ app.post('/quote/full', async (req, res) => {
 // ── STRIPE CHECKOUT ───────────────────────────────────────────────────────────
 const stripeKey = process.env.STRIPE_TEST_MODE === 'true' ? process.env.STRIPE_TEST_KEY : process.env.STRIPE_SECRET_KEY;
 const stripe = stripeKey ? require('stripe')(stripeKey) : null;
+console.log('[stripe] mode:', process.env.STRIPE_TEST_MODE === 'true' ? 'TEST' : 'LIVE', '| key starts:', stripeKey ? stripeKey.slice(0,12) : 'MISSING');
 
 // Buy template
 app.post('/buy/:slug', async (req, res) => {
