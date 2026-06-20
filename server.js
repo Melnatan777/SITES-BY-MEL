@@ -86,11 +86,10 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 // ── MIDDLEWARE ────────────────────────────────────────────────────────────────
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-// Serve public assets — /images explicitly first, then everything except /templates/* routes
-app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+// Serve static files — skip /templates/* page routes, all other assets served normally
 app.use((req, res, next) => {
   if (req.path.startsWith('/templates/') && !req.path.match(/\.[a-z]{2,4}$/i)) return next();
-  express.static(path.join(__dirname, 'public'))(req, res, next);
+  express.static(path.join(__dirname, 'public'), { fallthrough: true })(req, res, next);
 });
 // Serve template previews under /preview/ — inject watermark into HTML pages
 app.use('/preview', (req, res, next) => {
@@ -401,7 +400,7 @@ app.post('/setup/:slug', async (req, res) => {
     await sendEmail({
       to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
       subject: `New done-for-you setup deposit — ${business_name || name}`,
-      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone||'—'}\nBusiness: ${business_name||'—'}\nCurrent site: ${business_url||'—'}\nTemplate: ${product ? product.name : 'No specific template'}\nNotes: ${notes||'—'}\n\n$200 deposit initiated via Stripe. Check the dashboard for payment confirmation.`
+      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone||'—'}\nBusiness: ${business_name||'—'}\nCurrent site: ${business_url||'—'}\nTemplate: ${product ? product.name : 'No specific template'}\nNotes: ${notes||'—'}\n\n$400 deposit initiated via Stripe. Check the dashboard for payment confirmation.`
     });
     // Auto-reply to customer
     await sendEmail({
@@ -505,12 +504,13 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
   };
 
   // Check add-ons
-  const wantsDrive  = req.body.addon_drive === '1';
-  const wantsUpload = req.body.addon_upload === '1';
-  const wantsColors = req.body.addon_colors === '1';
-  const wantsGlove  = req.body.addon_glove === '1';
-  const brandColors = req.body.brand_colors || '';
-  const addonTotal  = (wantsDrive ? 4900 : 0) + (wantsUpload ? 9700 : 0) + (wantsColors ? 5000 : 0) + (wantsGlove ? 14900 : 0);
+  const wantsDrive   = req.body.addon_drive === '1';
+  const wantsUpload  = req.body.addon_upload === '1';
+  const wantsColors  = req.body.addon_colors === '1';
+  const wantsGlove   = req.body.addon_glove === '1';
+  const wantsPayment = req.body.addon_payment === '1';
+  const brandColors  = req.body.brand_colors || '';
+  const addonTotal   = (wantsDrive ? 5000 : 0) + (wantsUpload ? 10000 : 0) + (wantsColors ? 5000 : 0) + (wantsGlove ? 25300 : 0) + (wantsPayment ? 15000 : 0);
 
   // Build the personalized zip first regardless
   const tmpPath = path.join(__dirname, 'downloads', `custom-${order.id}-${Date.now()}.zip`);
@@ -523,7 +523,7 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
   // Save add-on request to DB if any selected
   if (addonTotal > 0 && stripe) {
     const photoPaths = (req.files || []).map(f => f.path);
-    const addonTypes = [wantsDrive && 'drive_link', wantsUpload && 'photo_upload', wantsColors && 'brand_colors', wantsGlove && 'white_glove'].filter(Boolean).join(',');
+    const addonTypes = [wantsDrive && 'drive_link', wantsUpload && 'photo_upload', wantsColors && 'brand_colors', wantsGlove && 'white_glove', wantsPayment && 'payment_setup'].filter(Boolean).join(',');
 
     const addonRecord = db.prepare(`INSERT INTO template_addons
       (order_id, customer_name, customer_email, product_name, addon_type, addon_amount, drive_link, photo_paths)
@@ -534,10 +534,11 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
     );
 
     const addonLineItems = [];
-    if (wantsDrive)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Photo Swap via Google Drive' }, unit_amount:4900 }, quantity:1 });
-    if (wantsUpload) addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Direct Photo Upload' }, unit_amount:9700 }, quantity:1 });
-    if (wantsColors) addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Custom Brand Colors' }, unit_amount:5000 }, quantity:1 });
-    if (wantsGlove)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'White-Glove Finish' }, unit_amount:14900 }, quantity:1 });
+    if (wantsDrive)   addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Photo Swap via Google Drive' }, unit_amount:5000 }, quantity:1 });
+    if (wantsUpload)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Direct Photo Upload' }, unit_amount:10000 }, quantity:1 });
+    if (wantsColors)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Custom Brand Colors' }, unit_amount:5000 }, quantity:1 });
+    if (wantsGlove)   addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'White-Glove Finish' }, unit_amount:25300 }, quantity:1 });
+    if (wantsPayment) addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Payment Button & Business Email Setup' }, unit_amount:15000 }, quantity:1 });
 
     try {
       const stripeSession = await stripe.checkout.sessions.create({
