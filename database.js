@@ -291,16 +291,13 @@ db.exec(`
   )
 `);
 
-// Seed + force-update packages — insert if missing, always update content
+// Seed packages — INSERT only if the slug doesn't exist yet.
+// Once a package exists, admin edits via /admin/packages are preserved across deploys.
 const insertPkgIgnore = db.prepare(`INSERT OR IGNORE INTO service_packages
   (slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes)
   VALUES (?,?,?,?,?,?,?,?,?,?,?)`);
-const updatePkg = db.prepare(`UPDATE service_packages SET
-  name=?,tagline=?,price_display=?,description=?,bullets=?,cta_label=?,cta_url=?,
-  is_featured=?,sort_order=?,internal_notes=? WHERE slug=?`);
 function upsertPkg(slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes) {
   insertPkgIgnore.run(slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes);
-  updatePkg.run(name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes,slug);
 }
 
 // ── PACKAGE 1: TEMPLATE PACKAGE ───────────────────────────────────────────────
@@ -611,8 +608,7 @@ if (count.n === 0) {
 // Activate all templates if any are still inactive from old seed
 db.prepare("UPDATE products SET active=1 WHERE active=0").run();
 
-// Update template prices to $197
-db.prepare("UPDATE products SET price=35000").run();
+// Prices are managed via /admin/products — no force-override on deploy
 
 // Backfill preview_url for existing records that don't have one
 const previewUrls = [
