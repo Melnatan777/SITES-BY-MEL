@@ -90,21 +90,11 @@
                 </div>
               </div>
 
-              <div id="opt-payment" onclick="selectOption('payment')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div>
-                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Payment Button &amp; Business Email Setup</span>
-                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Stripe payment button + your professional business email (you@yourdomain.com) <em>(total $394)</em></span>
-                  </div>
-                  <span style="font-weight:800;color:var(--gold);font-size:1rem;">+$197</span>
-                </div>
-              </div>
-
               <div id="opt-glove" onclick="selectOption('glove')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                   <div>
-                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ White-Glove Template <span style="background:#fdf0ed;color:#c0392b;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:100px;margin-left:4px;">Best Value</span></span>
-                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Photos + brand colors + text tweaks + final review — nearly done for you <em>(total $597)</em></span>
+                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Done-For-You Template <span style="background:#fdf0ed;color:#c0392b;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:100px;margin-left:4px;">Best Value</span></span>
+                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Mel customizes everything — photos, colors, text, Stripe payment button, business email — ready to launch <em>(total $597)</em></span>
                   </div>
                   <span style="font-weight:800;color:var(--gold);font-size:1rem;">+$400</span>
                 </div>
@@ -129,8 +119,8 @@
           <% } %>
 
           <script>
-            const prices = { none: 197, upload: 294, colors: 294, payment: 394, glove: 597 };
-            const labels = { none: 'Buy & Download — $197', upload: 'Buy Now — $294 total', colors: 'Buy Now — $294 total', payment: 'Buy Now — $394 total', glove: 'Buy Now — $597 total' };
+            const prices = { none: 197, upload: 294, colors: 294, glove: 597 };
+            const labels = { none: 'Buy & Download — $197', upload: 'Buy Now — $294 total', colors: 'Buy Now — $294 total', glove: 'Buy Now — $597 total' };
 
             const addonDetails = {
               none: {
@@ -158,11 +148,11 @@
                 ]
               },
               glove: {
-                title: '+ White-Glove Finish — What Mel Does For You',
+                title: '+ Done-For-You Template — What Mel Does For You',
                 items: [
-                  '✓ Everything in template', '✓ Your photos swapped in',
-                  '✓ Text updated with your details', '✓ Colors adjusted to your brand',
-                  '✓ Full review & polish', '✓ Ready to go live'
+                  '✓ Your photos swapped in', '✓ Colors adjusted to your brand',
+                  '✓ Text updated with your details', '✓ Stripe payment button set up',
+                  '✓ Professional business email set up', '✓ Full review & ready to launch'
                 ]
               },
               colors: {
@@ -173,18 +163,11 @@
                   '✓ Returned within 2 business days', '✓ Looks like YOUR brand, not a template'
                 ]
               },
-              payment: {
-                title: '+ Payment & Email Setup — What Mel Does For You',
-                items: [
-                  '✓ Everything in template', '✓ Stripe payment button built & tested',
-                  '✓ Professional email set up (you@yourdomain.com)', '✓ Email forwarding to your inbox',
-                  '✓ Both embedded & working', '✓ Look like a legit business from day one'
-                ]
-              }
+              payment: { title: '', items: [] }
             };
 
             function selectOption(key) {
-              ['none','upload','colors','payment','glove'].forEach(function(k) {
+              ['none','upload','colors','glove'].forEach(function(k) {
                 var el = document.getElementById('opt-' + k);
                 if (el) el.style.borderColor = k === key ? 'var(--gold)' : 'var(--border)';
                 if (el) el.style.background = k === key ? '#fffdf7' : '';
