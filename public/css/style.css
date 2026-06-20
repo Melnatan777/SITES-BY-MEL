@@ -62,9 +62,22 @@ img { max-width: 100%; }
 
 /* ── HERO ── */
 .hero {
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, #254070 100%);
+  position: relative; overflow: hidden;
   color: var(--white); padding: 96px 24px 80px; text-align: center;
+  background: var(--navy-dark);
 }
+.hero-slide {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity 1.2s ease-in-out;
+  z-index: 0;
+}
+.hero-slide.active { opacity: 1; }
+.hero-slide::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(15,26,38,0.78) 0%, rgba(27,47,78,0.72) 100%);
+}
+.hero .container { position: relative; z-index: 1; }
 .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 20px; }
 .hero h1 span { color: var(--gold); }
 .hero p { font-size: 1.15rem; opacity: 0.88; max-width: 580px; margin: 0 auto 36px; }

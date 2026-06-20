@@ -2,22 +2,39 @@
 <%- include('partials/nav', { activePage: 'home' }) %>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="heroSection">
+  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&q=80')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=1600&q=80')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1600&q=80')"></div>
   <div class="container">
     <span class="hero-badge">Websites That Work as Hard as You Do</span>
     <h1>Professional Websites for <span>Small Businesses</span></h1>
-    <p>Grab a polished template for $197, get it set up for you, or let's build something fully custom. No bloat. No confusion. Just a site that works.</p>
+    <p>Pick a template and Mel personalizes it for your business — or go fully custom. No bloat. No confusion. Just a site that works.</p>
     <div class="hero-buttons">
       <a href="/templates" class="btn btn-gold">Browse Templates</a>
       <a href="/services" class="btn btn-outline-gold">Done-For-You Setup</a>
     </div>
   </div>
 </section>
+<script>
+  (function(){
+    var slides = document.querySelectorAll('#heroSection .hero-slide');
+    var current = 0;
+    setInterval(function(){
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 4500);
+  })();
+</script>
 
 <!-- TRUST BAR -->
 <div class="container">
   <div class="trust-bar">
-    <div class="trust-item"><strong>$197</strong><span>Templates start at</span></div>
+    <div class="trust-item"><strong>$350</strong><span>Templates start at</span></div>
     <div class="trust-item"><strong>$797</strong><span>Template Launch setup</span></div>
     <div class="trust-item"><strong>48h</strong><span>Download link valid</span></div>
     <div class="trust-item"><strong>16+</strong><span>Niche-specific templates</span></div>
@@ -82,7 +99,7 @@
       <div class="process-step">
         <div class="process-step-num">1</div>
         <h3>Buy a Template</h3>
-        <p>$197. Download a fully coded HTML/CSS site built for your industry. Looks great on phones, tablets, and computers. Personalize it with your info, customize colors and photos, and launch it yourself.</p>
+        <p>$350. Mel personalizes a professionally designed template for your business — your name, your photos, your info — and sends it ready to launch. No technical work on your end.</p>
       </div>
       <div class="process-step">
         <div class="process-step-num">2</div>
