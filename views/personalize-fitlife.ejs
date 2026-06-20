@@ -1,0 +1,293 @@
+<%- include('partials/head', { title: 'Set Up Your FitLife Website — Sites by Mel', metaDesc: 'Tell us about your fitness business and upload your photos. We\'ll build your ready-to-launch website.' }) %>
+<%- include('partials/nav') %>
+
+<section style="padding:60px 0 100px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:720px;margin:0 auto;padding:0 24px">
+
+    <div style="text-align:center;margin-bottom:36px">
+      <p style="color:#C9922B;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px">FitLife Template</p>
+      <h1 style="font-size:1.9rem;font-weight:800;color:#1B2F4E;margin-bottom:10px">Tell Us About Your Business</h1>
+      <p style="color:#6B7280;line-height:1.7;max-width:500px;margin:0 auto">Fill in as much as you can. Mel will use everything you provide to build your personalized website. You'll receive your download link within 24 hours.</p>
+    </div>
+
+    <form method="POST" action="/personalize/<%= token %>" enctype="multipart/form-data">
+
+      <!-- ── SECTION 1: THE BASICS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">1 — The Basics</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Business Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="businessName" placeholder="e.g. Iron Results Fitness" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces "FitLife" everywhere across all 5 pages</p>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Name (Trainer) <span style="color:#ef4444">*</span></label>
+          <input type="text" name="trainerName" placeholder="e.g. Sarah Johnson" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces "Marcus" on the About and Gallery pages</p>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Tagline / Slogan <span style="color:#ef4444">*</span></label>
+          <input type="text" name="tagline" placeholder="e.g. Real Results. No Shortcuts." required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces "Transform Your Body. Transform Your Life." on the home page</p>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Hero Badge Text</label>
+          <input type="text" name="heroBadge" placeholder="e.g. Austin's #1 Rated Personal Trainer" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">The orange badge at the top of your home page. Replaces "Portland's #1 Rated Personal Trainer"</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Phone Number <span style="color:#ef4444">*</span></label>
+            <input type="tel" name="phone" placeholder="(555) 000-0000" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Email <span style="color:#ef4444">*</span></label>
+            <input type="email" name="email" placeholder="you@yourbusiness.com" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Street Address</label>
+            <input type="text" name="address" placeholder="789 Main Street, Suite 4" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank if you work online / from home</p>
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">City <span style="color:#ef4444">*</span></label>
+            <input type="text" name="city" placeholder="Austin" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">State & Zip</label>
+            <input type="text" name="cityZip" placeholder="TX 78701" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Instagram Handle</label>
+            <input type="text" name="instagram" placeholder="@YourHandle" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces "@FitLifePDX" on the gallery page</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: HOURS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">2 — Your Hours</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Monday – Friday</label>
+            <input type="text" name="hoursMF" placeholder="5:30am – 8pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Saturday</label>
+            <input type="text" name="hoursSat" placeholder="7am – 2pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Sunday</label>
+            <input type="text" name="hoursSun" placeholder="Closed or 7am–12pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 3: YOUR STORY ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">3 — Your Story (About Page)</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>Tip:</strong> Write in first person. Keep it real and personal — customers hire trainers they connect with. Even 3–4 sentences is enough.
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Bio / Story <span style="color:#ef4444">*</span></label>
+          <textarea name="bio" rows="6" placeholder="e.g. I grew up in Austin as a competitive swimmer. After a shoulder injury ended my racing career, I discovered strength training — and it changed everything. Over the past 6 years I've helped 200+ clients build bodies and confidence they never thought possible..." required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces Marcus's backstory on the About page</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Years of Experience</label>
+            <input type="text" name="yearsExp" placeholder="e.g. 6+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces "8+" on the About page</p>
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Clients Helped</label>
+            <input type="text" name="clientCount" placeholder="e.g. 200+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces "500+" on the About page</p>
+          </div>
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Certifications</label>
+          <input type="text" name="certs" placeholder="e.g. NASM-CPT | ACE-GFI | Precision Nutrition Level 1" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Replaces "NASM-CPT | ACE-GFI | Precision Nutrition Level 2" — leave blank to remove</p>
+        </div>
+      </div>
+
+      <!-- ── SECTION 4: SERVICES & PRICING ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">4 — Your Services & Pricing</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <% var services = [
+          { num: 1, namePh: '1-on-1 Personal Training', pricePh: '$295 / 4 sessions', nameField: 'svc1Name', priceField: 'svc1Price', descField: 'svc1Desc', descPh: 'Private sessions tailored to your exact goals...' },
+          { num: 2, namePh: 'Group Classes', pricePh: '$99 / month', nameField: 'svc2Name', priceField: 'svc2Price', descField: 'svc2Desc', descPh: 'High-energy group training sessions...' },
+          { num: 3, namePh: 'Online Coaching', pricePh: '$149 / month', nameField: 'svc3Name', priceField: 'svc3Price', descField: 'svc3Desc', descPh: 'Full coaching program delivered remotely...' },
+        ]; %>
+
+        <% services.forEach(function(s) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Service <%= s.num %></p>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Service Name</label>
+              <input type="text" name="<%= s.nameField %>" placeholder="<%= s.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Price</label>
+              <input type="text" name="<%= s.priceField %>" placeholder="<%= s.pricePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Short Description</label>
+            <textarea name="<%= s.descField %>" rows="2" placeholder="<%= s.descPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 5: TESTIMONIALS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">5 — Client Testimonials</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>No reviews yet?</strong> Leave these blank and Mel will remove the placeholder testimonials from your site.
+        </div>
+
+        <% var testimonials = [
+          { num: 1, namePh: 'Jennifer M., 41', resultPh: 'Lost 42 lbs — Personal Training', quotePh: '"I finally found a trainer who actually listens..."', nameField: 'test1Name', resultField: 'test1Result', quoteField: 'test1Quote' },
+          { num: 2, namePh: 'Todd K., 48', resultPh: '275 lb deadlift PR', quotePh: '"Best coaching I\'ve ever had..."', nameField: 'test2Name', resultField: 'test2Result', quoteField: 'test2Quote' },
+          { num: 3, namePh: 'Sandra & Mike T.', resultPh: '68 lbs together — Couples Training', quotePh: '"Doing this as a couple made all the difference..."', nameField: 'test3Name', resultField: 'test3Result', quoteField: 'test3Quote' },
+        ]; %>
+
+        <% testimonials.forEach(function(t) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Testimonial <%= t.num %></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Client Name & Age</label>
+              <input type="text" name="<%= t.nameField %>" placeholder="<%= t.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Result / Label</label>
+              <input type="text" name="<%= t.resultField %>" placeholder="<%= t.resultPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Their Quote</label>
+            <textarea name="<%= t.quoteField %>" rows="2" placeholder="<%= t.quotePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 6: CONTACT FORM & BOOKING ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">6 — Contact Form & Booking</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#fffdf0;border:1px solid #f0d080;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#7d5a00;line-height:1.6">
+          <strong>Formspree</strong> is free and makes your contact form work. Sign up at <strong>formspree.io</strong>, create a form, and paste the Form ID below (looks like <em>xabcdefg</em>).<br>
+          <strong>Calendly</strong> is free for basic booking — sign up at <strong>calendly.com</strong> and paste your link below.
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Formspree Form ID</label>
+            <input type="text" name="formspreeId" placeholder="xabcdefg" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Just the ID, not the full URL</p>
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Calendly Link</label>
+            <input type="text" name="calendlyLink" placeholder="calendly.com/yourname/free-assessment" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 7: PHOTOS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">7 — Your Photos</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:14px 18px;margin-bottom:22px;font-size:.82rem;color:#374151;line-height:1.7">
+          <strong>Photo tips:</strong> JPG or PNG only. Landscape photos (wider than tall) work best for banners. Square or portrait for headshots. Files under 2MB load fastest.<br>
+          <strong>Don't have photos yet?</strong> Leave any slot blank — Mel will leave a styled placeholder and you can swap it in later.
+        </div>
+
+        <% var photos = [
+          { field: 'photoHero', label: 'Home Page — Hero / Training Photo', desc: 'Wide landscape photo of you training a client, or your gym space. This is the big image at the top of your home page.', size: 'Landscape, 1200px+ wide' },
+          { field: 'photoClass', label: 'Home Page — Group Class Photo', desc: 'Photo of a group class or bootcamp in action.', size: 'Landscape or square' },
+          { field: 'photoNutrition', label: 'Home Page — Nutrition / Coaching Photo', desc: 'Photo for the nutrition coaching section — food prep, consultation, or client coaching.', size: 'Landscape or square' },
+          { field: 'photoAboutMain', label: 'About Page — Your Main Headshot / Photo', desc: 'Your main professional photo. This appears large on the left side of your About page.', size: 'Portrait or square, at least 600px tall' },
+          { field: 'photoBA1', label: 'About Page — Before & After #1', desc: 'Client transformation photo for the results section.', size: 'Square or portrait' },
+          { field: 'photoBA2', label: 'About Page — Before & After #2', desc: 'Second client transformation photo.', size: 'Square or portrait' },
+          { field: 'photoBA3', label: 'About Page — Before & After #3', desc: 'Third client transformation photo.', size: 'Square or portrait' },
+          { field: 'photoGallery1', label: 'Gallery — Client Photo #1', desc: 'Action shot or transformation photo for the gallery grid.', size: 'Square recommended' },
+          { field: 'photoGallery2', label: 'Gallery — Client Photo #2', desc: 'Action shot or transformation photo.', size: 'Square recommended' },
+          { field: 'photoGallery3', label: 'Gallery — Client Photo #3', desc: 'Action shot or transformation photo.', size: 'Square recommended' },
+          { field: 'photoGallery4', label: 'Gallery — Client Photo #4', desc: 'Action shot or transformation photo.', size: 'Square recommended' },
+          { field: 'photoHIIT', label: 'Gallery — HIIT Bootcamp Class Photo', desc: 'Photo of your HIIT or bootcamp class in session.', size: 'Landscape' },
+          { field: 'photoStrength', label: 'Gallery — Strength Class Photo', desc: 'Photo of your strength training class.', size: 'Landscape' },
+          { field: 'photoTrainer1', label: 'Gallery — Trainer Photo #1 (you)', desc: 'A photo of you — coaching, demonstrating, or candid.', size: 'Square or portrait' },
+          { field: 'photoTrainer2', label: 'Gallery — Trainer Photo #2 (you)', desc: 'Second photo of you.', size: 'Square or portrait' },
+          { field: 'photoTrainer3', label: 'Gallery — Trainer Photo #3 (you)', desc: 'Third photo of you.', size: 'Square or portrait' },
+        ]; %>
+
+        <% photos.forEach(function(p) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:12px">
+          <label style="display:block;font-size:.85rem;font-weight:700;color:#1B2F4E;margin-bottom:4px"><%= p.label %></label>
+          <p style="font-size:.78rem;color:#6B7280;margin:0 0 8px;line-height:1.5"><%= p.desc %></p>
+          <p style="font-size:.72rem;color:#9CA3AF;margin:0 0 8px">Best size: <strong><%= p.size %></strong></p>
+          <input type="file" name="<%= p.field %>" accept="image/jpeg,image/png,image/webp" style="font-size:.82rem;color:#374151">
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 8: NOTES FOR MEL ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">8 — Anything Else for Mel?</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:28px">
+        <textarea name="melNotes" rows="4" placeholder="Any special requests, sections you want removed, extra info Mel should know..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+      </div>
+
+      <button type="submit" style="width:100%;background:#C9922B;color:#fff;border:none;border-radius:10px;padding:18px;font-size:1.05rem;font-weight:700;cursor:pointer">
+        Send to Mel — I'll receive my site within 24 hours →
+      </button>
+
+      <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:12px">You can always email mel@sitesbymel.com with updates or additional photos after submitting.</p>
+
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

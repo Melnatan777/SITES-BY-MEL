@@ -57,6 +57,7 @@ try { db.exec(`ALTER TABLE orders ADD COLUMN city TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_path TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_token TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_expires TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE order_photos ADD COLUMN field_name TEXT`); } catch(e) {}
 
 // ── COUPONS ───────────────────────────────────────────────────────────────────
 db.exec(`

@@ -25,7 +25,7 @@ const photoStorage = multer.diskStorage({
     cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`);
   }
 });
-const photoUpload = multer({ storage: photoStorage, limits: { files: 5, fileSize: 20 * 1024 * 1024 } });
+const photoUpload = multer({ storage: photoStorage, limits: { files: 20, fileSize: 20 * 1024 * 1024 } });
 const { buildAllDownloads } = require('./scripts/build-downloads');
 const { buildPersonalizedZip, PLACEHOLDERS } = require('./scripts/personalize');
 
@@ -620,7 +620,11 @@ app.get('/personalize/:token', (req, res) => {
     const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
     if (!product) return res.status(404).send('<h2>Product not found</h2><p>Contact mel@sitesbymel.com</p>');
     const placeholder = PLACEHOLDERS[product.slug] || {};
-    res.render('personalize', { token: req.params.token, product, placeholder, selectedAddon: order.selected_addon || 'none' }, (err, html) => {
+    // Use template-specific intake form if available
+    const templateView = `personalize-${product.slug}`;
+    const viewPath = require('path').join(__dirname, 'views', `${templateView}.ejs`);
+    const view = require('fs').existsSync(viewPath) ? templateView : 'personalize';
+    res.render(view, { token: req.params.token, product, placeholder, selectedAddon: order.selected_addon || 'none' }, (err, html) => {
       if (err) {
         console.error('[personalize] render error:', err.message, err.stack);
         return res.status(500).send('<h2>Something went wrong</h2><p>Please email <a href="mailto:mel@sitesbymel.com">mel@sitesbymel.com</a> with your order and she will help you right away.</p>');
@@ -634,20 +638,42 @@ app.get('/personalize/:token', (req, res) => {
 });
 
 // Build personalized zip and deliver it (or route to Stripe for add-ons)
-app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res) => {
+app.post('/personalize/:token', photoUpload.any(), async (req, res) => {
   const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
   if (!order) return res.status(404).send('Order not found.');
   if (new Date(order.download_expires_at) < new Date()) return res.status(410).send('Download link expired. Contact mel@sitesbymel.com');
   const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
   if (!product) return res.status(404).send('Product not found.');
 
+  const b = req.body;
   const data = {
-    businessName: req.body.businessName || '',
-    phone: req.body.phone || '',
-    email: req.body.email || '',
-    address: req.body.address || '',
-    tagline: req.body.tagline || '',
-    city: req.body.city || '',
+    businessName: b.businessName || '',
+    phone: b.phone || '',
+    email: b.email || '',
+    address: b.address || '',
+    tagline: b.tagline || '',
+    city: b.city || '',
+    // FitLife-specific
+    trainerName: b.trainerName || '',
+    heroBadge: b.heroBadge || '',
+    cityZip: b.cityZip || '',
+    instagram: b.instagram || '',
+    hoursMF: b.hoursMF || '',
+    hoursSat: b.hoursSat || '',
+    hoursSun: b.hoursSun || '',
+    bio: b.bio || '',
+    yearsExp: b.yearsExp || '',
+    clientCount: b.clientCount || '',
+    certs: b.certs || '',
+    svc1Name: b.svc1Name || '', svc1Price: b.svc1Price || '', svc1Desc: b.svc1Desc || '',
+    svc2Name: b.svc2Name || '', svc2Price: b.svc2Price || '', svc2Desc: b.svc2Desc || '',
+    svc3Name: b.svc3Name || '', svc3Price: b.svc3Price || '', svc3Desc: b.svc3Desc || '',
+    test1Name: b.test1Name || '', test1Result: b.test1Result || '', test1Quote: b.test1Quote || '',
+    test2Name: b.test2Name || '', test2Result: b.test2Result || '', test2Quote: b.test2Quote || '',
+    test3Name: b.test3Name || '', test3Result: b.test3Result || '', test3Quote: b.test3Quote || '',
+    formspreeId: b.formspreeId || '',
+    calendlyLink: b.calendlyLink || '',
+    melNotes: b.melNotes || '',
   };
 
   const brandColors = req.body.brand_colors || '';
@@ -671,11 +697,14 @@ app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res)
   if (gloveNotes) db.prepare('UPDATE orders SET glove_notes=? WHERE id=?').run(gloveNotes, order.id);
   if (photoNotes) db.prepare('UPDATE orders SET photo_notes=? WHERE id=?').run(photoNotes, order.id);
 
-  // Save uploaded photos to DB linked to this order
+  // Save notes for Mel
+  if (data.melNotes) db.prepare('UPDATE orders SET glove_notes=? WHERE id=?').run(data.melNotes, order.id);
+
+  // Save uploaded photos to DB linked to this order (req.files is array when using .any())
   if (req.files && req.files.length > 0) {
-    const insertPhoto = db.prepare('INSERT INTO order_photos (order_id, filename, original, path) VALUES (?,?,?,?)');
+    const insertPhoto = db.prepare('INSERT INTO order_photos (order_id, filename, original, path, field_name) VALUES (?,?,?,?,?)');
     for (const f of req.files) {
-      insertPhoto.run(order.id, f.filename, f.originalname, f.path);
+      insertPhoto.run(order.id, f.filename, f.originalname, f.path, f.fieldname || '');
     }
     sendEmail({
       to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
