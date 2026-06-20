@@ -41,7 +41,7 @@
             <% } %>
             <p style="font-size:0.9rem;color:var(--gray);line-height:1.7;"><%- m.message.replace(/\n/g,'<br/>') %></p>
             <div style="margin-top:12px;">
-              <a href="mailto:<%= m.email %>?subject=Re: <%= encodeURIComponent(m.subject || 'Your message to Sites by Mel') %>" class="btn btn-navy btn-sm">Reply via Email</a>
+              <a href="https://mail.google.com/mail/?view=cm&to=<%= encodeURIComponent(m.email) %>&su=<%= encodeURIComponent('Re: ' + (m.subject || 'Your message to Sites by Mel')) %>" target="_blank" class="btn btn-navy btn-sm">Reply via Gmail</a>
             </div>
           </div>
         </div>
