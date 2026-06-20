@@ -49,7 +49,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 /* OWNER STORY */
 .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.story-img{background:linear-gradient(135deg,var(--primary),var(--secondary));min-height:520px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,0.3);font-size:0.82rem}
+.story-img{background:url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80') center/cover no-repeat;min-height:520px;overflow:hidden;}
 .story-content{padding:64px 56px;display:flex;flex-direction:column;justify-content:center}
 .story-content .label{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
 .story-content h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:20px}
@@ -66,7 +66,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 /* SOURCING */
 .sourcing-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.sourcing-img{background:linear-gradient(135deg,var(--accent),var(--primary));border-radius:var(--radius);min-height:400px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(255,255,255,0.3);font-size:0.82rem}
+.sourcing-img{background:url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80') center/cover no-repeat;border-radius:var(--radius);min-height:400px;overflow:hidden;}
 
 /* TIMELINE */
 .timeline{max-width:680px;margin:0 auto}
@@ -80,7 +80,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 /* TEAM */
 .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px}
 .team-card{text-align:center}
-.team-photo{height:240px;border-radius:var(--radius);margin-bottom:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.3);font-size:0.82rem}
+.team-photo{height:240px;border-radius:var(--radius);margin-bottom:16px;overflow:hidden;}
 .team-card h3{font-size:1.05rem;margin-bottom:4px;color:var(--primary)}
 .team-role{font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
 .team-card p{color:var(--gray);font-size:0.86rem;line-height:1.6}
@@ -133,8 +133,6 @@ footer a:hover{color:var(--lavender)}
 <section class="section" style="padding:0">
   <div class="story-grid">
     <div class="story-img">
-      <div style="font-size:3rem;opacity:0.5">&#127800;</div>
-      <span>Add your photo here</span>
     </div>
     <div class="story-content">
       <p class="label">The Founder</p>
@@ -194,8 +192,6 @@ footer a:hover{color:var(--lavender)}
         <a href="contact.html" class="btn btn-outline">Get Invited to Our Next Event</a>
       </div>
       <div class="sourcing-img">
-        <div style="font-size:3rem;opacity:0.5">&#10024;</div>
-        <span>Add your studio / sourcing photo here</span>
       </div>
     </div>
   </div>
@@ -264,27 +260,21 @@ footer a:hover{color:var(--lavender)}
     </div>
     <div class="team-grid">
       <div class="team-card">
-        <div class="team-photo" style="background:linear-gradient(135deg,var(--primary),var(--secondary))">
-          <div style="font-size:2.5rem;opacity:0.5">&#128100;</div>
-          <span>Add your photo here</span>
+        <div class="team-photo" style="background:url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80') center/cover no-repeat;">
         </div>
         <h3>Maya Chen</h3>
         <p class="team-role">Founder &amp; Buyer</p>
         <p>Finds every piece, knows every maker, and still wraps every special order herself when she can.</p>
       </div>
       <div class="team-card">
-        <div class="team-photo" style="background:linear-gradient(135deg,var(--accent),var(--primary))">
-          <div style="font-size:2.5rem;opacity:0.5">&#128100;</div>
-          <span>Add your photo here</span>
+        <div class="team-photo" style="background:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80') center/cover no-repeat;">
         </div>
         <h3>Sofia R.</h3>
         <p class="team-role">Shop Manager</p>
         <p>Runs the floor, handles online orders, and has an uncanny ability to recommend the perfect gift for anyone.</p>
       </div>
       <div class="team-card">
-        <div class="team-photo" style="background:linear-gradient(135deg,#7a4aaa,var(--accent))">
-          <div style="font-size:2.5rem;opacity:0.5">&#128100;</div>
-          <span>Add your photo here</span>
+        <div class="team-photo" style="background:url('https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&q=80') center/cover no-repeat;">
         </div>
         <h3>Jordan K.</h3>
         <p class="team-role">Styling &amp; Events</p>

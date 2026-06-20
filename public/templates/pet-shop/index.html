@@ -58,17 +58,8 @@
     /* ── IMAGE PLACEHOLDER ── */
     .img-placeholder {
       width: 100%;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
       border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-align: center;
-      padding: 1rem;
-      letter-spacing: 0.03em;
+      overflow: hidden;
     }
 
     /* ════════════════════════════════
@@ -226,12 +217,12 @@
       gap: 1rem;
     }
     .gallery-item .img-placeholder { height: 220px; }
-    .gallery-item:nth-child(1) .img-placeholder { background: linear-gradient(135deg, var(--primary), #2dc4b0); }
-    .gallery-item:nth-child(2) .img-placeholder { background: linear-gradient(135deg, var(--accent), #f09050); }
-    .gallery-item:nth-child(3) .img-placeholder { background: linear-gradient(135deg, var(--secondary), var(--primary)); }
-    .gallery-item:nth-child(4) .img-placeholder { background: linear-gradient(135deg, #e06010, var(--accent)); }
-    .gallery-item:nth-child(5) .img-placeholder { background: linear-gradient(135deg, #12a090, var(--primary)); }
-    .gallery-item:nth-child(6) .img-placeholder { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+    .gallery-item:nth-child(1) .img-placeholder { background: url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80') center/cover no-repeat; }
+    .gallery-item:nth-child(2) .img-placeholder { background: url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80') center/cover no-repeat; }
+    .gallery-item:nth-child(3) .img-placeholder { background: url('https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=800&q=80') center/cover no-repeat; }
+    .gallery-item:nth-child(4) .img-placeholder { background: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80') center/cover no-repeat; }
+    .gallery-item:nth-child(5) .img-placeholder { background: url('https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=800&q=80') center/cover no-repeat; }
+    .gallery-item:nth-child(6) .img-placeholder { background: url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80') center/cover no-repeat; }
 
     @media (max-width: 600px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
 
@@ -489,12 +480,12 @@
         <p style="color:#556; max-width:520px; margin:0 auto;">Browse photos of our happy clients — your pet could be next!</p>
       </div>
       <div class="gallery-grid">
-        <div class="gallery-item"><div class="img-placeholder" style="height:220px">Add your photo here</div></div>
-        <div class="gallery-item"><div class="img-placeholder" style="height:220px">Add your photo here</div></div>
-        <div class="gallery-item"><div class="img-placeholder" style="height:220px">Add your photo here</div></div>
-        <div class="gallery-item"><div class="img-placeholder" style="height:220px">Add your photo here</div></div>
-        <div class="gallery-item"><div class="img-placeholder" style="height:220px">Add your photo here</div></div>
-        <div class="gallery-item"><div class="img-placeholder" style="height:220px">Add your photo here</div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:220px"></div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:220px"></div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:220px"></div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:220px"></div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:220px"></div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:220px"></div></div>
       </div>
     </div>
   </section>
@@ -564,7 +555,7 @@
           <div class="stars">★★★★★</div>
           <p class="review-text">"My golden retriever Max comes home smelling amazing and looking like a show dog every single time. The staff is so gentle and patient — he actually gets excited when we pull into the parking lot now!"</p>
           <div class="reviewer">
-            <div class="reviewer-avatar"><div class="img-placeholder" style="width:48px;height:48px;border-radius:50%;font-size:0.6rem">Photo</div></div>
+            <div class="reviewer-avatar"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));"></div></div>
             <div class="reviewer-info">
               <strong>Sarah T.</strong>
               <span>Dog Mom to Max, Golden Retriever</span>
@@ -575,7 +566,7 @@
           <div class="stars">★★★★★</div>
           <p class="review-text">"I was nervous about leaving my anxious rescue pup overnight, but the team here kept me updated with photos and messages. She came home happy and relaxed. I won't take her anywhere else!"</p>
           <div class="reviewer">
-            <div class="reviewer-avatar"><div class="img-placeholder" style="width:48px;height:48px;border-radius:50%;font-size:0.6rem">Photo</div></div>
+            <div class="reviewer-avatar"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));"></div></div>
             <div class="reviewer-info">
               <strong>James R.</strong>
               <span>Dog Dad to Luna, Rescue Mix</span>
@@ -586,7 +577,7 @@
           <div class="stars">★★★★★</div>
           <p class="review-text">"Best groomer in town, hands down. My two poodles have been coming here for three years and they always look perfect. The prices are fair and the staff remembers every little thing about each dog."</p>
           <div class="reviewer">
-            <div class="reviewer-avatar"><div class="img-placeholder" style="width:48px;height:48px;border-radius:50%;font-size:0.6rem">Photo</div></div>
+            <div class="reviewer-avatar"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));"></div></div>
             <div class="reviewer-info">
               <strong>Maria L.</strong>
               <span>Dog Mom to Coco &amp; Biscuit, Poodles</span>

@@ -45,7 +45,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 /* BIO */
 .bio-grid{display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:start}
-.bio-photo{height:480px;background:linear-gradient(135deg,var(--primary),#3a9a8a);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(255,255,255,0.35);font-size:0.85rem;text-align:center;position:sticky;top:90px}
+.bio-photo{height:480px;background:linear-gradient(135deg,var(--primary),#3a9a8a);border-radius:var(--radius);overflow:hidden;position:sticky;top:90px}
+.bio-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .bio-content .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
 .bio-content h2{font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:8px;font-weight:400}
 .bio-tagline{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--gray);margin-bottom:24px}
@@ -61,7 +62,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 /* TEAM */
 .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
 .team-card{text-align:center}
-.team-photo{height:280px;background:linear-gradient(135deg,var(--primary),#3a9a8a);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.35);font-size:0.82rem;margin-bottom:20px}
+.team-photo{height:280px;background:linear-gradient(135deg,var(--primary),#3a9a8a);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
+.team-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .team-card h3{font-size:1.1rem;margin-bottom:4px}
 .team-card .role{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
 .team-card p{color:var(--gray);font-size:0.88rem;line-height:1.7}
@@ -151,8 +153,7 @@ footer a:hover{color:#6ac4b4}
   <div class="container">
     <div class="bio-grid">
       <div class="bio-photo">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Add your photo here
+        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Dr. Maya Chen, Lead Practitioner"/>
       </div>
       <div class="bio-content">
         <p class="label">Lead Practitioner</p>
@@ -203,26 +204,23 @@ footer a:hover{color:#6ac4b4}
     <div class="team-grid">
       <div class="team-card">
         <div class="team-photo">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Add your photo here
+          <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Dr. Maya Chen"/>
         </div>
         <h3>Dr. Maya Chen</h3>
         <p class="role">Lead Practitioner, L.Ac., LMT</p>
         <p>Specializes in pain management, women's health, fertility support, and stress-related conditions. 12+ years of clinical experience.</p>
       </div>
       <div class="team-card">
-        <div class="team-photo" style="background:linear-gradient(135deg,#1a5248,#2d7a6e)">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Add your photo here
+        <div class="team-photo">
+          <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&q=80" alt="Jordan Reeves, LMT"/>
         </div>
         <h3>Jordan Reeves, LMT</h3>
         <p class="role">Licensed Massage Therapist</p>
         <p>Expert in deep tissue, sports massage, and myofascial release. Works extensively with athletes and active clients seeking performance recovery.</p>
       </div>
       <div class="team-card">
-        <div class="team-photo" style="background:linear-gradient(135deg,#3a9a8a,#2d7a6e)">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Add your photo here
+        <div class="team-photo">
+          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80" alt="Priya Sharma, L.Ac."/>
         </div>
         <h3>Priya Sharma, L.Ac.</h3>
         <p class="role">Licensed Acupuncturist</p>

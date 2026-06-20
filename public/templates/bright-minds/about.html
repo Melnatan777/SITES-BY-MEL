@@ -39,7 +39,8 @@
     .section-title span { color:var(--accent); }
     .max-w { max-width:1100px; margin:0 auto; }
     .two-col { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
-    .img-ph { border-radius:var(--radius); display:flex; align-items:center; justify-content:center; font-size:0.9rem; color:rgba(255,255,255,0.85); font-weight:600; text-align:center; flex-direction:column; gap:0.5rem; }
+    .img-ph { border-radius:var(--radius); overflow:hidden; }
+    .img-ph img { width:100%; height:100%; object-fit:cover; object-position:center top; }
 
     .bio-text p { color:#555; line-height:1.8; margin-bottom:1.25rem; font-size:1rem; }
     .cert-row { display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:1.5rem; }
@@ -60,7 +61,7 @@
     .tutors-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1100px; margin:0 auto; }
     .tutor-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:var(--transition); text-align:center; }
     .tutor-card:hover { transform:translateY(-5px); }
-    .tutor-photo { height:200px; display:flex; align-items:center; justify-content:center; font-size:0.88rem; color:rgba(255,255,255,0.8); font-weight:600; }
+    .tutor-photo { height:200px; background-size:cover; background-position:center top; }
     .tutor-body { padding:1.5rem; }
     .tutor-body h3 { font-size:1.1rem; font-weight:800; color:var(--primary); margin-bottom:0.25rem; }
     .tutor-body .role { font-size:0.85rem; color:var(--accent); font-weight:700; margin-bottom:0.75rem; }
@@ -136,8 +137,8 @@
 <section style="background:var(--white);">
   <div class="two-col max-w">
     <div>
-      <div class="img-ph" style="height:480px;background:linear-gradient(135deg,var(--primary),var(--accent));">
-        <span style="font-size:2rem;">📸</span>Add your photo here<small style="font-size:0.78rem;opacity:0.8;">(Founder / Director)</small>
+      <div class="img-ph" style="height:480px;">
+        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80" alt="BrightMinds Founder"/>
       </div>
     </div>
     <div class="bio-text">
@@ -265,7 +266,7 @@
   </div>
   <div class="tutors-grid">
     <div class="tutor-card">
-      <div class="tutor-photo" style="background:linear-gradient(135deg,var(--primary),#2a7abf);">📸 Add photo here</div>
+      <div class="tutor-photo" style="background-image:url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80')"></div>
       <div class="tutor-body">
         <h3>[Tutor Name]</h3>
         <div class="role">Math & SAT Specialist</div>
@@ -274,7 +275,7 @@
       </div>
     </div>
     <div class="tutor-card">
-      <div class="tutor-photo" style="background:linear-gradient(135deg,#2a5c3a,#1a4028);">📸 Add photo here</div>
+      <div class="tutor-photo" style="background-image:url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80')"></div>
       <div class="tutor-body">
         <h3>[Tutor Name]</h3>
         <div class="role">English & Writing Coach</div>
@@ -283,7 +284,7 @@
       </div>
     </div>
     <div class="tutor-card">
-      <div class="tutor-photo" style="background:linear-gradient(135deg,#5c3a1a,#3d2510);">📸 Add photo here</div>
+      <div class="tutor-photo" style="background-image:url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80')"></div>
       <div class="tutor-body">
         <h3>[Tutor Name]</h3>
         <div class="role">Science Tutor</div>

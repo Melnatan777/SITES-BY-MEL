@@ -49,9 +49,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 /* BIO */
 .bio-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:60px;align-items:center}
-.bio-photo{height:520px;background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
-.bio-photo svg{opacity:0.2}
-.bio-photo span{color:rgba(255,255,255,0.35);font-size:0.82rem}
+.bio-photo{height:520px;background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);overflow:hidden}
+.bio-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .bio-content .label{font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 .bio-content h2{font-size:clamp(2rem,3.5vw,3rem);margin-bottom:6px}
 .bio-content .title{color:var(--gray);font-size:0.95rem;margin-bottom:24px;font-weight:500}
@@ -136,8 +135,7 @@ footer a:hover{color:var(--gold)}
   <div class="container">
     <div class="bio-grid">
       <div class="bio-photo">
-        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>Add your photo here</span>
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80" alt="Sarah Mitchell, Licensed Realtor"/>
       </div>
       <div class="bio-content">
         <p class="label">About Me</p>

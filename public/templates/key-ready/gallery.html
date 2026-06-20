@@ -51,7 +51,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 .listings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
 .listing-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);transition:var(--transition)}
 .listing-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.listing-img{height:210px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.82rem;position:relative}
+.listing-img{height:210px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.82rem;position:relative;background-size:cover;background-position:center;overflow:hidden}
 .listing-badge{position:absolute;top:14px;left:14px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;border-radius:2px}
 .badge-sold{background:var(--primary);color:var(--white)}
 .badge-sale{background:var(--gold);color:var(--white)}
@@ -67,11 +67,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 /* NEIGHBORHOOD PHOTOS */
 .neighborhood-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:260px 180px;gap:12px}
 .neighborhood-grid .feat{grid-column:span 1;grid-row:span 2}
-.photo-tile{border-radius:var(--radius);display:flex;align-items:flex-end;padding:16px;position:relative;overflow:hidden;transition:var(--transition)}
+.photo-tile{border-radius:var(--radius);display:flex;align-items:flex-end;padding:16px;position:relative;overflow:hidden;transition:var(--transition);background-size:cover;background-position:center}
 .photo-tile:hover{opacity:0.92}
 .photo-tile .tile-label{background:rgba(0,0,0,0.55);color:var(--white);font-size:0.78rem;font-weight:600;padding:5px 12px;border-radius:2px}
-.photo-tile .placeholder-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:2rem;opacity:0.3}
-.photo-tile .add-text{position:absolute;top:50%;left:50%;transform:translate(-50%,20%);color:rgba(255,255,255,0.35);font-size:0.78rem}
 
 /* STATS */
 .sold-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
@@ -142,8 +140,7 @@ footer a:hover{color:var(--gold)}
     </div>
     <div class="listings-grid">
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,var(--primary),var(--secondary))">
-          <span>Add property photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80')">
           <span class="listing-badge badge-sale">For Sale</span>
         </div>
         <div class="listing-body">
@@ -154,8 +151,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#254070,var(--primary))">
-          <span>Add property photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80')">
           <span class="listing-badge badge-sale">New Listing</span>
         </div>
         <div class="listing-body">
@@ -166,8 +162,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,var(--secondary),#071a30)">
-          <span>Add property photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80')">
           <span class="listing-badge badge-sale">Price Reduced</span>
         </div>
         <div class="listing-body">
@@ -178,8 +173,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#1a3a6a,var(--secondary))">
-          <span>Add property photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80')">
           <span class="listing-badge badge-pending">Pending</span>
         </div>
         <div class="listing-body">
@@ -190,8 +184,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#0d2a50,var(--secondary))">
-          <span>Add property photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80')">
           <span class="listing-badge badge-sale">For Sale</span>
         </div>
         <div class="listing-body">
@@ -202,8 +195,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#1a4060,#0d2840)">
-          <span>Add property photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80')">
           <span class="listing-badge badge-sale">New Listing</span>
         </div>
         <div class="listing-body">
@@ -231,8 +223,7 @@ footer a:hover{color:var(--gold)}
     </div>
     <div class="listings-grid">
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#2a4a2a,#1a3020)">
-          <span>Add sold home photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80')">
           <span class="listing-badge badge-sold">Sold</span>
         </div>
         <div class="listing-body">
@@ -245,8 +236,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#3a2a1a,#201408)">
-          <span>Add sold home photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80')">
           <span class="listing-badge badge-sold">Sold</span>
         </div>
         <div class="listing-body">
@@ -259,8 +249,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#2a1a3a,#180a28)">
-          <span>Add sold home photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80')">
           <span class="listing-badge badge-sold">Sold</span>
         </div>
         <div class="listing-body">
@@ -273,8 +262,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#1a3a3a,#0a2020)">
-          <span>Add sold home photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80')">
           <span class="listing-badge badge-sold">Sold</span>
         </div>
         <div class="listing-body">
@@ -287,8 +275,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#3a3a1a,#202008)">
-          <span>Add sold home photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80')">
           <span class="listing-badge badge-sold">Sold</span>
         </div>
         <div class="listing-body">
@@ -301,8 +288,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#1a2a3a,#0a1828)">
-          <span>Add sold home photo</span>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80')">
           <span class="listing-badge badge-sold">Sold</span>
         </div>
         <div class="listing-body">
@@ -345,29 +331,19 @@ footer a:hover{color:var(--gold)}
       <div class="gold-line"></div>
     </div>
     <div class="neighborhood-grid">
-      <div class="photo-tile feat" style="background:linear-gradient(135deg,var(--primary),var(--secondary));min-height:500px">
-        <div class="placeholder-icon">&#127968;</div>
-        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add your photo here</div>
+      <div class="photo-tile feat" style="background-image:url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80');min-height:500px">
         <span class="tile-label">Houston Heights</span>
       </div>
-      <div class="photo-tile" style="background:linear-gradient(135deg,#254070,var(--primary))">
-        <div class="placeholder-icon">&#127960;</div>
-        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add photo</div>
+      <div class="photo-tile" style="background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80')">
         <span class="tile-label">Sugar Land</span>
       </div>
-      <div class="photo-tile" style="background:linear-gradient(135deg,#1a4060,var(--secondary))">
-        <div class="placeholder-icon">&#127966;</div>
-        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add photo</div>
+      <div class="photo-tile" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80')">
         <span class="tile-label">Katy</span>
       </div>
-      <div class="photo-tile" style="background:linear-gradient(135deg,#2a3a60,#1a2040)">
-        <div class="placeholder-icon">&#127775;</div>
-        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add photo</div>
+      <div class="photo-tile" style="background-image:url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80')">
         <span class="tile-label">The Woodlands</span>
       </div>
-      <div class="photo-tile" style="background:linear-gradient(135deg,#0d2840,#07182a)">
-        <div class="placeholder-icon">&#127774;</div>
-        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add photo</div>
+      <div class="photo-tile" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80')">
         <span class="tile-label">Pearland</span>
       </div>
     </div>

@@ -58,7 +58,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 .featured-grid{display:grid;grid-template-columns:3fr 2fr;gap:40px;align-items:start}
 .featured-post{cursor:pointer}
-.featured-img{height:340px;background:linear-gradient(135deg,#6B4FA0,#9B7DD4);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(255,255,255,0.35);font-size:0.82rem;margin-bottom:20px}
+.featured-img{height:340px;background:url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800&q=80') center/cover no-repeat;border-radius:8px;margin-bottom:20px;overflow:hidden;}
 .post-cat{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:8px}
 .featured-post h2{font-size:clamp(1.4rem,2.5vw,1.9rem);margin-bottom:10px;line-height:1.3;color:var(--ink)}
 .featured-post p{color:var(--gray);font-size:0.92rem;line-height:1.75;margin-bottom:16px}
@@ -67,7 +67,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 .sidebar-posts{display:flex;flex-direction:column;gap:24px}
 .sidebar-post{display:grid;grid-template-columns:100px 1fr;gap:14px;cursor:pointer}
-.sidebar-post-img{height:80px;background:linear-gradient(135deg,#9B7DD4,#6B4FA0);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:rgba(255,255,255,0.3)}
+.sidebar-post-img{height:80px;border-radius:6px;overflow:hidden;background:center/cover no-repeat;}
 .sidebar-post .post-cat{margin-bottom:4px}
 .sidebar-post h4{font-size:0.92rem;line-height:1.4;color:var(--ink);font-family:'Fraunces',serif;font-weight:600}
 .sidebar-post h4:hover{color:var(--purple)}
@@ -81,7 +81,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 /* LATEST POSTS */
 .posts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px}
 .post-card{cursor:pointer}
-.post-card-img{height:200px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:rgba(255,255,255,0.3);margin-bottom:16px;background:linear-gradient(135deg,#6B4FA0,#9B7DD4)}
+.post-card-img{height:200px;border-radius:8px;margin-bottom:16px;overflow:hidden;background:center/cover no-repeat;}
 .post-card h3{font-size:1.1rem;margin-bottom:8px;line-height:1.4;color:var(--ink)}
 .post-card h3:hover{color:var(--purple)}
 .post-card p{color:var(--gray);font-size:0.88rem;line-height:1.7;margin-bottom:12px}
@@ -89,7 +89,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 /* PODCAST */
 .podcast-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.podcast-art{height:320px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+.podcast-art{height:320px;background:url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800&q=80') center/cover no-repeat;border-radius:16px;overflow:hidden;position:relative;}
 .podcast-art h3{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--white);text-align:center;padding:0 24px}
 .podcast-art p{font-size:0.82rem;color:rgba(255,255,255,0.65);text-align:center}
 .podcast-content .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple-light);margin-bottom:10px}
@@ -190,10 +190,7 @@ footer a:hover{color:var(--purple-light)}
     </div>
     <div class="featured-grid">
       <div class="featured-post">
-        <div class="featured-img">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>Add featured image</span>
-        </div>
+        <div class="featured-img"></div>
         <p class="post-cat">Creativity</p>
         <h2>Why Your Creative Block Isn&rsquo;t What You Think It Is</h2>
         <p>Most creators mistake resistance for lack of inspiration. But the real issue runs deeper &mdash; and it has a surprisingly simple fix that has nothing to do with motivation.</p>
@@ -211,7 +208,7 @@ footer a:hover{color:var(--purple-light)}
             </div>
           </div>
           <div class="sidebar-post">
-            <div class="sidebar-post-img" style="background:linear-gradient(135deg,#9B7DD4,#c5a8f0)">photo</div>
+            <div class="sidebar-post-img" style="background-image:url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&q=80')"></div>
             <div>
               <p class="post-cat">Mindset</p>
               <h4>Letting Go of the Content Calendar (And What I Do Instead)</h4>
@@ -219,7 +216,7 @@ footer a:hover{color:var(--purple-light)}
             </div>
           </div>
           <div class="sidebar-post">
-            <div class="sidebar-post-img" style="background:linear-gradient(135deg,#c5a8f0,#6B4FA0)">photo</div>
+            <div class="sidebar-post-img" style="background-image:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&q=80')"></div>
             <div>
               <p class="post-cat">Business</p>
               <h4>How I Monetized My Newsletter Without Feeling Gross About It</h4>
@@ -260,21 +257,21 @@ footer a:hover{color:var(--purple-light)}
     </div>
     <div class="posts-grid" style="margin-top:40px">
       <div class="post-card">
-        <div class="post-card-img">Add image</div>
+        <div class="post-card-img" style="background-image:url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80')"></div>
         <p class="post-cat">Mindset</p>
         <h3>Stop Optimizing Your Morning Routine</h3>
         <p>The best morning routine is one you actually do. Here&rsquo;s what I learned after three years of experimenting.</p>
         <a href="#" class="read-more">Read more &rarr;</a>
       </div>
       <div class="post-card">
-        <div class="post-card-img" style="background:linear-gradient(135deg,#9B7DD4,#EDE8F8)">Add image</div>
+        <div class="post-card-img" style="background-image:url('https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=800&q=80')"></div>
         <p class="post-cat">Tools &amp; Tech</p>
         <h3>The Only Tools I Actually Use After 5 Years</h3>
         <p>Forget the shiny new app. These are the five tools that have stood the test of time in my creative workflow.</p>
         <a href="#" class="read-more">Read more &rarr;</a>
       </div>
       <div class="post-card">
-        <div class="post-card-img" style="background:linear-gradient(135deg,#4A3580,#9B7DD4)">Add image</div>
+        <div class="post-card-img" style="background-image:url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80')"></div>
         <p class="post-cat">Business</p>
         <h3>From 0 to 8k Subscribers: What Actually Worked</h3>
         <p>No viral moments, no big launches. Just slow, steady growth — and the three things I kept doing every week.</p>

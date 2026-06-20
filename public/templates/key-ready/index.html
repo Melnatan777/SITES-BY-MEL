@@ -65,7 +65,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 .listings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
 .listing-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);transition:var(--transition)}
 .listing-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.listing-img{height:200px;background:linear-gradient(135deg,var(--navy),var(--navy-dark));display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.82rem;position:relative}
+.listing-img{height:200px;background:linear-gradient(135deg,var(--navy),var(--navy-dark));background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.82rem;position:relative;overflow:hidden}
 .listing-badge{position:absolute;top:14px;left:14px;background:var(--gold);color:var(--white);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:2px}
 .listing-body{padding:20px}
 .listing-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:6px}
@@ -75,9 +75,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 /* BIO */
 .bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.bio-img{height:440px;background:linear-gradient(135deg,var(--navy),var(--navy-dark));border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
-.bio-img svg{opacity:0.25}
-.bio-img span{color:rgba(255,255,255,0.35);font-size:0.82rem}
+.bio-img{height:440px;background:linear-gradient(135deg,var(--navy),var(--navy-dark));border-radius:var(--radius);overflow:hidden;position:relative}
+.bio-img img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .bio-content .label{font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 .bio-content h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:6px}
 .bio-content .title{color:var(--gray);font-size:0.9rem;margin-bottom:24px}
@@ -200,7 +199,7 @@ footer a:hover{color:var(--gold)}
     </div>
     <div class="listings-grid">
       <div class="listing-card">
-        <div class="listing-img"><span>Add property photo</span><span class="listing-badge">For Sale</span></div>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80');background-size:cover;background-position:center"><span class="listing-badge">For Sale</span></div>
         <div class="listing-body">
           <div class="listing-price">$485,000</div>
           <div class="listing-address">4218 Magnolia Creek Drive</div>
@@ -209,7 +208,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,#254070,var(--navy))"><span>Add property photo</span><span class="listing-badge">New</span></div>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80');background-size:cover;background-position:center"><span class="listing-badge">New</span></div>
         <div class="listing-body">
           <div class="listing-price">$319,000</div>
           <div class="listing-address">812 Cypress Bend Court</div>
@@ -218,7 +217,7 @@ footer a:hover{color:var(--gold)}
         </div>
       </div>
       <div class="listing-card">
-        <div class="listing-img" style="background:linear-gradient(135deg,var(--navy),var(--secondary))"><span>Add property photo</span><span class="listing-badge">Price Reduced</span></div>
+        <div class="listing-img" style="background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80');background-size:cover;background-position:center"><span class="listing-badge">Price Reduced</span></div>
         <div class="listing-body">
           <div class="listing-price">$728,000</div>
           <div class="listing-address">2901 River Oaks Boulevard</div>
@@ -235,8 +234,7 @@ footer a:hover{color:var(--gold)}
   <div class="container">
     <div class="bio-grid">
       <div class="bio-img">
-        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span>Add your photo here</span>
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80" alt="Sarah Mitchell, Licensed Realtor"/>
       </div>
       <div class="bio-content">
         <p class="label">About Your Agent</p>

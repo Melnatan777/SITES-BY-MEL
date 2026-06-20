@@ -46,7 +46,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 /* BIO */
 .bio-grid{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:start}
 .bio-photo-col{position:sticky;top:90px}
-.bio-photo{height:420px;background:linear-gradient(135deg,var(--primary),#6b4fa0);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.35);font-size:0.82rem;margin-bottom:20px}
+.bio-photo{height:420px;background:url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800&q=80') center/cover no-repeat;border-radius:var(--radius);margin-bottom:20px;overflow:hidden;}
 .bio-socials{display:flex;flex-direction:column;gap:8px}
 .bio-social-link{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.85rem;font-weight:500;color:var(--gray);transition:var(--transition)}
 .bio-social-link:hover{border-color:var(--primary);color:var(--primary)}
@@ -166,10 +166,7 @@ footer a:hover{color:#9b7dd4}
   <div class="container">
     <div class="bio-grid">
       <div class="bio-photo-col">
-        <div class="bio-photo">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          Add your photo here
-        </div>
+        <div class="bio-photo"></div>
         <div class="bio-socials">
           <a href="#" class="bio-social-link"><span class="icon">📸</span> @thoughtfulcreator</a>
           <a href="#" class="bio-social-link"><span class="icon">🐦</span> @alexwrites</a>
