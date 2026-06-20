@@ -58,6 +58,22 @@ try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_path TEXT`); } catch(e) {
 try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_token TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_expires TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE order_photos ADD COLUMN field_name TEXT`); } catch(e) {}
+// FitLife extended intake fields
+try { db.exec(`ALTER TABLE orders ADD COLUMN trainer_name TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN hero_badge TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN city_zip TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN instagram TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN hours_mf TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN hours_sat TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN hours_sun TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN bio TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN years_exp TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN client_count TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN certs TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN services_json TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN testimonials_json TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN formspree_id TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN calendly_link TEXT`); } catch(e) {}
 
 // ── COUPONS ───────────────────────────────────────────────────────────────────
 db.exec(`

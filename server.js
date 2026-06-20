@@ -734,9 +734,33 @@ app.post('/personalize/:token', photoUpload.any(), async (req, res) => {
     });
   }
 
-  // Save business details to order record
-  db.prepare(`UPDATE orders SET business_name=?, phone=?, email=?, address=?, tagline=?, city=? WHERE id=?`)
-    .run(data.businessName, data.phone, data.email, data.address, data.tagline, data.city || '', order.id);
+  // Save all intake fields to order record
+  const servicesJson = JSON.stringify([
+    { name: data.svc1Name, price: data.svc1Price, desc: data.svc1Desc },
+    { name: data.svc2Name, price: data.svc2Price, desc: data.svc2Desc },
+    { name: data.svc3Name, price: data.svc3Price, desc: data.svc3Desc },
+  ].filter(s => s.name));
+  const testimonialsJson = JSON.stringify([
+    { name: data.test1Name, result: data.test1Result, quote: data.test1Quote },
+    { name: data.test2Name, result: data.test2Result, quote: data.test2Quote },
+    { name: data.test3Name, result: data.test3Result, quote: data.test3Quote },
+  ].filter(t => t.name));
+  db.prepare(`UPDATE orders SET
+    business_name=?, phone=?, email=?, address=?, tagline=?, city=?,
+    trainer_name=?, hero_badge=?, city_zip=?, instagram=?,
+    hours_mf=?, hours_sat=?, hours_sun=?,
+    bio=?, years_exp=?, client_count=?, certs=?,
+    services_json=?, testimonials_json=?,
+    formspree_id=?, calendly_link=?
+    WHERE id=?`).run(
+    data.businessName, data.phone, data.email, data.address, data.tagline, data.city,
+    data.trainerName, data.heroBadge, data.cityZip, data.instagram,
+    data.hoursMF, data.hoursSat, data.hoursSun,
+    data.bio, data.yearsExp, data.clientCount, data.certs,
+    servicesJson, testimonialsJson,
+    data.formspreeId, data.calendlyLink,
+    order.id
+  );
 
   // Show "we're preparing your site" — Mel builds and sends from admin
   res.render('preparing', {
@@ -1085,6 +1109,10 @@ app.post('/admin/orders/:id/build-and-send', requireAuth, async (req, res) => {
   const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
   if (!product) return res.redirect(`/admin/orders/${order.id}`);
 
+  // Parse stored JSON fields
+  let services = [], testimonials = [];
+  try { services = JSON.parse(order.services_json || '[]'); } catch(e) {}
+  try { testimonials = JSON.parse(order.testimonials_json || '[]'); } catch(e) {}
   const data = {
     businessName: order.business_name || '',
     phone: order.phone || '',
@@ -1092,6 +1120,26 @@ app.post('/admin/orders/:id/build-and-send', requireAuth, async (req, res) => {
     address: order.address || '',
     tagline: order.tagline || '',
     city: order.city || '',
+    // FitLife fields
+    trainerName: order.trainer_name || '',
+    heroBadge: order.hero_badge || '',
+    cityZip: order.city_zip || '',
+    instagram: order.instagram || '',
+    hoursMF: order.hours_mf || '',
+    hoursSat: order.hours_sat || '',
+    hoursSun: order.hours_sun || '',
+    bio: order.bio || '',
+    yearsExp: order.years_exp || '',
+    clientCount: order.client_count || '',
+    certs: order.certs || '',
+    svc1Name: (services[0]||{}).name||'', svc1Price: (services[0]||{}).price||'', svc1Desc: (services[0]||{}).desc||'',
+    svc2Name: (services[1]||{}).name||'', svc2Price: (services[1]||{}).price||'', svc2Desc: (services[1]||{}).desc||'',
+    svc3Name: (services[2]||{}).name||'', svc3Price: (services[2]||{}).price||'', svc3Desc: (services[2]||{}).desc||'',
+    test1Name: (testimonials[0]||{}).name||'', test1Result: (testimonials[0]||{}).result||'', test1Quote: (testimonials[0]||{}).quote||'',
+    test2Name: (testimonials[1]||{}).name||'', test2Result: (testimonials[1]||{}).result||'', test2Quote: (testimonials[1]||{}).quote||'',
+    test3Name: (testimonials[2]||{}).name||'', test3Result: (testimonials[2]||{}).result||'', test3Quote: (testimonials[2]||{}).quote||'',
+    formspreeId: order.formspree_id || '',
+    calendlyLink: order.calendly_link || '',
   };
 
   const DOWNLOADS_DIR = process.env.DATABASE_PATH
