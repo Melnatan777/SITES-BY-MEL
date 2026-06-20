@@ -90,33 +90,61 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
   <!-- STEP 2: MAKE IT YOURS -->
   <div class="card">
     <div class="oyster">🌍</div>
-    <h2>Step 2 — The world is your oyster. Make it yours!</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">This is the fun part. Every word, price, and photo is yours to change. You don't need to know how to code — just open each page file, find the text you want to change, type something new, and save. Here's exactly how:</p>
-    <div class="fun">
-      <strong>✏️ No downloads needed — you already have everything!</strong><br>
-      <span style="font-size:.82rem"><strong>Windows:</strong> right-click any HTML file → <strong>Open with → Notepad</strong>. &nbsp;|&nbsp; <strong>Mac:</strong> right-click → <strong>Open with → TextEdit</strong>. Both are already on your computer.</span>
+    <h2>Step 2 — Make It Yours! (No coding needed, promise.)</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">Every word, price, and business name in this template is yours to change. You're not coding — you're just finding words and replacing them. That's it.</p>
+
+    <div class="fun" style="margin-bottom:18px">
+      <strong>✏️ No downloads, no installs, no accounts.</strong><br>
+      <span style="font-size:.82rem">You already have everything you need on your computer right now.<br>
+      <strong>Windows:</strong> Notepad &nbsp;|&nbsp; <strong>Mac:</strong> TextEdit — both come pre-installed.</span>
     </div>
+
+    <p style="font-size:.9rem;font-weight:700;color:#1B2F4E;margin-bottom:12px">Here's exactly what to do, step by step:</p>
 
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Right-click a page file and open it in Notepad (Windows) or TextEdit (Mac)</strong><span>Find your website folder, right-click a file like <code>index.html</code>, choose <strong>Open with → Notepad</strong>. You'll see the code — don't panic! You only need to find the words and change them. Everything else stays the same.</span></div>
+      <div class="step-body"><strong>Open your website folder</strong><span>Find the folder you unzipped on your computer. You'll see files like <code>index.html</code>, <code>about.html</code>, <code>services.html</code>, etc. Each one is a page of your website.</span></div>
     </div>
+
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Find the text you want to change</strong><span>Press <code>Ctrl+F</code> (Windows) or <code>Cmd+F</code> (Mac) to search. Type a word from the template — like the demo business name or a placeholder phrase — then click on it and type your own words.</span></div>
+      <div class="step-body"><strong>Right-click a file and open it in Notepad (or TextEdit on Mac)</strong><span>Right-click on <code>index.html</code> → choose <strong>Open with</strong> → choose <strong>Notepad</strong>. You'll see a lot of text. <em>Don't panic!</em> You're not reading all of it — you're just searching for the words you want to swap out.</span></div>
     </div>
+
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Save — it goes right back to the same file</strong><span>Press <code>Ctrl+S</code> (Windows) or <code>Cmd+S</code> (Mac). It saves back to the same file — no moving, no renaming. Then double-click <code>index.html</code> to open it in your browser and see your changes.</span></div>
+      <div class="step-body">
+        <strong>Use Find &amp; Replace to swap your business name (the easy way!)</strong>
+        <span>
+          This is the secret trick that makes it fast:<br><br>
+          Press <code>Ctrl+H</code> on Windows (or <code>Cmd+H</code> on Mac). A small box pops up with two fields:<br><br>
+          &nbsp;&nbsp;• <strong>Find what:</strong> type the demo business name (e.g. <em>FitLife</em>)<br>
+          &nbsp;&nbsp;• <strong>Replace with:</strong> type YOUR business name<br><br>
+          Then click <strong>Replace All</strong>. Every single instance on that page changes at once. Takes 10 seconds.
+        </span>
+      </div>
     </div>
+
     <div class="step">
       <div class="step-num">4</div>
-      <div class="step-body"><strong>Repeat for each page</strong><span>Right-click each file, open in Notepad, make your edits, save. <code>services.html</code> for pricing, <code>about.html</code> for your story, <code>contact.html</code> for contact info. One file at a time — easy!</span></div>
+      <div class="step-body"><strong>Change any other text the same way</strong><span>Want to update your tagline, phone number, address, or service descriptions? Same trick — press <code>Ctrl+H</code>, type the old words in the top box, type your new words in the bottom box, click Replace All. Or just click directly on the word in Notepad and type over it.</span></div>
     </div>
+
     <div class="step">
       <div class="step-num">5</div>
-      <div class="step-body"><strong>Replace your business name on all pages at once (time-saver!)</strong><span>Press <code>Ctrl+H</code> (Windows) or <code>Cmd+H</code> (Mac) to open Find &amp; Replace. Type the demo business name in the top box, your business name in the bottom, click <strong>Replace All</strong>. Do this in each file and you're done in minutes.</span></div>
+      <div class="step-body"><strong>Save your changes</strong><span>Press <code>Ctrl+S</code> (Windows) or <code>Cmd+S</code> (Mac). That's it — it saves right back to the same file. Nothing moves, nothing gets lost.</span></div>
     </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body"><strong>See your changes in the browser</strong><span>Go back to your website folder and double-click <code>index.html</code> — it opens in your browser so you can see exactly how your page looks. If you made more changes, just press <code>F5</code> on your keyboard to refresh and see the latest version.</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body"><strong>Do the same for every page</strong><span>Right-click <code>about.html</code> → Open with Notepad → update your story → Ctrl+S. Then <code>services.html</code> for your pricing → open → update → save. Each file is one page. Edit, save, done. Repeat for each one.</span></div>
+    </div>
+
     <div class="tip">${tipSave}</div>
   </div>
 
@@ -144,32 +172,40 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
   <!-- COLORS -->
   <div class="card">
     <div class="oyster">🎨</div>
-    <h2>Change Your Colors — It's Easier Than You Think!</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:14px;">Your entire color scheme lives in ONE place at the top of each HTML file. Change it there and every button, heading, and banner on that page updates automatically.</p>
-    <p style="font-size:.88rem;color:#555;margin-bottom:10px;">Open <code>index.html</code> in Notepad++ and look near the very top for something like this:</p>
-    <div style="background:#1a1a2e;color:#e8e8e8;padding:16px 20px;border-radius:8px;font-family:monospace;font-size:.82rem;line-height:1.8;margin-bottom:14px;">
+    <h2>Change Your Colors</h2>
+
+    <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 18px;margin-bottom:20px">
+      <p style="font-size:.88rem;font-weight:700;color:#1e40af;margin:0 0 6px">💡 First — what is a hex code?</p>
+      <p style="font-size:.84rem;color:#333;margin:0;line-height:1.7">A <strong>hex code</strong> is just a color written as a code that computers understand. Every color in the world has one. It always starts with a <strong>#</strong> and has 6 letters and numbers after it.<br><br>
+      Examples: &nbsp;<strong style="color:#C9922B">#C9922B</strong> = gold &nbsp;|&nbsp; <strong style="color:#1B2F4E">#1B2F4E</strong> = navy blue &nbsp;|&nbsp; <strong style="color:#ef4444">#ef4444</strong> = red<br><br>
+      You don't need to memorize anything — you just look up the color you want and copy the code.</p>
+    </div>
+
+    <p style="font-size:.88rem;color:#555;margin-bottom:10px;">Your template's colors live near the very top of each HTML file. Open <code>index.html</code> in Notepad and look for a section that looks like this:</p>
+    <div style="background:#1a1a2e;color:#e8e8e8;padding:16px 20px;border-radius:8px;font-family:monospace;font-size:.82rem;line-height:1.8;margin-bottom:16px;">
       <span style="color:#888">/* YOUR BRAND COLORS — change these! */</span><br/>
       :root {<br/>
-      &nbsp;&nbsp;<span style="color:#79b8ff">--primary</span>: <span style="color:#C9922B">${primary}</span>;  <span style="color:#888">/* main dark color */</span><br/>
-      &nbsp;&nbsp;<span style="color:#79b8ff">--accent</span>: <span style="color:#C9922B">${accent}</span>;   <span style="color:#888">/* highlight color */</span><br/>
-      &nbsp;&nbsp;<span style="color:#79b8ff">--text</span>: <span style="color:#C9922B">#1a1a2a</span>;    <span style="color:#888">/* body text */</span><br/>
+      &nbsp;&nbsp;<span style="color:#79b8ff">--primary</span>: <span style="color:#C9922B">${primary}</span>;  <span style="color:#888">← main color (buttons, headings)</span><br/>
+      &nbsp;&nbsp;<span style="color:#79b8ff">--accent</span>: <span style="color:#C9922B">${accent}</span>;   <span style="color:#888">← highlight color (accents, links)</span><br/>
       }
     </div>
-    <p style="font-size:.84rem;color:#555;margin-bottom:12px;">Just replace those <strong>#hex codes</strong> with your brand colors. Don't know your hex codes? No problem:</p>
+    <p style="font-size:.84rem;color:#555;margin-bottom:16px;">Just swap those codes with your own colors. Here's how to find your hex code in 30 seconds:</p>
+
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Go to <a href="https://coolors.co" target="_blank">coolors.co</a></strong><span>Hit the spacebar to generate beautiful color palettes. When you find colors you love, click on one to copy the hex code (it looks like #FF5733).</span></div>
+      <div class="step-body"><strong>Go to Google and search: <em>color picker</em></strong><span>Google has a color picker built right into search results. A rainbow wheel appears — click anywhere on it to pick a color. The hex code shows up automatically in a box labeled "HEX." It'll look something like <strong>#3a86ff</strong>. Copy that.</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Or Google "color picker"</strong><span>Google has a built-in color picker right in the search results. Pick any color and it shows you the hex code instantly.</span></div>
+      <div class="step-body"><strong>Or browse ready-made palettes at <a href="https://coolors.co" target="_blank">coolors.co</a></strong><span>Hit the spacebar to cycle through beautiful color combos. When you see one you love, click any color swatch to see its hex code. Great for picking a primary + accent combo that looks professional together.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Paste your hex code in the file</strong><span>Replace the existing hex code (like <code>${primary}</code>) with your new one. Save, refresh your browser — your whole site changes color instantly. Magic!</span></div>
+      <div class="step-body"><strong>Paste your hex code into Notepad</strong><span>In Notepad, press <code>Ctrl+H</code> to open Find &amp; Replace. In <strong>Find what</strong> type the old code (like <code>${primary}</code>). In <strong>Replace with</strong> paste your new code. Click <strong>Replace All</strong>. Press <code>Ctrl+S</code> to save, then double-click <code>index.html</code> in your browser to see your new colors instantly.</span></div>
     </div>
-    <div class="fun">💡 <strong>Pro tip:</strong> Do this on index.html first to preview how your colors look. Once you're happy, use <code>Ctrl+H</code> in Notepad to find and replace the old hex codes in each page file.</div>
-    <p style="font-size:.83rem;color:#555;margin-top:12px;">Here are some example color combos to get you inspired:</p>
+
+    <div class="fun">💡 <strong>Do index.html first</strong> to preview your colors in the browser. Once you're happy, do the same Ctrl+H swap in each of the other page files.</div>
+    <p style="font-size:.83rem;color:#555;margin-top:14px;">Need inspiration? Here are some combos to get you started:</p>
     <div class="color-row">
       <div class="color-chip" style="background:${primary};">Your Primary ${primary}</div>
       <div class="color-chip" style="background:${accent};">Your Accent ${accent}</div>
