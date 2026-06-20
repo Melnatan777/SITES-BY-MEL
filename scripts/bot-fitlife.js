@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const BOT = {
 
   welcome: {
-    msg: "Hi! 👋 I'm here to walk you through setting up your FitLife template. What do you want to do first?",
+    msg: "Hi! 👋 I'm Mel's setup assistant and I'm going to walk you through every single step.\n\n<b>Quick tip before we start:</b> Keep this browser window open while you work. Open your page in <b>Notepad</b> to edit, and keep the <b>browser</b> open to preview and get help from me. I'll be right here!\n\nWhat do you want to do first?",
     choices: [
       { label: "✏️ Edit my business name & text", next: "edit_which_page" },
       { label: "📸 Swap out the photos", next: "photos_intro" },

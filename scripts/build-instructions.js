@@ -89,6 +89,15 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
       <div class="step-body"><strong>Preview it right now</strong><span>Open the folder and double-click <code>index.html</code>. It opens in your browser. Click around — all 5 pages work immediately, right on your computer. No internet needed yet!</span></div>
     </div>
     <div class="tip">${tipUnzip}</div>
+
+    <div style="background:#1B2F4E;color:#fff;border-radius:10px;padding:18px 22px;margin-top:16px">
+      <p style="font-size:.95rem;font-weight:700;margin-bottom:8px">🤖 Your setup helper is on every page!</p>
+      <p style="font-size:.84rem;opacity:.9;line-height:1.7;margin-bottom:10px">See the chat bubble in the bottom right corner of your screen? That's your step-by-step guide. It knows exactly what's in YOUR template and will walk you through every change.</p>
+      <p style="font-size:.84rem;opacity:.9;line-height:1.7"><strong style="color:#C9922B">Here's the trick:</strong> keep TWO windows open side by side while you work —<br>
+      &nbsp;&nbsp;• <strong>Notepad</strong> on one side to make your edits<br>
+      &nbsp;&nbsp;• <strong>Your browser</strong> on the other side to preview AND get help from the bot<br><br>
+      Edit in Notepad → Ctrl+S to save → click the browser → press F5 to refresh → see your changes. The bot is always one click away in the browser!</p>
+    </div>
   </div>
 
   <!-- STEP 2: MAKE IT YOURS -->
