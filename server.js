@@ -269,32 +269,39 @@ const stripe = process.env.STRIPE_SECRET_KEY ? require('stripe')(process.env.STR
 
 // Buy template
 app.post('/buy/:slug', async (req, res) => {
-  if (!stripe) return res.redirect('/templates');
+  if (!stripe) {
+    console.error('[buy] Stripe not initialized — STRIPE_SECRET_KEY missing');
+    return res.send('<h2>Checkout unavailable</h2><p>Stripe is not configured. Please contact mel@sitesbymel.com.</p><a href="/templates">Back to templates</a>');
+  }
   const product = db.prepare('SELECT * FROM products WHERE slug=? AND active=1').get(req.params.slug);
-  if (!product) return res.redirect('/templates');
+  if (!product) {
+    console.error('[buy] Product not found:', req.params.slug);
+    return res.redirect('/templates');
+  }
   try {
+    const selectedAddon = req.body.selected_addon || 'none';
+    const addonAmounts = { none: 0, drive: 4900, upload: 9700, glove: 14900 };
+    const totalAmount = product.price + (addonAmounts[selectedAddon] || 0);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [{ price_data: {
         currency: 'usd',
         product_data: { name: product.name, description: product.description },
-        unit_amount: product.price
+        unit_amount: totalAmount
       }, quantity: 1 }],
       mode: 'payment',
       billing_address_collection: 'auto',
       customer_email: req.body.email || undefined,
       success_url: `${BASE_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${BASE_URL}/templates/${product.slug}`,
-      metadata: { product_id: product.id, product_name: product.name, type: 'template', selected_addon: req.body.selected_addon || 'none' }
+      metadata: { product_id: product.id, product_name: product.name, type: 'template', selected_addon: selectedAddon }
     });
-    // Create pending order
-    const selectedAddon = req.body.selected_addon || 'none';
     db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, admin_notes)
-      VALUES (?,?,?,?,'pending',?)`).run(product.id, product.name, product.price, session.id, `selected_addon:${selectedAddon}`);
+      VALUES (?,?,?,?,'pending',?)`).run(product.id, product.name, totalAmount, session.id, `selected_addon:${selectedAddon}`);
     res.redirect(303, session.url);
   } catch (e) {
-    console.error(e);
-    res.redirect('/templates');
+    console.error('[buy] Stripe error:', e.message);
+    return res.send(`<h2>Checkout error</h2><p>${e.message}</p><a href="/templates/${req.params.slug}">Go back</a>`);
   }
 });
 
