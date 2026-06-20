@@ -93,29 +93,29 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     <h2>Step 2 — The world is your oyster. Make it yours!</h2>
     <p style="font-size:.88rem;color:#555;margin-bottom:16px;">This is the fun part. Every word, price, and photo is yours to change. You don't need to know how to code — just open each page file, find the text you want to change, type something new, and save. Here's exactly how:</p>
     <div class="fun">
-      <strong>✏️ Best free editor — Notepad++</strong> (Windows) or <strong>CotEditor</strong> (Mac)<br>
-      <span style="font-size:.82rem">Both are simple, free, no account needed, no pop-ups — just install and open. Download Notepad++ at <a href="https://notepad-plus-plus.org" target="_blank">notepad-plus-plus.org</a> &nbsp;|&nbsp; CotEditor at <a href="https://coteditor.com" target="_blank">coteditor.com</a></span>
+      <strong>✏️ No downloads needed — you already have everything!</strong><br>
+      <span style="font-size:.82rem"><strong>Windows:</strong> right-click any HTML file → <strong>Open with → Notepad</strong>. &nbsp;|&nbsp; <strong>Mac:</strong> right-click → <strong>Open with → TextEdit</strong>. Both are already on your computer.</span>
     </div>
 
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Open a page file in Notepad++</strong><span>Open Notepad++, then go to <strong>File → Open</strong>. Navigate to your website folder and open one file at a time — <code>index.html</code> for your Home page, <code>about.html</code> for your About page, etc. <em>Don't worry about all the code — you only need to find and change the words!</em></span></div>
+      <div class="step-body"><strong>Right-click a page file and open it in Notepad (Windows) or TextEdit (Mac)</strong><span>Find your website folder, right-click a file like <code>index.html</code>, choose <strong>Open with → Notepad</strong>. You'll see the code — don't panic! You only need to find the words and change them. Everything else stays the same.</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Find the text you want to change</strong><span>Press <code>Ctrl+F</code> to search. Type a word that's in the template — like the demo business name or a placeholder phrase. Click on it and type your own words instead. Easy!</span></div>
+      <div class="step-body"><strong>Find the text you want to change</strong><span>Press <code>Ctrl+F</code> (Windows) or <code>Cmd+F</code> (Mac) to search. Type a word from the template — like the demo business name or a placeholder phrase — then click on it and type your own words.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Save — it goes right back to the same file</strong><span>Press <code>Ctrl+S</code> to save. No "Save As," no moving files — it saves right back where it was. Then open <code>index.html</code> in your browser (double-click it) and press <code>F5</code> to refresh and see your changes.</span></div>
+      <div class="step-body"><strong>Save — it goes right back to the same file</strong><span>Press <code>Ctrl+S</code> (Windows) or <code>Cmd+S</code> (Mac). It saves back to the same file — no moving, no renaming. Then double-click <code>index.html</code> to open it in your browser and see your changes.</span></div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <div class="step-body"><strong>Repeat for each page</strong><span>Open each file one at a time: <code>services.html</code> for your pricing, <code>about.html</code> for your story, <code>contact.html</code> for your contact info. Edit, save, done — one page at a time.</span></div>
+      <div class="step-body"><strong>Repeat for each page</strong><span>Right-click each file, open in Notepad, make your edits, save. <code>services.html</code> for pricing, <code>about.html</code> for your story, <code>contact.html</code> for contact info. One file at a time — easy!</span></div>
     </div>
     <div class="step">
       <div class="step-num">5</div>
-      <div class="step-body"><strong>Replace your business name on all pages at once (time-saver!)</strong><span>In Notepad++, press <code>Ctrl+H</code> to open Find &amp; Replace. Type the demo business name in the top box, your business name in the bottom, then click <strong>Replace All</strong>. Do this for each page file and you're done in minutes.</span></div>
+      <div class="step-body"><strong>Replace your business name on all pages at once (time-saver!)</strong><span>Press <code>Ctrl+H</code> (Windows) or <code>Cmd+H</code> (Mac) to open Find &amp; Replace. Type the demo business name in the top box, your business name in the bottom, click <strong>Replace All</strong>. Do this in each file and you're done in minutes.</span></div>
     </div>
     <div class="tip">${tipSave}</div>
   </div>
@@ -131,7 +131,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Find the image in the HTML file</strong><span>In Notepad++, search (<code>Ctrl+F</code>) for <code>img src</code> to find image tags. They look like this: <code>&lt;img src="images/hero.jpg"&gt;</code></span></div>
+      <div class="step-body"><strong>Find the image in the HTML file</strong><span>In Notepad, search (<code>Ctrl+F</code>) for <code>img src</code> to find image tags. They look like this: <code>&lt;img src="images/hero.jpg"&gt;</code></span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
@@ -168,7 +168,7 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
       <div class="step-num">3</div>
       <div class="step-body"><strong>Paste your hex code in the file</strong><span>Replace the existing hex code (like <code>${primary}</code>) with your new one. Save, refresh your browser — your whole site changes color instantly. Magic!</span></div>
     </div>
-    <div class="fun">💡 <strong>Pro tip:</strong> Do this on index.html first to preview how your colors look. Once you're happy, use <code>Ctrl+H</code> in Notepad++ to find and replace the old hex codes in each page file.</div>
+    <div class="fun">💡 <strong>Pro tip:</strong> Do this on index.html first to preview how your colors look. Once you're happy, use <code>Ctrl+H</code> in Notepad to find and replace the old hex codes in each page file.</div>
     <p style="font-size:.83rem;color:#555;margin-top:12px;">Here are some example color combos to get you inspired:</p>
     <div class="color-row">
       <div class="color-chip" style="background:${primary};">Your Primary ${primary}</div>
