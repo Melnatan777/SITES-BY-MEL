@@ -245,7 +245,12 @@ app.get('/templates/:slug', (req, res) => {
 });
 
 // Services page
-app.get('/services', (req, res) => { trackView(req); res.render('services'); });
+app.get('/services', (req, res) => {
+  trackView(req);
+  const packages = db.prepare('SELECT * FROM service_packages WHERE is_active=1 ORDER BY sort_order').all();
+  packages.forEach(p => { try { p.bullets = JSON.parse(p.bullets || '[]'); } catch(e) { p.bullets = []; } });
+  res.render('services', { packages });
+});
 
 // Portfolio page
 app.get('/portfolio', (req, res) => { trackView(req); res.render('portfolio'); });
@@ -936,6 +941,27 @@ app.get('/admin/clients/:id/handoff', requireAuth, (req, res) => {
   const client = db.prepare('SELECT * FROM client_projects WHERE id=?').get(req.params.id);
   if (!client) return res.redirect('/admin/clients');
   res.render('admin/client-handoff', { client });
+});
+
+// ── ADMIN PACKAGES ───────────────────────────────────────────────────────────
+app.get('/admin/packages', requireAuth, (req, res) => {
+  const packages = db.prepare('SELECT * FROM service_packages ORDER BY sort_order').all();
+  packages.forEach(p => { try { p.bullets = JSON.parse(p.bullets || '[]'); } catch(e) { p.bullets = []; } });
+  res.render('admin/packages', { packages });
+});
+
+app.post('/admin/packages/:id/edit', requireAuth, (req, res) => {
+  const { name, tagline, price_display, description, cta_label, cta_url, is_featured, is_active, sort_order, internal_notes } = req.body;
+  const rawBullets = req.body.bullets || '';
+  const bullets = rawBullets.split('\n').map(b => b.trim()).filter(Boolean);
+  db.prepare(`UPDATE service_packages SET
+    name=?,tagline=?,price_display=?,description=?,bullets=?,
+    cta_label=?,cta_url=?,is_featured=?,is_active=?,sort_order=?,
+    internal_notes=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`)
+    .run(name, tagline, price_display, description, JSON.stringify(bullets),
+      cta_label, cta_url, is_featured?1:0, is_active?1:0,
+      parseInt(sort_order)||0, internal_notes, req.params.id);
+  res.redirect('/admin/packages');
 });
 
 // Admin — Setup requests

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Packages — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'packages' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1>Service Packages</h1>
+        <p style="font-size:.82rem;color:var(--gray);margin-top:2px">These appear on your public Services page. Edit anything here — no code required.</p>
+      </div>
+      <a href="/services" target="_blank" class="btn btn-outline btn-sm">View Services Page &rarr;</a>
+    </div>
+    <div class="admin-content">
+
+      <% packages.forEach(function(pkg) { %>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:24px;overflow:hidden">
+
+        <!-- PACKAGE HEADER -->
+        <div style="background:<%= pkg.is_featured ? 'var(--navy)' : 'var(--light)' %>;padding:18px 24px;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <span style="font-size:1rem;font-weight:700;color:<%= pkg.is_featured ? '#fff' : 'var(--navy)' %>"><%= pkg.name %></span>
+            <span style="font-size:.8rem;color:<%= pkg.is_featured ? 'rgba(255,255,255,.7)' : 'var(--gray)' %>;margin-left:12px"><%= pkg.price_display %></span>
+            <% if (pkg.is_featured) { %><span style="background:var(--gold);color:#fff;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:8px">FEATURED</span><% } %>
+          </div>
+          <span style="font-size:.75rem;font-weight:600;color:<%= pkg.is_active ? '#22c55e' : '#ef4444' %>"><%= pkg.is_active ? 'ACTIVE' : 'HIDDEN' %></span>
+        </div>
+
+        <!-- CURRENT VALUES -->
+        <div style="padding:20px 24px;border-bottom:1px solid var(--border)">
+          <p style="font-size:.85rem;color:var(--gray);line-height:1.7;margin-bottom:10px"><%= pkg.description %></p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <% pkg.bullets.forEach(function(b) { %>
+            <span style="background:var(--light);font-size:.75rem;padding:3px 10px;border-radius:100px;color:var(--navy)">✓ <%= b %></span>
+            <% }); %>
+          </div>
+        </div>
+
+        <!-- EDIT FORM -->
+        <details style="padding:24px">
+          <summary style="font-size:.88rem;font-weight:700;color:var(--navy);cursor:pointer;margin-bottom:0">Edit This Package</summary>
+          <form method="POST" action="/admin/packages/<%= pkg.id %>/edit" style="margin-top:20px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px">
+              <div>
+                <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Package Name</label>
+                <input type="text" name="name" value="<%= pkg.name %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+              </div>
+              <div>
+                <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Tagline (shown under name)</label>
+                <input type="text" name="tagline" value="<%= pkg.tagline||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+              </div>
+              <div>
+                <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Price Display (e.g. "$797" or "Starting at $1,500")</label>
+                <input type="text" name="price_display" value="<%= pkg.price_display %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+              </div>
+              <div>
+                <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Button Label</label>
+                <input type="text" name="cta_label" value="<%= pkg.cta_label||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+              </div>
+              <div>
+                <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Button Link</label>
+                <input type="text" name="cta_url" value="<%= pkg.cta_url||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+              </div>
+              <div>
+                <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Sort Order (1 = first)</label>
+                <input type="number" name="sort_order" value="<%= pkg.sort_order %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+              </div>
+            </div>
+
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Public Description (shown on services page)</label>
+              <textarea name="description" rows="3" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem;resize:vertical"><%= pkg.description||'' %></textarea>
+            </div>
+
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Bullet Points — one per line (shown as checkmarks)</label>
+              <textarea name="bullets" rows="8" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem;resize:vertical;font-family:monospace"><%= pkg.bullets.join('\n') %></textarea>
+            </div>
+
+            <div style="background:#fdf6e3;border:1px solid #f0d080;border-radius:8px;padding:16px;margin-bottom:14px">
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px;color:#7d5a00">Internal Notes (never shown publicly — what you actually do for this package)</label>
+              <textarea name="internal_notes" rows="4" style="width:100%;padding:8px 12px;border:1px solid #f0d080;border-radius:6px;font-size:.85rem;resize:vertical;background:#fffdf7"><%= pkg.internal_notes||'' %></textarea>
+            </div>
+
+            <div style="display:flex;gap:16px;margin-bottom:14px">
+              <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer">
+                <input type="checkbox" name="is_featured" value="1" <%= pkg.is_featured ? 'checked' : '' %>>
+                Mark as Featured (highlighted on services page)
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;font-size:.82rem;cursor:pointer">
+                <input type="checkbox" name="is_active" value="1" <%= pkg.is_active ? 'checked' : '' %>>
+                Active (visible on services page)
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-gold btn-sm">Save Package</button>
+          </form>
+        </details>
+
+      </div>
+      <% }); %>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

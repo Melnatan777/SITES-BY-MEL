@@ -1,431 +1,88 @@
-<%- include('partials/head', { title: 'Services', metaDesc: 'Professional website templates starting at $197, done-for-you custom builds starting at $1,200, or a fully custom quote. Websites for small businesses.' }) %>
+<%- include('partials/head', { title: 'Services — Sites by Mel', metaDesc: 'DIY website templates from $197, done-for-you template launch at $797, or a fully custom build starting at $1,500. Professional websites for small businesses.' }) %>
 <%- include('partials/nav', { activePage: 'services' }) %>
 
 <div class="page-header">
-  <h1>Services</h1>
-  <p>Whether you want a hands-off setup or a fully custom build, I've got you covered.</p>
+  <div class="container">
+    <h1>Services</h1>
+    <p style="margin-top:8px;opacity:.8;max-width:520px">Whether you want to do it yourself, have it set up for you, or need something built from scratch — there's an option for every stage of your business.</p>
+  </div>
 </div>
 
 <section class="section">
   <div class="container">
-    <div class="pricing-grid" style="max-width:900px;margin:0 auto;">
 
-      <!-- OPTION 1: Template only -->
-      <div class="pricing-card">
-        <div class="pricing-name">DIY Template</div>
-        <div class="pricing-price">$197<small style="font-size:0.75rem;display:block;color:var(--gray);font-weight:400;margin-top:4px;">one-time purchase</small></div>
-        <p class="pricing-desc">A complete, niche-built website — not just a homepage. Every section your business needs, ready to customize.</p>
-        <ul class="pricing-features">
-          <li>Full multi-section website (not just a homepage)</li>
-          <li>Built for your specific industry</li>
-          <li>Mobile-responsive, fast-loading</li>
-          <li>Hero, services, gallery, reviews, contact form</li>
-          <li>Instant download after purchase</li>
-          <li>Customization guide included</li>
-          <li>You own every file — no monthly fees</li>
-        </ul>
-        <a href="/templates" class="btn btn-navy btn-full">Browse Templates</a>
-      </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;max-width:1000px;margin:0 auto 64px">
 
-      <!-- OPTION 2: Done-for-you -->
-      <div class="pricing-card featured">
-        <div class="pricing-name">Done-For-You</div>
-        <div class="pricing-price">Starts at $1,200</div>
-        <p class="pricing-desc">I build your site from scratch — custom to your business. You do nothing technical. Just answer a few questions and I handle everything.</p>
-        <ul class="pricing-features">
-          <li>Custom designed for your brand</li>
-          <li>Your logo, colors, photos &amp; copy</li>
-          <li>Contact form &amp; booking wired up</li>
-          <li>Domain &amp; hosting connected</li>
-          <li>Mobile-responsive &amp; fast-loading</li>
-          <li>Live within 7–10 business days</li>
-          <li>$400 deposit, balance due at delivery</li>
-        </ul>
-        <a href="#setup-form" class="btn btn-gold btn-full">Get Started — $400 Deposit</a>
-      </div>
+      <% packages.forEach(function(pkg) { %>
+      <div style="background:#fff;border:<%= pkg.is_featured ? '2px solid var(--gold)' : '1px solid var(--border)' %>;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;position:relative">
 
-      <!-- OPTION 3: Custom quote -->
-      <div class="pricing-card">
-        <div class="pricing-name">Custom Build</div>
-        <div class="pricing-price">Quote</div>
-        <p class="pricing-desc">Need e-commerce, a CMS, booking system, or something fully bespoke? Let's talk — and get 10% off when you request a quote this month.</p>
-        <ul class="pricing-features">
-          <li>Fully custom design &amp; development</li>
-          <li>CMS so you edit your own content</li>
-          <li>E-commerce, booking, blog — anything</li>
-          <li>Admin dashboard included</li>
-          <li>Ongoing maintenance available</li>
-          <li>🎉 10% off — mention this when you reach out</li>
-        </ul>
-        <a href="/quote" class="btn btn-outline btn-full">Request a Quote &rarr;</a>
-      </div>
+        <% if (pkg.is_featured) { %>
+        <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;font-size:.7rem;font-weight:800;padding:4px 18px;border-radius:0 0 8px 8px;letter-spacing:.07em;white-space:nowrap">MOST POPULAR</div>
+        <% } %>
 
-    </div>
-  </div>
-</section>
+        <div style="padding:32px 28px 20px;flex:1">
+          <p style="font-size:.72rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px"><%= pkg.tagline %></p>
+          <h2 style="font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:6px"><%= pkg.name %></h2>
+          <div style="font-size:1.9rem;font-weight:800;color:var(--navy);margin-bottom:16px"><%= pkg.price_display %><% if (pkg.slug === 'diy') { %><small style="font-size:.75rem;font-weight:400;color:var(--gray);display:block;margin-top:2px">one-time purchase</small><% } %><% if (pkg.slug === 'template_launch') { %><small style="font-size:.75rem;font-weight:400;color:var(--gray);display:block;margin-top:2px">one-time — hosting $15/mo after year 1</small><% } %></div>
+          <p style="font-size:.88rem;color:var(--gray);line-height:1.75;margin-bottom:20px"><%= pkg.description %></p>
 
-<!-- CMS BACKEND -->
-<section class="section section-navy">
-  <div class="container">
-
-    <div style="text-align:center;margin-bottom:52px;">
-      <span class="hero-badge" style="margin-bottom:20px;display:inline-block;">Premium Service</span>
-      <h2 style="color:var(--white);font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:16px;">Custom CMS &amp; Admin Dashboard</h2>
-      <p style="color:rgba(255,255,255,0.75);font-size:1.05rem;max-width:640px;margin:0 auto;line-height:1.85;">Most small businesses are stuck emailing their developer every time they need to change a price, add a photo, or see how many people filled out their contact form. I fix that. I build you a private admin panel — password-protected, on your own domain — so you run your site yourself from day one.</p>
-    </div>
-
-    <!-- WHAT'S INSIDE THE DASHBOARD -->
-    <div style="border:1px solid rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;margin-bottom:48px;">
-      <div style="background:rgba(255,255,255,0.05);padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.08);">
-        <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);">What's Inside Your Dashboard</span>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;">
-
-        <div style="padding:28px 28px;border-right:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);">
-          <div style="margin-bottom:14px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </div>
-          <h4 style="color:var(--white);margin-bottom:8px;font-size:1rem;">Content Management</h4>
-          <p style="color:rgba(255,255,255,0.6);font-size:0.86rem;line-height:1.7;">Edit your headline, services list, pricing, bio, photos — anything on the page. Changes go live in seconds. No login to a third-party platform. No page builder. Just your site, your words, your control.</p>
-        </div>
-
-        <div style="padding:28px 28px;border-bottom:1px solid rgba(255,255,255,0.08);">
-          <div style="margin-bottom:14px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <h4 style="color:var(--white);margin-bottom:8px;font-size:1rem;">Leads &amp; Inquiries Inbox</h4>
-          <p style="color:rgba(255,255,255,0.6);font-size:0.86rem;line-height:1.7;">Every quote request, contact form, and callback submission is stored in your dashboard with timestamps and status tracking. Mark them replied, archive old ones, export to CSV. You never lose a lead again — even if your email goes to spam.</p>
-        </div>
-
-        <div style="padding:28px 28px;border-right:1px solid rgba(255,255,255,0.08);">
-          <div style="margin-bottom:14px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          </div>
-          <h4 style="color:var(--white);margin-bottom:8px;font-size:1rem;">Orders &amp; Payments</h4>
-          <p style="color:rgba(255,255,255,0.6);font-size:0.86rem;line-height:1.7;">Sell services, products, or digital downloads directly from your site. Stripe handles the checkout — your dashboard shows every order, payment status, customer email, and total revenue. No Shopify subscription. No platform fees beyond Stripe's standard rate.</p>
-        </div>
-
-        <div style="padding:28px 28px;">
-          <div style="margin-bottom:14px;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          </div>
-          <h4 style="color:var(--white);margin-bottom:8px;font-size:1rem;">Business Analytics</h4>
-          <p style="color:rgba(255,255,255,0.6);font-size:0.86rem;line-height:1.7;">See revenue by week and month, which services get the most quote requests, where your visitors come from, and what pages they leave from. Not generic Google Analytics — numbers that actually tell you something about your specific business.</p>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- WHO THIS IS FOR + TECH -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:48px;">
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:28px;">
-        <h4 style="color:var(--white);margin-bottom:16px;font-size:0.95rem;letter-spacing:0.03em;">This Is Right For You If&hellip;</h4>
-        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
-          <li style="color:rgba(255,255,255,0.7);font-size:0.88rem;display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--gold);margin-top:2px;">&#10003;</span> You want to update your own site without calling a developer</li>
-          <li style="color:rgba(255,255,255,0.7);font-size:0.88rem;display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--gold);margin-top:2px;">&#10003;</span> You receive leads or bookings through your website</li>
-          <li style="color:rgba(255,255,255,0.7);font-size:0.88rem;display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--gold);margin-top:2px;">&#10003;</span> You sell anything — services, products, files, memberships</li>
-          <li style="color:rgba(255,255,255,0.7);font-size:0.88rem;display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--gold);margin-top:2px;">&#10003;</span> You want to actually understand what your website data means</li>
-          <li style="color:rgba(255,255,255,0.7);font-size:0.88rem;display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--gold);margin-top:2px;">&#10003;</span> You're done paying monthly SaaS fees to platforms you don't own</li>
-        </ul>
-      </div>
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:28px;">
-        <h4 style="color:var(--white);margin-bottom:16px;font-size:0.95rem;letter-spacing:0.03em;">What I Build It With</h4>
-        <p style="color:rgba(255,255,255,0.6);font-size:0.86rem;line-height:1.75;margin-bottom:14px;">Every CMS I build runs on <strong style="color:rgba(255,255,255,0.85);">Node.js + Express</strong> with a <strong style="color:rgba(255,255,255,0.85);">SQLite database</strong> — fast, reliable, and zero licensing cost. The admin panel is password-protected with session authentication. Email notifications are handled by Resend. Payments are Stripe.</p>
-        <p style="color:rgba(255,255,255,0.6);font-size:0.86rem;line-height:1.75;">You host it on <strong style="color:rgba(255,255,255,0.85);">Railway</strong> for about $5/month — or I can host it under your domain. You get access to the full codebase. You own everything.</p>
-        <p style="color:rgba(255,255,255,0.45);font-size:0.78rem;margin-top:12px;font-style:italic;">This is the exact same stack powering Enduring Branches — a live site with a store, blog, sermon archive, prayer requests, and full admin panel.</p>
-      </div>
-    </div>
-
-    <div style="text-align:center;">
-      <p style="color:rgba(255,255,255,0.5);font-size:0.88rem;margin-bottom:24px;">Pricing is quoted per project based on the features you need. Most CMS builds start around $600&ndash;$1,200 and are delivered within 2&ndash;3 weeks.</p>
-      <a href="/quote" class="btn btn-gold" style="font-size:1rem;padding:14px 40px;">Request a CMS Quote &rarr;</a>
-    </div>
-
-  </div>
-</section>
-
-<!-- DATA ANALYTICS -->
-<section class="section section-light">
-  <div class="container">
-
-    <!-- REAL EXAMPLE STORY -->
-    <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:36px 40px;margin-bottom:60px;max-width:860px;margin-left:auto;margin-right:auto;">
-      <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">What This Looks Like in Practice</p>
-      <p style="font-size:1.05rem;color:var(--dark);font-weight:600;margin-bottom:20px;line-height:1.5;">Say you run a pressure washing company. Your website gets traffic. You get some calls. But you have no idea <em>why</em>.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
-        <div>
-          <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:8px;">Without a Dashboard</p>
-          <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#dc2626;font-weight:700;">&#10007;</span> "We got 4 quote requests this month... I think"</li>
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#dc2626;font-weight:700;">&#10007;</span> No idea which service page people visit most</li>
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#dc2626;font-weight:700;">&#10007;</span> Can't tell if the Facebook ad brought anyone in</li>
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#dc2626;font-weight:700;">&#10007;</span> Revenue is buried in Stripe emails</li>
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#dc2626;font-weight:700;">&#10007;</span> Lost leads because they slipped through email</li>
+          <ul style="list-style:none;margin-bottom:24px">
+            <% pkg.bullets.forEach(function(b) { %>
+            <li style="font-size:.85rem;color:<%= pkg.slug === 'diy' ? 'var(--gray)' : 'var(--navy)' %>;padding:5px 0;display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid var(--border)">
+              <span style="color:var(--gold);font-weight:700;flex-shrink:0">✓</span><%= b %>
+            </li>
+            <% }); %>
           </ul>
+
+          <% if (pkg.slug === 'diy') { %>
+          <div style="background:#fdf6e3;border-left:3px solid var(--gold);padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:20px;font-size:.78rem;color:#7d5a00;line-height:1.6">
+            Optional add-ons available on each template page — Photo Swap, Brand Colors, Payment Setup, and White-Glove Finish.
+          </div>
+          <% } %>
         </div>
-        <div>
-          <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:8px;">With Your Dashboard</p>
-          <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#16a34a;font-weight:700;">&#10003;</span> "11 quote requests — 3 new, 6 replied, 2 booked"</li>
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#16a34a;font-weight:700;">&#10003;</span> Roof cleaning page: 340 visits, 18% filled the form</li>
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#16a34a;font-weight:700;">&#10003;</span> Facebook referrals this month: 47 visitors</li>
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#16a34a;font-weight:700;">&#10003;</span> Revenue this month: $3,840 (up from $2,100)</li>
-            <li style="color:var(--gray);font-size:0.88rem;display:flex;gap:8px;"><span style="color:#16a34a;font-weight:700;">&#10003;</span> Every lead stored, searchable, never lost</li>
-          </ul>
+
+        <div style="padding:0 28px 28px">
+          <a href="<%= pkg.cta_url %>" class="btn <%= pkg.is_featured ? 'btn-gold' : 'btn-navy' %> btn-full"><%= pkg.cta_label %> &rarr;</a>
         </div>
       </div>
-      <p style="color:var(--gray);font-size:0.84rem;margin-top:20px;font-style:italic;border-top:1px solid var(--border);padding-top:16px;">The data was always there. A dashboard just makes it readable — so you can make decisions instead of guesses.</p>
+      <% }); %>
+
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;">
-
-      <div>
-        <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Add-On Service</p>
-        <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:16px;">Business Data &amp; Reporting</h2>
-        <p style="color:var(--gray);line-height:1.85;margin-bottom:16px;font-size:0.97rem;">Google Analytics tells you how many visitors you had. It doesn't tell you which service page is turning visitors into customers, how much revenue came from your contact form this month, or whether your Tuesday posts drive more leads than your Friday ones.</p>
-        <p style="color:var(--gray);line-height:1.85;margin-bottom:28px;font-size:0.97rem;">I build reporting dashboards custom to your business — pulling from your own data (orders, inquiries, page visits, form submissions) and presenting it in plain English. Numbers you can actually act on.</p>
-
-        <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:32px;">
-          <div style="display:flex;gap:16px;align-items:flex-start;">
-            <div style="width:36px;height:36px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            </div>
-            <div>
-              <strong style="font-size:0.92rem;display:block;margin-bottom:3px;">Revenue Reporting</strong>
-              <span style="color:var(--gray);font-size:0.86rem;">Monthly and weekly totals, average order value, best-selling products or services, refund tracking.</span>
-            </div>
-          </div>
-          <div style="display:flex;gap:16px;align-items:flex-start;">
-            <div style="width:36px;height:36px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            </div>
-            <div>
-              <strong style="font-size:0.92rem;display:block;margin-bottom:3px;">Lead Tracking</strong>
-              <span style="color:var(--gray);font-size:0.86rem;">Which pages generate the most inquiries, response time trends, lead volume by week or campaign.</span>
-            </div>
-          </div>
-          <div style="display:flex;gap:16px;align-items:flex-start;">
-            <div style="width:36px;height:36px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
-            <div>
-              <strong style="font-size:0.92rem;display:block;margin-bottom:3px;">Visitor Behavior</strong>
-              <span style="color:var(--gray);font-size:0.86rem;">Time on page, bounce patterns, most-visited pages, traffic sources — without sharing your data with Google.</span>
-            </div>
-          </div>
-          <div style="display:flex;gap:16px;align-items:flex-start;">
-            <div style="width:36px;height:36px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            </div>
-            <div>
-              <strong style="font-size:0.92rem;display:block;margin-bottom:3px;">Custom KPI Dashboard</strong>
-              <span style="color:var(--gray);font-size:0.86rem;">One screen with the 5&ndash;8 numbers that matter most to your business. Built around your goals, not a generic template.</span>
-            </div>
-          </div>
-        </div>
-
-        <a href="/quote" class="btn btn-navy">Talk About Your Data &rarr;</a>
-      </div>
-
-      <div>
-        <!-- MOCK DASHBOARD CARD -->
-        <div style="background:var(--navy);border-radius:10px;padding:28px;box-shadow:0 8px 40px rgba(0,0,0,0.15);">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-            <span style="color:rgba(255,255,255,0.8);font-size:0.88rem;font-weight:600;">Business Overview</span>
-            <span style="color:rgba(255,255,255,0.4);font-size:0.75rem;">Last 30 days</span>
-          </div>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;">
-            <div style="background:rgba(255,255,255,0.06);border-radius:6px;padding:16px;">
-              <div style="color:rgba(255,255,255,0.45);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Revenue</div>
-              <div style="color:var(--white);font-size:1.5rem;font-weight:700;">$4,820</div>
-              <div style="color:#4ade80;font-size:0.78rem;margin-top:4px;">&#9650; 18% vs last month</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.06);border-radius:6px;padding:16px;">
-              <div style="color:rgba(255,255,255,0.45);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">New Leads</div>
-              <div style="color:var(--white);font-size:1.5rem;font-weight:700;">34</div>
-              <div style="color:#4ade80;font-size:0.78rem;margin-top:4px;">&#9650; 6 more than last month</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.06);border-radius:6px;padding:16px;">
-              <div style="color:rgba(255,255,255,0.45);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Site Visitors</div>
-              <div style="color:var(--white);font-size:1.5rem;font-weight:700;">1,204</div>
-              <div style="color:rgba(255,255,255,0.4);font-size:0.78rem;margin-top:4px;">Avg. 2m 14s on site</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.06);border-radius:6px;padding:16px;">
-              <div style="color:rgba(255,255,255,0.45);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Top Page</div>
-              <div style="color:var(--white);font-size:1rem;font-weight:600;margin-top:4px;">/services</div>
-              <div style="color:rgba(255,255,255,0.4);font-size:0.78rem;margin-top:4px;">412 visits, 38% converted</div>
-            </div>
-          </div>
-
-          <!-- BAR CHART VISUAL -->
-          <div style="margin-bottom:16px;">
-            <div style="color:rgba(255,255,255,0.45);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Revenue by Week</div>
-            <div style="display:flex;align-items:flex-end;gap:6px;height:60px;">
-              <div style="flex:1;background:rgba(201,146,43,0.3);border-radius:2px 2px 0 0;height:40%"></div>
-              <div style="flex:1;background:rgba(201,146,43,0.4);border-radius:2px 2px 0 0;height:55%"></div>
-              <div style="flex:1;background:rgba(201,146,43,0.5);border-radius:2px 2px 0 0;height:70%"></div>
-              <div style="flex:1;background:var(--gold);border-radius:2px 2px 0 0;height:100%"></div>
-            </div>
-            <div style="display:flex;gap:6px;margin-top:6px;">
-              <div style="flex:1;text-align:center;color:rgba(255,255,255,0.3);font-size:0.68rem;">Wk 1</div>
-              <div style="flex:1;text-align:center;color:rgba(255,255,255,0.3);font-size:0.68rem;">Wk 2</div>
-              <div style="flex:1;text-align:center;color:rgba(255,255,255,0.3);font-size:0.68rem;">Wk 3</div>
-              <div style="flex:1;text-align:center;color:rgba(255,255,255,0.3);font-size:0.68rem;">Wk 4</div>
-            </div>
-          </div>
-
-          <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;font-size:0.78rem;color:rgba(255,255,255,0.35);text-align:center;font-style:italic;">Example dashboard — built around your actual business data</div>
-        </div>
-      </div>
-
+    <!-- COMPARISON NOTE -->
+    <div style="max-width:680px;margin:0 auto 64px;text-align:center">
+      <h2 style="font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:12px">Not sure which is right for you?</h2>
+      <p style="color:var(--gray);line-height:1.8;font-size:.95rem">If you're comfortable on a computer and just need the files — go DIY. If you want your site live without touching anything technical — Template Launch. If you need something custom-built for a specific vision — let's talk.</p>
+      <a href="/contact" class="btn btn-outline" style="margin-top:20px;display:inline-block">Ask Mel a Question</a>
     </div>
-  </div>
-</section>
 
-<!-- SETUP PROCESS -->
-<section class="section section-light">
-  <div class="container">
-    <div class="section-header">
-      <h2>How the Done-For-You Setup Works</h2>
-      <p>From deposit to live site in less than a week.</p>
-      <div class="gold-line"></div>
-    </div>
-    <div class="process-steps" style="max-width:800px;margin:0 auto;">
-      <div class="process-step">
-        <div class="process-step-num">1</div>
-        <h3>Pick a Template</h3>
-        <p>Browse the templates and choose the one that fits your business. Or tell me your industry and I'll recommend one.</p>
-      </div>
-      <div class="process-step">
-        <div class="process-step-num">2</div>
-        <h3>Pay $400 Deposit</h3>
-        <p>Secure checkout via Stripe. I'll reach out within 24 hours to collect your content — logo, photos, text, and any specific requests.</p>
-      </div>
-      <div class="process-step">
-        <div class="process-step-num">3</div>
-        <h3>I Build It</h3>
-        <p>I customize the template with your branding and content. You get a preview link to approve before it goes live.</p>
-      </div>
-      <div class="process-step">
-        <div class="process-step-num">4</div>
-        <h3>You Launch</h3>
-        <p>Once you approve, I connect your domain and flip the switch. Your site is live — you own every file.</p>
+    <!-- FAQ -->
+    <div style="max-width:680px;margin:0 auto">
+      <h2 style="font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:20px">Common Questions</h2>
+      <div style="border-top:1px solid var(--border)">
+        <details style="padding:16px 0;border-bottom:1px solid var(--border)">
+          <summary style="cursor:pointer;font-weight:600;font-size:.93rem">What's included in the domain with Template Launch?</summary>
+          <p style="margin-top:10px;color:var(--gray);font-size:.88rem;line-height:1.75">One year of domain registration is included in the $797 price. After year 1, domain renewal is typically $12–15/year. Hosting renews at $15/month after year 1.</p>
+        </details>
+        <details style="padding:16px 0;border-bottom:1px solid var(--border)">
+          <summary style="cursor:pointer;font-weight:600;font-size:.93rem">Do I own my website?</summary>
+          <p style="margin-top:10px;color:var(--gray);font-size:.88rem;line-height:1.75">Yes — your domain and all website files belong to you. If you ever want to move to another provider, your files are always available. No lock-in.</p>
+        </details>
+        <details style="padding:16px 0;border-bottom:1px solid var(--border)">
+          <summary style="cursor:pointer;font-weight:600;font-size:.93rem">How long does Template Launch take?</summary>
+          <p style="margin-top:10px;color:var(--gray);font-size:.88rem;line-height:1.75">Most Template Launch projects are live within 3–5 business days after you provide your content (logo, photos, colors, copy).</p>
+        </details>
+        <details style="padding:16px 0;border-bottom:1px solid var(--border)">
+          <summary style="cursor:pointer;font-weight:600;font-size:.93rem">What does a Full Custom Build include?</summary>
+          <p style="margin-top:10px;color:var(--gray);font-size:.88rem;line-height:1.75">Everything in Template Launch plus a custom-designed site built around your brand, SEO from day one, Google Analytics, and any advanced features you need. Pricing starts at $1,500 and depends on scope — <a href="/quote" style="color:var(--gold)">request a quote</a> to get an exact number.</p>
+        </details>
+        <details style="padding:16px 0;border-bottom:1px solid var(--border)">
+          <summary style="cursor:pointer;font-weight:600;font-size:.93rem">Can I upgrade from DIY to Template Launch later?</summary>
+          <p style="margin-top:10px;color:var(--gray);font-size:.88rem;line-height:1.75">Yes. If you bought a DIY template and want Mel to take it from there, contact mel@sitesbymel.com — the template purchase price will be credited toward a Template Launch.</p>
+        </details>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- SETUP FORM -->
-<section class="section" id="setup-form">
-  <div class="container">
-    <div class="form-card">
-      <h2 style="font-size:1.4rem;margin-bottom:6px;">Start Your Done-For-You Website</h2>
-      <p style="color:var(--gray);font-size:0.9rem;margin-bottom:28px;">Tell me about your business and what you need. I'll review your answers and be in touch within 24 hours. A $400 deposit locks in your spot.</p>
-      <form action="/setup/none" method="POST">
-
-        <div class="form-2col">
-          <div class="form-group">
-            <label for="name">Your Name *</label>
-            <input type="text" id="name" name="name" required placeholder="Jane Smith" />
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address *</label>
-            <input type="email" id="email" name="email" required placeholder="jane@example.com" />
-          </div>
-        </div>
-
-        <div class="form-2col">
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
-          </div>
-          <div class="form-group">
-            <label for="business_name">Business Name *</label>
-            <input type="text" id="business_name" name="business_name" required placeholder="Jane's Cleaning Co." />
-          </div>
-        </div>
-
-        <div class="form-2col">
-          <div class="form-group">
-            <label for="industry">Your Industry *</label>
-            <select id="industry" name="industry" required>
-              <option value="">Select your industry…</option>
-              <option>Auto Detailing / Mechanic</option>
-              <option>Beauty / Hair / Lash Studio</option>
-              <option>Cleaning Service</option>
-              <option>Coaching / Consulting</option>
-              <option>Event Planning / Wedding</option>
-              <option>Fitness / Personal Training</option>
-              <option>Food / Restaurant / Catering</option>
-              <option>Healthcare / Medical</option>
-              <option>Landscaping / Lawn Care</option>
-              <option>Legal / Financial</option>
-              <option>Pet Services</option>
-              <option>Photography / Videography</option>
-              <option>Real Estate</option>
-              <option>Retail / E-commerce</option>
-              <option>Tutoring / Education</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="business_url">Current Website (if any)</label>
-            <input type="url" id="business_url" name="business_url" placeholder="https://..." />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>What pages do you need? (check all that apply)</label>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Home"> Home</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Services"> Services</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="About"> About</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Gallery"> Gallery / Portfolio</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Contact"> Contact / Booking</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Blog"> Blog</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Shop"> Online Shop</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Other"> Other</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="features">Any special features needed?</label>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Online payments"> Online payments (Stripe)</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Booking calendar"> Booking / Calendar</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Business email"> Business email setup</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Admin dashboard"> Admin dashboard / CMS</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Photo gallery"> Photo gallery</label>
-            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Newsletter signup"> Newsletter signup</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="colors">Brand colors or style preferences</label>
-          <input type="text" id="colors" name="colors" placeholder="e.g. Navy blue and gold, clean and modern — or share a site you love" />
-        </div>
-
-        <div class="form-group">
-          <label for="timeline">When do you need this live?</label>
-          <select id="timeline" name="timeline">
-            <option value="">Select a timeline…</option>
-            <option>ASAP — as fast as possible</option>
-            <option>Within 2 weeks</option>
-            <option>Within a month</option>
-            <option>No rush — just planning ahead</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="notes">Anything else I should know?</label>
-          <textarea id="notes" name="notes" rows="4" placeholder="Tell me about your business, what you want customers to feel when they visit your site, or anything specific you have in mind…"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">Pay $400 Deposit to Get Started &rarr;</button>
-        <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:10px;">Secure checkout via Stripe. $400 deposit applied toward your total. Balance due at delivery.</p>
-      </form>
-    </div>
   </div>
 </section>
 

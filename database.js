@@ -126,6 +126,94 @@ db.exec(`CREATE TABLE IF NOT EXISTS expenses (
   created_at   DATETIME DEFAULT CURRENT_TIMESTAMP
 )`);
 
+// ── SERVICE PACKAGES (public-facing, editable from admin) ────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS service_packages (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug             TEXT NOT NULL UNIQUE,
+    name             TEXT NOT NULL,
+    tagline          TEXT,
+    price_display    TEXT NOT NULL,
+    description      TEXT,
+    bullets          TEXT DEFAULT '[]',
+    cta_label        TEXT,
+    cta_url          TEXT,
+    is_featured      INTEGER DEFAULT 0,
+    is_active        INTEGER DEFAULT 1,
+    sort_order       INTEGER DEFAULT 0,
+    internal_notes   TEXT,
+    updated_at       DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
+// Seed default packages if not already there
+const pkgCount = db.prepare("SELECT COUNT(*) as n FROM service_packages").get();
+if (pkgCount.n === 0) {
+  const insertPkg = db.prepare(`INSERT INTO service_packages
+    (slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?)`);
+
+  insertPkg.run(
+    'diy',
+    'DIY Template',
+    'You customize it yourself',
+    '$197',
+    'Get a professionally designed, niche-built website template — ready to customize with your own content. Includes step-by-step instructions. Optional add-ons available on each template page.',
+    JSON.stringify([
+      'Full HTML + CSS source files',
+      'Mobile-responsive design',
+      'Niche-specific layout and sections',
+      'Step-by-step customization guide',
+      'Contact form ready to use',
+      'Lifetime download access',
+      'Optional: Photo Swap, Brand Colors, Payment Setup add-ons',
+    ]),
+    'Browse Templates', '/templates', 0, 1,
+    'Covers template download only. Customer does all setup and hosting themselves. Add-ons (photo swap, colors, payment) are extra — handled manually by Mel within 2 business days.'
+  );
+
+  insertPkg.run(
+    'template_launch',
+    'Template Launch',
+    'We set everything up — you just show up',
+    '$797',
+    'You pick a template, we handle everything else. Your site goes live on your own domain with a professional business email — fully set up, tested, and ready for customers. You do nothing technical.',
+    JSON.stringify([
+      'Template customized with your content',
+      'Your own domain name (1 year included)',
+      'Professional business email (you@yourdomain.com)',
+      'Site deployed and live — no free-hosting subdomain',
+      'SSL certificate (secure https)',
+      'Contact forms tested and delivering',
+      'Mobile and desktop review',
+      'Hosting included for year 1',
+      'Stripe payment button (if needed)',
+    ]),
+    'Get Started', '/contact', 1, 2,
+    'Mel handles: domain purchase (client name), Cloudflare DNS, Railway project, GitHub repo, deploy, professional email via Cloudflare routing + Resend, contact form test, Stripe setup (client must verify their own identity). Hosting = Railway $5/mo under Mel\'s account. Client charged $15/mo after year 1.'
+  );
+
+  insertPkg.run(
+    'custom_build',
+    'Full Custom Build',
+    'A website built entirely around your business',
+    'Starting at $1,500',
+    'Need something built from the ground up — custom design, advanced features, e-commerce, or booking? Let\'s talk. Every full custom build includes everything in Template Launch plus a design built specifically for your brand.',
+    JSON.stringify([
+      'Custom design — not a template',
+      'Everything in Template Launch included',
+      'SEO built in from day one',
+      'Google Analytics set up and configured',
+      'Google Search Console submitted',
+      'Advanced features: booking, e-commerce, CMS, and more',
+      'Full review and launch support',
+      'Priority support for 30 days after launch',
+    ]),
+    'Request a Quote', '/quote', 0, 3,
+    'Full custom: custom design mockup → client approves → build → deploy. SEO = meta tags, schema, Search Console, sitemap. GA4 = full setup + goals. CMS additions vary per client — price accordingly. Starting at $1,500, quote based on scope.'
+  );
+}
+
 // ── ORDER PHOTOS (uploaded photos linked to orders) ───────────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS order_photos (
