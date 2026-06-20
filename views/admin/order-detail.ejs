@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order #<%= order.id %> — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'orders' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="/admin/orders" style="color:var(--gray);font-size:.85rem;text-decoration:none">← Orders</a>
+        <h1 style="margin:0">Order #<%= order.id %></h1>
+        <span class="badge <%= order.status === 'completed' ? 'badge-green' : order.status === 'paid' ? 'badge-yellow' : 'badge-red' %>"><%= order.status %></span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <% if (order.status !== 'completed') { %>
+        <form method="POST" action="/admin/orders/<%= order.id %>/complete" style="margin:0">
+          <button type="submit" class="btn btn-sm" style="background:#1B2F4E;color:#fff;border:none">✓ Mark Complete</button>
+        </form>
+        <% } %>
+        <form action="/admin/logout" method="POST" style="margin:0;">
+          <button class="btn btn-outline btn-sm">Sign Out</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="admin-content" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+      <!-- LEFT: Customer & Order Info -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px">
+          <h2 style="font-size:.85rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Customer</h2>
+          <p style="font-size:1rem;font-weight:700;color:#1B2F4E;margin:0 0 4px"><%= order.customer_name || '—' %></p>
+          <p style="font-size:.88rem;color:var(--gray);margin:0 0 4px"><%= order.customer_email || '—' %></p>
+          <p style="font-size:.78rem;color:var(--gray);margin:0"><%= order.created_at ? order.created_at.substring(0,10) : '' %></p>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px">
+          <h2 style="font-size:.85rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Order Details</h2>
+          <table style="width:100%;font-size:.88rem;border-collapse:collapse">
+            <tr><td style="padding:6px 0;color:var(--gray);width:45%">Template</td><td style="font-weight:600;color:#1B2F4E"><%= order.product_name %></td></tr>
+            <tr><td style="padding:6px 0;color:var(--gray)">Add-On</td><td style="color:#C9922B;font-weight:600"><%= {none:'None',upload:'Photo & Color Customization',glove:'Done-For-You'}[order.selected_addon] || order.selected_addon || 'None' %></td></tr>
+            <tr><td style="padding:6px 0;color:var(--gray)">Amount Paid</td><td style="font-weight:700;color:#1B2F4E;font-size:1rem">$<%= ((order.amount||0)/100).toFixed(2) %></td></tr>
+            <% if (order.coupon_code) { %>
+            <tr><td style="padding:6px 0;color:var(--gray)">Coupon</td><td><span style="font-family:monospace;font-size:.8rem;font-weight:700;color:#166534;background:#f0fdf4;padding:2px 6px;border-radius:4px"><%= order.coupon_code %></span> &nbsp;−$<%= ((order.discount_amount||0)/100).toFixed(2) %></td></tr>
+            <% } %>
+            <tr><td style="padding:6px 0;color:var(--gray)">Downloads</td><td><%= order.download_count || 0 %></td></tr>
+          </table>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px">
+          <h2 style="font-size:.85rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Business Details Entered</h2>
+          <% var fields = [
+            ['Business Name', order.business_name],
+            ['Phone', order.phone],
+            ['Email', order.email],
+            ['Address', order.address],
+            ['Tagline', order.tagline],
+          ]; %>
+          <table style="width:100%;font-size:.88rem;border-collapse:collapse">
+            <% fields.forEach(function(f) { if(f[1]) { %>
+            <tr><td style="padding:5px 0;color:var(--gray);width:45%;vertical-align:top"><%= f[0] %></td><td style="color:#1B2F4E"><%= f[1] %></td></tr>
+            <% } }); %>
+            <% if (!fields.some(function(f){return f[1];})) { %>
+            <tr><td colspan="2" style="color:var(--gray);font-style:italic;padding:8px 0">Customer skipped business details</td></tr>
+            <% } %>
+          </table>
+        </div>
+
+        <% if (order.brand_colors) { %>
+        <div style="background:#fffdf7;border:1px solid #f0d080;border-radius:10px;padding:24px">
+          <h2 style="font-size:.85rem;font-weight:700;color:#7d5a00;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Brand Colors</h2>
+          <p style="font-size:.95rem;color:#1B2F4E;margin:0"><%= order.brand_colors %></p>
+        </div>
+        <% } %>
+
+        <% if (order.photo_notes) { %>
+        <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:10px;padding:24px">
+          <h2 style="font-size:.85rem;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Photo Notes & Requests</h2>
+          <p style="font-size:.9rem;color:#1B2F4E;line-height:1.7;margin:0"><%= order.photo_notes %></p>
+        </div>
+        <% } %>
+
+      </div>
+
+      <!-- RIGHT: Photos -->
+      <div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <h2 style="font-size:.85rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin:0">Photos (<%= photos.length %>)</h2>
+            <% if (photos.length > 0) { %>
+            <form method="POST" action="/admin/orders/<%= order.id %>/delete-photos" onsubmit="return confirm('Delete all photos for this order?')" style="margin:0">
+              <button type="submit" style="font-size:.75rem;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:5px 12px;cursor:pointer">Delete All Photos</button>
+            </form>
+            <% } %>
+          </div>
+
+          <% if (photos.length === 0) { %>
+            <p style="color:var(--gray);font-size:.88rem;text-align:center;padding:40px 0">No photos uploaded for this order.</p>
+          <% } else { %>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px">
+            <% photos.forEach(function(ph) { %>
+            <div style="position:relative">
+              <a href="/admin/order-photo/<%= ph.id %>" target="_blank">
+                <img src="/admin/order-photo/<%= ph.id %>" alt="<%= ph.original %>" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--border);display:block">
+              </a>
+              <p style="font-size:.7rem;color:var(--gray);margin:4px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><%= ph.original %></p>
+              <form method="POST" action="/admin/order-photo/<%= ph.id %>/delete" style="margin:4px 0 0" onsubmit="return confirm('Delete this photo?')">
+                <button type="submit" style="font-size:.72rem;background:none;border:1px solid #ef4444;color:#ef4444;border-radius:4px;padding:2px 8px;cursor:pointer;width:100%">Delete</button>
+              </form>
+            </div>
+            <% }); %>
+          </div>
+          <% } %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

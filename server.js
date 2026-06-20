@@ -998,6 +998,14 @@ app.post('/admin/order-photo/:id/delete', requireAuth, (req, res) => {
   res.redirect('/admin/orders');
 });
 
+// Order detail page
+app.get('/admin/orders/:id', requireAuth, (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
+  if (!order) return res.redirect('/admin/orders');
+  const photos = db.prepare('SELECT * FROM order_photos WHERE order_id=? AND deleted=0 ORDER BY created_at').all(req.params.id);
+  res.render('admin/order-detail', { order, photos });
+});
+
 // Mark order complete
 app.post('/admin/orders/:id/complete', requireAuth, (req, res) => {
   db.prepare("UPDATE orders SET status='completed' WHERE id=?").run(req.params.id);
