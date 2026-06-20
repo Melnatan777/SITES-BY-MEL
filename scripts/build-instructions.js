@@ -92,11 +92,15 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     <div class="oyster">🌍</div>
     <h2>Step 2 — The world is your oyster. Make it yours!</h2>
     <p style="font-size:.88rem;color:#555;margin-bottom:16px;">This is the fun part. Every word, price, and photo is yours to change. You don't need to know how to code — just open each page file, find the text you want to change, type something new, and save. Here's exactly how:</p>
-    <div class="fun"><strong>Best tool (free):</strong> Download <a href="https://code.visualstudio.com" target="_blank">VS Code</a>. It's free, highlights your code in color so it's easy to read, and is what most web designers use. Once installed, you'll use it to open and edit each page.</div>
+    <div class="fun"><strong>Best tool (free):</strong> Download <a href="https://code.visualstudio.com" target="_blank">VS Code</a>. It's free, highlights your code in color so it's easy to read, and is what most web designers use.</div>
+
+    <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.84rem;color:#7d5a00;">
+      <strong>⚡ First time opening VS Code?</strong> It may ask you to sign in to GitHub or show a welcome screen. <strong>Skip all of it</strong> — click <strong>"Continue without Signing In"</strong> or just close any pop-up that appears. You don't need an account. Go straight to the next step.
+    </div>
 
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Open a page file in VS Code</strong><span>In VS Code, go to <strong>File → Open File</strong>, then navigate to your website folder and open one file — for example <code>about.html</code> to edit your About page, or <code>index.html</code> for your Home page. Edit one page at a time.</span></div>
+      <div class="step-body"><strong>Open a page file in VS Code</strong><span>Go to <strong>File → Open File</strong> at the top of VS Code. Navigate to your website folder and open one file — for example <code>about.html</code> for your About page, or <code>index.html</code> for your Home page. <em>Don't be scared by all the code — just use Ctrl+F to find the words you want to change!</em></span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
