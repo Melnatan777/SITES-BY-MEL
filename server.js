@@ -36,10 +36,11 @@ app.use('/preview', (req, res, next) => {
   const watermark = `
 <style>
 #sbm-watermark{position:fixed;top:0;left:0;width:100%;z-index:999999;pointer-events:none;}
-#sbm-watermark-bar{background:rgba(27,47,78,0.92);color:#C9922B;text-align:center;padding:10px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.04em;}
+#sbm-watermark-bar{background:rgba(27,47,78,0.95);color:#C9922B;text-align:center;padding:9px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.04em;box-shadow:0 2px 8px rgba(0,0,0,0.3);}
 #sbm-watermark-bar a{color:#C9922B;text-decoration:underline;pointer-events:all;}
 #sbm-watermark-diag{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:999998;}
 #sbm-watermark-diag::before{content:'PREVIEW ONLY — sitesbymel.com — PREVIEW ONLY — sitesbymel.com — PREVIEW ONLY — sitesbymel.com';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:1.4rem;font-weight:800;color:rgba(27,47,78,0.07);white-space:nowrap;font-family:Arial,sans-serif;letter-spacing:.1em;width:200%;text-align:center;}
+body{padding-top:42px !important;}
 </style>
 <div id="sbm-watermark">
   <div id="sbm-watermark-bar">
