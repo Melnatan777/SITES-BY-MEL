@@ -42,6 +42,9 @@
             <p style="font-size:0.9rem;color:var(--gray);line-height:1.7;"><%- m.message.replace(/\n/g,'<br/>') %></p>
             <div style="margin-top:12px;">
               <a href="https://mail.google.com/mail/?view=cm&to=<%= encodeURIComponent(m.email) %>&su=<%= encodeURIComponent('Re: ' + (m.subject || 'Your message to Sites by Mel')) %>" target="_blank" class="btn btn-navy btn-sm">Reply via Gmail</a>
+              <form action="/admin/messages/<%= m.id %>/delete" method="POST" style="display:inline;margin-left:6px" onsubmit="return confirm('Delete this message?')">
+                <button type="submit" style="font-size:.75rem;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:5px 12px;cursor:pointer">Delete</button>
+              </form>
             </div>
           </div>
         </div>

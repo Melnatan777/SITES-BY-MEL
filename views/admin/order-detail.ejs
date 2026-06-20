@@ -22,6 +22,9 @@
           <button type="submit" class="btn btn-sm" style="background:#1B2F4E;color:#fff;border:none">✓ Mark Complete</button>
         </form>
         <% } %>
+        <form method="POST" action="/admin/orders/<%= order.id %>/delete" style="margin:0" onsubmit="return confirm('Delete this order permanently?')">
+          <button type="submit" style="font-size:.8rem;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:6px 14px;cursor:pointer">Delete Order</button>
+        </form>
         <form action="/admin/logout" method="POST" style="margin:0;">
           <button class="btn btn-outline btn-sm">Sign Out</button>
         </form>

@@ -96,8 +96,11 @@
                 <span class="badge <%= statusColors[c.status] || 'badge-yellow' %>"><%= c.status %></span>
                 <% if (c.membership_status==='active') { %><br><span style="font-size:.7rem;color:#22c55e;font-weight:600">● Member</span><% } %>
               </td>
-              <td>
+              <td style="display:flex;gap:6px;align-items:center">
                 <a href="/admin/clients/<%= c.id %>" class="btn btn-outline btn-sm">View</a>
+                <form action="/admin/clients/<%= c.id %>/delete" method="POST" style="margin:0" onsubmit="return confirm('Delete this client?')">
+                  <button type="submit" style="font-size:.72rem;background:#ef4444;color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer">Delete</button>
+                </form>
               </td>
             </tr>
             <% }); %>

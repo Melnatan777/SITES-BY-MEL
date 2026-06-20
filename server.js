@@ -1032,6 +1032,12 @@ app.post('/admin/orders/:id/complete', requireAuth, (req, res) => {
   db.prepare("UPDATE orders SET status='completed' WHERE id=?").run(req.params.id);
   res.redirect('/admin/orders');
 });
+// Delete order
+app.post('/admin/orders/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM order_photos WHERE order_id=?').run(req.params.id);
+  db.prepare('DELETE FROM orders WHERE id=?').run(req.params.id);
+  res.redirect('/admin/orders');
+});
 
 // Delete all photos for an order
 app.post('/admin/orders/:id/delete-photos', requireAuth, (req, res) => {
@@ -1056,6 +1062,10 @@ app.post('/subscribe', async (req, res) => {
 
 // Admin subscribers list
 // Admin: list all intake responses
+app.post('/admin/intakes/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM intake_responses WHERE id=?').run(req.params.id);
+  res.redirect('/admin/intakes');
+});
 app.get('/admin/intakes', requireAuth, (req, res) => {
   const intakes = db.prepare(`SELECT i.*, o.product_name, o.customer_email
     FROM intake_responses i LEFT JOIN orders o ON i.order_id=o.id
@@ -1152,6 +1162,10 @@ const PACKAGE_CHECKLISTS = {
   diy: [],
 };
 
+app.post('/admin/clients/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM client_projects WHERE id=?').run(req.params.id);
+  res.redirect('/admin/clients');
+});
 app.get('/admin/clients', requireAuth, (req, res) => {
   const clients = db.prepare('SELECT * FROM client_projects ORDER BY created_at DESC').all();
   res.render('admin/clients', { clients });
@@ -1316,6 +1330,10 @@ app.post('/admin/packages/:id/edit', requireAuth, (req, res) => {
   res.redirect('/admin/packages');
 });
 
+app.post('/admin/setups/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM setup_requests WHERE id=?').run(req.params.id);
+  res.redirect('/admin/setups');
+});
 // Admin — Setup requests
 app.get('/admin/setups', requireAuth, (req, res) => {
   const setups = db.prepare('SELECT * FROM setup_requests ORDER BY created_at DESC').all();
@@ -1498,6 +1516,10 @@ app.get('/admin/messages', requireAuth, (req, res) => {
   db.prepare('UPDATE messages SET read=1').run();
   const messages = db.prepare('SELECT * FROM messages ORDER BY created_at DESC').all();
   res.render('admin/messages', { messages });
+});
+app.post('/admin/messages/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM messages WHERE id=?').run(req.params.id);
+  res.redirect('/admin/messages');
 });
 
 // ── START ─────────────────────────────────────────────────────────────────────
