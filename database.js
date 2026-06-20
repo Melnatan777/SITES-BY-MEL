@@ -40,9 +40,11 @@ db.exec(`
     download_token      TEXT UNIQUE,
     download_count      INTEGER DEFAULT 0,
     download_expires_at DATETIME,
+    selected_addon      TEXT DEFAULT 'none',
     created_at          DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
+try { db.exec(`ALTER TABLE orders ADD COLUMN selected_addon TEXT DEFAULT 'none'`); } catch(e) {}
 
 // ── SETUP REQUESTS (done-for-you service) ─────────────────────────────────────
 db.exec(`

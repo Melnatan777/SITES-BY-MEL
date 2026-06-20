@@ -374,8 +374,8 @@ app.post('/buy/:slug', async (req, res) => {
       cancel_url: `${BASE_URL}/templates/${product.slug}`,
       metadata: { product_id: product.id, product_name: product.name, type: 'template', selected_addon: selectedAddon }
     });
-    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, customer_email)
-      VALUES (?,?,?,?,'pending','')`).run(product.id, product.name, totalAmount, session.id);
+    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, customer_email, selected_addon)
+      VALUES (?,?,?,?,'pending','',?)`).run(product.id, product.name, totalAmount, session.id, selectedAddon);
     res.redirect(303, session.url);
   } catch (e) {
     console.error('[buy] Stripe error:', e.message);
@@ -515,77 +515,34 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
     city: req.body.city || '',
   };
 
-  // Check add-ons
-  const wantsDrive   = req.body.addon_drive === '1';
-  const wantsUpload  = req.body.addon_upload === '1';
-  const wantsColors  = req.body.addon_colors === '1';
-  const wantsGlove   = req.body.addon_glove === '1';
-  const wantsPayment = req.body.addon_payment === '1';
-  const brandColors  = req.body.brand_colors || '';
-  const addonTotal   = (wantsDrive ? 5000 : 0) + (wantsUpload ? 10000 : 0) + (wantsColors ? 5000 : 0) + (wantsGlove ? 25300 : 0) + (wantsPayment ? 15000 : 0);
+  const brandColors = req.body.brand_colors || '';
+  const driveLink   = req.body.drive_link || '';
+  const selectedAddon = order.selected_addon || 'none';
 
-  // Build the personalized zip first regardless
+  // Build the personalized zip
   const tmpPath = path.join(__dirname, 'downloads', `custom-${order.id}-${Date.now()}.zip`);
   const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
   try { await buildPersonalizedZip(product.slug, product.name, niche, data, tmpPath); } catch(e) {
     console.error('[personalize]', e.message);
-    return res.redirect(`/download/${req.params.token}`);
   }
 
-  // Save add-on request to DB if any selected
-  if (addonTotal > 0 && stripe) {
-    const photoPaths = (req.files || []).map(f => f.path);
-    const addonTypes = [wantsDrive && 'drive_link', wantsUpload && 'photo_upload', wantsColors && 'brand_colors', wantsGlove && 'white_glove', wantsPayment && 'payment_setup'].filter(Boolean).join(',');
+  // Email Mel with all order details so she can do the add-on work
+  const addonLabel = { none:'Template Only', drive:'Photo Swap via Google Drive', upload:'Direct Photo Upload', glove:'White-Glove Finish', colors:'Custom Brand Colors', payment:'Payment Button & Business Email Setup' };
+  await sendEmail({
+    to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
+    subject: `New order ready — ${product.name}${selectedAddon !== 'none' ? ' + ' + addonLabel[selectedAddon] : ''}`,
+    text: `Customer: ${order.customer_name || 'unknown'}\nEmail: ${order.customer_email || 'unknown'}\nProduct: ${product.name}\nAdd-on paid: ${addonLabel[selectedAddon] || selectedAddon}\nAmount paid: $${(order.amount/100).toFixed(0)}\n\nBusiness details entered:\nName: ${data.businessName}\nPhone: ${data.phone}\nEmail: ${data.email}\nAddress: ${data.address}\nTagline: ${data.tagline}\nBrand colors: ${brandColors || 'none'}\nDrive link: ${driveLink || 'none'}`
+  }).catch(e => console.error('[personalize email]', e.message));
 
-    const addonRecord = db.prepare(`INSERT INTO template_addons
-      (order_id, customer_name, customer_email, product_name, addon_type, addon_amount, drive_link, photo_paths)
-      VALUES (?,?,?,?,?,?,?,?)`).run(
-      order.id, order.customer_name || '', order.customer_email || '',
-      product.name, addonTypes, addonTotal,
-      req.body.drive_link || '', JSON.stringify(photoPaths)
-    );
-
-    const addonLineItems = [];
-    if (wantsDrive)   addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Photo Swap via Google Drive' }, unit_amount:5000 }, quantity:1 });
-    if (wantsUpload)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Direct Photo Upload' }, unit_amount:10000 }, quantity:1 });
-    if (wantsColors)  addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Custom Brand Colors' }, unit_amount:5000 }, quantity:1 });
-    if (wantsGlove)   addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'White-Glove Finish' }, unit_amount:25300 }, quantity:1 });
-    if (wantsPayment) addonLineItems.push({ price_data: { currency:'usd', product_data:{ name:'Payment Button & Business Email Setup' }, unit_amount:15000 }, quantity:1 });
-
-    try {
-      const stripeSession = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: addonLineItems,
-        mode: 'payment',
-        success_url: `${BASE_URL}/order/addon-success?addon_id=${addonRecord.lastInsertRowid}&token=${req.params.token}`,
-        cancel_url: `${BASE_URL}/personalize/${req.params.token}`,
-        customer_email: order.customer_email || undefined,
-        metadata: { addon_id: addonRecord.lastInsertRowid, order_id: order.id, type: 'addon' }
-      });
-      db.prepare('UPDATE template_addons SET stripe_session_id=? WHERE id=?').run(stripeSession.id, addonRecord.lastInsertRowid);
-
-      // Store zip path temporarily so we can deliver after payment
-      db.prepare('UPDATE template_addons SET admin_notes=? WHERE id=?').run(tmpPath, addonRecord.lastInsertRowid);
-
-      // Notify Mel
-      await sendEmail({
-        to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
-        subject: `New add-on order — ${product.name} — ${addonTypes} — $${(addonTotal/100).toFixed(0)}`,
-        text: `Customer: ${order.customer_name || 'unknown'}\nEmail: ${order.customer_email || 'unknown'}\nProduct: ${product.name}\nAdd-ons: ${addonTypes}\nAmount: $${(addonTotal/100).toFixed(0)}\nDrive link: ${req.body.drive_link || 'none'}\nBrand colors: ${brandColors || 'none'}\nPhotos uploaded: ${photoPaths.length}\nCheck dashboard for details.`
-      });
-
-      return res.redirect(303, stripeSession.url);
-    } catch(e) {
-      console.error('[addon stripe]', e.message);
-    }
-  }
-
-  // No add-ons or Stripe not configured — deliver zip directly
+  // Deliver zip directly — everything was paid upfront
   db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
-  res.download(tmpPath, `${product.slug}-sitesbymel.zip`, () => {
-    const fs = require('fs');
-    try { fs.unlinkSync(tmpPath); } catch(e) {}
-  });
+  const fs = require('fs');
+  if (fs.existsSync(tmpPath)) {
+    return res.download(tmpPath, `${product.slug}-sitesbymel.zip`, () => {
+      try { fs.unlinkSync(tmpPath); } catch(e) {}
+    });
+  }
+  res.redirect(`/download/${req.params.token}`);
 });
 
 // Add-on payment success
