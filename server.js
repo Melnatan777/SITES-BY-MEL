@@ -86,12 +86,8 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 // ── MIDDLEWARE ────────────────────────────────────────────────────────────────
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-// Serve images directly — must come before the templates block
+// Serve public assets — /images explicitly first, then everything except /templates/* routes
 app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
-app.use('/css', express.static(path.join(__dirname, 'public', 'css')));
-app.use('/js', express.static(path.join(__dirname, 'public', 'js')));
-
-// Serve static files but block /templates/* so Express routes handle those
 app.use((req, res, next) => {
   if (req.path.startsWith('/templates/') && !req.path.match(/\.[a-z]{2,4}$/i)) return next();
   express.static(path.join(__dirname, 'public'))(req, res, next);
