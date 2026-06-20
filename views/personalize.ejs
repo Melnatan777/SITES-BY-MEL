@@ -123,8 +123,8 @@
       </div>
       <% } %>
 
-      <!-- PHOTO GUIDE FOR ALL (shown when no photo add-on selected) -->
-      <% if (selectedAddon === 'none' || !selectedAddon) { %>
+      <!-- PHOTO UPLOAD (only for upload or glove add-on) -->
+      <% if (selectedAddon === 'upload' || selectedAddon === 'glove') { %>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px">
         <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">📸 Have photos to share?</h2>
         <p style="font-size:.82rem;color:#6B7280;margin-bottom:14px">Upload up to 5 photos and I'll place them in your template. Not required — you can always email them later.</p>
