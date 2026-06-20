@@ -110,6 +110,54 @@
       </div>
       <% } %>
 
+      <!-- MEMBERSHIP & SUPPORT -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:24px">
+        <h2 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px">Membership & Ongoing Support</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px">
+          <div style="background:var(--light);border-radius:8px;padding:14px">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Membership Status</div>
+            <%
+              const memColors = { none:'#9CA3AF', active:'#22c55e', paused:'#f59e0b', cancelled:'#ef4444' };
+              const memLabels = { none:'No Membership', active:'Active Member', paused:'Paused', cancelled:'Cancelled' };
+            %>
+            <div style="font-weight:700;color:<%= memColors[client.membership_status||'none'] %>"><%= memLabels[client.membership_status||'none'] %></div>
+          </div>
+          <div style="background:var(--light);border-radius:8px;padding:14px">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Membership Tier</div>
+            <div style="font-weight:700;color:var(--navy)"><%= client.membership_tier || '—' %></div>
+          </div>
+          <div style="background:var(--light);border-radius:8px;padding:14px">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Monthly Amount</div>
+            <div style="font-weight:700;color:var(--gold)"><%= client.membership_amount ? '$' + client.membership_amount.toFixed(0) + '/mo' : '—' %></div>
+          </div>
+          <div style="background:var(--light);border-radius:8px;padding:14px">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Hourly Rate (non-member)</div>
+            <div style="font-weight:700;color:var(--navy)">$<%= (client.hourly_rate||75).toFixed(0) %>/hr</div>
+          </div>
+          <div style="background:var(--light);border-radius:8px;padding:14px;grid-column:span 2">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Stripe Recurring Payment Link</div>
+            <% if (client.stripe_recurring_link) { %>
+              <a href="<%= client.stripe_recurring_link %>" target="_blank" style="color:var(--gold);font-size:.85rem;word-break:break-all"><%= client.stripe_recurring_link %></a>
+            <% } else { %>
+              <span style="font-size:.82rem;color:#9CA3AF">Not set — create in Stripe dashboard → Products → Recurring</span>
+            <% } %>
+          </div>
+        </div>
+
+        <% if (client.credentials_notes) { %>
+        <div style="background:#fdf6e3;border:1px solid #f0d080;border-radius:8px;padding:16px">
+          <div style="font-size:.75rem;font-weight:700;color:#7d5a00;margin-bottom:6px">🔐 Credentials & Access Notes (never share — for your eyes only)</div>
+          <p style="font-size:.85rem;color:#7d5a00;line-height:1.7;white-space:pre-wrap;margin:0"><%= client.credentials_notes %></p>
+        </div>
+        <% } %>
+
+        <div style="margin-top:16px;padding:14px;background:#f0f7ff;border-radius:8px;border-left:3px solid #3b82f6">
+          <p style="font-size:.78rem;color:#1e40af;line-height:1.6;margin:0">
+            <strong>Security tip:</strong> Store actual passwords in a password manager like <strong>Bitwarden</strong> (free) — create one entry per client. Use the credentials notes above only for hints like "Stripe = their business email" or "Domain = Namecheap under client account."
+          </p>
+        </div>
+      </div>
+
       <!-- NOTES -->
       <% if (client.notes) { %>
       <div style="background:#fdf6e3;border:1px solid #f0d080;border-radius:10px;padding:24px;margin-bottom:24px">
@@ -141,6 +189,29 @@
             <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Package Price Paid ($)</label><input type="number" name="package_price" value="<%= client.package_price||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
           </div>
           <div style="margin-bottom:16px"><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Internal Notes</label><textarea name="notes" rows="3" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem;resize:vertical"><%= client.notes||'' %></textarea></div>
+
+          <div style="border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px">
+            <p style="font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:12px">Membership & Support</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Membership Status</label>
+                <select name="membership_status" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+                  <option value="none" <%=client.membership_status==='none'||!client.membership_status?'selected':''%>>No Membership</option>
+                  <option value="active" <%=client.membership_status==='active'?'selected':''%>>Active Member</option>
+                  <option value="paused" <%=client.membership_status==='paused'?'selected':''%>>Paused</option>
+                  <option value="cancelled" <%=client.membership_status==='cancelled'?'selected':''%>>Cancelled</option>
+                </select>
+              </div>
+              <div><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Membership Tier</label><input type="text" name="membership_tier" value="<%= client.membership_tier||'' %>" placeholder="e.g. Basic Care, Pro Maintenance" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+              <div><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Monthly Amount ($)</label><input type="number" name="membership_amount" value="<%= client.membership_amount||'' %>" placeholder="75" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+              <div><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Hourly Rate — non-member support ($)</label><input type="number" name="hourly_rate" value="<%= client.hourly_rate||75 %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+              <div style="grid-column:span 2"><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Stripe Recurring Payment Link</label><input type="text" name="stripe_recurring_link" value="<%= client.stripe_recurring_link||'' %>" placeholder="https://buy.stripe.com/..." style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+              <div style="grid-column:span 2">
+                <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px;color:#7d5a00">🔐 Credentials & Access Notes (internal only — no actual passwords)</label>
+                <textarea name="credentials_notes" rows="4" placeholder="e.g. Domain = Namecheap under client email&#10;Stripe = hello@theirbusiness.com&#10;Railway = project 'client-name' in Mel's account&#10;GitHub = github.com/your-account/repo-name" style="width:100%;padding:8px 12px;border:1px solid #f0d080;border-radius:6px;font-size:.85rem;resize:vertical;background:#fffdf7"><%= client.credentials_notes||'' %></textarea>
+              </div>
+            </div>
+          </div>
+
           <button type="submit" class="btn btn-gold btn-sm">Save Changes</button>
         </form>
       </details>

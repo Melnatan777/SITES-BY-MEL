@@ -917,16 +917,23 @@ app.post('/admin/clients/:id/edit', requireAuth, (req, res) => {
   const { customer_name, customer_email, package_type, status, domain_name, domain_renewal_date,
     railway_project_name, railway_project_url, railway_monthly_cost, github_repo_url,
     cloudflare_zone, professional_email, resend_domain, stripe_status,
-    package_price, monthly_fee, notes } = req.body;
+    package_price, monthly_fee, notes,
+    membership_status, membership_tier, membership_amount, stripe_recurring_link,
+    credentials_notes, hourly_rate } = req.body;
   db.prepare(`UPDATE client_projects SET
     customer_name=?,customer_email=?,package_type=?,status=?,domain_name=?,domain_renewal_date=?,
     railway_project_name=?,railway_project_url=?,railway_monthly_cost=?,github_repo_url=?,
     cloudflare_zone=?,professional_email=?,resend_domain=?,stripe_status=?,
-    package_price=?,monthly_fee=?,notes=? WHERE id=?`)
+    package_price=?,monthly_fee=?,notes=?,
+    membership_status=?,membership_tier=?,membership_amount=?,stripe_recurring_link=?,
+    credentials_notes=?,hourly_rate=? WHERE id=?`)
     .run(customer_name, customer_email, package_type, status, domain_name, domain_renewal_date,
       railway_project_name, railway_project_url, parseFloat(railway_monthly_cost)||5,
       github_repo_url, cloudflare_zone, professional_email, resend_domain, stripe_status,
-      parseFloat(package_price)||0, parseFloat(monthly_fee)||15, notes, req.params.id);
+      parseFloat(package_price)||0, parseFloat(monthly_fee)||15, notes,
+      membership_status||'none', membership_tier, parseFloat(membership_amount)||0,
+      stripe_recurring_link, credentials_notes, parseFloat(hourly_rate)||75,
+      req.params.id);
   res.redirect('/admin/clients/' + req.params.id);
 });
 

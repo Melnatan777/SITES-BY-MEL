@@ -31,7 +31,7 @@
       <!-- STATS -->
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px">
         <% const active = clients.filter(c=>c.status==='active').length; %>
-        <% const mrr = clients.filter(c=>c.status==='active').reduce((s,c)=>s+(c.monthly_fee||0),0); %>
+        <% const mrr = clients.filter(c=>c.status==='active').reduce((s,c)=>s+(c.monthly_fee||0)+(c.membership_status==='active'?c.membership_amount||0:0),0); %>
         <% const costs = clients.filter(c=>c.status==='active').reduce((s,c)=>s+(c.railway_monthly_cost||0),0); %>
         <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:20px">
           <div style="font-size:1.6rem;font-weight:800;color:var(--navy)"><%= active %></div>
@@ -86,8 +86,16 @@
                   </span>
                 <% } else { %>—<% } %>
               </td>
-              <td style="font-weight:600;color:var(--gold)">$<%= (c.monthly_fee||0).toFixed(0) %>/mo</td>
-              <td><span class="badge <%= statusColors[c.status] || 'badge-yellow' %>"><%= c.status %></span></td>
+              <td style="font-weight:600;color:var(--gold)">
+                $<%= (c.monthly_fee||0).toFixed(0) %>/mo
+                <% if (c.membership_status==='active' && c.membership_amount) { %>
+                  <br><span style="font-size:.72rem;color:#22c55e">+ $<%= c.membership_amount.toFixed(0) %>/mo member</span>
+                <% } %>
+              </td>
+              <td>
+                <span class="badge <%= statusColors[c.status] || 'badge-yellow' %>"><%= c.status %></span>
+                <% if (c.membership_status==='active') { %><br><span style="font-size:.7rem;color:#22c55e;font-weight:600">● Member</span><% } %>
+              </td>
               <td>
                 <a href="/admin/clients/<%= c.id %>" class="btn btn-outline btn-sm">View</a>
               </td>

@@ -126,6 +126,17 @@ db.exec(`CREATE TABLE IF NOT EXISTS expenses (
   created_at   DATETIME DEFAULT CURRENT_TIMESTAMP
 )`);
 
+// ── CLIENT PROJECT UPGRADES (membership + credentials) ───────────────────────
+try {
+  db.exec(`ALTER TABLE client_projects ADD COLUMN membership_status TEXT DEFAULT 'none'`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN membership_tier TEXT`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN membership_amount REAL DEFAULT 0`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN stripe_recurring_link TEXT`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN credentials_notes TEXT`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN hourly_rate REAL DEFAULT 75`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN project_type TEXT DEFAULT 'template_launch'`);
+} catch(e) {}
+
 // ── SERVICE PACKAGES (public-facing, editable from admin) ────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS service_packages (
