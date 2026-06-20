@@ -172,6 +172,31 @@ function buildInstructions(templateName, templateSlug, niche) {
     </div>
   </div>
 
+  <!-- GET ONLINE -->
+  <div class="card">
+    <div class="oyster">🌐</div>
+    <h2>Step 4 — Get Your Site Online (Free, 2 Minutes — Drag &amp; Drop!)</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:14px;">Ready to go live? The easiest way in the world is <strong>Netlify Drop</strong>. No accounts, no tech knowledge, no code. Just drag and drop.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body"><strong>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a></strong><span>You'll see a big box that says "Drag and drop your site folder here." That's it — that's the whole thing.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body"><strong>Drag your entire unzipped folder onto that box</strong><span>Select the whole folder (the one with all your HTML files in it) and drag it right onto the Netlify page. Drop it.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body"><strong>Your site is live — instantly!</strong><span>Netlify gives you a free web address like <code>random-name.netlify.app</code>. You can share that link with anyone right now and they can visit your site. For free. Forever.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body"><strong>Connect your own domain name (optional)</strong><span>If you have a domain like <code>yourbusiness.com</code>, create a free Netlify account, claim your site, then go to Domain Settings → Add custom domain. Netlify walks you through every step. Your only cost is your domain (~$12/yr from GoDaddy or Namecheap).</span></div>
+    </div>
+    <div class="tip">💡 <strong>No domain yet?</strong> No problem — your free <code>.netlify.app</code> address works perfectly while you decide. You can connect a real domain any time later.</div>
+    <div class="fun">🎉 <strong>That's really it.</strong> Drag. Drop. Live. The whole internet can now find your business. You did that!</div>
+  </div>
+
   <!-- NEED HELP -->
   <div class="card">
     <h2>🙋 Rather have someone just do it for you?</h2>
