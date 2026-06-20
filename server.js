@@ -7,12 +7,16 @@ const multer = require('multer');
 const fs = require('fs');
 const db = require('./database');
 
-// Per-order photo storage
+// Per-order photo storage — use volume path so photos survive deploys
+const UPLOADS_DIR = process.env.DATABASE_PATH
+  ? path.join(path.dirname(process.env.DATABASE_PATH), 'uploads')
+  : path.join(__dirname, 'uploads');
+
 const photoStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     const token = req.params.token || 'misc';
     const order = db.prepare('SELECT id FROM orders WHERE download_token=?').get(token);
-    const dir = path.join(__dirname, 'uploads', 'orders', String(order ? order.id : 'misc'));
+    const dir = path.join(UPLOADS_DIR, 'orders', String(order ? order.id : 'misc'));
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
@@ -162,7 +166,7 @@ app.use('/preview', (req, res, next) => {
   res.send(html);
 });
 app.use('/preview', express.static(path.join(__dirname, 'public', 'templates')));
-app.use('/uploads/intake', requireAuth, express.static(path.join(__dirname, 'uploads', 'intake')));
+app.use('/uploads/intake', requireAuth, express.static(path.join(UPLOADS_DIR, 'intake')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
@@ -643,24 +647,21 @@ app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res)
     }
     const photoNotes = req.body.photo_notes || '';
     if (photoNotes) db.prepare('UPDATE orders SET photo_notes=? WHERE id=?').run(photoNotes, order.id);
-    if (resend) {
-      resend.emails.send({
-        from: 'Sites by Mel <mel@sitesbymel.com>',
-        to: 'mel@sitesbymel.com',
-        subject: `📸 Photos uploaded — Order #${order.id} (${order.product_name})`,
-        html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
-          <h2 style="color:#1B2F4E">Customer Photos Uploaded</h2>
-          <p style="color:#374151"><strong>${order.customer_name || 'A customer'}</strong> (${order.customer_email || 'unknown'}) just uploaded <strong>${req.files.length} photo${req.files.length > 1 ? 's' : ''}</strong> for their order.</p>
-          <table style="width:100%;border-collapse:collapse;font-size:.9rem;margin:16px 0">
-            <tr><td style="padding:6px 0;color:#6B7280;width:40%">Order</td><td style="font-weight:600;color:#1B2F4E">#${order.id} — ${order.product_name}</td></tr>
-            <tr><td style="padding:6px 0;color:#6B7280">Add-On</td><td style="color:#1B2F4E">${order.selected_addon && order.selected_addon !== 'none' ? order.selected_addon : 'None'}</td></tr>
-            <tr><td style="padding:6px 0;color:#6B7280">Files</td><td style="color:#1B2F4E">${req.files.map(f => f.originalname).join(', ')}</td></tr>
-            ${photoNotes ? `<tr><td style="padding:6px 0;color:#6B7280;vertical-align:top">Notes</td><td style="color:#1B2F4E;font-style:italic">${photoNotes}</td></tr>` : ''}
-          </table>
-          <a href="${BASE_URL}/admin/orders" style="display:inline-block;background:#1B2F4E;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem">View in Admin →</a>
-        </div>`
-      }).catch(e => console.error('[photo notify]', e.message));
-    }
+    sendEmail({
+      to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
+      subject: `Photos uploaded — Order #${order.id} (${order.product_name})`,
+      html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
+        <h2 style="color:#1B2F4E">Customer Photos Uploaded</h2>
+        <p style="color:#374151"><strong>${order.customer_name || 'A customer'}</strong> (${order.customer_email || 'unknown'}) just uploaded <strong>${req.files.length} photo${req.files.length > 1 ? 's' : ''}</strong> for their order.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:.9rem;margin:16px 0">
+          <tr><td style="padding:6px 0;color:#6B7280;width:40%">Order</td><td style="font-weight:600;color:#1B2F4E">#${order.id} — ${order.product_name}</td></tr>
+          <tr><td style="padding:6px 0;color:#6B7280">Add-On</td><td style="color:#1B2F4E">${order.selected_addon && order.selected_addon !== 'none' ? order.selected_addon : 'None'}</td></tr>
+          <tr><td style="padding:6px 0;color:#6B7280">Files</td><td style="color:#1B2F4E">${req.files.map(f => f.originalname).join(', ')}</td></tr>
+          ${photoNotes ? `<tr><td style="padding:6px 0;color:#6B7280;vertical-align:top">Notes</td><td style="color:#1B2F4E;font-style:italic">${photoNotes}</td></tr>` : ''}
+        </table>
+        <a href="${BASE_URL}/admin/orders" style="display:inline-block;background:#1B2F4E;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem">View in Admin →</a>
+      </div>`
+    }).catch(e => console.error('[photo notify]', e.message));
   }
 
   // Add-on orders: show "We're on it" page — Mel delivers manually
@@ -777,11 +778,10 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), (req, res
         } catch(e) {}
         const intakeUrl = `${BASE_URL}/intake/${intakeToken}`;
         const personalizeUrl = `${BASE_URL}/personalize/${order.download_token}`;
-        if (resend) {
-          resend.emails.send({
-            from: 'Mel <mel@sitesbymel.com>',
+        {
+          sendEmail({
             to: email,
-            subject: `Welcome! Here's what's next for your new website 🎉`,
+            subject: `Welcome! Here's what's next for your new website`,
             html: `
 <!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1a1a2e">
 <div style="text-align:center;margin-bottom:28px">
@@ -814,10 +814,9 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), (req, res
           }).catch(e => console.error('[webhook] welcome email failed:', e.message));
 
           // Notify Mel
-          resend.emails.send({
-            from: 'Sites by Mel <mel@sitesbymel.com>',
-            to: 'mel@sitesbymel.com',
-            subject: `💰 New order — ${order.product_name} ($${(order.amount/100).toFixed(2)})`,
+          sendEmail({
+            to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
+            subject: `New order — ${order.product_name} ($${(order.amount/100).toFixed(2)})`,
             html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
               <h2 style="color:#1B2F4E;margin-bottom:4px">New Template Order</h2>
               <p style="color:#6B7280;font-size:.85rem;margin-bottom:20px">${new Date().toLocaleString()}</p>
@@ -828,10 +827,7 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), (req, res
                 <tr><td style="padding:8px 0;color:#6B7280">Add-On</td><td style="color:#1B2F4E">${order.selected_addon && order.selected_addon !== 'none' ? order.selected_addon : 'None'}</td></tr>
                 <tr><td style="padding:8px 0;color:#6B7280">Amount</td><td style="font-weight:700;color:#C9922B;font-size:1.1rem">$${(order.amount/100).toFixed(2)}</td></tr>
               </table>
-              <div style="margin-top:20px;display:flex;gap:10px">
-                <a href="${BASE_URL}/admin/orders" style="display:inline-block;background:#1B2F4E;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem">View in Admin →</a>
-                <a href="${intakeUrl}" style="display:inline-block;background:#C9922B;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem">View Intake Form →</a>
-              </div>
+              <a href="${BASE_URL}/admin/orders" style="display:inline-block;background:#1B2F4E;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem;margin-top:20px">View in Admin →</a>
             </div>`
           }).catch(e => console.error('[webhook] mel notify failed:', e.message));
         }
@@ -846,7 +842,7 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), (req, res
 // ── INTAKE FORM ───────────────────────────────────────────────────────────────
 const intakeLogoStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = path.join(__dirname, 'uploads', 'intake');
+    const dir = path.join(UPLOADS_DIR, 'intake');
     require('fs').mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
@@ -879,11 +875,10 @@ app.post('/intake/:token', intakeUpload.single('logo'), (req, res) => {
       font_style, logo_filename, about_text, services_text, phone, address,
       facebook, instagram, twitter, linkedin, tiktok, special_notes, req.params.token);
   // Notify Mel
-  if (resend) {
+  {
     const order = intake.order_id ? db.prepare('SELECT * FROM orders WHERE id=?').get(intake.order_id) : null;
-    resend.emails.send({
-      from: 'Sites by Mel <mel@sitesbymel.com>',
-      to: 'mel@sitesbymel.com',
+    sendEmail({
+      to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
       subject: `New intake form submitted — ${business_name}`,
       html: `<p><strong>${business_name}</strong> just submitted their intake form${order ? ` for order #${order.id} (${order.product_name})` : ''}.</p>
       <p><a href="${BASE_URL}/admin/intake/${req.params.token}">View in Admin →</a></p>`
