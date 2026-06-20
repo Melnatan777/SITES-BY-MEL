@@ -377,7 +377,7 @@ app.post('/setup/:slug', async (req, res) => {
   const product = db.prepare('SELECT * FROM products WHERE slug=?').get(req.params.slug);
   const { name, email, phone, business_name, business_url, notes } = req.body;
   if (!name || !email) return res.redirect('/services');
-  const depositAmount = 20000; // $200 deposit
+  const depositAmount = 40000; // $400 deposit
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],

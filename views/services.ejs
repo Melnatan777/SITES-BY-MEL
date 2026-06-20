@@ -1,4 +1,4 @@
-<%- include('partials/head', { title: 'Services', metaDesc: 'Professional website templates starting at $197, done-for-you setup at $497, or a fully custom build. Websites for small businesses.' }) %>
+<%- include('partials/head', { title: 'Services', metaDesc: 'Professional website templates starting at $197, done-for-you custom builds starting at $1,200, or a fully custom quote. Websites for small businesses.' }) %>
 <%- include('partials/nav', { activePage: 'services' }) %>
 
 <div class="page-header">
@@ -30,33 +30,34 @@
       <!-- OPTION 2: Done-for-you -->
       <div class="pricing-card featured">
         <div class="pricing-name">Done-For-You</div>
-        <div class="pricing-price">$497<small> total</small></div>
-        <p class="pricing-desc">I take the template, fill it with your content, and get your site live. You do nothing technical.</p>
+        <div class="pricing-price">Starts at $1,200</div>
+        <p class="pricing-desc">I build your site from scratch — custom to your business. You do nothing technical. Just answer a few questions and I handle everything.</p>
         <ul class="pricing-features">
-          <li>Everything in DIY Template</li>
-          <li>Customized with your branding &amp; content</li>
+          <li>Custom designed for your brand</li>
           <li>Your logo, colors, photos &amp; copy</li>
+          <li>Contact form &amp; booking wired up</li>
           <li>Domain &amp; hosting connected</li>
-          <li>Contact form wired up &amp; tested</li>
-          <li>Live within 5–7 business days</li>
-          <li>$200 deposit, $297 due at delivery</li>
+          <li>Mobile-responsive &amp; fast-loading</li>
+          <li>Live within 7–10 business days</li>
+          <li>$400 deposit, balance due at delivery</li>
         </ul>
-        <a href="#setup-form" class="btn btn-gold btn-full">Get Started — $200 Deposit</a>
+        <a href="#setup-form" class="btn btn-gold btn-full">Get Started — $400 Deposit</a>
       </div>
 
       <!-- OPTION 3: Custom quote -->
       <div class="pricing-card">
         <div class="pricing-name">Custom Build</div>
         <div class="pricing-price">Quote</div>
-        <p class="pricing-desc">Need something beyond a template? I'll design and build a fully custom site from scratch.</p>
+        <p class="pricing-desc">Need e-commerce, a CMS, booking system, or something fully bespoke? Let's talk — and get 10% off when you request a quote this month.</p>
         <ul class="pricing-features">
-          <li>Fully custom design</li>
-          <li>Any features you need</li>
-          <li>E-commerce, booking, blog</li>
+          <li>Fully custom design &amp; development</li>
+          <li>CMS so you edit your own content</li>
+          <li>E-commerce, booking, blog — anything</li>
+          <li>Admin dashboard included</li>
           <li>Ongoing maintenance available</li>
-          <li>Free consultation call</li>
+          <li>🎉 10% off — mention this when you reach out</li>
         </ul>
-        <a href="/quote" class="btn btn-outline btn-full">Request a Quote</a>
+        <a href="/quote" class="btn btn-outline btn-full">Request a Quote &rarr;</a>
       </div>
 
     </div>
@@ -298,8 +299,8 @@
       </div>
       <div class="process-step">
         <div class="process-step-num">2</div>
-        <h3>Pay $200 Deposit</h3>
-        <p>Secure checkout via Stripe. I'll reach out within 24 hours to collect your content — logo, photos, text.</p>
+        <h3>Pay $400 Deposit</h3>
+        <p>Secure checkout via Stripe. I'll reach out within 24 hours to collect your content — logo, photos, text, and any specific requests.</p>
       </div>
       <div class="process-step">
         <div class="process-step-num">3</div>
@@ -319,9 +320,10 @@
 <section class="section" id="setup-form">
   <div class="container">
     <div class="form-card">
-      <h2 style="font-size:1.4rem;margin-bottom:6px;">Start Your Done-For-You Setup</h2>
-      <p style="color:var(--gray);font-size:0.9rem;margin-bottom:28px;">Fill out the form below and you'll be taken to a secure $200 deposit checkout. I'll be in touch within 24 hours.</p>
+      <h2 style="font-size:1.4rem;margin-bottom:6px;">Start Your Done-For-You Website</h2>
+      <p style="color:var(--gray);font-size:0.9rem;margin-bottom:28px;">Tell me about your business and what you need. I'll review your answers and be in touch within 24 hours. A $400 deposit locks in your spot.</p>
       <form action="/setup/none" method="POST">
+
         <div class="form-2col">
           <div class="form-group">
             <label for="name">Your Name *</label>
@@ -332,26 +334,96 @@
             <input type="email" id="email" name="email" required placeholder="jane@example.com" />
           </div>
         </div>
+
         <div class="form-2col">
           <div class="form-group">
-            <label for="phone">Phone (optional)</label>
+            <label for="phone">Phone Number</label>
             <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
           </div>
           <div class="form-group">
-            <label for="business_name">Business Name</label>
-            <input type="text" id="business_name" name="business_name" placeholder="Smith Pressure Washing" />
+            <label for="business_name">Business Name *</label>
+            <input type="text" id="business_name" name="business_name" required placeholder="Jane's Cleaning Co." />
           </div>
         </div>
-        <div class="form-group">
-          <label for="business_url">Current Website (if any)</label>
-          <input type="url" id="business_url" name="business_url" placeholder="https://..." />
+
+        <div class="form-2col">
+          <div class="form-group">
+            <label for="industry">Your Industry *</label>
+            <select id="industry" name="industry" required>
+              <option value="">Select your industry…</option>
+              <option>Auto Detailing / Mechanic</option>
+              <option>Beauty / Hair / Lash Studio</option>
+              <option>Cleaning Service</option>
+              <option>Coaching / Consulting</option>
+              <option>Event Planning / Wedding</option>
+              <option>Fitness / Personal Training</option>
+              <option>Food / Restaurant / Catering</option>
+              <option>Healthcare / Medical</option>
+              <option>Landscaping / Lawn Care</option>
+              <option>Legal / Financial</option>
+              <option>Pet Services</option>
+              <option>Photography / Videography</option>
+              <option>Real Estate</option>
+              <option>Retail / E-commerce</option>
+              <option>Tutoring / Education</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="business_url">Current Website (if any)</label>
+            <input type="url" id="business_url" name="business_url" placeholder="https://..." />
+          </div>
         </div>
+
+        <div class="form-group">
+          <label>What pages do you need? (check all that apply)</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Home"> Home</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Services"> Services</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="About"> About</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Gallery"> Gallery / Portfolio</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Contact"> Contact / Booking</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Blog"> Blog</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Shop"> Online Shop</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="pages[]" value="Other"> Other</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="features">Any special features needed?</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Online payments"> Online payments (Stripe)</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Booking calendar"> Booking / Calendar</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Business email"> Business email setup</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Admin dashboard"> Admin dashboard / CMS</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Photo gallery"> Photo gallery</label>
+            <label style="font-weight:400;display:flex;align-items:center;gap:8px;font-size:0.88rem;"><input type="checkbox" name="features[]" value="Newsletter signup"> Newsletter signup</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="colors">Brand colors or style preferences</label>
+          <input type="text" id="colors" name="colors" placeholder="e.g. Navy blue and gold, clean and modern — or share a site you love" />
+        </div>
+
+        <div class="form-group">
+          <label for="timeline">When do you need this live?</label>
+          <select id="timeline" name="timeline">
+            <option value="">Select a timeline…</option>
+            <option>ASAP — as fast as possible</option>
+            <option>Within 2 weeks</option>
+            <option>Within a month</option>
+            <option>No rush — just planning ahead</option>
+          </select>
+        </div>
+
         <div class="form-group">
           <label for="notes">Anything else I should know?</label>
-          <textarea id="notes" name="notes" rows="4" placeholder="Which template are you interested in? Any specific colors or style notes?"></textarea>
+          <textarea id="notes" name="notes" rows="4" placeholder="Tell me about your business, what you want customers to feel when they visit your site, or anything specific you have in mind…"></textarea>
         </div>
-        <button type="submit" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">Pay $200 Deposit to Get Started &rarr;</button>
-        <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:10px;">Secure checkout via Stripe. $200 deposit applied toward your $497 total. Balance of $297 due at delivery.</p>
+
+        <button type="submit" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">Pay $400 Deposit to Get Started &rarr;</button>
+        <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:10px;">Secure checkout via Stripe. $400 deposit applied toward your total. Balance due at delivery.</p>
       </form>
     </div>
   </div>
