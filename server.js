@@ -844,6 +844,44 @@ app.get('/admin/analytics', requireAuth, (req, res) => {
   });
 });
 
+// Admin — Check images on Railway server
+app.get('/admin/check-images', requireAuth, (req, res) => {
+  const fs = require('fs');
+  const imgDir = path.join(__dirname, 'public', 'images');
+  const files = fs.existsSync(imgDir) ? fs.readdirSync(imgDir) : [];
+  const products = db.prepare('SELECT slug, thumbnail FROM products ORDER BY slug').all();
+  let html = '<h2>Images on server</h2><ul>' + files.map(f => `<li>${f}</li>`).join('') + '</ul>';
+  html += '<h2>DB thumbnails</h2><ul>' + products.map(p => `<li>${p.slug}: <b>${p.thumbnail || 'NULL'}</b> ${files.includes(p.thumbnail) ? '✅' : '❌ MISSING'}</li>`).join('') + '</ul>';
+  res.send(html);
+});
+
+// Admin — Force fix thumbnails in DB
+app.post('/admin/fix-thumbnails', requireAuth, (req, res) => {
+  const thumbs = [
+    { slug: 'service-pro',    thumbnail: 'service-pro.jpg' },
+    { slug: 'table-ready',    thumbnail: 'Tables.jpg' },
+    { slug: 'key-ready',      thumbnail: 'KeyReady.jpg' },
+    { slug: 'shop-front',     thumbnail: 'ShopReady.jpg' },
+    { slug: 'voice-first',    thumbnail: 'ThoughtfulCreator.jpg' },
+    { slug: 'gather-here',    thumbnail: 'Cornerstone.jpg' },
+    { slug: 'pet-shop',       thumbnail: 'pet-shop.jpg' },
+    { slug: 'beauty-studio',  thumbnail: 'beauty-studio.jpg' },
+    { slug: 'lens-and-light', thumbnail: 'lens-and-light.jpg' },
+    { slug: 'green-cut',      thumbnail: 'green-cut.jpg' },
+    { slug: 'wellness-pro',   thumbnail: 'wellness-pro.jpg' },
+    { slug: 'fit-life',       thumbnail: 'fit-life.jpg' },
+    { slug: 'sparkle-clean',  thumbnail: 'sparkle-clean.jpg' },
+    { slug: 'bright-minds',   thumbnail: 'bright-minds.jpg' },
+    { slug: 'forever-events', thumbnail: 'forever-events.jpg' },
+    { slug: 'auto-shine',     thumbnail: 'auto-shine.jpg' },
+    { slug: 'detail-pro',     thumbnail: 'detail-pro.jpg' },
+  ];
+  for (const t of thumbs) {
+    db.prepare('UPDATE products SET thumbnail=? WHERE slug=?').run(t.thumbnail, t.slug);
+  }
+  res.redirect('/admin/check-images');
+});
+
 // Admin — Rebuild downloads
 app.post('/admin/rebuild-downloads', requireAuth, async (req, res) => {
   try {
