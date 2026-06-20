@@ -28,6 +28,25 @@ buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e
   } catch(e) { console.error('[seed] detail-pro error:', e.message); }
 })();
 
+// Ensure ALL templates have preview_url set
+(function fixPreviewUrls() {
+  const slugs = [
+    'service-pro','table-ready','key-ready','shop-front','voice-first',
+    'gather-here','pet-shop','beauty-studio','lens-and-light','green-cut',
+    'wellness-pro','fit-life','sparkle-clean','bright-minds','forever-events',
+    'auto-shine','detail-pro'
+  ];
+  try {
+    for (const slug of slugs) {
+      const row = db.prepare('SELECT id, preview_url FROM products WHERE slug=?').get(slug);
+      if (row && !row.preview_url) {
+        db.prepare('UPDATE products SET preview_url=? WHERE slug=?').run(`/preview/${slug}/`, slug);
+        console.log(`[seed] Fixed preview_url for ${slug}`);
+      }
+    }
+  } catch(e) { console.error('[seed] fixPreviewUrls error:', e.message); }
+})();
+
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 const app = express();
