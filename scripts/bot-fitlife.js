@@ -806,9 +806,9 @@ function melBotShow(nodeId) {
     choices.appendChild(btn);
   });
 }
-
-window._melBotReady = true;
-melBotStart();
+\`;
+  document.body.insertAdjacentHTML('beforeend', botHTML);
+  melBotStart();
 });
 }
 <\/script>`;
