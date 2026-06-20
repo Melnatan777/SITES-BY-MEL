@@ -1,0 +1,315 @@
+<%- include('partials/head', { title: 'Set Up Your Lens & Light Website — Sites by Mel', metaDesc: 'Tell us about your photography business and upload your portfolio photos. We\'ll build your ready-to-launch photographer website.' }) %>
+<%- include('partials/nav', { activePage: 'templates' }) %>
+
+<section style="padding:60px 0 100px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:720px;margin:0 auto;padding:0 24px">
+
+    <div style="text-align:center;margin-bottom:36px">
+      <p style="color:#C9922B;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px">Lens & Light Template</p>
+      <h1 style="font-size:1.9rem;font-weight:800;color:#1B2F4E;margin-bottom:10px">Tell Us About Your Photography Business</h1>
+      <p style="color:#6B7280;line-height:1.7;max-width:500px;margin:0 auto">Fill in as much as you can. Mel will use everything you provide to build your personalized photography website. You'll receive your download link within 24 hours.</p>
+    </div>
+
+    <form method="POST" action="/personalize/<%= token %>" enctype="multipart/form-data">
+
+      <div style="max-width:780px;margin:0 auto 0;padding:0 24px;">
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px 18px;margin:24px 0 8px;font-size:0.88rem;color:#1E40AF;line-height:1.6;">
+          <strong>Tip:</strong> Not sure what to write? Check <em>"Let Mel handle this"</em> on any field and she'll craft professional copy that fits your business perfectly. You can also check it on photo slots if you'd like Mel to use a great stock photo instead.
+        </div>
+      </div>
+
+      <!-- ── SECTION 1: THE BASICS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">1 — The Basics</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business / Studio Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="businessName" placeholder="e.g. Golden Hour Photography" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="photographerName" placeholder="e.g. Alex Rivera" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Tagline / Slogan</label>
+          <input type="text" name="tagline" placeholder="e.g. Real Moments. Timeless Photos." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank — Mel will write professional copy</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Phone Number <span style="color:#ef4444">*</span></label>
+            <input type="tel" name="phone" placeholder="(555) 000-0000" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Email <span style="color:#ef4444">*</span></label>
+            <input type="email" name="email" placeholder="you@yourphotography.com" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">City <span style="color:#ef4444">*</span></label>
+            <input type="text" name="city" placeholder="Seattle" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">State & Zip</label>
+            <input type="text" name="stateZip" placeholder="WA 98101" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Instagram Handle <span style="color:#ef4444">*</span></label>
+            <input type="text" name="instagram" placeholder="@GoldenHourPhoto" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Very important for photographers — featured prominently on your site</p>
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Camera / Gear Brand</label>
+            <input type="text" name="gearBrand" placeholder="e.g. Sony, Canon, Nikon" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Optional fun fact — leave blank to omit</p>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Years Shooting</label>
+            <input type="text" name="yearsExp" placeholder="e.g. 9+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Sessions / Weddings Shot</label>
+            <input type="text" name="sessionCount" placeholder="e.g. 300+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Offer Video / Reels?</label>
+            <select name="offersVideo" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box;background:#fff">
+              <option value="">Select…</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Turnaround Time</label>
+          <input type="text" name="turnaround" placeholder="e.g. Photos delivered within 2 weeks" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:8px;color:#374151">Photography Specialties</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Weddings"> Weddings
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Portraits"> Portraits
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Families"> Families
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Newborns"> Newborns
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Commercial/Brand"> Commercial / Brand
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Events"> Events
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Real Estate"> Real Estate
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── SECTION 2: YOUR STORY ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">2 — Your Story (About Page)</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>Tip:</strong> Clients want to know the person behind the camera. Share what inspires you, your style, and what makes a session with you special.
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Bio / Story</label>
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_bio" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Let Mel handle this
+          </label>
+          <textarea name="bio" rows="6" placeholder="e.g. I picked up my first camera at 16 and never put it down. I specialize in natural, candid moments — the laugh that catches you off guard, the quiet glance between partners, the chaos of a family that loves each other fiercely. Photography is my way of preserving the things that matter most..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank — Mel will write professional copy</p>
+        </div>
+
+      </div>
+
+      <!-- ── SECTION 3: PACKAGES & PRICING ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">3 — Packages & Pricing</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#fffdf0;border:1px solid #f0d080;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#7d5a00;line-height:1.6">
+          Leave any or all blank — Mel will write attractive package descriptions for you.
+        </div>
+
+        <% var packages = [
+          { num: 1, namePh: 'Mini Session', pricePh: '$250', nameField: 'pkg1Name', priceField: 'pkg1Price', inclField: 'pkg1Included', inclPh: 'e.g.\n- 30-minute session\n- 1 location\n- 20 edited digital photos\n- Online gallery for download' },
+          { num: 2, namePh: 'Portrait Session', pricePh: '$450', nameField: 'pkg2Name', priceField: 'pkg2Price', inclField: 'pkg2Included', inclPh: 'e.g.\n- 1-hour session\n- Up to 2 locations\n- 50+ edited digital photos\n- Print release included' },
+          { num: 3, namePh: 'Wedding Collection', pricePh: 'Starting at $2,400', nameField: 'pkg3Name', priceField: 'pkg3Price', inclField: 'pkg3Included', inclPh: 'e.g.\n- 8 hours of coverage\n- 500+ edited photos\n- Online gallery & USB drive\n- Engagement session included' },
+        ]; %>
+
+        <% packages.forEach(function(p) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Package <%= p.num %></p>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Package Name</label>
+              <input type="text" name="<%= p.nameField %>" placeholder="<%= p.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Price</label>
+              <input type="text" name="<%= p.priceField %>" placeholder="<%= p.pricePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">What's Included (hours, # of photos, prints, etc.)</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= p.inclField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= p.inclField %>" rows="4" placeholder="<%= p.inclPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 4: TESTIMONIALS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">4 — Client Testimonials</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>No reviews yet?</strong> Leave these blank and Mel will remove the placeholder testimonials from your site.
+        </div>
+
+        <% var testimonials = [
+          { num: 1, namePh: 'Katie & Tom B.', sessionPh: 'Wedding Photography', quotePh: '"We cried looking at our photos. Alex captured everything perfectly..."', nameField: 'test1Name', sessField: 'test1Session', quoteField: 'test1Quote' },
+          { num: 2, namePh: 'The Nguyen Family', sessionPh: 'Family Portrait Session', quotePh: '"The kids actually had fun! And the photos are stunning..."', nameField: 'test2Name', sessField: 'test2Session', quoteField: 'test2Quote' },
+          { num: 3, namePh: 'Jordan M.', sessionPh: 'Brand / Headshot Session', quotePh: '"Finally have photos I\'m proud to use everywhere. Booking again next year..."', nameField: 'test3Name', sessField: 'test3Session', quoteField: 'test3Quote' },
+        ]; %>
+
+        <% testimonials.forEach(function(t) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Testimonial <%= t.num %></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Client Name</label>
+              <input type="text" name="<%= t.nameField %>" placeholder="<%= t.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Session Type</label>
+              <input type="text" name="<%= t.sessField %>" placeholder="<%= t.sessionPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Their Quote</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= t.quoteField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= t.quoteField %>" rows="2" placeholder="<%= t.quotePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 5: CONTACT FORM ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">5 — Contact Form</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#fffdf0;border:1px solid #f0d080;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#7d5a00;line-height:1.6">
+          <strong>Formspree</strong> is free and makes your contact form work. Sign up at <strong>formspree.io</strong>, create a form, and paste the Form ID below (looks like <em>xabcdefg</em>).
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Formspree Form ID</label>
+          <input type="text" name="formspreeId" placeholder="xabcdefg" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Free at formspree.io — leave blank and Mel will add a placeholder</p>
+        </div>
+      </div>
+
+      <!-- ── SECTION 6: PORTFOLIO PHOTOS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">6 — Your Portfolio Photos</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#1B2F4E;border-radius:8px;padding:16px 18px;margin-bottom:22px">
+          <p style="color:#fff;font-size:.9rem;font-weight:700;margin:0 0 6px">These photos will be displayed throughout your website.</p>
+          <p style="color:#C9922B;font-size:.82rem;margin:0;line-height:1.6">As a photographer, your images ARE your website. Choose your absolute best shots — they do all the selling for you.</p>
+        </div>
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:14px 18px;margin-bottom:22px;font-size:.82rem;color:#374151;line-height:1.7">
+          <strong>Tips:</strong> JPG or PNG only. Files under 3MB work best. For portfolio photos, quality beats quantity — pick your strongest images across different styles and subjects.<br>
+          <strong>Don't have photos ready?</strong> Leave any slot blank — Mel will use stylish placeholders and you can swap in your own images anytime.
+        </div>
+
+        <% var photos = [
+          { field: 'photoHero', label: 'Hero / Banner Photo — Your Absolute Best Shot', desc: 'The first thing visitors see. Choose your most striking, wow-worthy image. Wide landscape composition works best.', size: '1600×900 landscape' },
+          { field: 'photoPortfolio1', label: 'Portfolio Photo #1 — Wedding or Portrait', desc: 'A beautiful wedding, engagement, or portrait shot.', size: '800×800 square' },
+          { field: 'photoPortfolio2', label: 'Portfolio Photo #2', desc: 'Another strong portfolio image — different subject or style from #1.', size: '800×800 square' },
+          { field: 'photoPortfolio3', label: 'Portfolio Photo #3', desc: 'A third portfolio image showcasing your range.', size: '800×800 square' },
+          { field: 'photoPortfolio4', label: 'Portfolio Photo #4', desc: 'Another portfolio standout.', size: '800×800 square' },
+          { field: 'photoPortfolio5', label: 'Portfolio Photo #5', desc: 'Another portfolio standout.', size: '800×800 square' },
+          { field: 'photoPortfolio6', label: 'Portfolio Photo #6', desc: 'Final portfolio image — round out the variety.', size: '800×800 square' },
+          { field: 'photoHeadshot', label: 'Your Portrait / Headshot — Photo of YOU', desc: 'A photo of you — with your camera, at work, or a clean professional headshot. Clients love putting a face to the name.', size: '800×800 square or portrait' },
+          { field: 'photoLogo', label: 'Logo or Watermark', desc: 'Your studio logo or watermark. PNG with transparent background preferred.', size: 'PNG transparent preferred' },
+        ]; %>
+
+        <% photos.forEach(function(p) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:12px">
+          <label style="display:block;font-size:.85rem;font-weight:700;color:#1B2F4E;margin-bottom:4px"><%= p.label %></label>
+          <p style="font-size:.78rem;color:#6B7280;margin:0 0 8px;line-height:1.5"><%= p.desc %></p>
+          <p style="font-size:.72rem;color:#9CA3AF;margin:0 0 8px">Best size: <strong><%= p.size %></strong></p>
+          <input type="file" name="<%= p.field %>" accept="image/jpeg,image/png,image/webp" style="font-size:.82rem;color:#374151">
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-top:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_stock_<%= p.field %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Use a professional stock photo instead
+          </label>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 7: NOTES FOR MEL ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">7 — Anything Else for Mel?</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:28px">
+        <textarea name="melNotes" rows="4" placeholder="Any special requests, sections you want removed, extra info Mel should know... (Shooting style — moody/dark, bright/airy, film-inspired? Awards or publications? Travel availability? Second shooter? Add it here!)" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+      </div>
+
+      <button type="submit" style="width:100%;background:#C9922B;color:#fff;border:none;border-radius:10px;padding:18px;font-size:1.05rem;font-weight:700;cursor:pointer">
+        Send to Mel →
+      </button>
+
+      <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:12px">You can always email mel@sitesbymel.com with updates or additional photos after submitting.</p>
+
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

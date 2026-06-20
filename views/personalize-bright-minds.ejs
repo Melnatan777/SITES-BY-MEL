@@ -1,0 +1,376 @@
+<%- include('partials/head', { title: 'Set Up Your Bright Minds Website — Sites by Mel', metaDesc: 'Tell us about your tutoring business and upload your photos. We\'ll build your ready-to-launch website.' }) %>
+<%- include('partials/nav', { activePage: 'templates' }) %>
+
+<section style="padding:60px 0 100px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:720px;margin:0 auto;padding:0 24px">
+
+    <div style="text-align:center;margin-bottom:36px">
+      <p style="color:#C9922B;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px">Bright Minds Template</p>
+      <h1 style="font-size:1.9rem;font-weight:800;color:#1B2F4E;margin-bottom:10px">Tell Us About Your Tutoring Business</h1>
+      <p style="color:#6B7280;line-height:1.7;max-width:500px;margin:0 auto">Fill in as much as you can. Mel will use everything you provide to build your personalized website. You'll receive your download link within 24 hours.</p>
+    </div>
+
+    <form method="POST" action="/personalize/<%= token %>" enctype="multipart/form-data">
+
+      <div style="max-width:780px;margin:0 auto 0;padding:0 24px;">
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px 18px;margin:24px 0 8px;font-size:0.88rem;color:#1E40AF;line-height:1.6;">
+          <strong>Tip:</strong> Not sure what to write? Check <em>"Let Mel handle this"</em> on any field and she'll craft professional copy that fits your business perfectly. You can also check it on photo slots if you'd like Mel to use a great stock photo instead.
+        </div>
+      </div>
+
+      <!-- ── SECTION 1: THE BASICS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">1 — The Basics</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="businessName" placeholder="e.g. Bright Minds Tutoring" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Name (Director / Lead Tutor) <span style="color:#ef4444">*</span></label>
+          <input type="text" name="yourName" placeholder="e.g. Amanda Reyes" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Tagline / Slogan <span style="color:#ef4444">*</span></label>
+          <input type="text" name="tagline" placeholder="e.g. Unlocking Potential, One Student at a Time" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Phone Number <span style="color:#ef4444">*</span></label>
+            <input type="tel" name="phone" placeholder="(555) 000-0000" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Email <span style="color:#ef4444">*</span></label>
+            <input type="email" name="email" placeholder="you@yourbusiness.com" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Street Address</label>
+            <input type="text" name="address" placeholder="123 Learning Lane, Suite 2" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank if you operate online only</p>
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">City <span style="color:#ef4444">*</span></label>
+            <input type="text" name="city" placeholder="Austin" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">State & Zip</label>
+            <input type="text" name="stateZip" placeholder="TX 78701" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Years in Business / Teaching</label>
+            <input type="text" name="yearsExp" placeholder="e.g. 8+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: HOURS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">2 — Your Hours</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Monday – Friday</label>
+            <input type="text" name="hoursMF" placeholder="3pm – 8pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Saturday</label>
+            <input type="text" name="hoursSat" placeholder="9am – 3pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Sunday</label>
+            <input type="text" name="hoursSun" placeholder="Closed" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 3: TUTORING DETAILS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">3 — Tutoring Details</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:8px;color:#374151">Tutoring Format</label>
+          <div style="display:flex;gap:20px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:7px;font-size:.88rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="formatInPerson" value="yes"> In-Person
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:.88rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="formatOnline" value="yes"> Online
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:.88rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="formatBoth" value="yes"> Both
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:20px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:8px;color:#374151">Grade Levels Served</label>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:7px;font-size:.88rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="gradeElementary" value="yes"> Elementary
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:.88rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="gradeMiddle" value="yes"> Middle School
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:.88rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="gradeHigh" value="yes"> High School
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:.88rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="gradeCollege" value="yes"> College
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:.88rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="gradeAdult" value="yes"> Adult / Test Prep
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Subjects Offered</label>
+          <input type="text" name="subjects" placeholder="e.g. Math, Science, English, SAT/ACT Prep, Spanish" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank — Mel will list subjects based on your services</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Students Helped (stat)</label>
+            <input type="text" name="studentsHelped" placeholder="e.g. 500+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Average Grade Improvement</label>
+            <input type="text" name="gradeImprovement" placeholder="e.g. Students improve 1-2 letter grades" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank — Mel will write a placeholder</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Session Length & Pricing Note</label>
+          <input type="text" name="sessionNote" placeholder="e.g. 1-hour sessions starting at $60/hr" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Shown as a callout on the services section. Leave blank — Mel will write a placeholder</p>
+        </div>
+
+      </div>
+
+      <!-- ── SECTION 4: YOUR STORY ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">4 — Your Story (About Page)</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>Tip:</strong> Write in first person. Parents want to hire someone who genuinely loves teaching. Even 3–4 sentences is plenty.
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Bio / Story</label>
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_bio" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Let Mel handle this
+          </label>
+          <textarea name="bio" rows="6" placeholder="Leave blank — Mel will write professional copy for you" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+        </div>
+      </div>
+
+      <!-- ── SECTION 5: TUTOR PROFILES ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">5 — Tutor Profiles</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          Leave blank — Mel will write friendly tutor bios for you.
+        </div>
+
+        <% var tutors = [
+          { num: 1, nameField: 'tutor1Name', specField: 'tutor1Specialty', bioField: 'tutor1Bio' },
+          { num: 2, nameField: 'tutor2Name', specField: 'tutor2Specialty', bioField: 'tutor2Bio' },
+        ]; %>
+
+        <% tutors.forEach(function(t) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Tutor <%= t.num %></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Tutor Name</label>
+              <input type="text" name="<%= t.nameField %>" placeholder="Leave blank — Mel will add placeholder" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Subject Specialty</label>
+              <input type="text" name="<%= t.specField %>" placeholder="e.g. Math & Physics" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Short Bio (1–2 sentences)</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= t.bioField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= t.bioField %>" rows="2" placeholder="Leave blank — Mel will write a friendly bio for you" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 6: SERVICES & PRICING ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">6 — Tutoring Packages & Pricing</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <% var services = [
+          { num: 1, namePh: '1-on-1 Weekly Sessions', pricePh: '$60/hr', nameField: 'svc1Name', priceField: 'svc1Price', descField: 'svc1Desc', descPh: 'Personalized one-on-one tutoring tailored to your child\'s learning style and goals...' },
+          { num: 2, namePh: 'SAT/ACT Prep Package', pricePh: '$499 / 8 sessions', nameField: 'svc2Name', priceField: 'svc2Price', descField: 'svc2Desc', descPh: 'Targeted test prep covering all sections with full practice exams and score analysis...' },
+          { num: 3, namePh: 'Group Study Sessions', pricePh: '$25/student', nameField: 'svc3Name', priceField: 'svc3Price', descField: 'svc3Desc', descPh: 'Small group sessions (3–5 students) for collaborative learning and peer support...' },
+        ]; %>
+
+        <% services.forEach(function(s) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Package <%= s.num %></p>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Package / Service Name</label>
+              <input type="text" name="<%= s.nameField %>" placeholder="<%= s.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Price</label>
+              <input type="text" name="<%= s.priceField %>" placeholder="<%= s.pricePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Short Description</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= s.descField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= s.descField %>" rows="2" placeholder="<%= s.descPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 7: TESTIMONIALS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">7 — Testimonials</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>No reviews yet?</strong> Leave these blank and Mel will remove the placeholder testimonials from your site.
+        </div>
+
+        <% var testimonials = [
+          { num: 1, namePh: 'Sarah K., Parent', resultPh: 'Grade 7 Math', quotePh: '"My daughter went from a C to an A in one semester. The patience and approach here is unlike anything we\'d tried before..."', nameField: 'test1Name', resultField: 'test1Result', quoteField: 'test1Quote' },
+          { num: 2, namePh: 'Marcus T., Student', resultPh: 'SAT Score +240 pts', quotePh: '"I was terrified of the SAT. After just 8 sessions I felt completely ready and ended up scoring 1420..."', nameField: 'test2Name', resultField: 'test2Result', quoteField: 'test2Quote' },
+          { num: 3, namePh: 'Linda & James P., Parents', resultPh: 'High School Algebra', quotePh: '"Both our kids use this service and both have made honor roll for the first time. We couldn\'t be happier..."', nameField: 'test3Name', resultField: 'test3Result', quoteField: 'test3Quote' },
+        ]; %>
+
+        <% testimonials.forEach(function(t) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Testimonial <%= t.num %></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Parent or Student Name</label>
+              <input type="text" name="<%= t.nameField %>" placeholder="<%= t.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Grade / Subject</label>
+              <input type="text" name="<%= t.resultField %>" placeholder="<%= t.resultPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Their Quote</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= t.quoteField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= t.quoteField %>" rows="2" placeholder="<%= t.quotePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 8: CONTACT FORM ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">8 — Contact Form</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#fffdf0;border:1px solid #f0d080;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#7d5a00;line-height:1.6">
+          <strong>Formspree</strong> is free and makes your contact form work. Sign up at <strong>formspree.io</strong>, create a form, and paste the Form ID below (looks like <em>xabcdefg</em>). Leave blank and Mel will add a placeholder.
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Formspree Form ID</label>
+          <input type="text" name="formspreeId" placeholder="xabcdefg — Free at formspree.io — leave blank and Mel will add placeholder" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Just the ID, not the full URL</p>
+        </div>
+      </div>
+
+      <!-- ── SECTION 9: PHOTOS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">9 — Your Photos</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:14px 18px;margin-bottom:22px;font-size:.82rem;color:#374151;line-height:1.7">
+          <strong>Photo tips:</strong> JPG or PNG only. Landscape photos (wider than tall) work best for banners. Square or portrait for headshots. Files under 2MB load fastest.<br>
+          <strong>Don't have photos yet?</strong> Leave any slot blank — Mel will leave a styled placeholder and you can swap it in later.
+        </div>
+
+        <% var photos = [
+          { field: 'photoHero', label: 'Hero Photo — Tutoring Session or Bright Study Space', desc: 'The big image at the top of your home page. Show a tutoring session in progress, a student at a desk, or a warm, inviting study space.', size: '1600×900 (landscape)' },
+          { field: 'photoDirector', label: 'Your Portrait / Director Photo', desc: 'Your main professional headshot. Used on the About page and wherever you appear as the face of the business.', size: '800×800 (square)' },
+          { field: 'photoTutorStudent', label: 'Tutor with Student', desc: 'A warm, candid photo of a tutor working one-on-one with a student.', size: '800×600 (landscape)' },
+          { field: 'photoStudySpace', label: 'Study Space or Classroom', desc: 'A photo of your tutoring space, classroom, or home office setup.', size: '800×600 (landscape)' },
+          { field: 'photoLogo', label: 'Your Logo', desc: 'Your business logo. PNG with transparent background is preferred so it looks great on any background color.', size: 'PNG, transparent background preferred' },
+        ]; %>
+
+        <% photos.forEach(function(p) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:12px">
+          <label style="display:block;font-size:.85rem;font-weight:700;color:#1B2F4E;margin-bottom:4px"><%= p.label %></label>
+          <p style="font-size:.78rem;color:#6B7280;margin:0 0 8px;line-height:1.5"><%= p.desc %></p>
+          <p style="font-size:.72rem;color:#9CA3AF;margin:0 0 8px">Best size: <strong><%= p.size %></strong></p>
+          <input type="file" name="<%= p.field %>" accept="image/jpeg,image/png,image/webp" style="font-size:.82rem;color:#374151">
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-top:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_stock_<%= p.field %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Use a professional stock photo instead
+          </label>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 10: NOTES FOR MEL ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">10 — Anything Else for Mel?</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:28px">
+        <textarea name="melNotes" rows="4" placeholder="Any special requests, sections you want removed, extra info Mel should know..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+      </div>
+
+      <button type="submit" style="width:100%;background:#C9922B;color:#fff;border:none;border-radius:10px;padding:18px;font-size:1.05rem;font-weight:700;cursor:pointer">
+        Send to Mel →
+      </button>
+
+      <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:12px">You can always email mel@sitesbymel.com with updates or additional photos after submitting.</p>
+
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,331 @@
+<%- include('partials/head', { title: 'Set Up Your Key Ready Website — Sites by Mel', metaDesc: 'Tell us about your real estate business and upload your photos. We\'ll build your ready-to-launch agent website.' }) %>
+<%- include('partials/nav', { activePage: 'templates' }) %>
+
+<section style="padding:60px 0 100px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:720px;margin:0 auto;padding:0 24px">
+
+    <div style="text-align:center;margin-bottom:36px">
+      <p style="color:#C9922B;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px">Key Ready Template</p>
+      <h1 style="font-size:1.9rem;font-weight:800;color:#1B2F4E;margin-bottom:10px">Tell Us About Your Real Estate Business</h1>
+      <p style="color:#6B7280;line-height:1.7;max-width:500px;margin:0 auto">Fill in as much as you can. Mel will use everything you provide to build your personalized agent website. You'll receive your download link within 24 hours.</p>
+    </div>
+
+    <form method="POST" action="/personalize/<%= token %>" enctype="multipart/form-data">
+
+      <div style="max-width:780px;margin:0 auto 0;padding:0 24px;">
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px 18px;margin:24px 0 8px;font-size:0.88rem;color:#1E40AF;line-height:1.6;">
+          <strong>Tip:</strong> Not sure what to write? Check <em>"Let Mel handle this"</em> on any field and she'll craft professional copy that fits your business perfectly. You can also check it on photo slots if you'd like Mel to use a great stock photo instead.
+        </div>
+      </div>
+
+      <!-- ── SECTION 1: THE BASICS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">1 — The Basics</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="agentName" placeholder="e.g. Jessica Hartley" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">This is your personal agent site — your name is the brand</p>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Brokerage Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="brokerageName" placeholder="e.g. Keller Williams Realty" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Tagline / Slogan</label>
+          <input type="text" name="tagline" placeholder="e.g. Your Key to the Perfect Home" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank — Mel will write professional copy</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Phone Number <span style="color:#ef4444">*</span></label>
+            <input type="tel" name="phone" placeholder="(555) 000-0000" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Email <span style="color:#ef4444">*</span></label>
+            <input type="email" name="email" placeholder="you@yourbrokerage.com" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Office Address</label>
+            <input type="text" name="address" placeholder="123 Main Street, Suite 200" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">City <span style="color:#ef4444">*</span></label>
+            <input type="text" name="city" placeholder="Denver" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">State & Zip</label>
+            <input type="text" name="stateZip" placeholder="CO 80202" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">License Number</label>
+            <input type="text" name="licenseNumber" placeholder="e.g. CO-12345678" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Optional — shown in footer for compliance</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Service Area / Neighborhoods <span style="color:#ef4444">*</span></label>
+          <input type="text" name="serviceArea" placeholder="e.g. Denver Metro, Highlands, Cherry Creek, Washington Park" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:6px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:8px;color:#374151">Specialties</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Buyer's Agent"> Buyer's Agent
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Seller's Agent"> Seller's Agent
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Investment Properties"> Investment Properties
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="Luxury Homes"> Luxury Homes
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:.85rem;color:#374151;cursor:pointer">
+              <input type="checkbox" name="specialty" value="First-Time Buyers"> First-Time Buyers
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── SECTION 2: HOURS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">2 — Your Availability</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Monday – Friday</label>
+            <input type="text" name="hoursMF" placeholder="9am – 6pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Saturday</label>
+            <input type="text" name="hoursSat" placeholder="10am – 4pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Sunday</label>
+            <input type="text" name="hoursSun" placeholder="By appointment" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 3: YOUR STORY ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">3 — Your Story (About Page)</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>Tip:</strong> Write in first person. Buyers and sellers want to feel like they know you before they call. Even 3–4 sentences works great.
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Bio / Story</label>
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_bio" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Let Mel handle this
+          </label>
+          <textarea name="bio" rows="6" placeholder="e.g. I grew up in Denver and have watched this city grow and change for over 20 years. After a decade in corporate finance, I made the leap into real estate — and I've never looked back. I combine deep local knowledge with sharp negotiation skills to help my clients get the best outcome every time..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank — Mel will write professional copy</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Years of Experience</label>
+            <input type="text" name="yearsExp" placeholder="e.g. 12+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Homes Sold</label>
+            <input type="text" name="homesSold" placeholder="e.g. 150+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Avg. Days on Market</label>
+            <input type="text" name="avgDaysOnMarket" placeholder="e.g. 18 days" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Optional stat — leave blank to omit</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── SECTION 4: FEATURED LISTINGS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">4 — Featured Listings</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#fffdf0;border:1px solid #f0d080;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#7d5a00;line-height:1.6">
+          These are example or current listings displayed on your home page. <strong>Leave any or all blank</strong> and Mel will use attractive placeholder listings.
+        </div>
+
+        <% var listings = [
+          { num: 1, areaField: 'listing1Area', bedField: 'listing1Beds', bathField: 'listing1Baths', priceField: 'listing1Price', descField: 'listing1Desc' },
+          { num: 2, areaField: 'listing2Area', bedField: 'listing2Beds', bathField: 'listing2Baths', priceField: 'listing2Price', descField: 'listing2Desc' },
+          { num: 3, areaField: 'listing3Area', bedField: 'listing3Beds', bathField: 'listing3Baths', priceField: 'listing3Price', descField: 'listing3Desc' },
+        ]; %>
+
+        <% listings.forEach(function(l) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Listing <%= l.num %></p>
+          <div style="margin-bottom:10px">
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Address or Area</label>
+            <input type="text" name="<%= l.areaField %>" placeholder="e.g. 4215 Elm Street, Highlands" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Bedrooms</label>
+              <input type="text" name="<%= l.bedField %>" placeholder="3" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Bathrooms</label>
+              <input type="text" name="<%= l.bathField %>" placeholder="2.5" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Price</label>
+              <input type="text" name="<%= l.priceField %>" placeholder="$485,000" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">One-Line Description</label>
+            <input type="text" name="<%= l.descField %>" placeholder="e.g. Charming Victorian with updated kitchen and mountain views" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 5: TESTIMONIALS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">5 — Client Testimonials</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>No reviews yet?</strong> Leave these blank and Mel will remove the placeholder testimonials from your site.
+        </div>
+
+        <% var testimonials = [
+          { num: 1, namePh: 'The Henderson Family', transactionPh: 'Sold in 12 days — $15K over asking', quotePh: '"Jessica found us the perfect buyer and handled everything seamlessly..."', nameField: 'test1Name', transField: 'test1Transaction', quoteField: 'test1Quote' },
+          { num: 2, namePh: 'Marcus & Dana R.', transactionPh: 'First-time buyers — closed under asking', quotePh: '"As first-time buyers we were nervous, but she made the whole process stress-free..."', nameField: 'test2Name', transField: 'test2Transaction', quoteField: 'test2Quote' },
+          { num: 3, namePh: 'Robert C.', transactionPh: 'Investment property — duplex purchase', quotePh: '"Her knowledge of the Denver investment market saved me thousands..."', nameField: 'test3Name', transField: 'test3Transaction', quoteField: 'test3Quote' },
+        ]; %>
+
+        <% testimonials.forEach(function(t) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Testimonial <%= t.num %></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Client Name</label>
+              <input type="text" name="<%= t.nameField %>" placeholder="<%= t.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Transaction Type / Result</label>
+              <input type="text" name="<%= t.transField %>" placeholder="<%= t.transactionPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Their Quote</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= t.quoteField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= t.quoteField %>" rows="2" placeholder="<%= t.quotePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 6: CONTACT FORM & BOOKING ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">6 — Contact Form & Scheduling</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#fffdf0;border:1px solid #f0d080;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#7d5a00;line-height:1.6">
+          <strong>Formspree</strong> is free and makes your contact form work. Sign up at <strong>formspree.io</strong>, create a form, and paste the Form ID below (looks like <em>xabcdefg</em>).<br>
+          <strong>Calendly</strong> is free for basic scheduling — sign up at <strong>calendly.com</strong> and paste your booking link below.
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Formspree Form ID</label>
+            <input type="text" name="formspreeId" placeholder="xabcdefg" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Free at formspree.io — leave blank and Mel will add a placeholder</p>
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Calendly / Scheduling Link</label>
+            <input type="text" name="calendlyLink" placeholder="calendly.com/yourname/consultation" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Used for "Schedule a Call" button</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 7: PHOTOS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">7 — Your Photos</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:14px 18px;margin-bottom:22px;font-size:.82rem;color:#374151;line-height:1.7">
+          <strong>Photo tips:</strong> JPG or PNG only. Files under 2MB load fastest.<br>
+          <strong>Don't have photos yet?</strong> Leave any slot blank — Mel will use a styled placeholder and you can swap it in later.
+        </div>
+
+        <% var photos = [
+          { field: 'photoHeadshot', label: 'Your Professional Headshot', desc: 'Your main agent photo. This appears prominently throughout the site — use your best professional headshot.', size: '800×800 square — very important!' },
+          { field: 'photoListing1', label: 'Featured Home #1 — Exterior', desc: 'Front exterior photo of your first featured listing.', size: '800×600 landscape' },
+          { field: 'photoListing2', label: 'Featured Home #2 — Exterior', desc: 'Front exterior photo of your second featured listing.', size: '800×600 landscape' },
+          { field: 'photoListing3', label: 'Featured Home #3 — Exterior', desc: 'Front exterior photo of your third featured listing.', size: '800×600 landscape' },
+          { field: 'photoNeighborhood', label: 'Neighborhood or Lifestyle Photo', desc: 'A photo that captures the area — a park, downtown street, scenic view, or community feel.', size: '800×600 landscape' },
+          { field: 'photoLogo', label: 'Logo or Personal Brand Mark (optional)', desc: 'Your personal logo if you have one. PNG with transparent background preferred.', size: 'PNG transparent, any size' },
+        ]; %>
+
+        <% photos.forEach(function(p) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:12px">
+          <label style="display:block;font-size:.85rem;font-weight:700;color:#1B2F4E;margin-bottom:4px"><%= p.label %></label>
+          <p style="font-size:.78rem;color:#6B7280;margin:0 0 8px;line-height:1.5"><%= p.desc %></p>
+          <p style="font-size:.72rem;color:#9CA3AF;margin:0 0 8px">Best size: <strong><%= p.size %></strong></p>
+          <input type="file" name="<%= p.field %>" accept="image/jpeg,image/png,image/webp" style="font-size:.82rem;color:#374151">
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-top:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_stock_<%= p.field %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Use a professional stock photo instead
+          </label>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 8: NOTES FOR MEL ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">8 — Anything Else for Mel?</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:28px">
+        <textarea name="melNotes" rows="4" placeholder="Any special requests, sections you want removed, extra info Mel should know... (If you accept specific insurance or want to mention certifications / designations like ABR, CRS, GRI — add them here)" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+      </div>
+
+      <button type="submit" style="width:100%;background:#C9922B;color:#fff;border:none;border-radius:10px;padding:18px;font-size:1.05rem;font-weight:700;cursor:pointer">
+        Send to Mel →
+      </button>
+
+      <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:12px">You can always email mel@sitesbymel.com with updates or additional photos after submitting.</p>
+
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

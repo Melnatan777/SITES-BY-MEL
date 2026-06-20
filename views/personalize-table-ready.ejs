@@ -1,0 +1,322 @@
+<%- include('partials/head', { title: 'Set Up Your Table Ready Website — Sites by Mel', metaDesc: 'Tell us about your restaurant and upload your photos. Mel will build your personalized website within 24 hours.' }) %>
+<%- include('partials/nav', { activePage: 'templates' }) %>
+
+<section style="padding:60px 0 100px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:720px;margin:0 auto;padding:0 24px">
+
+    <div style="text-align:center;margin-bottom:36px">
+      <p style="color:#C9922B;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px">Table Ready Template</p>
+      <h1 style="font-size:1.9rem;font-weight:800;color:#1B2F4E;margin-bottom:10px">Tell Us About Your Restaurant</h1>
+      <p style="color:#6B7280;line-height:1.7;max-width:500px;margin:0 auto">Fill in as much as you can. Mel will use everything you provide to build your personalized restaurant website. You'll receive your download link within 24 hours.</p>
+    </div>
+
+    <form method="POST" action="/personalize/<%= token %>" enctype="multipart/form-data">
+
+      <div style="max-width:780px;margin:0 auto 0;padding:0 24px;">
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px 18px;margin:24px 0 8px;font-size:0.88rem;color:#1E40AF;line-height:1.6;">
+          <strong>Tip:</strong> Not sure what to write? Check <em>"Let Mel handle this"</em> on any field and she'll craft professional copy that fits your business perfectly. You can also check it on photo slots if you'd like Mel to use a great stock photo instead.
+        </div>
+      </div>
+
+      <!-- ── SECTION 1: THE BASICS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">1 — The Basics</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Restaurant Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="businessName" placeholder="e.g. The Golden Fork" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Name (Owner/Contact) <span style="color:#ef4444">*</span></label>
+            <input type="text" name="ownerName" placeholder="e.g. Maria Lopez" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Chef Name (if different)</label>
+            <input type="text" name="chefName" placeholder="e.g. Chef Roberto Sanchez" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank if same as above</p>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Cuisine Type <span style="color:#ef4444">*</span></label>
+            <input type="text" name="cuisineType" placeholder="e.g. Italian, Mexican, American Comfort Food" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Seating Capacity</label>
+            <input type="text" name="seatingCapacity" placeholder="e.g. 80 guests" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Optional — appears in your About section</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Tagline / Slogan</label>
+          <input type="text" name="tagline" placeholder="e.g. Where Every Meal Tells a Story" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank — Mel will write professional copy</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Phone Number <span style="color:#ef4444">*</span></label>
+            <input type="tel" name="phone" placeholder="(555) 000-0000" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Email <span style="color:#ef4444">*</span></label>
+            <input type="email" name="email" placeholder="you@yourrestaurant.com" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Street Address <span style="color:#ef4444">*</span></label>
+          <input type="text" name="address" placeholder="123 Main Street" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">City <span style="color:#ef4444">*</span></label>
+            <input type="text" name="city" placeholder="Chicago" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">State</label>
+            <input type="text" name="state" placeholder="IL" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Zip</label>
+            <input type="text" name="zip" placeholder="60601" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Instagram Handle</label>
+            <input type="text" name="instagram" placeholder="@YourRestaurant" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Do You Take Reservations?</label>
+            <select name="takesReservations" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box;background:#fff">
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No — walk-ins only</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Calendly or Reservation Link</label>
+          <input type="text" name="reservationLink" placeholder="e.g. calendly.com/yourrestaurant or resy.com/..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Powers the "Reserve a Table" button — leave blank if walk-in only</p>
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: HOURS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">2 — Your Hours</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Monday – Friday</label>
+            <input type="text" name="hoursMF" placeholder="11am – 10pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Saturday</label>
+            <input type="text" name="hoursSat" placeholder="10am – 11pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Sunday</label>
+            <input type="text" name="hoursSun" placeholder="10am – 9pm or Closed" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 3: MENU HIGHLIGHTS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">3 — Your Menu Highlights</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          These 8 items will appear on your homepage menu preview. You can list more on the full menu page — add them in Notes for Mel at the bottom.
+        </div>
+
+        <% var menuItems = [
+          { num: 1, namePh: 'Spaghetti Carbonara', descPh: 'Creamy pasta with pancetta, egg, and parmesan', pricePh: '$18' },
+          { num: 2, namePh: 'Brick Oven Margherita', descPh: 'San Marzano tomato, fresh mozzarella, basil', pricePh: '$16' },
+          { num: 3, namePh: 'Grilled Salmon', descPh: 'Atlantic salmon with lemon butter and seasonal veg', pricePh: '$24' },
+          { num: 4, namePh: 'Caesar Salad', descPh: 'Romaine, house-made dressing, croutons, anchovies', pricePh: '$12' },
+          { num: 5, namePh: 'Ribeye Steak', descPh: '12oz USDA Choice, chimichurri, roasted potatoes', pricePh: '$38' },
+          { num: 6, namePh: 'Tiramisu', descPh: 'Classic Italian dessert, espresso-soaked ladyfingers', pricePh: '$9' },
+          { num: 7, namePh: 'House Soup', descPh: 'Ask your server — changes daily', pricePh: '$8' },
+          { num: 8, namePh: 'Bruschetta', descPh: 'Toasted ciabatta, tomato, garlic, fresh basil, EVOO', pricePh: '$10' },
+        ]; %>
+
+        <% menuItems.forEach(function(item) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px;margin-bottom:12px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Menu Item <%= item.num %></p>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:8px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Item Name</label>
+              <input type="text" name="menu<%= item.num %>Name" placeholder="<%= item.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Price</label>
+              <input type="text" name="menu<%= item.num %>Price" placeholder="<%= item.pricePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Description (1 line)</label>
+            <input type="text" name="menu<%= item.num %>Desc" placeholder="<%= item.descPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+          </div>
+        </div>
+        <% }); %>
+      </div>
+
+      <!-- ── SECTION 4: WEEKLY SPECIALS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">4 — Weekly / Featured Specials</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <% var specials = [
+          { num: 1, namePh: 'Sunday Brunch Special', descPh: 'Eggs Benedict with smoked salmon and mimosa', pricePh: '$22' },
+          { num: 2, namePh: "Wednesday Wine Night", descPh: 'Half-price bottles of select red and white wines', pricePh: 'Half price' },
+          { num: 3, namePh: 'Friday Fish Fry', descPh: 'Beer-battered cod, fries, coleslaw, tartar sauce', pricePh: '$16' },
+        ]; %>
+
+        <% specials.forEach(function(s) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px;margin-bottom:12px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Special <%= s.num %></p>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:8px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Special Name</label>
+              <input type="text" name="special<%= s.num %>Name" placeholder="<%= s.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Price</label>
+              <input type="text" name="special<%= s.num %>Price" placeholder="<%= s.pricePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Description</label>
+            <input type="text" name="special<%= s.num %>Desc" placeholder="<%= s.descPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+          </div>
+        </div>
+        <% }); %>
+      </div>
+
+      <!-- ── SECTION 5: TESTIMONIALS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">5 — Diner Testimonials</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>No reviews yet?</strong> Leave these blank and Mel will remove the placeholder testimonials from your site.
+        </div>
+
+        <% var testimonials = [
+          { num: 1, namePh: 'Jennifer M.', occasionPh: 'Anniversary dinner', quotePh: '"The pasta was absolutely perfect — we\'ve been coming back every month since."', nameField: 'test1Name', occasionField: 'test1Occasion', quoteField: 'test1Quote' },
+          { num: 2, namePh: 'Carlos & Ana R.', occasionPh: 'Birthday celebration', quotePh: '"Service was warm and attentive. The ribeye was the best I\'ve ever had."', nameField: 'test2Name', occasionField: 'test2Occasion', quoteField: 'test2Quote' },
+          { num: 3, namePh: 'The Johnson Family', occasionPh: 'Sunday brunch', quotePh: '"Our go-to spot for special occasions. The kids love it too!"', nameField: 'test3Name', occasionField: 'test3Occasion', quoteField: 'test3Quote' },
+        ]; %>
+
+        <% testimonials.forEach(function(t) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Testimonial <%= t.num %></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Diner Name</label>
+              <input type="text" name="<%= t.nameField %>" placeholder="<%= t.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Occasion (e.g. "Anniversary dinner")</label>
+              <input type="text" name="<%= t.occasionField %>" placeholder="<%= t.occasionPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Their Quote</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= t.quoteField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= t.quoteField %>" rows="2" placeholder="<%= t.quotePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+
+      <!-- ── SECTION 6: CONTACT FORM ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">6 — Contact Form</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#fffdf0;border:1px solid #f0d080;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#7d5a00;line-height:1.6">
+          <strong>Formspree</strong> is free and makes your contact form work. Sign up at <strong>formspree.io</strong>, create a form, and paste the Form ID below (looks like <em>xabcdefg</em>). Leave blank and Mel will add a placeholder.
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Formspree Form ID</label>
+          <input type="text" name="formspreeId" placeholder="xabcdefg" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Just the ID, not the full URL — free at formspree.io</p>
+        </div>
+      </div>
+
+      <!-- ── SECTION 7: PHOTOS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">7 — Your Photos</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:14px 18px;margin-bottom:22px;font-size:.82rem;color:#374151;line-height:1.7">
+          <strong>Photo tips:</strong> JPG or PNG only. Files under 2MB load fastest.<br>
+          <strong>Don't have a photo yet?</strong> Leave any slot blank — Mel will use a styled placeholder you can swap in later.
+        </div>
+
+        <% var photos = [
+          { field: 'photoHero', label: 'Hero Photo — Restaurant Exterior or Dining Room', desc: 'The big banner image at the top of your home page. Wide landscape shot works best.', size: '1600 × 900 px recommended' },
+          { field: 'photoFood1', label: 'Food Photo #1 — Your Best Dish', desc: 'Close-up of your most photogenic or signature dish.', size: '800 × 800 px' },
+          { field: 'photoFood2', label: 'Food Photo #2', desc: 'Another standout menu item.', size: '800 × 800 px' },
+          { field: 'photoFood3', label: 'Food Photo #3', desc: 'Third food photo for the menu section.', size: '800 × 800 px' },
+          { field: 'photoInterior', label: 'Restaurant Interior / Ambiance', desc: 'Shows the atmosphere — tables set, lighting, the full room.', size: '800 × 600 px' },
+          { field: 'photoChef', label: 'Chef / Owner Photo', desc: 'A photo of you or your chef — in the kitchen or plating a dish.', size: '800 × 800 px' },
+          { field: 'photoLogo', label: 'Your Logo', desc: 'Used in the header and footer. PNG with transparent background is ideal.', size: 'PNG transparent preferred' },
+        ]; %>
+
+        <% photos.forEach(function(p) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:12px">
+          <label style="display:block;font-size:.85rem;font-weight:700;color:#1B2F4E;margin-bottom:4px"><%= p.label %></label>
+          <p style="font-size:.78rem;color:#6B7280;margin:0 0 6px;line-height:1.5"><%= p.desc %></p>
+          <p style="font-size:.72rem;color:#9CA3AF;margin:0 0 8px">Best size: <strong><%= p.size %></strong></p>
+          <input type="file" name="<%= p.field %>" accept="image/jpeg,image/png,image/webp" style="font-size:.82rem;color:#374151">
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-top:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_stock_<%= p.field %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Use a professional stock photo instead
+          </label>
+        </div>
+        <% }); %>
+      </div>
+
+      <!-- ── SECTION 8: NOTES FOR MEL ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">8 — Anything Else for Mel?</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:28px">
+        <textarea name="melNotes" rows="5" placeholder="Extra menu items for the full menu page, special requests, sections you want removed, full menu PDF link, anything else Mel should know..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+      </div>
+
+      <button type="submit" style="width:100%;background:#C9922B;color:#fff;border:none;border-radius:10px;padding:18px;font-size:1.05rem;font-weight:700;cursor:pointer">
+        Send to Mel →
+      </button>
+
+      <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:12px">You can always email mel@sitesbymel.com with updates or additional photos after submitting.</p>
+
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

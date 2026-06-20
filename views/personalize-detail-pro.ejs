@@ -1,0 +1,279 @@
+<%- include('partials/head', { title: 'Set Up Your Detail Pro Website — Sites by Mel', metaDesc: 'Tell us about your premium auto detailing business and upload your photos. Mel will build your ready-to-launch website.' }) %>
+<%- include('partials/nav', { activePage: 'templates' }) %>
+
+<section style="padding:60px 0 100px;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:720px;margin:0 auto;padding:0 24px">
+
+    <div style="text-align:center;margin-bottom:36px">
+      <p style="color:#C9922B;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px">Detail Pro Template</p>
+      <h1 style="font-size:1.9rem;font-weight:800;color:#1B2F4E;margin-bottom:10px">Tell Us About Your Business</h1>
+      <p style="color:#6B7280;line-height:1.7;max-width:500px;margin:0 auto">Fill in as much as you can. Mel will use everything you provide to build your personalized website. You'll receive your download link within 24 hours.</p>
+    </div>
+
+    <form method="POST" action="/personalize/<%= token %>" enctype="multipart/form-data">
+
+      <div style="max-width:780px;margin:0 auto 0;padding:0 24px;">
+        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px 18px;margin:24px 0 8px;font-size:0.88rem;color:#1E40AF;line-height:1.6;">
+          <strong>Tip:</strong> Not sure what to write? Check <em>"Let Mel handle this"</em> on any field and she'll craft professional copy that fits your business perfectly. You can also check it on photo slots if you'd like Mel to use a great stock photo instead.
+        </div>
+      </div>
+
+      <!-- ── SECTION 1: THE BASICS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">1 — The Basics</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="businessName" placeholder="e.g. Apex Detail Co." required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Name <span style="color:#ef4444">*</span></label>
+          <input type="text" name="ownerName" placeholder="e.g. Ryan Park" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Tagline / Slogan <span style="color:#ef4444">*</span></label>
+          <input type="text" name="tagline" placeholder="e.g. Perfection in Every Detail." required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Tagline / Badge</label>
+          <input type="text" name="heroBadge" placeholder="e.g. Portland's #1 Rated Detailer" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">The highlighted badge that appears at the top of your home page. Leave blank — Mel will write one for you.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Phone Number <span style="color:#ef4444">*</span></label>
+            <input type="tel" name="phone" placeholder="(555) 000-0000" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Business Email <span style="color:#ef4444">*</span></label>
+            <input type="email" name="email" placeholder="you@yourbusiness.com" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Street Address</label>
+            <input type="text" name="address" placeholder="789 Industrial Blvd" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Leave blank if you're mobile / by-appointment</p>
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">City <span style="color:#ef4444">*</span></label>
+            <input type="text" name="city" placeholder="Seattle" required style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">State & Zip</label>
+            <input type="text" name="stateZip" placeholder="WA 98101" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Instagram Handle</label>
+            <input type="text" name="instagram" placeholder="@YourHandle" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Years in Business</label>
+            <input type="text" name="yearsInBusiness" placeholder="e.g. 12" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Cars Detailed (homepage stat)</label>
+            <input type="text" name="carsDetailedCount" placeholder="e.g. 5,000+" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+            <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Appears as a trust stat on your home page</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Certifications</label>
+          <input type="text" name="certifications" placeholder="e.g. IDA Certified, 3M Authorized, CarPro Certified" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Separate with commas. Leave blank to remove this section.</p>
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Specialty Vehicles</label>
+          <input type="text" name="specialtyVehicles" placeholder="e.g. Exotic cars, classic cars, fleet vehicles" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">What types of vehicles do you specialize in? Leave blank — Mel will write general copy.</p>
+        </div>
+
+      </div>
+
+      <!-- ── SECTION 2: HOURS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">2 — Your Hours</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Monday – Friday</label>
+            <input type="text" name="hoursMF" placeholder="8am – 6pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Saturday</label>
+            <input type="text" name="hoursSat" placeholder="9am – 4pm" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+          <div>
+            <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Sunday</label>
+            <input type="text" name="hoursSun" placeholder="By appointment" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 3: SERVICES ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">3 — Your Services & Pricing</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <% var services = [
+          { num: 1, namePh: 'Signature Interior Detail', pricePh: '$199', nameField: 'svc1Name', priceField: 'svc1Price', descField: 'svc1Desc', descPh: 'Deep clean of every surface — seats, carpets, dash, door panels. Steam cleaned and deodorized.' },
+          { num: 2, namePh: 'Full Paint Correction', pricePh: 'Starting at $499', nameField: 'svc2Name', priceField: 'svc2Price', descField: 'svc2Desc', descPh: 'Multi-stage machine polish to remove swirl marks, scratches, and oxidation. Restores a showroom finish.' },
+          { num: 3, namePh: 'Ceramic Coating', pricePh: 'Starting at $999', nameField: 'svc3Name', priceField: 'svc3Price', descField: 'svc3Desc', descPh: 'Professional-grade nano ceramic coating with 5–7 year durability. Includes full paint correction prep.' },
+        ]; %>
+
+        <% services.forEach(function(s) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Service <%= s.num %></p>
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Service Name</label>
+              <input type="text" name="<%= s.nameField %>" placeholder="<%= s.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Price</label>
+              <input type="text" name="<%= s.priceField %>" placeholder="<%= s.pricePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Short Description</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= s.descField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= s.descField %>" rows="2" placeholder="<%= s.descPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 4: TESTIMONIALS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">4 — Customer Testimonials</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#374151;line-height:1.6">
+          <strong>No reviews yet?</strong> Leave these blank and Mel will remove the placeholder testimonials from your site.
+        </div>
+
+        <% var testimonials = [
+          { num: 1, namePh: 'Marcus W.', resultPh: 'Ferrari 488 — Full Detail + Ceramic', quotePh: '"These guys treated my car like their own. The paint looks better than the day I picked it up from the dealer."', nameField: 'test1Name', resultField: 'test1Result', quoteField: 'test1Quote' },
+          { num: 2, namePh: 'Stephanie L.', resultPh: 'Full paint correction', quotePh: '"I thought my car needed a respray. One visit here and it looks absolutely flawless. Incredible work."', nameField: 'test2Name', resultField: 'test2Result', quoteField: 'test2Quote' },
+          { num: 3, namePh: 'James T.', resultPh: 'Classic car restoration detail', quotePh: '"Brought my 1969 Mustang in. They were meticulous, patient, and clearly passionate about what they do. Five stars."', nameField: 'test3Name', resultField: 'test3Result', quoteField: 'test3Quote' },
+        ]; %>
+
+        <% testimonials.forEach(function(t) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:18px;margin-bottom:14px">
+          <p style="font-size:.78rem;font-weight:700;color:#C9922B;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">Testimonial <%= t.num %></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Customer Name</label>
+              <input type="text" name="<%= t.nameField %>" placeholder="<%= t.namePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Their Result / Title</label>
+              <input type="text" name="<%= t.resultField %>" placeholder="<%= t.resultPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Their Quote</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_<%= t.quoteField %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
+            <textarea name="<%= t.quoteField %>" rows="2" placeholder="<%= t.quotePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 5: CONTACT FORM ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">5 — Contact Form</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#fffdf0;border:1px solid #f0d080;border-radius:8px;padding:12px 16px;margin-bottom:18px;font-size:.82rem;color:#7d5a00;line-height:1.6">
+          <strong>Formspree</strong> makes your contact form work for free. Sign up at <strong>formspree.io</strong>, create a form, and paste the Form ID below (looks like <em>xabcdefg</em>).
+        </div>
+
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Formspree Form ID</label>
+          <input type="text" name="formspreeId" placeholder="xabcdefg" style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;box-sizing:border-box">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:3px">Just the ID, not the full URL. Leave blank — Mel will add a placeholder.</p>
+        </div>
+      </div>
+
+      <!-- ── SECTION 6: PHOTOS ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">6 — Your Photos</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:20px">
+
+        <div style="background:#f0f4ff;border-radius:8px;padding:14px 18px;margin-bottom:22px;font-size:.82rem;color:#374151;line-height:1.7">
+          <strong>Photo tips:</strong> JPG or PNG only. For premium detailing, dramatic before/after photos are your best marketing tool. Good lighting makes all the difference — natural or bright shop lighting is ideal. Don't have a shot for every slot? Leave it blank and swap it in later.
+        </div>
+
+        <% var photos = [
+          { field: 'photoHero', label: 'Hero Photo — Luxury car being detailed or stunning finished result', desc: 'The centerpiece of your home page. A dramatic, high-quality shot that immediately signals premium quality.', size: 'Landscape, 1600×900 recommended' },
+          { field: 'photoTeam', label: 'You / Your Team at Work', desc: 'Show the craftsmanship and care that goes into every vehicle. Action shots build trust.', size: '800×600 recommended' },
+          { field: 'photoBABefore', label: 'Before & After — Dirty / Damaged Car BEFORE', desc: 'The "before" half of your most dramatic transformation. Heavy contamination, swirls, or dirt work best.', size: '800×600 recommended' },
+          { field: 'photoBAAfter', label: 'Before & After — Same Car Gleaming AFTER', desc: 'The jaw-dropping result. Same angle as the "Before" shot if possible.', size: '800×600 recommended' },
+          { field: 'photoCeramic', label: 'Ceramic Coating / Paint Protection Result', desc: 'Water beading, reflections, or a perfectly coated panel — showcase the protection product quality.', size: '800×600 recommended' },
+          { field: 'photoInterior', label: 'Interior Detailing Close-Up', desc: 'A tight shot of a perfectly cleaned interior — stitching, dash, leather, or carpet restoration.', size: '800×600 recommended' },
+          { field: 'photoLogo', label: 'Your Logo', desc: 'Used in the header, footer, and favicon. PNG with transparent background preferred.', size: 'PNG transparent background preferred' },
+        ]; %>
+
+        <% photos.forEach(function(p) { %>
+        <div style="border:1px solid #E5E0D8;border-radius:8px;padding:16px 18px;margin-bottom:12px">
+          <label style="display:block;font-size:.85rem;font-weight:700;color:#1B2F4E;margin-bottom:4px"><%= p.label %></label>
+          <p style="font-size:.78rem;color:#6B7280;margin:0 0 8px;line-height:1.5"><%= p.desc %></p>
+          <p style="font-size:.72rem;color:#9CA3AF;margin:0 0 8px">Best size: <strong><%= p.size %></strong></p>
+          <input type="file" name="<%= p.field %>" accept="image/jpeg,image/png,image/webp" style="font-size:.82rem;color:#374151">
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-top:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_stock_<%= p.field %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Use a professional stock photo instead
+          </label>
+        </div>
+        <% }); %>
+
+      </div>
+
+      <!-- ── SECTION 7: NOTES FOR MEL ── -->
+      <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
+        <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">7 — Anything Else for Mel?</h2>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:28px">
+        <textarea name="melNotes" rows="4" placeholder="Any special requests, sections to remove, color preferences, booking link, or extra info Mel should know..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
+      </div>
+
+      <button type="submit" style="width:100%;background:#C9922B;color:#fff;border:none;border-radius:10px;padding:18px;font-size:1.05rem;font-weight:700;cursor:pointer">
+        Send to Mel →
+      </button>
+
+      <p style="text-align:center;font-size:.78rem;color:#9CA3AF;margin-top:12px">You can always email mel@sitesbymel.com with updates or additional photos after submitting.</p>
+
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

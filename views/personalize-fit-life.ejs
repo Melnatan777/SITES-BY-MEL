@@ -12,6 +12,10 @@
 
     <form method="POST" action="/personalize/<%= token %>" enctype="multipart/form-data">
 
+      <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:0.88rem;color:#1E40AF;line-height:1.6;">
+        <strong>Tip:</strong> Not sure what to write? Check <em>"Let Mel handle this"</em> on any field and she'll craft professional copy that fits your business perfectly. You can also check it on photo slots if you'd like Mel to use a great stock photo instead.
+      </div>
+
       <!-- ── SECTION 1: THE BASICS ── -->
       <div style="background:#1B2F4E;border-radius:12px 12px 0 0;padding:14px 24px">
         <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">1 — The Basics</h2>
@@ -162,6 +166,10 @@
           </div>
           <div>
             <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Short Description</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_svc<%= s.num %>_desc" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
             <textarea name="<%= s.descField %>" rows="2" placeholder="<%= s.descPh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
           </div>
         </div>
@@ -200,6 +208,10 @@
           </div>
           <div>
             <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px;color:#374151">Their Quote</label>
+            <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+              <input type="checkbox" name="mel_test<%= t.num %>_quote" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+              Let Mel handle this
+            </label>
             <textarea name="<%= t.quoteField %>" rows="2" placeholder="<%= t.quotePh %>" style="width:100%;padding:9px 12px;border:1px solid #D1D5DB;border-radius:6px;font-size:.88rem;resize:vertical;box-sizing:border-box"></textarea>
           </div>
         </div>
@@ -267,6 +279,10 @@
           <p style="font-size:.78rem;color:#6B7280;margin:0 0 8px;line-height:1.5"><%= p.desc %></p>
           <p style="font-size:.72rem;color:#9CA3AF;margin:0 0 8px">Best size: <strong><%= p.size %></strong></p>
           <input type="file" name="<%= p.field %>" accept="image/jpeg,image/png,image/webp" style="font-size:.82rem;color:#374151">
+          <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-top:6px;cursor:pointer;">
+            <input type="checkbox" name="mel_stock_<%= p.field %>" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+            Use a professional stock photo instead
+          </label>
         </div>
         <% }); %>
 
@@ -277,6 +293,10 @@
         <h2 style="color:#fff;font-size:.95rem;font-weight:700;margin:0">8 — Anything Else for Mel?</h2>
       </div>
       <div style="background:#fff;border:1px solid #E5E0D8;border-top:none;border-radius:0 0 12px 12px;padding:28px;margin-bottom:28px">
+        <label style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:#6B7280;margin-bottom:6px;cursor:pointer;">
+          <input type="checkbox" name="mel_notes" value="yes" style="width:14px;height:14px;accent-color:#1d4ed8;cursor:pointer;">
+          Let Mel handle this
+        </label>
         <textarea name="melNotes" rows="4" placeholder="Any special requests, sections you want removed, extra info Mel should know..." style="width:100%;padding:10px 14px;border:1px solid #D1D5DB;border-radius:6px;font-size:.9rem;resize:vertical;box-sizing:border-box"></textarea>
       </div>
 
