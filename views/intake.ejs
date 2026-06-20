@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Intake Form — Sites by Mel</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body { background: #f4f1ec; }
+    .intake-wrap { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
+    .intake-header { text-align: center; margin-bottom: 36px; }
+    .intake-logo { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .intake-logo span { color: var(--gold); }
+    .intake-header h1 { font-size: 1.6rem; color: var(--navy); margin-bottom: 10px; }
+    .intake-header p { color: var(--gray); font-size: .92rem; line-height: 1.7; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; }
+    .card h2 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .field { margin-bottom: 18px; }
+    .field label { display: block; font-size: .78rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .field label .opt { font-weight: 400; color: var(--gray); }
+    .field input[type=text], .field input[type=tel], .field input[type=url], .field textarea, .field select {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 7px;
+      font-size: .9rem; color: var(--navy); font-family: inherit;
+    }
+    .field textarea { resize: vertical; line-height: 1.6; }
+    .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,146,43,.12); }
+    .color-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .color-field label { display: block; font-size: .75rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .color-picker-wrap { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 7px; padding: 6px 10px; background: #fff; }
+    .color-picker-wrap input[type=color] { width: 36px; height: 36px; border: none; background: none; cursor: pointer; padding: 0; border-radius: 4px; }
+    .color-picker-wrap input[type=text] { border: none; padding: 0; font-size: .88rem; width: 80px; background: none; }
+    .color-picker-wrap input[type=text]:focus { box-shadow: none; }
+    .font-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .font-option { position: relative; }
+    .font-option input[type=radio] { position: absolute; opacity: 0; }
+    .font-option label { display: block; padding: 14px 16px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all .15s; }
+    .font-option input:checked + label { border-color: var(--gold); background: #fdf8ef; }
+    .font-name { font-weight: 700; font-size: .88rem; color: var(--navy); }
+    .font-desc { font-size: .75rem; color: var(--gray); margin-top: 2px; }
+    .submit-btn { width: 100%; padding: 16px; background: var(--gold); color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .submit-btn:hover { background: #b07d20; }
+    .already-submitted { background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; padding: 20px 24px; text-align: center; margin-bottom: 24px; color: #15803d; }
+    .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  </style>
+</head>
+<body>
+<div class="intake-wrap">
+
+  <div class="intake-header">
+    <div class="intake-logo">Sites by <span>Mel</span></div>
+    <h1>Welcome! Let's set up your website.</h1>
+    <p>Fill in your business details below so I can customize your site to match your brand. The more you share, the better your site will look.<br>This only takes about 5–10 minutes.</p>
+    <% if (order) { %><p style="margin-top:8px;font-size:.82rem;color:var(--gold);font-weight:600">For: <%= order.product_name %></p><% } %>
+  </div>
+
+  <% if (submitted) { %>
+  <div class="already-submitted">
+    <strong>✓ You've already submitted this form.</strong><br>
+    <span style="font-size:.88rem">I've received your info and will be in touch within 1–2 business days. Reply to your welcome email if you need to make changes.</span>
+  </div>
+  <% } %>
+
+  <form method="POST" action="/intake/<%= token %>" enctype="multipart/form-data">
+
+    <!-- BUSINESS BASICS -->
+    <div class="card">
+      <h2>Business Basics</h2>
+      <div class="field">
+        <label>Business Name <span style="color:#ef4444">*</span></label>
+        <input type="text" name="business_name" value="<%= intake.business_name||'' %>" placeholder="e.g. Bloom Floral Studio" required>
+      </div>
+      <div class="field">
+        <label>Tagline / Slogan <span class="opt">(optional)</span></label>
+        <input type="text" name="tagline" value="<%= intake.tagline||'' %>" placeholder="e.g. Fresh flowers for every occasion">
+      </div>
+      <div class="field">
+        <label>About Your Business <span style="color:#ef4444">*</span></label>
+        <textarea name="about_text" rows="5" placeholder="Tell me about what you do, who you serve, and what makes you different. This will become your About section." required><%= intake.about_text||'' %></textarea>
+      </div>
+      <div class="field">
+        <label>Services / Products You Offer <span style="color:#ef4444">*</span></label>
+        <textarea name="services_text" rows="4" placeholder="List your main services or products, one per line. e.g.&#10;Wedding florals&#10;Event arrangements&#10;Same-day delivery" required><%= intake.services_text||'' %></textarea>
+      </div>
+    </div>
+
+    <!-- BRAND COLORS -->
+    <div class="card">
+      <h2>Brand Colors</h2>
+      <p style="font-size:.82rem;color:var(--gray);margin-bottom:16px">Pick the colors that represent your brand. Don't overthink it — even approximate colors help. You can update these later.</p>
+      <div class="color-row">
+        <div class="color-field">
+          <label>Primary Color</label>
+          <div class="color-picker-wrap">
+            <input type="color" id="c1" value="<%= intake.primary_color||'#1B2F4E' %>" oninput="document.getElementById('c1t').value=this.value">
+            <input type="text" id="c1t" name="primary_color" value="<%= intake.primary_color||'#1B2F4E' %>" oninput="document.getElementById('c1').value=this.value">
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Secondary Color</label>
+          <div class="color-picker-wrap">
+            <input type="color" id="c2" value="<%= intake.secondary_color||'#C9922B' %>" oninput="document.getElementById('c2t').value=this.value">
+            <input type="text" id="c2t" name="secondary_color" value="<%= intake.secondary_color||'#C9922B' %>" oninput="document.getElementById('c2').value=this.value">
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Accent / Background</label>
+          <div class="color-picker-wrap">
+            <input type="color" id="c3" value="<%= intake.accent_color||'#ffffff' %>" oninput="document.getElementById('c3t').value=this.value">
+            <input type="text" id="c3t" name="accent_color" value="<%= intake.accent_color||'#ffffff' %>" oninput="document.getElementById('c3').value=this.value">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FONT STYLE -->
+    <div class="card">
+      <h2>Font Style Preference</h2>
+      <div class="font-grid">
+        <div class="font-option">
+          <input type="radio" name="font_style" id="f1" value="modern" <%=intake.font_style==='modern'?'checked':''%>>
+          <label for="f1">
+            <div class="font-name" style="font-family:sans-serif">Modern & Clean</div>
+            <div class="font-desc">Minimal, sleek, professional</div>
+          </label>
+        </div>
+        <div class="font-option">
+          <input type="radio" name="font_style" id="f2" value="classic" <%=intake.font_style==='classic'?'checked':''%>>
+          <label for="f2">
+            <div class="font-name" style="font-family:Georgia,serif">Classic & Elegant</div>
+            <div class="font-desc">Refined, traditional, timeless</div>
+          </label>
+        </div>
+        <div class="font-option">
+          <input type="radio" name="font_style" id="f3" value="bold" <%=intake.font_style==='bold'?'checked':''%>>
+          <label for="f3">
+            <div class="font-name" style="font-weight:900;font-size:1rem">Bold & Edgy</div>
+            <div class="font-desc">Strong, impactful, high-contrast</div>
+          </label>
+        </div>
+        <div class="font-option">
+          <input type="radio" name="font_style" id="f4" value="friendly" <%=intake.font_style==='friendly'?'checked':''%>>
+          <label for="f4">
+            <div class="font-name" style="font-family:cursive">Friendly & Playful</div>
+            <div class="font-desc">Warm, approachable, fun</div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGO -->
+    <div class="card">
+      <h2>Logo <span style="font-weight:400;color:var(--gray);font-size:.82rem">(optional — PNG or JPG)</span></h2>
+      <% if (intake.logo_filename) { %>
+      <p style="font-size:.82rem;color:#22c55e;margin-bottom:12px">✓ Logo on file: <strong><%= intake.logo_filename %></strong>. Upload a new file to replace it.</p>
+      <% } %>
+      <input type="file" name="logo" accept="image/*" style="font-size:.88rem">
+      <p style="font-size:.75rem;color:var(--gray);margin-top:8px">No logo yet? No problem — I can use your business name as text. You can always add one later.</p>
+    </div>
+
+    <!-- CONTACT INFO -->
+    <div class="card">
+      <h2>Contact Information</h2>
+      <div class="field">
+        <label>Phone Number <span class="opt">(optional)</span></label>
+        <input type="tel" name="phone" value="<%= intake.phone||'' %>" placeholder="e.g. (555) 123-4567">
+      </div>
+      <div class="field">
+        <label>Business Address <span class="opt">(optional — only if you want it shown on your site)</span></label>
+        <input type="text" name="address" value="<%= intake.address||'' %>" placeholder="e.g. 123 Main St, Nashville, TN 37201">
+      </div>
+    </div>
+
+    <!-- SOCIAL MEDIA -->
+    <div class="card">
+      <h2>Social Media <span style="font-weight:400;color:var(--gray);font-size:.82rem">(any that apply)</span></h2>
+      <div class="social-grid">
+        <div class="field">
+          <label>Instagram</label>
+          <input type="text" name="instagram" value="<%= intake.instagram||'' %>" placeholder="@yourbusiness">
+        </div>
+        <div class="field">
+          <label>Facebook</label>
+          <input type="text" name="facebook" value="<%= intake.facebook||'' %>" placeholder="facebook.com/yourbusiness">
+        </div>
+        <div class="field">
+          <label>TikTok</label>
+          <input type="text" name="tiktok" value="<%= intake.tiktok||'' %>" placeholder="@yourbusiness">
+        </div>
+        <div class="field">
+          <label>LinkedIn</label>
+          <input type="text" name="linkedin" value="<%= intake.linkedin||'' %>" placeholder="linkedin.com/in/yourname">
+        </div>
+      </div>
+    </div>
+
+    <!-- SPECIAL NOTES -->
+    <div class="card">
+      <h2>Anything Else I Should Know? <span style="font-weight:400;color:var(--gray);font-size:.82rem">(optional)</span></h2>
+      <div class="field">
+        <textarea name="special_notes" rows="4" placeholder="Specific requests, things you love or don't love, competitors you admire, pages you want, anything that helps me understand your vision."><%= intake.special_notes||'' %></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit My Intake Form →</button>
+    <p style="text-align:center;font-size:.78rem;color:var(--gray);margin-top:12px">After submitting, I'll reach out within 1–2 business days with next steps.</p>
+  </form>
+
+</div>
+</body>
+</html>

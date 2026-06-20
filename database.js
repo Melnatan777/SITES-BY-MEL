@@ -142,6 +142,34 @@ try {
   db.exec(`ALTER TABLE client_projects ADD COLUMN contract_notes TEXT`);
 } catch(e) {}
 
+// ── CLIENT INTAKE RESPONSES ───────────────────────────────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS intake_responses (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id        INTEGER,
+    token           TEXT UNIQUE,
+    business_name   TEXT,
+    tagline         TEXT,
+    primary_color   TEXT DEFAULT '#1B2F4E',
+    secondary_color TEXT DEFAULT '#C9922B',
+    accent_color    TEXT DEFAULT '#ffffff',
+    font_style      TEXT,
+    logo_filename   TEXT,
+    about_text      TEXT,
+    services_text   TEXT,
+    phone           TEXT,
+    address         TEXT,
+    facebook        TEXT,
+    instagram       TEXT,
+    twitter         TEXT,
+    linkedin        TEXT,
+    tiktok          TEXT,
+    special_notes   TEXT,
+    submitted       INTEGER DEFAULT 0,
+    created_at      DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
 // ── CONTRACT TEMPLATE (editable from admin) ───────────────────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS contract_template (

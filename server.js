@@ -162,6 +162,7 @@ app.use('/preview', (req, res, next) => {
   res.send(html);
 });
 app.use('/preview', express.static(path.join(__dirname, 'public', 'templates')));
+app.use('/uploads/intake', requireAuth, express.static(path.join(__dirname, 'uploads', 'intake')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
@@ -696,13 +697,110 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), (req, res
   if (event.type === 'checkout.session.completed') {
     const s = event.data.object;
     if (s.metadata.type === 'template') {
+      const email = s.customer_details?.email || '';
+      const name  = s.customer_details?.name  || '';
       db.prepare("UPDATE orders SET status='paid', customer_email=?, customer_name=? WHERE stripe_session_id=?")
-        .run(s.customer_details?.email, s.customer_details?.name, s.id);
+        .run(email, name, s.id);
+      // Create intake record and send welcome email
+      const order = db.prepare("SELECT * FROM orders WHERE stripe_session_id=?").get(s.id);
+      if (order && email) {
+        const intakeToken = require('crypto').randomBytes(16).toString('hex');
+        try {
+          db.prepare("INSERT OR IGNORE INTO intake_responses (order_id, token) VALUES (?,?)").run(order.id, intakeToken);
+        } catch(e) {}
+        const intakeUrl = `${BASE_URL}/intake/${intakeToken}`;
+        const personalizeUrl = `${BASE_URL}/personalize/${order.download_token}`;
+        if (resend) {
+          resend.emails.send({
+            from: 'Mel <mel@sitesbymel.com>',
+            to: email,
+            subject: `Welcome! Here's what's next for your new website 🎉`,
+            html: `
+<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1a1a2e">
+<div style="text-align:center;margin-bottom:28px">
+  <div style="font-size:1.4rem;font-weight:700;color:#1B2F4E">Sites by <span style="color:#C9922B">Mel</span></div>
+</div>
+<h1 style="font-size:1.3rem;color:#1B2F4E;margin-bottom:8px">Your website is on its way, ${name.split(' ')[0] || 'there'}! 🎉</h1>
+<p style="color:#374151;line-height:1.7">Thank you so much for your purchase of <strong>${order.product_name}</strong>. I'm excited to help you get your new site looking exactly right.</p>
+<p style="color:#374151;line-height:1.7">Here's what happens next — two quick steps and we're off to the races:</p>
+
+<div style="background:#f9fafb;border:1px solid #E5E0D8;border-radius:10px;padding:24px;margin:24px 0">
+  <div style="margin-bottom:20px">
+    <div style="font-weight:700;color:#1B2F4E;font-size:1rem;margin-bottom:6px">Step 1 — Fill out your intake form <span style="color:#C9922B">(most important!)</span></div>
+    <p style="color:#374151;font-size:.9rem;line-height:1.6;margin:0 0 12px">Tell me your business name, brand colors, logo, about text, and services. This is how I customize your site for you.</p>
+    <a href="${intakeUrl}" style="display:inline-block;background:#C9922B;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.95rem">Fill Out My Intake Form →</a>
+  </div>
+  <hr style="border:none;border-top:1px solid #E5E0D8;margin:20px 0">
+  <div>
+    <div style="font-weight:700;color:#1B2F4E;font-size:1rem;margin-bottom:6px">Step 2 — Personalize & download your template</div>
+    <p style="color:#374151;font-size:.9rem;line-height:1.6;margin:0 0 12px">You can also jump straight into personalizing your template and downloading your files.</p>
+    <a href="${personalizeUrl}" style="display:inline-block;background:#1B2F4E;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.95rem">Personalize My Template →</a>
+  </div>
+</div>
+
+<p style="color:#374151;line-height:1.7">Once I receive your intake form, I'll get to work and reach out within <strong>1–2 business days</strong> with an update.</p>
+<p style="color:#374151;line-height:1.7">Have questions? Just reply to this email — I personally read every message.</p>
+<p style="color:#374151;line-height:1.7;margin-top:28px">With excitement,<br><strong>Mel</strong><br><span style="color:#6B7280;font-size:.88rem">Sites by Mel | sitesbymel.com</span></p>
+<hr style="border:none;border-top:1px solid #E5E0D8;margin:28px 0">
+<p style="color:#9CA3AF;font-size:.75rem;text-align:center">Your intake link: ${intakeUrl}<br>Your template link: ${personalizeUrl}<br>Save these — they're valid for 48 hours.</p>
+</body></html>`
+          }).catch(e => console.error('[webhook] welcome email failed:', e.message));
+        }
+      }
     } else if (s.metadata.type === 'setup') {
       db.prepare("UPDATE setup_requests SET status='paid' WHERE stripe_session_id=?").run(s.id);
     }
   }
   res.sendStatus(200);
+});
+
+// ── INTAKE FORM ───────────────────────────────────────────────────────────────
+const intakeLogoStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dir = path.join(__dirname, 'uploads', 'intake');
+    require('fs').mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `logo-${req.params.token}${ext}`);
+  }
+});
+const intakeUpload = multer({ storage: intakeLogoStorage, limits: { fileSize: 10 * 1024 * 1024 } });
+
+app.get('/intake/:token', (req, res) => {
+  const intake = db.prepare('SELECT * FROM intake_responses WHERE token=?').get(req.params.token);
+  if (!intake) return res.status(404).render('404', { message: 'Intake form not found. Please use the link from your welcome email.' });
+  const order = intake.order_id ? db.prepare('SELECT * FROM orders WHERE id=?').get(intake.order_id) : null;
+  res.render('intake', { intake, order, token: req.params.token, submitted: intake.submitted });
+});
+
+app.post('/intake/:token', intakeUpload.single('logo'), (req, res) => {
+  const intake = db.prepare('SELECT * FROM intake_responses WHERE token=?').get(req.params.token);
+  if (!intake) return res.status(404).send('Not found.');
+  const { business_name, tagline, primary_color, secondary_color, accent_color, font_style,
+    about_text, services_text, phone, address, facebook, instagram, twitter, linkedin, tiktok, special_notes } = req.body;
+  const logo_filename = req.file ? req.file.filename : intake.logo_filename;
+  db.prepare(`UPDATE intake_responses SET
+    business_name=?,tagline=?,primary_color=?,secondary_color=?,accent_color=?,font_style=?,
+    logo_filename=?,about_text=?,services_text=?,phone=?,address=?,
+    facebook=?,instagram=?,twitter=?,linkedin=?,tiktok=?,special_notes=?,submitted=1
+    WHERE token=?`)
+    .run(business_name, tagline, primary_color||'#1B2F4E', secondary_color||'#C9922B', accent_color||'#ffffff',
+      font_style, logo_filename, about_text, services_text, phone, address,
+      facebook, instagram, twitter, linkedin, tiktok, special_notes, req.params.token);
+  // Notify Mel
+  if (resend) {
+    const order = intake.order_id ? db.prepare('SELECT * FROM orders WHERE id=?').get(intake.order_id) : null;
+    resend.emails.send({
+      from: 'Sites by Mel <mel@sitesbymel.com>',
+      to: 'mel@sitesbymel.com',
+      subject: `New intake form submitted — ${business_name}`,
+      html: `<p><strong>${business_name}</strong> just submitted their intake form${order ? ` for order #${order.id} (${order.product_name})` : ''}.</p>
+      <p><a href="${BASE_URL}/admin/intake/${req.params.token}">View in Admin →</a></p>`
+    }).catch(()=>{});
+  }
+  res.render('intake-thanks', { business_name });
 });
 
 // ── ADMIN ─────────────────────────────────────────────────────────────────────
@@ -827,6 +925,22 @@ app.post('/subscribe', async (req, res) => {
 });
 
 // Admin subscribers list
+// Admin: list all intake responses
+app.get('/admin/intakes', requireAuth, (req, res) => {
+  const intakes = db.prepare(`SELECT i.*, o.product_name, o.customer_email
+    FROM intake_responses i LEFT JOIN orders o ON i.order_id=o.id
+    ORDER BY i.created_at DESC`).all();
+  res.render('admin/intakes', { intakes });
+});
+
+app.get('/admin/intake/:token', requireAuth, (req, res) => {
+  const intake = db.prepare('SELECT * FROM intake_responses WHERE token=?').get(req.params.token);
+  if (!intake) return res.redirect('/admin/intakes');
+  const order = intake.order_id ? db.prepare('SELECT * FROM orders WHERE id=?').get(intake.order_id) : null;
+  const logoUrl = intake.logo_filename ? `/uploads/intake/${intake.logo_filename}` : null;
+  res.render('admin/intake-detail', { intake, order, logoUrl });
+});
+
 app.get('/admin/subscribers', requireAuth, (req, res) => {
   const subscribers = db.prepare('SELECT * FROM subscribers ORDER BY created_at DESC').all();
   res.render('admin/subscribers', { subscribers });

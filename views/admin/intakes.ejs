@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intake Forms — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'intakes' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1>Client Intake Forms</h1>
+        <p style="font-size:.82rem;color:var(--gray)">Submitted by clients after purchase</p>
+      </div>
+    </div>
+    <div class="admin-content">
+      <% const submitted = intakes.filter(i=>i.submitted); const pending = intakes.filter(i=>!i.submitted); %>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center">
+          <div style="font-size:1.6rem;font-weight:700;color:var(--navy)"><%= intakes.length %></div>
+          <div style="font-size:.78rem;color:var(--gray)">Total Sent</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center">
+          <div style="font-size:1.6rem;font-weight:700;color:#22c55e"><%= submitted.length %></div>
+          <div style="font-size:.78rem;color:var(--gray)">Submitted</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center">
+          <div style="font-size:1.6rem;font-weight:700;color:#f59e0b"><%= pending.length %></div>
+          <div style="font-size:.78rem;color:var(--gray)">Awaiting Response</div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse">
+          <thead>
+            <tr style="background:var(--light)">
+              <th style="padding:12px 16px;text-align:left;font-size:.75rem;color:var(--gray);font-weight:700">Business</th>
+              <th style="padding:12px 16px;text-align:left;font-size:.75rem;color:var(--gray);font-weight:700">Email</th>
+              <th style="padding:12px 16px;text-align:left;font-size:.75rem;color:var(--gray);font-weight:700">Template</th>
+              <th style="padding:12px 16px;text-align:left;font-size:.75rem;color:var(--gray);font-weight:700">Status</th>
+              <th style="padding:12px 16px;text-align:left;font-size:.75rem;color:var(--gray);font-weight:700">Date</th>
+              <th style="padding:12px 16px;text-align:left;font-size:.75rem;color:var(--gray);font-weight:700"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (intakes.length === 0) { %>
+            <tr><td colspan="6" style="padding:32px;text-align:center;color:var(--gray);font-size:.88rem">No intake forms yet — they appear here after a customer purchases a template.</td></tr>
+            <% } %>
+            <% intakes.forEach(i => { %>
+            <tr style="border-top:1px solid var(--border)">
+              <td style="padding:14px 16px;font-weight:600;color:var(--navy)"><%= i.business_name || '—' %></td>
+              <td style="padding:14px 16px;font-size:.85rem;color:var(--gray)"><%= i.customer_email || '—' %></td>
+              <td style="padding:14px 16px;font-size:.85rem"><%= i.product_name || '—' %></td>
+              <td style="padding:14px 16px">
+                <% if (i.submitted) { %>
+                  <span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700">Submitted</span>
+                <% } else { %>
+                  <span style="background:#fef9c3;color:#92400e;padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700">Pending</span>
+                <% } %>
+              </td>
+              <td style="padding:14px 16px;font-size:.82rem;color:var(--gray)"><%= i.created_at ? i.created_at.slice(0,10) : '' %></td>
+              <td style="padding:14px 16px">
+                <% if (i.submitted) { %>
+                <a href="/admin/intake/<%= i.token %>" class="btn btn-outline btn-sm">View</a>
+                <% } else { %>
+                <span style="font-size:.78rem;color:var(--gray)">Waiting</span>
+                <% } %>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

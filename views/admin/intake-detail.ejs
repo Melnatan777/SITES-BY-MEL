@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intake — <%= intake.business_name || 'Detail' %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'intakes' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1><%= intake.business_name || 'Intake Response' %></h1>
+        <p style="font-size:.82rem;color:var(--gray)">Submitted <%= intake.created_at ? intake.created_at.slice(0,10) : '' %> <% if (order) { %>· <%= order.product_name %><% } %></p>
+      </div>
+      <a href="/admin/intakes" class="btn btn-outline btn-sm">&larr; All Intakes</a>
+    </div>
+    <div class="admin-content" style="max-width:800px">
+
+      <!-- COLORS -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:20px">
+        <h2 style="font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:16px">Brand Colors</h2>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <% [['Primary',intake.primary_color],['Secondary',intake.secondary_color],['Accent',intake.accent_color]].forEach(([l,c])=>{ if(!c) return; %>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:40px;height:40px;border-radius:6px;background:<%= c %>;border:1px solid rgba(0,0,0,.1)"></div>
+            <div>
+              <div style="font-size:.72rem;color:var(--gray)"><%= l %></div>
+              <div style="font-weight:700;font-size:.9rem;color:var(--navy)"><%= c %></div>
+            </div>
+          </div>
+          <% }); %>
+          <% if (intake.font_style) { %>
+          <div style="display:flex;align-items:center;gap:10px;margin-left:auto">
+            <div>
+              <div style="font-size:.72rem;color:var(--gray)">Font Style</div>
+              <div style="font-weight:700;font-size:.9rem;color:var(--navy);text-transform:capitalize"><%= intake.font_style %></div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- LOGO -->
+      <% if (logoUrl) { %>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:20px">
+        <h2 style="font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:14px">Logo</h2>
+        <img src="<%= logoUrl %>" alt="Client logo" style="max-height:120px;max-width:300px;object-fit:contain;border:1px solid var(--border);border-radius:6px;padding:10px;background:#f9fafb">
+        <div style="margin-top:8px"><a href="<%= logoUrl %>" download class="btn btn-outline btn-sm">Download Logo</a></div>
+      </div>
+      <% } %>
+
+      <!-- ABOUT & SERVICES -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:20px">
+        <h2 style="font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:14px">Business Info</h2>
+        <% if (intake.tagline) { %>
+        <div style="margin-bottom:14px"><div style="font-size:.72rem;font-weight:700;color:var(--gray);margin-bottom:4px">TAGLINE</div><div style="font-size:.95rem;color:var(--navy);font-style:italic">"<%= intake.tagline %>"</div></div>
+        <% } %>
+        <% if (intake.about_text) { %>
+        <div style="margin-bottom:14px"><div style="font-size:.72rem;font-weight:700;color:var(--gray);margin-bottom:4px">ABOUT</div><div style="font-size:.88rem;color:var(--navy);line-height:1.7;white-space:pre-line"><%= intake.about_text %></div></div>
+        <% } %>
+        <% if (intake.services_text) { %>
+        <div><div style="font-size:.72rem;font-weight:700;color:var(--gray);margin-bottom:4px">SERVICES / PRODUCTS</div><div style="font-size:.88rem;color:var(--navy);line-height:1.7;white-space:pre-line"><%= intake.services_text %></div></div>
+        <% } %>
+      </div>
+
+      <!-- CONTACT & SOCIAL -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:20px">
+        <h2 style="font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:14px">Contact & Social</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <% [['Phone',intake.phone],['Address',intake.address],['Instagram',intake.instagram],['Facebook',intake.facebook],['TikTok',intake.tiktok],['LinkedIn',intake.linkedin]].forEach(([l,v])=>{ if(!v) return; %>
+          <div><div style="font-size:.72rem;font-weight:700;color:var(--gray)"><%= l.toUpperCase() %></div><div style="font-size:.88rem;color:var(--navy);margin-top:3px"><%= v %></div></div>
+          <% }); %>
+        </div>
+      </div>
+
+      <!-- SPECIAL NOTES -->
+      <% if (intake.special_notes) { %>
+      <div style="background:#fdf8ef;border:1px solid #E5E0D8;border-radius:10px;padding:24px;margin-bottom:20px">
+        <h2 style="font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:10px">Special Notes from Client</h2>
+        <p style="font-size:.88rem;color:var(--navy);line-height:1.7;white-space:pre-line"><%= intake.special_notes %></p>
+      </div>
+      <% } %>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
