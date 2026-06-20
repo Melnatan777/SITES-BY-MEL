@@ -593,14 +593,14 @@ app.get('/personalize/:token', (req, res) => {
     const placeholder = PLACEHOLDERS[product.slug] || {};
     res.render('personalize', { token: req.params.token, product, placeholder, selectedAddon: order.selected_addon || 'none' }, (err, html) => {
       if (err) {
-        console.error('[personalize] render error:', err.message);
-        return res.status(500).send('<h2>Page error</h2><pre>' + err.message + '</pre><p>Contact mel@sitesbymel.com</p>');
+        console.error('[personalize] render error:', err.message, err.stack);
+        return res.status(500).render('error-friendly', { email: 'mel@sitesbymel.com' });
       }
       res.send(html);
     });
   } catch(e) {
-    console.error('[personalize] crash:', e.message);
-    res.status(500).send('<h2>Something went wrong</h2><pre>' + e.message + '</pre>');
+    console.error('[personalize] crash:', e.message, e.stack);
+    res.status(500).render('error-friendly', { email: 'mel@sitesbymel.com' });
   }
 });
 

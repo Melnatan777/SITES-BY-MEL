@@ -1,0 +1,12 @@
+<%- include('partials/head', { title: 'Something went wrong — Sites by Mel', metaDesc: '' }) %>
+<%- include('partials/nav') %>
+<section style="padding:80px 0;text-align:center;min-height:60vh;display:flex;align-items:center">
+  <div style="max-width:480px;margin:0 auto;padding:0 24px">
+    <div style="font-size:3rem;margin-bottom:16px">😔</div>
+    <h1 style="font-size:1.6rem;font-weight:800;color:#1B2F4E;margin-bottom:12px">Something went wrong</h1>
+    <p style="color:#6B7280;line-height:1.7;margin-bottom:28px">We hit a snag loading your page. Mel has been notified and will reach out shortly. In the meantime, email us and we'll get you sorted right away.</p>
+    <a href="mailto:<%= email %>" class="btn btn-gold">Email Mel — <%= email %></a>
+    <p style="margin-top:20px"><a href="/" style="color:#9CA3AF;font-size:.82rem">Back to homepage</a></p>
+  </div>
+</section>
+<%- include('partials/footer') %>
