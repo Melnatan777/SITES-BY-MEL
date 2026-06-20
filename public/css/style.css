@@ -124,7 +124,8 @@ img { max-width: 100%; }
 .trust-item span { font-size: 0.82rem; color: var(--gray); }
 
 /* ── PROCESS ── */
-.process-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; counter-reset: steps; }
+.process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: steps; max-width: 860px; margin: 0 auto; }
+@media (max-width: 640px) { .process-steps { grid-template-columns: 1fr; } }
 .process-step { padding: 28px 20px; text-align: center; position: relative; }
 .process-step-num { width: 44px; height: 44px; background: var(--gold); color: var(--white); border-radius: 50%; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
 .process-step h3 { font-size: 1rem; margin-bottom: 8px; }
