@@ -577,6 +577,23 @@ app.get('/order/success', async (req, res) => {
           )
         });
         console.log('[success] email sent to', order.customer_email);
+        // Notify Mel of new purchase
+        sendEmail({
+          to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
+          subject: `New order — ${order.product_name} ($${(order.amount/100).toFixed(2)})`,
+          html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
+            <h2 style="color:#1B2F4E">New Template Purchase</h2>
+            <table style="width:100%;font-size:.9rem;border-collapse:collapse">
+              <tr><td style="padding:6px 0;color:#6B7280;width:40%">Customer</td><td style="font-weight:600;color:#1B2F4E">${order.customer_name || '—'}</td></tr>
+              <tr><td style="padding:6px 0;color:#6B7280">Email</td><td style="color:#1B2F4E">${order.customer_email}</td></tr>
+              <tr><td style="padding:6px 0;color:#6B7280">Template</td><td style="font-weight:600;color:#1B2F4E">${order.product_name}</td></tr>
+              <tr><td style="padding:6px 0;color:#6B7280">Add-On</td><td style="color:#C9922B">${order.selected_addon && order.selected_addon !== 'none' ? order.selected_addon : 'None'}</td></tr>
+              <tr><td style="padding:6px 0;color:#6B7280">Amount</td><td style="font-weight:700;color:#C9922B;font-size:1.1rem">$${(order.amount/100).toFixed(2)}</td></tr>
+            </table>
+            <p style="color:#6B7280;font-size:.85rem;margin-top:16px">Customer is filling out their personalize form now. You'll get another email with their details when they submit.</p>
+            <a href="${BASE_URL}/admin/orders" style="display:inline-block;background:#1B2F4E;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem;margin-top:12px">View in Admin →</a>
+          </div>`
+        }).catch(e => console.error('[success] mel notify error:', e.message));
       } catch(e) { console.error('[success] email error:', e.message); }
     } else {
       console.warn('[success] no customer email — skipping email send');
