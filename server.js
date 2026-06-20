@@ -745,6 +745,28 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), (req, res
 <p style="color:#9CA3AF;font-size:.75rem;text-align:center">Your intake link: ${intakeUrl}<br>Your template link: ${personalizeUrl}<br>Save these — they're valid for 48 hours.</p>
 </body></html>`
           }).catch(e => console.error('[webhook] welcome email failed:', e.message));
+
+          // Notify Mel
+          resend.emails.send({
+            from: 'Sites by Mel <mel@sitesbymel.com>',
+            to: 'mel@sitesbymel.com',
+            subject: `💰 New order — ${order.product_name} ($${(order.amount/100).toFixed(2)})`,
+            html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
+              <h2 style="color:#1B2F4E;margin-bottom:4px">New Template Order</h2>
+              <p style="color:#6B7280;font-size:.85rem;margin-bottom:20px">${new Date().toLocaleString()}</p>
+              <table style="width:100%;border-collapse:collapse;font-size:.9rem">
+                <tr><td style="padding:8px 0;color:#6B7280;width:40%">Customer</td><td style="font-weight:600;color:#1B2F4E">${name || '—'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6B7280">Email</td><td style="color:#1B2F4E">${email}</td></tr>
+                <tr><td style="padding:8px 0;color:#6B7280">Template</td><td style="font-weight:600;color:#1B2F4E">${order.product_name}</td></tr>
+                <tr><td style="padding:8px 0;color:#6B7280">Add-On</td><td style="color:#1B2F4E">${order.selected_addon && order.selected_addon !== 'none' ? order.selected_addon : 'None'}</td></tr>
+                <tr><td style="padding:8px 0;color:#6B7280">Amount</td><td style="font-weight:700;color:#C9922B;font-size:1.1rem">$${(order.amount/100).toFixed(2)}</td></tr>
+              </table>
+              <div style="margin-top:20px;display:flex;gap:10px">
+                <a href="${BASE_URL}/admin/orders" style="display:inline-block;background:#1B2F4E;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem">View in Admin →</a>
+                <a href="${intakeUrl}" style="display:inline-block;background:#C9922B;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem">View Intake Form →</a>
+              </div>
+            </div>`
+          }).catch(e => console.error('[webhook] mel notify failed:', e.message));
         }
       }
     } else if (s.metadata.type === 'setup') {
