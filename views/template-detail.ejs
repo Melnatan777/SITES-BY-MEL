@@ -99,6 +99,16 @@
                   <span style="font-weight:800;color:var(--gold);font-size:1rem;">$346</span>
                 </div>
               </div>
+
+              <div id="opt-payment" onclick="selectOption('payment')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <div>
+                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Payment Button Setup</span>
+                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Mel sets up Stripe &amp; adds a working payment button to your site</span>
+                  </div>
+                  <span style="font-weight:800;color:var(--gold);font-size:1rem;">$296</span>
+                </div>
+              </div>
             </div>
 
             <form action="/buy/<%= product.slug %>" method="POST" id="buy-form">
@@ -111,7 +121,7 @@
 
             <div style="margin-top:14px;padding:12px 14px;background:#fdf6e3;border-radius:6px;border-left:3px solid #C9922B;">
               <p style="font-size:0.75rem;color:#7d5a00;line-height:1.6;margin:0;">
-                <strong>This is a DIY template.</strong> It's built for small business owners who are comfortable on a computer — someone who can open a file, edit text, and follow written instructions — but no coding skills are needed. Getting it live requires creating a free GitHub account and deploying to Cloudflare Pages (full step-by-step instructions included). If you'd rather hand it off, the <a href="/services" style="color:#C9922B;font-weight:600;">Done-For-You Setup</a> has you covered.
+                <strong>This is a DIY template.</strong> It's built for small business owners who are comfortable on a computer — someone who can open a file, edit text, and follow written instructions — no coding skills needed. Full step-by-step instructions are included. If you'd rather hand it off, the <a href="/services" style="color:#C9922B;font-weight:600;">Done-For-You Setup</a> has you covered.
               </p>
             </div>
           <% } else { %>
@@ -119,10 +129,10 @@
           <% } %>
 
           <script>
-            const prices = { none: 197, drive: 246, upload: 294, glove: 346 };
-            const labels = { none: 'Buy & Download — $197', drive: 'Buy & Download — $246', upload: 'Buy & Download — $294', glove: 'Buy & Download — $346' };
+            const prices = { none: 197, drive: 246, upload: 294, glove: 346, payment: 296 };
+            const labels = { none: 'Buy & Download — $197', drive: 'Buy & Download — $246', upload: 'Buy & Download — $294', glove: 'Buy & Download — $346', payment: 'Buy & Download — $296' };
             function selectOption(key) {
-              ['none','drive','upload','glove'].forEach(function(k) {
+              ['none','drive','upload','glove','payment'].forEach(function(k) {
                 var el = document.getElementById('opt-' + k);
                 if (el) el.style.borderColor = k === key ? 'var(--gold)' : 'var(--border)';
                 if (el) el.style.background = k === key ? '#fffdf7' : '';
