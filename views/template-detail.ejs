@@ -56,41 +56,17 @@
 
           <% if (product.active) { %>
 
-            <!-- ADD-ON OPTIONS -->
-            <div style="margin-bottom:16px;">
-              <p style="font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;">Optional Add-Ons</p>
-
-              <div id="opt-none" onclick="selectOption('none')" style="border:2px solid var(--gold);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;background:#fffdf7;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div>
-                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">&#10003; Template Only</span>
-                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">I'll customize it myself</span>
-                  </div>
-                  <span style="font-weight:800;color:var(--gold);font-size:1rem;">$197</span>
-                </div>
-              </div>
-
-              <div id="opt-upload" onclick="selectOption('upload')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div>
-                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Photo &amp; Color Customization</span>
-                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Upload up to 5 photos + share your brand colors — Mel swaps them all in within 2 business days</span>
-                    <span style="font-size:0.7rem;color:#b45309;display:block;margin-top:3px;">Includes your template + customization</span>
-                  </div>
-                  <span style="font-weight:800;color:var(--gold);font-size:1rem;">$294</span>
-                </div>
-              </div>
-
-              <div id="opt-glove" onclick="selectOption('glove')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div>
-                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Done-For-You Template <span style="background:#fdf0ed;color:#c0392b;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:100px;margin-left:4px;">Best Value</span></span>
-                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Mel customizes everything — photos, colors, text, Stripe payment button, business email — ready to launch</span>
-                    <span style="font-size:0.7rem;color:#b45309;display:block;margin-top:3px;">Includes your template + full customization</span>
-                  </div>
-                  <span style="font-weight:800;color:var(--gold);font-size:1rem;">$597</span>
-                </div>
-              </div>
+            <!-- WHAT'S INCLUDED -->
+            <div style="margin-bottom:20px;padding:16px;background:#f8f6f2;border-radius:8px;">
+              <p style="font-size:0.78rem;font-weight:700;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;">What's Included</p>
+              <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+                <li style="font-size:0.82rem;color:var(--gray);">✓ Personalized by Mel</li>
+                <li style="font-size:0.82rem;color:var(--gray);">✓ Your text & business info</li>
+                <li style="font-size:0.82rem;color:var(--gray);">✓ Your photos added in</li>
+                <li style="font-size:0.82rem;color:var(--gray);">✓ Mobile-responsive layout</li>
+                <li style="font-size:0.82rem;color:var(--gray);">✓ Contact form ready</li>
+                <li style="font-size:0.82rem;color:var(--gray);">✓ Ready to go live free</li>
+              </ul>
             </div>
 
             <!-- COUPON CODE -->
@@ -104,115 +80,24 @@
             </div>
 
             <form action="/buy/<%= product.slug %>" method="POST" id="buy-form">
-              <input type="hidden" name="selected_addon" id="selected-addon-input" value="none">
+              <input type="hidden" name="selected_addon" value="none">
               <input type="hidden" name="coupon_code" id="coupon-code-input" value="">
               <button type="submit" id="buy-btn" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">
-                Buy &amp; Download — $197 &rarr;
+                Get My Website — $<%= (product.price / 100).toFixed(0) %> &rarr;
               </button>
             </form>
-            <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:10px;">Secure checkout via Stripe. Taxes calculated at checkout. Klarna buy-now-pay-later may be available at checkout.</p>
-
-            <div style="margin-top:14px;padding:12px 14px;background:#fdf6e3;border-radius:6px;border-left:3px solid #C9922B;">
-              <p style="font-size:0.75rem;color:#7d5a00;line-height:1.6;margin:0;">
-                <strong>This is a DIY template.</strong> It's built for small business owners who are comfortable on a computer — someone who can open a file, edit text, and follow written instructions — no coding skills needed. Full step-by-step instructions are included. If you'd rather hand it off, the <a href="/services" style="color:#C9922B;font-weight:600;">Done-For-You Setup</a> has you covered.
-              </p>
-            </div>
+            <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:10px;">Secure checkout via Stripe. Your personalized site delivered within 24 hours.</p>
           <% } else { %>
             <button class="btn btn-full" style="background:var(--border);color:var(--gray);cursor:default;padding:14px;font-size:1rem;">Coming Soon</button>
           <% } %>
 
           <script>
-            const prices = { none: 197, upload: 294, glove: 597 };
-            const labels = { none: 'Buy & Download — $197', upload: 'Buy Now — $294 total', glove: 'Buy Now — $597 total' };
-
-            const addonDetails = {
-              none: {
-                title: "What's Included",
-                items: [
-                  '✓ Full HTML source files', '✓ CSS stylesheet',
-                  '✓ Mobile-responsive layout', '✓ Customization guide',
-                  '✓ Contact form ready', '✓ Lifetime download access'
-                ]
-              },
-              drive: {
-                title: '+ Photo Swap — What Mel Does For You',
-                items: [
-                  '✓ Everything in template', '✓ You share a Google Drive link',
-                  '✓ Mel swaps in your photos', '✓ Returned within 2 business days',
-                  '✓ Up to 5 photos placed', '✓ No back-and-forth needed'
-                ]
-              },
-              upload: {
-                title: '+ Photo & Color Customization — What Mel Does For You',
-                items: [
-                  '✓ Upload up to 5 photos — Mel places them perfectly',
-                  '✓ Your brand colors applied throughout',
-                  '✓ Every button, heading & accent updated',
-                  '✓ Returned within 2 business days',
-                  '✓ Looks like YOUR brand, not a template',
-                  '✓ Just open & launch when you receive it'
-                ]
-              },
-              glove: {
-                title: '+ Done-For-You Template — What Mel Does For You',
-                items: [
-                  '✓ Your photos swapped in', '✓ Colors adjusted to your brand',
-                  '✓ Text updated with your details', '✓ Stripe payment button set up',
-                  '✓ Professional business email set up', '✓ Full review & ready to launch'
-                ]
-              },
-              colors: {
-                title: '+ Custom Brand Colors — What Mel Does For You',
-                items: [
-                  '✓ Everything in template', '✓ You tell Mel your brand colors',
-                  '✓ Every button & accent updated', '✓ Headings & highlights matched',
-                  '✓ Returned within 2 business days', '✓ Looks like YOUR brand, not a template'
-                ]
-              },
-              payment: { title: '', items: [] }
-            };
-
             var activeCoupon = null;
-
-            function selectOption(key) {
-              ['none','upload','glove'].forEach(function(k) {
-                var el = document.getElementById('opt-' + k);
-                if (el) el.style.borderColor = k === key ? 'var(--gold)' : 'var(--border)';
-                if (el) el.style.background = k === key ? '#fffdf7' : '';
-              });
-              document.getElementById('selected-addon-input').value = key;
-              updateBuyButton(key);
-
-              // Update left panel
-              var detail = addonDetails[key];
-              document.getElementById('addon-detail-title').textContent = detail.title;
-              var list = document.getElementById('addon-detail-list');
-              list.style.gridTemplateColumns = '1fr 1fr';
-              list.innerHTML = detail.items.map(function(i) {
-                return '<li style="font-size:0.88rem;color:var(--gray);">' + i + '</li>';
-              }).join('');
-              document.getElementById('addon-detail-box').style.background = key === 'none' ? 'var(--light)' : '#f0f7ff';
-            }
-
-            function updateBuyButton(key) {
-              key = key || document.getElementById('selected-addon-input').value || 'none';
-              var base = prices[key] || 197;
-              var msg = document.getElementById('coupon-msg');
-              if (activeCoupon) {
-                var disc = activeCoupon.type === 'percent'
-                  ? Math.round(base * activeCoupon.value / 100)
-                  : Math.min(activeCoupon.value, base - 1);
-                var final = base - disc;
-                document.getElementById('buy-btn').textContent = 'Buy Now — $' + final + ' (save $' + disc + ') →';
-              } else {
-                document.getElementById('buy-btn').textContent = labels[key] + ' →';
-              }
-            }
+            var basePrice = <%= product.price / 100 %>;
 
             function applyCoupon() {
               var code = document.getElementById('coupon-input').value.trim();
               var msg = document.getElementById('coupon-msg');
-              var addon = document.getElementById('selected-addon-input').value || 'none';
               if (!code) { msg.style.display='none'; return; }
               msg.style.display = 'block';
               msg.style.color = '#6B7280';
@@ -223,15 +108,19 @@
                   if (data.valid) {
                     activeCoupon = data;
                     document.getElementById('coupon-code-input').value = code;
+                    var disc = data.type === 'percent'
+                      ? Math.round(basePrice * data.value / 100)
+                      : Math.min(data.value, basePrice - 1);
+                    var final = basePrice - disc;
                     msg.style.color = '#166534';
                     msg.textContent = '✓ Coupon applied' + (data.description ? ' — ' + data.description : '') + '!';
-                    updateBuyButton();
+                    document.getElementById('buy-btn').textContent = 'Get My Website — $' + final + ' (save $' + disc + ') →';
                   } else {
                     activeCoupon = null;
                     document.getElementById('coupon-code-input').value = '';
                     msg.style.color = '#991b1b';
                     msg.textContent = '✗ ' + data.message;
-                    updateBuyButton();
+                    document.getElementById('buy-btn').textContent = 'Get My Website — $' + basePrice + ' →';
                   }
                 });
             }
@@ -245,19 +134,6 @@
               View Live Preview &rarr;
             </a>
           <% } %>
-
-          <ul class="price-includes" style="margin-top:24px;">
-            <li>HTML + CSS source files</li>
-            <li>Mobile-responsive design</li>
-            <li>No subscription fees</li>
-            <li>48-hour download link</li>
-            <li>Customization tips included</li>
-          </ul>
-
-          <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:4px;">
-            <p style="font-size:0.85rem;color:var(--gray);margin-bottom:12px;">Need it set up for you?</p>
-            <a href="/services#setup-<%= product.slug %>" class="btn btn-outline btn-sm btn-full">Done-For-You Setup — $200 deposit</a>
-          </div>
         </div>
       </div>
     </div>
