@@ -1032,7 +1032,16 @@ app.post('/admin/orders/:id/complete', requireAuth, (req, res) => {
   db.prepare("UPDATE orders SET status='completed' WHERE id=?").run(req.params.id);
   res.redirect('/admin/orders');
 });
-// Delete order
+// Bulk delete orders (must be before :id/delete to avoid route conflict)
+app.post('/admin/orders/bulk-delete', requireAuth, (req, res) => {
+  const ids = Array.isArray(req.body.ids) ? req.body.ids : req.body.ids ? [req.body.ids] : [];
+  ids.forEach(id => {
+    db.prepare('DELETE FROM order_photos WHERE order_id=?').run(id);
+    db.prepare('DELETE FROM orders WHERE id=?').run(id);
+  });
+  res.redirect('/admin/orders');
+});
+// Delete single order
 app.post('/admin/orders/:id/delete', requireAuth, (req, res) => {
   db.prepare('DELETE FROM order_photos WHERE order_id=?').run(req.params.id);
   db.prepare('DELETE FROM orders WHERE id=?').run(req.params.id);
