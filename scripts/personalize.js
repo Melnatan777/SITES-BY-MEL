@@ -56,6 +56,95 @@ const PLACEHOLDERS = {
     tagline: 'A Place to Belong',
     city: 'Memphis',
   },
+  'fit-life': {
+    businessName: 'FitLife',
+    phone: '(555) 123-4567',
+    email: 'info@fitlifestudio.com',
+    address: '789 Iron Street, Unit 4',
+    tagline: 'Transform Your Body. Transform Your Life.',
+    city: 'Portland',
+    trainerName: 'Marcus',
+  },
+  'pet-shop': {
+    businessName: 'Paw Paradise',
+    phone: '(555) 789-0123',
+    email: 'hello@pawparadise.com',
+    address: '456 Maple Street',
+    tagline: 'Where Every Pet Gets the Royal Treatment',
+    city: 'Denver',
+  },
+  'beauty-studio': {
+    businessName: 'Glow Studio',
+    phone: '(555) 234-5678',
+    email: 'hello@glowstudio.com',
+    address: '123 Beauty Lane',
+    tagline: 'Your Beauty, Our Passion',
+    city: 'Seattle',
+  },
+  'lens-and-light': {
+    businessName: 'Lens & Light Photography',
+    phone: '(555) 345-6789',
+    email: 'hello@lensandlight.com',
+    address: '789 Studio Row',
+    tagline: 'Capturing Life\'s Most Beautiful Moments',
+    city: 'Austin',
+  },
+  'wellness-pro': {
+    businessName: 'WellnessPro Medical',
+    phone: '(555) 456-7890',
+    email: 'info@wellnesspro.com',
+    address: '321 Health Blvd',
+    tagline: 'Your Health, Our Priority',
+    city: 'Phoenix',
+  },
+  'green-cut': {
+    businessName: 'GreenCut Landscaping',
+    phone: '(555) 567-8901',
+    email: 'info@greencut.com',
+    address: '654 Garden Way',
+    tagline: 'Beautiful Lawns, Happy Homes',
+    city: 'Dallas',
+  },
+  'sparkle-clean': {
+    businessName: 'Sparkle Clean Co.',
+    phone: '(555) 678-9012',
+    email: 'hello@sparkleclean.com',
+    address: '987 Fresh Street',
+    tagline: 'We Clean. You Relax.',
+    city: 'Miami',
+  },
+  'bright-minds': {
+    businessName: 'Bright Minds Tutoring',
+    phone: '(555) 789-0123',
+    email: 'hello@brightminds.com',
+    address: '123 Learning Lane',
+    tagline: 'Unlocking Every Child\'s Potential',
+    city: 'Boston',
+  },
+  'forever-events': {
+    businessName: 'Forever Events Co.',
+    phone: '(555) 890-1234',
+    email: 'hello@foreverevents.com',
+    address: '456 Celebration Drive',
+    tagline: 'Your Perfect Day, Perfectly Planned',
+    city: 'New York',
+  },
+  'auto-shine': {
+    businessName: 'AutoShine Detailing',
+    phone: '(555) 901-2345',
+    email: 'info@autoshine.com',
+    address: '789 Motor Row',
+    tagline: 'We Make Your Car Shine',
+    city: 'Las Vegas',
+  },
+  'detail-pro': {
+    businessName: 'DetailPro Auto',
+    phone: '(555) 012-3456',
+    email: 'info@detailpro.com',
+    address: '321 Auto Court',
+    tagline: 'Professional Auto Detailing Done Right',
+    city: 'Chicago',
+  },
 };
 
 function replaceAll(str, find, replace) {
@@ -94,14 +183,13 @@ function personalizeHtml(slug, html, data) {
 function buildPersonalizedZip(slug, templateName, niche, data, outputPath) {
   return new Promise((resolve, reject) => {
     const templateDir = path.join(__dirname, '..', 'public', 'templates', slug);
-    const htmlPath = path.join(templateDir, 'index.html');
+    const indexPath = path.join(templateDir, 'index.html');
 
-    if (!fs.existsSync(htmlPath)) return reject(new Error('Template not found: ' + slug));
+    if (!fs.existsSync(indexPath)) return reject(new Error('Template not found: ' + slug));
 
-    const rawHtml = fs.readFileSync(htmlPath, 'utf8');
-    const personalizedHtml = personalizeHtml(slug, rawHtml, data);
-    const primaryMatch = rawHtml.match(/--primary\s*:\s*(#[0-9a-fA-F]{3,6})/);
-    const accentMatch  = rawHtml.match(/--accent\s*:\s*(#[0-9a-fA-F]{3,6})/);
+    const indexHtml = fs.readFileSync(indexPath, 'utf8');
+    const primaryMatch = indexHtml.match(/--primary\s*:\s*(#[0-9a-fA-F]{3,6})/);
+    const accentMatch  = indexHtml.match(/--accent\s*:\s*(#[0-9a-fA-F]{3,6})/);
     const instructions = buildInstructions(templateName, slug, niche, primaryMatch && primaryMatch[1], accentMatch && accentMatch[1]);
 
     const output = fs.createWriteStream(outputPath);
@@ -111,16 +199,20 @@ function buildPersonalizedZip(slug, templateName, niche, data, outputPath) {
     archive.on('error', reject);
     archive.pipe(output);
 
-    // Add personalized index.html
-    archive.append(personalizedHtml, { name: `${slug}/index.html` });
-
-    // Add any other files in the template dir (images etc) except index.html
+    // Personalize ALL HTML files and add everything else as-is
     if (fs.existsSync(templateDir)) {
-      fs.readdirSync(templateDir).forEach(file => {
-        if (file !== 'index.html') {
-          archive.file(path.join(templateDir, file), { name: `${slug}/${file}` });
+      const entries = fs.readdirSync(templateDir, { withFileTypes: true });
+      for (const entry of entries) {
+        const filePath = path.join(templateDir, entry.name);
+        if (entry.isDirectory()) {
+          archive.directory(filePath, `${slug}/${entry.name}`);
+        } else if (entry.name.endsWith('.html')) {
+          const raw = fs.readFileSync(filePath, 'utf8');
+          archive.append(personalizeHtml(slug, raw, data), { name: `${slug}/${entry.name}` });
+        } else {
+          archive.file(filePath, { name: `${slug}/${entry.name}` });
         }
-      });
+      }
     }
 
     // Add instructions

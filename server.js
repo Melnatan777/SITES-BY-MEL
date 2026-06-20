@@ -69,6 +69,14 @@ buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e
   } catch(e) { console.error('[seed] fixPreviewUrls error:', e.message); }
 })();
 
+// Update all template prices to $350 (35000 cents)
+(function updateTemplatePrices() {
+  try {
+    db.prepare('UPDATE products SET price=35000 WHERE price < 35000 AND active=1').run();
+    console.log('[seed] Template prices updated to $350');
+  } catch(e) { console.error('[seed] price update error:', e.message); }
+})();
+
 // Ensure all templates have correct thumbnail filenames in DB
 (function fixThumbnails() {
   const thumbs = [
@@ -697,20 +705,16 @@ app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res)
     });
   }
 
-  // DIY only: deliver zip immediately
-  const tmpPath = path.join(__dirname, 'downloads', `custom-${order.id}-${Date.now()}.zip`);
-  const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
-  try { await buildPersonalizedZip(product.slug, product.name, niche, data, tmpPath); } catch(e) {
-    console.error('[personalize]', e.message);
-  }
-  db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
+  // Save business details to order record
+  db.prepare(`UPDATE orders SET business_name=?, phone=?, email=?, address=?, tagline=?, city=? WHERE id=?`)
+    .run(data.businessName, data.phone, data.email, data.address, data.tagline, data.city || '', order.id);
 
-  if (fs.existsSync(tmpPath)) {
-    return res.download(tmpPath, `${product.slug}-sitesbymel.zip`, () => {
-      try { fs.unlinkSync(tmpPath); } catch(e) {}
-    });
-  }
-  res.redirect(`/download/${req.params.token}`);
+  // Show "we're preparing your site" — Mel builds and sends from admin
+  res.render('preparing', {
+    customerName: data.businessName || order.customer_name || 'there',
+    productName: product.name,
+    customerEmail: order.customer_email || data.email
+  });
 });
 
 // Add-on payment success
@@ -750,6 +754,18 @@ app.get('/order/addon-success', async (req, res) => {
 });
 
 // File download
+// Customer downloads their built personalized site
+app.get('/get-my-site/:token', (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE built_zip_token=?').get(req.params.token);
+  if (!order) return res.status(404).send('Download link not found. Please contact mel@sitesbymel.com');
+  if (new Date(order.built_zip_expires) < new Date()) return res.status(410).send('This download link has expired. Please contact mel@sitesbymel.com');
+  if (!order.built_zip_path || !fs.existsSync(order.built_zip_path)) return res.status(404).send('File not found. Please contact mel@sitesbymel.com');
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+  const filename = `${product ? product.slug : 'your-site'}-sitesbymel.zip`;
+  db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
+  res.download(order.built_zip_path, filename);
+});
+
 app.get('/download/:token', (req, res) => {
   const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
   if (!order) return res.status(404).send('Download link not found or expired.');
@@ -1024,13 +1040,77 @@ app.get('/admin/orders/:id', requireAuth, (req, res) => {
   const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
   if (!order) return res.redirect('/admin/orders');
   const photos = db.prepare('SELECT * FROM order_photos WHERE order_id=? AND deleted=0 ORDER BY created_at').all(req.params.id);
-  res.render('admin/order-detail', { order, photos });
+  res.render('admin/order-detail', { order, photos, sent: req.query.sent === '1', error: req.query.error || null });
 });
 
 // Mark order complete
 app.post('/admin/orders/:id/complete', requireAuth, (req, res) => {
   db.prepare("UPDATE orders SET status='completed' WHERE id=?").run(req.params.id);
   res.redirect('/admin/orders');
+});
+
+// Build personalized ZIP and email customer download link
+app.post('/admin/orders/:id/build-and-send', requireAuth, async (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
+  if (!order) return res.redirect('/admin/orders');
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+  if (!product) return res.redirect(`/admin/orders/${order.id}`);
+
+  const data = {
+    businessName: order.business_name || '',
+    phone: order.phone || '',
+    email: order.email || '',
+    address: order.address || '',
+    tagline: order.tagline || '',
+    city: order.city || '',
+  };
+
+  const DOWNLOADS_DIR = process.env.DATABASE_PATH
+    ? path.join(path.dirname(process.env.DATABASE_PATH), 'built')
+    : path.join(__dirname, 'downloads', 'built');
+  fs.mkdirSync(DOWNLOADS_DIR, { recursive: true });
+
+  const fileName = `${product.slug}-order${order.id}-${Date.now()}.zip`;
+  const zipPath = path.join(DOWNLOADS_DIR, fileName);
+  const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
+
+  try {
+    await buildPersonalizedZip(product.slug, product.name, niche, data, zipPath);
+  } catch(e) {
+    console.error('[build-and-send]', e.message);
+    return res.redirect(`/admin/orders/${order.id}?error=build`);
+  }
+
+  // Create a secure download token for this built file
+  const token = crypto.randomBytes(24).toString('hex');
+  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 7 days
+  db.prepare(`UPDATE orders SET built_zip_path=?, built_zip_token=?, built_zip_expires=?, status='completed' WHERE id=?`)
+    .run(zipPath, token, expires, order.id);
+
+  const downloadLink = `${BASE_URL}/get-my-site/${token}`;
+  const customerEmail = order.customer_email || order.email || '';
+
+  await sendEmail({
+    to: customerEmail,
+    subject: `Your ${product.name} is ready! 🎉`,
+    html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
+      <div style="background:#1B2F4E;padding:24px;border-radius:10px 10px 0 0;text-align:center">
+        <p style="color:#C9922B;font-size:.8rem;font-weight:700;letter-spacing:.1em;margin:0 0 6px">SITES BY MEL</p>
+        <h1 style="color:#fff;font-size:1.4rem;margin:0">Your site is ready!</h1>
+      </div>
+      <div style="background:#fff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 10px 10px;padding:28px">
+        <p style="color:#374151;font-size:.95rem;line-height:1.7">Hi ${data.businessName || order.customer_name || 'there'}! 👋</p>
+        <p style="color:#374151;font-size:.95rem;line-height:1.7">Your <strong>${product.name}</strong> is ready with your business information already filled in. Just click below to download your files.</p>
+        <div style="text-align:center;margin:28px 0">
+          <a href="${downloadLink}" style="background:#C9922B;color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem;display:inline-block">⬇ Download My Site</a>
+        </div>
+        <p style="color:#6B7280;font-size:.82rem;line-height:1.6">This link expires in <strong>7 days</strong>. Once downloaded, unzip the folder and drag it onto <a href="https://app.netlify.com/drop" style="color:#1B2F4E">app.netlify.com/drop</a> to go live for free.</p>
+        <p style="color:#6B7280;font-size:.82rem;margin-top:20px">Questions? Just reply to this email — I'm happy to help.<br><strong>— Mel</strong></p>
+      </div>
+    </div>`
+  }).catch(e => console.error('[build-and-send email]', e.message));
+
+  res.redirect(`/admin/orders/${order.id}?sent=1`);
 });
 // Bulk delete orders (must be before :id/delete to avoid route conflict)
 app.post('/admin/orders/bulk-delete', requireAuth, (req, res) => {

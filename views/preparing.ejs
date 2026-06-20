@@ -1,0 +1,26 @@
+<%- include('partials/head', { title: 'Your Site Is Being Prepared', metaDesc: 'Mel is personalizing your template now.' }) %>
+<%- include('partials/nav') %>
+
+<section class="section">
+  <div class="container">
+    <div class="success-box" style="max-width:560px">
+      <div class="success-icon">🎨</div>
+      <h1>We're on it!</h1>
+      <p style="font-size:1.05rem;color:#374151;line-height:1.7">Thanks, <strong><%= customerName %></strong>! Your <strong><%= productName %></strong> is being personalized with your business information right now.</p>
+
+      <div style="background:#1B2F4E;border-radius:10px;padding:22px 28px;margin:28px 0;text-align:left">
+        <p style="color:#C9922B;font-weight:700;font-size:.95rem;margin-bottom:8px">What happens next:</p>
+        <ul style="color:rgba(255,255,255,0.85);font-size:.88rem;line-height:1.9;margin:0;padding-left:18px">
+          <li>Mel personally prepares your template with your details</li>
+          <li>You'll receive a download link at <strong style="color:#fff"><%= customerEmail %></strong></li>
+          <li>Your link will be ready within <strong style="color:#fff">24 hours</strong> (usually much sooner)</li>
+          <li>Just download, unzip, and drag to Netlify to go live free</li>
+        </ul>
+      </div>
+
+      <p style="font-size:.88rem;color:var(--gray)">Questions? <a href="/contact" style="color:var(--navy);font-weight:600">Message Mel</a> anytime.</p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

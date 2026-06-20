@@ -16,7 +16,16 @@
         <h1 style="margin:0">Order #<%= order.id %></h1>
         <span class="badge <%= order.status === 'completed' ? 'badge-green' : order.status === 'paid' ? 'badge-yellow' : 'badge-red' %>"><%= order.status %></span>
       </div>
-      <div style="display:flex;gap:8px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <% if (locals.sent) { %>
+        <span style="background:#dcfce7;color:#166534;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:700">✓ Download link sent!</span>
+        <% } %>
+        <% if (locals.error) { %>
+        <span style="background:#fef2f2;color:#991b1b;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:700">⚠ Build failed — check logs</span>
+        <% } %>
+        <form method="POST" action="/admin/orders/<%= order.id %>/build-and-send" style="margin:0" onsubmit="return confirm('Build personalized ZIP and email download link to customer?')">
+          <button type="submit" style="background:#C9922B;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:700;cursor:pointer">🚀 Build & Send to Customer</button>
+        </form>
         <% if (order.status !== 'completed') { %>
         <form method="POST" action="/admin/orders/<%= order.id %>/complete" style="margin:0">
           <button type="submit" class="btn btn-sm" style="background:#1B2F4E;color:#fff;border:none">✓ Mark Complete</button>
@@ -60,10 +69,11 @@
           <h2 style="font-size:.85rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Business Details Entered</h2>
           <% var fields = [
             ['Business Name', order.business_name],
+            ['Tagline', order.tagline],
             ['Phone', order.phone],
             ['Email', order.email],
             ['Address', order.address],
-            ['Tagline', order.tagline],
+            ['City', order.city],
           ]; %>
           <table style="width:100%;font-size:.88rem;border-collapse:collapse">
             <% fields.forEach(function(f) { if(f[1]) { %>

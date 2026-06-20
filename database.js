@@ -53,6 +53,10 @@ try { db.exec(`ALTER TABLE orders ADD COLUMN coupon_code TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN discount_amount INTEGER DEFAULT 0`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN brand_colors TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN glove_notes TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN city TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_path TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_token TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_expires TEXT`); } catch(e) {}
 
 // ── COUPONS ───────────────────────────────────────────────────────────────────
 db.exec(`
