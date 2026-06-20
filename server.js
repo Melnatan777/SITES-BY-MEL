@@ -346,7 +346,7 @@ app.post('/buy/:slug', async (req, res) => {
   }
   try {
     const selectedAddon = req.body.selected_addon || 'none';
-    const addonAmounts = { none: 0, drive: 4900, upload: 9700, glove: 14900, colors: 5000, payment: 15000 };
+    const addonAmounts = { none: 0, drive: 5000, upload: 10000, glove: 25300, colors: 5000, payment: 15000 };
     const totalAmount = product.price + (addonAmounts[selectedAddon] || 0);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
