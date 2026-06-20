@@ -268,21 +268,20 @@ db.exec(`
   )
 `);
 
-// Ensure unique index exists BEFORE upsert so ON CONFLICT works
-try { db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS idx_service_packages_slug ON service_packages(slug)`); } catch(e) {}
-
-// Seed + force-update packages so changes in code always apply
-const upsertPkg = db.prepare(`INSERT INTO service_packages
+// Seed + force-update packages — insert if missing, always update content
+const insertPkgIgnore = db.prepare(`INSERT OR IGNORE INTO service_packages
   (slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes)
-  VALUES (?,?,?,?,?,?,?,?,?,?,?)
-  ON CONFLICT(slug) DO UPDATE SET
-    name=excluded.name, tagline=excluded.tagline, price_display=excluded.price_display,
-    description=excluded.description, bullets=excluded.bullets, cta_label=excluded.cta_label,
-    cta_url=excluded.cta_url, is_featured=excluded.is_featured, sort_order=excluded.sort_order,
-    internal_notes=excluded.internal_notes`);
+  VALUES (?,?,?,?,?,?,?,?,?,?,?)`);
+const updatePkg = db.prepare(`UPDATE service_packages SET
+  name=?,tagline=?,price_display=?,description=?,bullets=?,cta_label=?,cta_url=?,
+  is_featured=?,sort_order=?,internal_notes=? WHERE slug=?`);
+function upsertPkg(slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes) {
+  insertPkgIgnore.run(slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes);
+  updatePkg.run(name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes,slug);
+}
 
 // ── PACKAGE 1: DIY TEMPLATE ───────────────────────────────────────────────────
-upsertPkg.run(
+upsertPkg(
   'diy',
   'DIY Template',
   'Your site, your way — we built the foundation',
@@ -322,7 +321,7 @@ PROFIT: $197 pure margin on base template`
 );
 
 // ── PACKAGE 2: DONE-FOR-YOU TEMPLATE (add-on tier, internal reference) ────────
-upsertPkg.run(
+upsertPkg(
   'done_for_you_template',
   'Done-For-You Template',
   'Mel customizes your template — you launch it',
@@ -363,7 +362,7 @@ PROFIT: ~$320-360 after time cost at $75/hr`
 );
 
 // ── PACKAGE 3: TEMPLATE LAUNCH ────────────────────────────────────────────────
-upsertPkg.run(
+upsertPkg(
   'template_launch',
   'Template Launch',
   'Your site goes live — you do nothing technical',
@@ -409,7 +408,7 @@ PROFIT: ~$200-350 after time cost at $75/hr + $10/mo recurring`
 );
 
 // ── PACKAGE 4: CUSTOM BUILD ───────────────────────────────────────────────────
-upsertPkg.run(
+upsertPkg(
   'custom_build',
   'Full Custom Build',
   'A website built entirely around your business',
