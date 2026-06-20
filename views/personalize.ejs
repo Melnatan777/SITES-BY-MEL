@@ -130,6 +130,27 @@
       </div>
       <% } %>
 
+      <!-- PHOTO GUIDE FOR ALL (shown when no photo add-on selected) -->
+      <% if (selectedAddon === 'none' || !selectedAddon) { %>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px">
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">📸 Have photos to share?</h2>
+        <p style="font-size:.82rem;color:#6B7280;margin-bottom:14px">Upload up to 5 photos and I'll place them in your template. Not required — you can always email them later.</p>
+        <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:.78rem;color:#1e40af">
+          <strong style="display:block;margin-bottom:6px">📐 What each photo is used for:</strong>
+          <table style="width:100%;border-collapse:collapse">
+            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:4px 8px;font-weight:700;width:28%">Photo 1</td><td style="padding:4px 8px"><strong>Hero / Banner</strong> — wide landscape, min 1200px wide. Your best work or space.</td></tr>
+            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:4px 8px;font-weight:700">Photo 2</td><td style="padding:4px 8px"><strong>About / Team</strong> — you, your team, or your workspace.</td></tr>
+            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:4px 8px;font-weight:700">Photo 3</td><td style="padding:4px 8px"><strong>Services</strong> — your product or service in action.</td></tr>
+            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:4px 8px;font-weight:700">Photo 4</td><td style="padding:4px 8px"><strong>Gallery</strong> — another work sample or product shot.</td></tr>
+            <tr><td style="padding:4px 8px;font-weight:700">Photo 5</td><td style="padding:4px 8px"><strong>Extra</strong> — optional additional image.</td></tr>
+          </table>
+        </div>
+        <input type="file" name="photos" accept="image/*" multiple style="width:100%;padding:10px 14px;border:1px solid #E5E0D8;border-radius:6px;font-size:.85rem;background:#fff;margin-bottom:12px">
+        <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:5px;color:#374151">Photo Notes <span style="font-weight:400;color:#9CA3AF">(optional — tell me where each photo goes)</span></label>
+        <textarea name="photo_notes" rows="2" placeholder="e.g. Photo1 = storefront, Photo2 = headshot of me, Photo3 = our signature dish" style="width:100%;padding:10px 14px;border:1px solid #E5E0D8;border-radius:6px;font-size:.85rem;resize:vertical;font-family:inherit"></textarea>
+      </div>
+      <% } %>
+
       <!-- WHAT HAPPENS NEXT -->
       <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:12px;padding:20px 24px;margin-bottom:16px">
         <p style="font-size:.85rem;color:#1e40af;line-height:1.7;margin:0">
