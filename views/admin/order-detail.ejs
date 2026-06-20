@@ -85,6 +85,12 @@
           <p style="font-size:.9rem;color:#1B2F4E;line-height:1.7;margin:0"><%= order.photo_notes %></p>
         </div>
         <% } %>
+        <% if (order.glove_notes) { %>
+        <div style="background:#fdf4ff;border:1px solid #e9d5ff;border-radius:10px;padding:24px">
+          <h2 style="font-size:.85rem;font-weight:700;color:#7e22ce;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">✨ White-Glove Notes</h2>
+          <p style="font-size:.9rem;color:#1B2F4E;line-height:1.7;margin:0"><%= order.glove_notes %></p>
+        </div>
+        <% } %>
 
       </div>
 
