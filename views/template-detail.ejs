@@ -91,8 +91,19 @@
               </div>
             </div>
 
+            <!-- COUPON CODE -->
+            <div style="margin-bottom:12px">
+              <div style="display:flex;gap:8px">
+                <input type="text" id="coupon-input" placeholder="Have a coupon code?" maxlength="30"
+                  style="flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.85rem;text-transform:uppercase;font-family:monospace;letter-spacing:.05em">
+                <button type="button" onclick="applyCoupon()" style="padding:9px 14px;background:var(--light);border:1px solid var(--border);border-radius:6px;font-size:.82rem;font-weight:700;color:var(--navy);cursor:pointer;white-space:nowrap">Apply</button>
+              </div>
+              <div id="coupon-msg" style="font-size:.75rem;margin-top:5px;display:none"></div>
+            </div>
+
             <form action="/buy/<%= product.slug %>" method="POST" id="buy-form">
               <input type="hidden" name="selected_addon" id="selected-addon-input" value="none">
+              <input type="hidden" name="coupon_code" id="coupon-code-input" value="">
               <button type="submit" id="buy-btn" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">
                 Buy &amp; Download — $197 &rarr;
               </button>
@@ -159,6 +170,8 @@
               payment: { title: '', items: [] }
             };
 
+            var activeCoupon = null;
+
             function selectOption(key) {
               ['none','upload','glove'].forEach(function(k) {
                 var el = document.getElementById('opt-' + k);
@@ -166,7 +179,7 @@
                 if (el) el.style.background = k === key ? '#fffdf7' : '';
               });
               document.getElementById('selected-addon-input').value = key;
-              document.getElementById('buy-btn').textContent = labels[key] + ' →';
+              updateBuyButton(key);
 
               // Update left panel
               var detail = addonDetails[key];
@@ -178,6 +191,51 @@
               }).join('');
               document.getElementById('addon-detail-box').style.background = key === 'none' ? 'var(--light)' : '#f0f7ff';
             }
+
+            function updateBuyButton(key) {
+              key = key || document.getElementById('selected-addon-input').value || 'none';
+              var base = prices[key] || 197;
+              var msg = document.getElementById('coupon-msg');
+              if (activeCoupon) {
+                var disc = activeCoupon.type === 'percent'
+                  ? Math.round(base * activeCoupon.value / 100)
+                  : Math.min(activeCoupon.value, base - 1);
+                var final = base - disc;
+                document.getElementById('buy-btn').textContent = 'Buy Now — $' + final + ' (save $' + disc + ') →';
+              } else {
+                document.getElementById('buy-btn').textContent = labels[key] + ' →';
+              }
+            }
+
+            function applyCoupon() {
+              var code = document.getElementById('coupon-input').value.trim();
+              var msg = document.getElementById('coupon-msg');
+              var addon = document.getElementById('selected-addon-input').value || 'none';
+              if (!code) { msg.style.display='none'; return; }
+              msg.style.display = 'block';
+              msg.style.color = '#6B7280';
+              msg.textContent = 'Checking...';
+              fetch('/coupon/validate?code=' + encodeURIComponent(code) + '&slug=<%= product.slug %>')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                  if (data.valid) {
+                    activeCoupon = data;
+                    document.getElementById('coupon-code-input').value = code;
+                    msg.style.color = '#166534';
+                    msg.textContent = '✓ Coupon applied' + (data.description ? ' — ' + data.description : '') + '!';
+                    updateBuyButton();
+                  } else {
+                    activeCoupon = null;
+                    document.getElementById('coupon-code-input').value = '';
+                    msg.style.color = '#991b1b';
+                    msg.textContent = '✗ ' + data.message;
+                    updateBuyButton();
+                  }
+                });
+            }
+            document.getElementById('coupon-input').addEventListener('keydown', function(e) {
+              if (e.key === 'Enter') { e.preventDefault(); applyCoupon(); }
+            });
           </script>
 
           <% if (product.preview_url) { %>

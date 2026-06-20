@@ -399,6 +399,18 @@ const stripeKey = process.env.STRIPE_TEST_KEY || process.env.STRIPE_SECRET_KEY;
 const stripe = stripeKey ? require('stripe')(stripeKey) : null;
 console.log('[stripe] key starts:', stripeKey ? stripeKey.slice(0,12) : 'MISSING');
 
+// Coupon validation endpoint (called by JS on template page)
+app.get('/coupon/validate', (req, res) => {
+  const { code, slug } = req.query;
+  if (!code) return res.json({ valid: false, message: 'No code entered.' });
+  const coupon = db.prepare('SELECT * FROM coupons WHERE code=? AND is_active=1').get(code.trim());
+  if (!coupon) return res.json({ valid: false, message: 'Invalid coupon code.' });
+  if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) return res.json({ valid: false, message: 'This coupon has expired.' });
+  if (coupon.max_uses > 0 && coupon.uses_count >= coupon.max_uses) return res.json({ valid: false, message: 'This coupon has reached its limit.' });
+  if (coupon.applies_to !== 'all' && coupon.applies_to !== slug) return res.json({ valid: false, message: 'This coupon doesn\'t apply to this template.' });
+  res.json({ valid: true, type: coupon.type, value: coupon.value, description: coupon.description });
+});
+
 // Buy template
 app.post('/buy/:slug', async (req, res) => {
   if (!stripe) {
@@ -413,12 +425,34 @@ app.post('/buy/:slug', async (req, res) => {
   try {
     const selectedAddon = req.body.selected_addon || 'none';
     const addonAmounts = { none: 0, upload: 9700, glove: 40000 };
-    const totalAmount = product.price + (addonAmounts[selectedAddon] || 0);
+    let totalAmount = product.price + (addonAmounts[selectedAddon] || 0);
+
+    // Apply coupon if provided
+    let discountAmount = 0;
+    let appliedCouponCode = null;
+    const couponCode = (req.body.coupon_code || '').trim();
+    if (couponCode) {
+      const coupon = db.prepare('SELECT * FROM coupons WHERE code=? AND is_active=1').get(couponCode);
+      const validScope = coupon && (coupon.applies_to === 'all' || coupon.applies_to === product.slug);
+      const notExpired = coupon && (!coupon.expires_at || new Date(coupon.expires_at) >= new Date());
+      const hasUses = coupon && (coupon.max_uses === 0 || coupon.uses_count < coupon.max_uses);
+      if (coupon && validScope && notExpired && hasUses) {
+        if (coupon.type === 'percent') discountAmount = Math.round(totalAmount * coupon.value / 100);
+        else discountAmount = Math.min(Math.round(coupon.value * 100), totalAmount - 100); // fixed, min $1
+        totalAmount = Math.max(totalAmount - discountAmount, 100);
+        appliedCouponCode = coupon.code;
+      }
+    }
+
+    const lineItemName = discountAmount > 0
+      ? `${product.name}${selectedAddon !== 'none' ? ' + Add-On' : ''} (Coupon: ${appliedCouponCode})`
+      : product.name;
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [{ price_data: {
         currency: 'usd',
-        product_data: { name: product.name, description: product.description },
+        product_data: { name: lineItemName, description: product.description },
         unit_amount: totalAmount
       }, quantity: 1 }],
       mode: 'payment',
@@ -428,8 +462,10 @@ app.post('/buy/:slug', async (req, res) => {
       cancel_url: `${BASE_URL}/templates/${product.slug}`,
       metadata: { product_id: product.id, product_name: product.name, type: 'template', selected_addon: selectedAddon }
     });
-    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, customer_email, selected_addon)
-      VALUES (?,?,?,?,'pending','',?)`).run(product.id, product.name, totalAmount, session.id, selectedAddon);
+    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, customer_email, selected_addon, coupon_code, discount_amount)
+      VALUES (?,?,?,?,'pending','',?,?,?)`).run(product.id, product.name, totalAmount, session.id, selectedAddon, appliedCouponCode, discountAmount);
+    // Increment coupon uses
+    if (appliedCouponCode) db.prepare('UPDATE coupons SET uses_count=uses_count+1 WHERE code=?').run(appliedCouponCode);
     res.redirect(303, session.url);
   } catch (e) {
     console.error('[buy] Stripe error:', e.message);
@@ -1151,6 +1187,36 @@ app.post('/admin/contract-template', requireAuth, (req, res) => {
   const content = JSON.stringify({ intro, sections });
   db.prepare('UPDATE contract_template SET content=?, updated_at=CURRENT_TIMESTAMP WHERE id=1').run(content);
   res.redirect('/admin/contract-template?saved=1');
+});
+
+// ── ADMIN COUPONS ─────────────────────────────────────────────────────────────
+app.get('/admin/coupons', requireAuth, (req, res) => {
+  const coupons = db.prepare('SELECT * FROM coupons ORDER BY created_at DESC').all();
+  const products = db.prepare('SELECT slug, name FROM products WHERE active=1 ORDER BY name').all();
+  res.render('admin/coupons', { coupons, products, success: req.query.success, error: req.query.error });
+});
+
+app.post('/admin/coupons/create', requireAuth, (req, res) => {
+  const { code, type, value, description, applies_to, max_uses, expires_at } = req.body;
+  if (!code || !value) return res.redirect('/admin/coupons?error=Code+and+value+are+required');
+  try {
+    db.prepare(`INSERT INTO coupons (code, type, value, description, applies_to, max_uses, expires_at, is_active)
+      VALUES (?,?,?,?,?,?,?,1)`)
+      .run(code.trim().toUpperCase(), type || 'percent', parseFloat(value), description || '', applies_to || 'all', parseInt(max_uses)||0, expires_at||null);
+    res.redirect('/admin/coupons?success=Coupon+created');
+  } catch(e) {
+    res.redirect('/admin/coupons?error=Code+already+exists');
+  }
+});
+
+app.post('/admin/coupons/:id/toggle', requireAuth, (req, res) => {
+  db.prepare('UPDATE coupons SET is_active = CASE WHEN is_active=1 THEN 0 ELSE 1 END WHERE id=?').run(req.params.id);
+  res.redirect('/admin/coupons');
+});
+
+app.post('/admin/coupons/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM coupons WHERE id=?').run(req.params.id);
+  res.redirect('/admin/coupons?success=Coupon+deleted');
 });
 
 // ── ADMIN PACKAGES ───────────────────────────────────────────────────────────

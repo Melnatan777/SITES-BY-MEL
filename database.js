@@ -49,6 +49,25 @@ db.exec(`
 `);
 try { db.exec(`ALTER TABLE orders ADD COLUMN selected_addon TEXT DEFAULT 'none'`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN photo_notes TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN coupon_code TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN discount_amount INTEGER DEFAULT 0`); } catch(e) {}
+
+// ── COUPONS ───────────────────────────────────────────────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS coupons (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    code         TEXT NOT NULL UNIQUE COLLATE NOCASE,
+    type         TEXT NOT NULL DEFAULT 'percent', -- 'percent' or 'fixed'
+    value        REAL NOT NULL,                   -- percent: 0-100, fixed: dollars
+    description  TEXT,                            -- internal label e.g. "Summer sale 20%"
+    applies_to   TEXT DEFAULT 'all',              -- 'all' or product slug
+    max_uses     INTEGER DEFAULT 0,               -- 0 = unlimited
+    uses_count   INTEGER DEFAULT 0,
+    expires_at   TEXT,                            -- ISO date string or null
+    is_active    INTEGER DEFAULT 1,
+    created_at   DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
 
 // ── SETUP REQUESTS (done-for-you service) ─────────────────────────────────────
 db.exec(`

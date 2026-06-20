@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coupons & Discounts — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'coupons' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1>Coupons & Discounts</h1>
+        <p style="font-size:.82rem;color:var(--gray);margin-top:2px">Create sale codes, appreciation discounts, or limited-time offers. Customers enter the code at checkout.</p>
+      </div>
+    </div>
+    <div class="admin-content">
+
+      <% if (typeof success !== 'undefined' && success) { %>
+      <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 16px;margin-bottom:20px;color:#166534;font-size:.88rem">✓ <%= success %></div>
+      <% } %>
+      <% if (typeof error !== 'undefined' && error) { %>
+      <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px 16px;margin-bottom:20px;color:#991b1b;font-size:.88rem">✗ <%= error %></div>
+      <% } %>
+
+      <!-- CREATE COUPON FORM -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:28px">
+        <h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:18px">Create New Coupon</h2>
+        <form method="POST" action="/admin/coupons/create">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Coupon Code <span style="color:#ef4444">*</span></label>
+              <input type="text" name="code" placeholder="e.g. SUMMER20 or WELCOME" required
+                style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem;text-transform:uppercase;font-family:monospace;font-weight:700;letter-spacing:.05em">
+              <p style="font-size:.7rem;color:var(--gray);margin-top:3px">Short, memorable, all caps</p>
+            </div>
+            <div>
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Discount Type <span style="color:#ef4444">*</span></label>
+              <select name="type" id="discount-type" onchange="updateValueLabel()" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+                <option value="percent">Percentage Off (%)</option>
+                <option value="fixed">Fixed Amount Off ($)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px" id="value-label">Discount Value (%) <span style="color:#ef4444">*</span></label>
+              <input type="number" name="value" placeholder="e.g. 20" required min="1" max="100" step="0.01"
+                style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+              <p style="font-size:.7rem;color:var(--gray);margin-top:3px" id="value-hint">Enter 20 for 20% off</p>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px">
+            <div>
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Applies To</label>
+              <select name="applies_to" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+                <option value="all">All Templates</option>
+                <% products.forEach(p => { %>
+                <option value="<%= p.slug %>"><%= p.name %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Max Uses (0 = unlimited)</label>
+              <input type="number" name="max_uses" value="0" min="0"
+                style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+              <p style="font-size:.7rem;color:var(--gray);margin-top:3px">Great for "first 10 customers"</p>
+            </div>
+            <div>
+              <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Expires On (leave blank = no expiry)</label>
+              <input type="date" name="expires_at"
+                style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+            </div>
+          </div>
+
+          <div style="margin-bottom:18px">
+            <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Internal Label (for your reference only)</label>
+            <input type="text" name="description" placeholder="e.g. June flash sale — 20% off all templates, announced on Instagram"
+              style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+          </div>
+
+          <button type="submit" class="btn btn-gold">Create Coupon</button>
+        </form>
+      </div>
+
+      <!-- QUICK IDEAS BOX -->
+      <div style="background:#fdf6e3;border:1px solid #f0d080;border-radius:10px;padding:20px 24px;margin-bottom:28px">
+        <h3 style="font-size:.88rem;font-weight:700;color:#7d5a00;margin-bottom:10px">Quick Coupon Ideas</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:.78rem;color:#7d5a00">
+          <div style="background:rgba(255,255,255,.6);border-radius:6px;padding:10px">
+            <strong style="display:block;margin-bottom:4px">Flash Sale</strong>
+            Code: FLASH20 · 20% off · expires in 48 hrs · unlimited uses
+          </div>
+          <div style="background:rgba(255,255,255,.6);border-radius:6px;padding:10px">
+            <strong style="display:block;margin-bottom:4px">Client Appreciation</strong>
+            Code: THANKS50 · $50 off · no expiry · 1 use (give directly to customer)
+          </div>
+          <div style="background:rgba(255,255,255,.6);border-radius:6px;padding:10px">
+            <strong style="display:block;margin-bottom:4px">Monthly Promo</strong>
+            Code: JUNE25 · 25% off · expires June 30 · unlimited
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE COUPONS TABLE -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden">
+        <div style="padding:18px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+          <h2 style="font-size:.95rem;font-weight:700;color:var(--navy);margin:0">All Coupons (<%= coupons.length %>)</h2>
+        </div>
+
+        <% if (coupons.length === 0) { %>
+        <p style="padding:32px;text-align:center;color:var(--gray);font-size:.88rem">No coupons yet. Create your first one above.</p>
+        <% } else { %>
+        <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+          <thead>
+            <tr style="background:var(--light)">
+              <th style="padding:10px 16px;text-align:left;font-size:.72rem;font-weight:700;color:var(--gray);text-transform:uppercase">Code</th>
+              <th style="padding:10px 16px;text-align:left;font-size:.72rem;font-weight:700;color:var(--gray);text-transform:uppercase">Discount</th>
+              <th style="padding:10px 16px;text-align:left;font-size:.72rem;font-weight:700;color:var(--gray);text-transform:uppercase">Applies To</th>
+              <th style="padding:10px 16px;text-align:left;font-size:.72rem;font-weight:700;color:var(--gray);text-transform:uppercase">Uses</th>
+              <th style="padding:10px 16px;text-align:left;font-size:.72rem;font-weight:700;color:var(--gray);text-transform:uppercase">Expires</th>
+              <th style="padding:10px 16px;text-align:left;font-size:.72rem;font-weight:700;color:var(--gray);text-transform:uppercase">Status</th>
+              <th style="padding:10px 16px;text-align:left;font-size:.72rem;font-weight:700;color:var(--gray);text-transform:uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% coupons.forEach(function(c) {
+              const expired = c.expires_at && new Date(c.expires_at) < new Date();
+              const maxedOut = c.max_uses > 0 && c.uses_count >= c.max_uses;
+              const effective = c.is_active && !expired && !maxedOut;
+            %>
+            <tr style="border-top:1px solid var(--border);<%= !effective ? 'opacity:.55' : '' %>">
+              <td style="padding:12px 16px">
+                <span style="font-family:monospace;font-weight:800;font-size:.9rem;color:var(--navy);background:var(--light);padding:3px 8px;border-radius:4px"><%= c.code %></span>
+                <% if (c.description) { %>
+                <span style="display:block;font-size:.7rem;color:var(--gray);margin-top:3px"><%= c.description %></span>
+                <% } %>
+              </td>
+              <td style="padding:12px 16px;font-weight:700;color:var(--gold)">
+                <%= c.type === 'percent' ? c.value + '% off' : '$' + c.value.toFixed(0) + ' off' %>
+              </td>
+              <td style="padding:12px 16px;color:var(--gray)">
+                <%= c.applies_to === 'all' ? 'All templates' : c.applies_to %>
+              </td>
+              <td style="padding:12px 16px">
+                <span style="color:<%= maxedOut ? '#ef4444' : 'var(--navy)' %>;font-weight:600">
+                  <%= c.uses_count %><%= c.max_uses > 0 ? ' / ' + c.max_uses : '' %>
+                </span>
+                <% if (maxedOut) { %><span style="font-size:.68rem;color:#ef4444;display:block">MAXED OUT</span><% } %>
+              </td>
+              <td style="padding:12px 16px;color:<%= expired ? '#ef4444' : 'var(--gray)' %>">
+                <% if (!c.expires_at) { %>
+                  <span style="color:var(--gray)">Never</span>
+                <% } else { %>
+                  <%= new Date(c.expires_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) %>
+                  <% if (expired) { %><span style="font-size:.68rem;color:#ef4444;display:block">EXPIRED</span><% } %>
+                <% } %>
+              </td>
+              <td style="padding:12px 16px">
+                <span style="font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:100px;
+                  background:<%= effective ? '#f0fdf4' : '#fef2f2' %>;
+                  color:<%= effective ? '#166534' : '#991b1b' %>">
+                  <%= effective ? 'ACTIVE' : (expired ? 'EXPIRED' : maxedOut ? 'MAXED' : 'PAUSED') %>
+                </span>
+              </td>
+              <td style="padding:12px 16px">
+                <div style="display:flex;gap:6px;flex-wrap:wrap">
+                  <form method="POST" action="/admin/coupons/<%= c.id %>/toggle" style="margin:0">
+                    <button type="submit" style="font-size:.72rem;padding:4px 10px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:var(--navy)">
+                      <%= c.is_active ? 'Pause' : 'Resume' %>
+                    </button>
+                  </form>
+                  <form method="POST" action="/admin/coupons/<%= c.id %>/delete" style="margin:0"
+                    onsubmit="return confirm('Delete coupon <%= c.code %>? This cannot be undone.')">
+                    <button type="submit" style="font-size:.72rem;padding:4px 10px;border:1px solid #fca5a5;border-radius:4px;background:#fef2f2;cursor:pointer;color:#991b1b">
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+function updateValueLabel() {
+  const type = document.getElementById('discount-type').value;
+  document.getElementById('value-label').innerHTML = type === 'percent'
+    ? 'Discount Value (%) <span style="color:#ef4444">*</span>'
+    : 'Discount Value ($) <span style="color:#ef4444">*</span>';
+  document.getElementById('value-hint').textContent = type === 'percent'
+    ? 'Enter 20 for 20% off'
+    : 'Enter 50 for $50 off';
+  const input = document.querySelector('input[name="value"]');
+  if (type === 'percent') { input.max = 100; input.placeholder = 'e.g. 20'; }
+  else { input.removeAttribute('max'); input.placeholder = 'e.g. 50'; }
+}
+</script>
+</body>
+</html>
