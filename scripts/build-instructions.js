@@ -64,14 +64,18 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
 
   <!-- STEP 1: PREVIEW -->
   <div class="card">
-    <h2>Step 1 — Preview your site right now</h2>
+    <h2>Step 1 — Save the folder somewhere on your computer</h2>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Unzip the folder</strong><span>Right-click the zip file → "Extract All" (Windows) or double-click (Mac). Keep all files in the same folder — they link to each other.</span></div>
+      <div class="step-body"><strong>Unzip the folder</strong><span>Right-click the zip file → "Extract All" (Windows) or double-click (Mac). A folder will appear with all your website files inside.</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Open index.html in your browser</strong><span>Double-click it. It opens right in your browser. Click around — all 5 pages work immediately, right on your computer. No internet needed yet!</span></div>
+      <div class="step-body"><strong>Move the folder somewhere easy to find</strong><span>Drag it to your Desktop or your Documents folder — wherever makes sense to you. Name it something like "My Website." <strong>Keep all the files inside it together — don't move them out individually.</strong></span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body"><strong>Preview it right now</strong><span>Open the folder and double-click <code>index.html</code>. It opens in your browser. Click around — all 5 pages work immediately, right on your computer. No internet needed yet!</span></div>
     </div>
     <div class="tip">You're looking at your real website. Every page, every button, every link — exactly as your visitors will see it once it's live.</div>
   </div>
@@ -80,22 +84,51 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
   <div class="card">
     <div class="oyster">🌍</div>
     <h2>Step 2 — The world is your oyster. Make it yours!</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">This is the fun part. Every single word, color, price, and photo in this template is yours to change. You don't need to know how to code — just find the text you want to change and type something new. Here's how to open the files:</p>
-    <div class="fun"><strong>Best tool (free):</strong> Download <a href="https://code.visualstudio.com" target="_blank">VS Code</a>. It's free, highlights your code in color, and makes everything easy to find. Once installed, go to File → Open Folder and open your unzipped template folder.</div>
+    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">This is the fun part. Every word, price, and photo is yours to change. You don't need to know how to code — just open each page file, find the text you want to change, type something new, and save. Here's exactly how:</p>
+    <div class="fun"><strong>Best tool (free):</strong> Download <a href="https://code.visualstudio.com" target="_blank">VS Code</a>. It's free, highlights your code in color so it's easy to read, and is what most web designers use. Once installed, you'll use it to open and edit each page.</div>
 
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Replace the business name on every page at once</strong><span>In VS Code, press <code>Ctrl+Shift+H</code> (Windows) or <code>Cmd+Shift+H</code> (Mac) to open Find &amp; Replace across ALL files. Type the demo name in the top box, your name in the bottom box, hit Replace All. Done — every page updated in one click!</span></div>
+      <div class="step-body"><strong>Open a page file in VS Code</strong><span>In VS Code, go to <strong>File → Open File</strong>, then navigate to your website folder and open one file — for example <code>about.html</code> to edit your About page, or <code>index.html</code> for your Home page. Edit one page at a time.</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Update your phone, email, and address</strong><span>Search for <code>(555) 000-0000</code> and replace with your real number. Do the same for the placeholder email and address. These appear in the footer of every page.</span></div>
+      <div class="step-body"><strong>Find the text you want to change and type your own</strong><span>Press <code>Ctrl+F</code> (Windows) or <code>Cmd+F</code> (Mac) to search for words on the page. Find a placeholder like "DetailPro" or "Over a decade of passion..." and just click on it and type your own words instead.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Change any text you want</strong><span>Just read through the file like a document. See something that should say something different? Click on it and type your own words. Your services, your prices, your story — make it 100% you.</span></div>
+      <div class="step-body"><strong>Save — it saves right back to the same file</strong><span>Press <code>Ctrl+S</code> (Windows) or <code>Cmd+S</code> (Mac). VS Code saves your changes directly back to the file in your folder — no "Save As," no moving files. Then press <code>F5</code> in your browser to refresh and see your changes.</span></div>
     </div>
-    <div class="tip"><strong>Save &amp; refresh trick:</strong> After every change, press <code>Ctrl+S</code> to save, then press <code>F5</code> in your browser to refresh. You'll see your changes instantly.</div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body"><strong>Repeat for each page</strong><span>Open <code>services.html</code> to edit your services and pricing, <code>about.html</code> for your story, <code>contact.html</code> for your contact info. Each file is its own page — edit, save, done.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body"><strong>Replace the business name across all pages at once (shortcut!)</strong><span>In VS Code, press <code>Ctrl+Shift+H</code> (Windows) or <code>Cmd+Shift+H</code> (Mac) to open Find &amp; Replace across ALL files. Type the demo business name in the top box, your name in the bottom — hit Replace All. Every page updated in one click.</span></div>
+    </div>
+    <div class="tip"><strong>Nothing gets lost.</strong> Every time you press Ctrl+S, your file is saved in your folder. When you're ready to go live, you just upload that same folder — exactly as it is on your computer.</div>
+  </div>
+
+  <!-- STEP 2B: PHOTOS -->
+  <div class="card">
+    <div class="oyster">📸</div>
+    <h2>Replacing Photos — Easier Than It Sounds</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">Your template already has placeholder images. Here's how to swap them for your own photos:</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body"><strong>Add your photos to the images folder</strong><span>Inside your website folder there is an <code>images</code> folder. Copy your own photos into that folder. Use simple names with no spaces — like <code>my-team.jpg</code> or <code>storefront.jpg</code>.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body"><strong>Find the image in the HTML file</strong><span>In VS Code, search (<code>Ctrl+F</code>) for <code>img src</code> to find image tags. They look like this: <code>&lt;img src="images/hero.jpg"&gt;</code></span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body"><strong>Replace the filename with your photo's name</strong><span>Change <code>images/hero.jpg</code> to <code>images/your-photo-name.jpg</code> — using the exact filename you saved in the images folder. Save the file and refresh your browser to see your photo appear.</span></div>
+    </div>
+    <div class="tip"><strong>Photo tips:</strong> Use JPG or PNG files. For banner/hero images, use a wide landscape photo (at least 1200px wide). Keep file sizes under 500KB for fast loading — you can compress photos free at <a href="https://squoosh.app" target="_blank">squoosh.app</a>.</div>
+    <div class="fun">💡 <strong>Not a photographer?</strong> Free high-quality photos at <a href="https://unsplash.com" target="_blank">unsplash.com</a> and <a href="https://www.pexels.com" target="_blank">pexels.com</a> — free to use on your website, no credit required.</div>
   </div>
 
   <!-- COLORS -->
