@@ -24,6 +24,7 @@ const TEMPLATES = [
   { slug: 'bright-minds',   name: 'Bright Minds Template',  niche: 'tutoring & learning center' },
   { slug: 'forever-events', name: 'Forever Events Template',niche: 'wedding & event planning' },
   { slug: 'auto-shine',     name: 'AutoShine Template',     niche: 'auto detailing & mechanic' },
+  { slug: 'detail-pro',    name: 'DetailPro Template',     niche: 'auto detailing & car care' },
 ];
 
 const ROOT = path.join(__dirname, '..');
