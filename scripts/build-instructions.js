@@ -99,6 +99,18 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
       <strong>Windows:</strong> Notepad &nbsp;|&nbsp; <strong>Mac:</strong> TextEdit — both come pre-installed.</span>
     </div>
 
+    <div style="background:#f8f4ff;border:1px solid #d8b4fe;border-radius:8px;padding:14px 18px;margin-bottom:18px;font-size:.84rem;color:#4c1d95;line-height:1.7">
+      <strong>📌 Two shortcuts you'll use:</strong><br>
+      <strong>Ctrl+F</strong> = <em>Find</em> — searches and highlights a word so you can see where it is.<br>
+      <strong>Ctrl+H</strong> = <em>Find &amp; Replace</em> — finds the old word AND swaps it with your new word in one click.<br><br>
+      <strong>Before you open Notepad</strong> — grab a piece of paper and jot down your info so it's ready to type in:<br>
+      &nbsp;&nbsp;• Your business name<br>
+      &nbsp;&nbsp;• Your phone number<br>
+      &nbsp;&nbsp;• Your address<br>
+      &nbsp;&nbsp;• Your tagline or short description<br>
+      Having it written down means you're not scrambling to remember while you're in the file.
+    </div>
+
     <p style="font-size:.9rem;font-weight:700;color:#1B2F4E;margin-bottom:12px">Here's exactly what to do, step by step:</p>
 
     <div class="step">
@@ -114,20 +126,19 @@ function buildInstructions(templateName, templateSlug, niche, primaryColor, acce
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
-        <strong>Use Find &amp; Replace to swap your business name (the easy way!)</strong>
+        <strong>Press Ctrl+H to open Find &amp; Replace</strong>
         <span>
-          This is the secret trick that makes it fast:<br><br>
-          Press <code>Ctrl+H</code> on Windows (or <code>Cmd+H</code> on Mac). A small box pops up with two fields:<br><br>
-          &nbsp;&nbsp;• <strong>Find what:</strong> type the demo business name (e.g. <em>FitLife</em>)<br>
-          &nbsp;&nbsp;• <strong>Replace with:</strong> type YOUR business name<br><br>
-          Then click <strong>Replace All</strong>. Every single instance on that page changes at once. Takes 10 seconds.
+          A small box pops up with two fields:<br><br>
+          &nbsp;&nbsp;• <strong>Find what:</strong> type the demo business name exactly as it appears (e.g. <em>${templateName.replace(' Template','')}</em>)<br>
+          &nbsp;&nbsp;• <strong>Replace with:</strong> type YOUR business name from your notes<br><br>
+          Then click <strong>Replace All</strong>. Every single spot on that page updates at once. Takes 10 seconds!
         </span>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">4</div>
-      <div class="step-body"><strong>Change any other text the same way</strong><span>Want to update your tagline, phone number, address, or service descriptions? Same trick — press <code>Ctrl+H</code>, type the old words in the top box, type your new words in the bottom box, click Replace All. Or just click directly on the word in Notepad and type over it.</span></div>
+      <div class="step-body"><strong>Replace your other info the same way</strong><span>Press <code>Ctrl+H</code> again for your phone number — old number in the top box, your number in the bottom, Replace All. Same for your address, tagline, email address. One at a time, done in minutes.</span></div>
     </div>
 
     <div class="step">
