@@ -11,9 +11,10 @@ const { buildInstructions } = require('./build-instructions');
 const botScripts = {};
 try { botScripts['fit-life'] = require('./bot-fitlife').getFitLifeBotScript(); } catch(e) {}
 
-// Inject bot into an HTML string before </body>
+// Inject bot into an HTML string before </body> — skip if already present
 function injectBot(html, botScript) {
   if (!botScript) return html;
+  if (html.includes('mel-bot-bubble')) return html;
   return html.replace(/<\/body>/i, botScript + '\n</body>');
 }
 
