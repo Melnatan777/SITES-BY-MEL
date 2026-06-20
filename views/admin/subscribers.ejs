@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subscribers — Admin</title>
+  <title>Email List — Admin</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
@@ -11,30 +11,43 @@
   <%- include('../partials/admin-nav', { activePage: 'subscribers' }) %>
   <div class="admin-main">
     <div class="admin-topbar">
-      <h1>Blog Subscribers (<%= subscribers.length %>)</h1>
-      <form action="/admin/logout" method="POST" style="margin:0;">
-        <button class="btn btn-outline btn-sm">Sign Out</button>
-      </form>
+      <h1>Email List (<%= contacts.length %>)</h1>
+      <div style="display:flex;gap:8px">
+        <a href="/admin/subscribers/export" class="btn btn-outline btn-sm">Export CSV</a>
+        <form action="/admin/logout" method="POST" style="margin:0;">
+          <button class="btn btn-outline btn-sm">Sign Out</button>
+        </form>
+      </div>
     </div>
     <div class="admin-content">
-      <% if (subscribers.length === 0) { %>
-        <p style="padding:40px;text-align:center;color:var(--gray);">No subscribers yet — the subscribe form on the blog page will populate this list.</p>
+      <div style="background:#fffdf7;border:1px solid #f0d080;border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:.85rem;color:#7d5a00">
+        <strong>Your email list</strong> — collected from template orders, quote requests, and blog subscribers. Use this to send coupon codes or updates. Always give an easy unsubscribe option.
+      </div>
+
+      <% if (contacts.length === 0) { %>
+        <p style="padding:40px;text-align:center;color:var(--gray);">No contacts yet.</p>
       <% } else { %>
       <div class="admin-table-wrap">
         <table>
           <thead>
             <tr>
-              <th>#</th>
+              <th>Name</th>
               <th>Email</th>
-              <th>Subscribed</th>
+              <th>Source</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
-            <% subscribers.forEach(function(s, i) { %>
+            <% contacts.forEach(function(c) { %>
             <tr>
-              <td style="color:var(--gray);font-size:.82rem;"><%= i + 1 %></td>
-              <td><a href="mailto:<%= s.email %>" style="color:var(--navy)"><%= s.email %></a></td>
-              <td style="font-size:.82rem;color:var(--gray)"><%= s.created_at ? s.created_at.substring(0,10) : '—' %></td>
+              <td style="font-weight:600;color:#1B2F4E"><%= c.name || '—' %></td>
+              <td><a href="mailto:<%= c.email %>" style="color:var(--navy)"><%= c.email %></a></td>
+              <td>
+                <span style="font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:4px;background:<%= c.source==='order'?'#dcfce7':c.source==='quote'?'#dbeafe':'#f3e8ff' %>;color:<%= c.source==='order'?'#166534':c.source==='quote'?'#1e40af':'#7e22ce' %>">
+                  <%= c.source %>
+                </span>
+              </td>
+              <td style="font-size:.82rem;color:var(--gray)"><%= c.date ? c.date.substring(0,10) : '—' %></td>
             </tr>
             <% }); %>
           </tbody>

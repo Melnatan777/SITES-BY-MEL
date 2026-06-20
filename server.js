@@ -1072,8 +1072,33 @@ app.get('/admin/intake/:token', requireAuth, (req, res) => {
 });
 
 app.get('/admin/subscribers', requireAuth, (req, res) => {
-  const subscribers = db.prepare('SELECT * FROM subscribers ORDER BY created_at DESC').all();
-  res.render('admin/subscribers', { subscribers });
+  const orders = db.prepare("SELECT customer_name as name, customer_email as email, 'order' as source, created_at as date FROM orders WHERE customer_email IS NOT NULL AND customer_email != '' ORDER BY created_at DESC").all();
+  const quotes = db.prepare("SELECT name, email, 'quote' as source, created_at as date FROM quotes WHERE email IS NOT NULL AND email != '' ORDER BY created_at DESC").all();
+  const subs = db.prepare("SELECT NULL as name, email, 'subscriber' as source, created_at as date FROM subscribers ORDER BY created_at DESC").all();
+  // Merge and deduplicate by email, keep most recent
+  const seen = new Set();
+  const contacts = [...orders, ...quotes, ...subs].filter(c => {
+    if (!c.email || seen.has(c.email.toLowerCase())) return false;
+    seen.add(c.email.toLowerCase());
+    return true;
+  });
+  res.render('admin/subscribers', { contacts });
+});
+
+app.get('/admin/subscribers/export', requireAuth, (req, res) => {
+  const orders = db.prepare("SELECT customer_name as name, customer_email as email, 'order' as source, created_at as date FROM orders WHERE customer_email IS NOT NULL AND customer_email != ''").all();
+  const quotes = db.prepare("SELECT name, email, 'quote' as source, created_at as date FROM quotes WHERE email IS NOT NULL AND email != ''").all();
+  const subs = db.prepare("SELECT NULL as name, email, 'subscriber' as source, created_at as date FROM subscribers").all();
+  const seen = new Set();
+  const contacts = [...orders, ...quotes, ...subs].filter(c => {
+    if (!c.email || seen.has(c.email.toLowerCase())) return false;
+    seen.add(c.email.toLowerCase());
+    return true;
+  });
+  const csv = 'Name,Email,Source,Date\n' + contacts.map(c => `"${(c.name||'').replace(/"/g,'""')}","${c.email}","${c.source}","${(c.date||'').substring(0,10)}"`).join('\n');
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', 'attachment; filename="email-list.csv"');
+  res.send(csv);
 });
 
 // ── ADMIN CLIENT PROJECTS ────────────────────────────────────────────────────
@@ -1444,6 +1469,10 @@ app.get('/admin/quotes', requireAuth, (req, res) => {
 });
 app.post('/admin/quotes/:id/status', requireAuth, (req, res) => {
   db.prepare('UPDATE quotes SET status=? WHERE id=?').run(req.body.status, req.params.id);
+  res.redirect('/admin/quotes');
+});
+app.post('/admin/quotes/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM quotes WHERE id=?').run(req.params.id);
   res.redirect('/admin/quotes');
 });
 app.post('/admin/quotes/:id/notes', requireAuth, (req, res) => {
