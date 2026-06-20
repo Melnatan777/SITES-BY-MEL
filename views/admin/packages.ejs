@@ -42,6 +42,14 @@
           </div>
         </div>
 
+        <!-- INTERNAL NOTES PREVIEW -->
+        <% if (pkg.internal_notes) { %>
+        <div style="background:#fffdf7;border-bottom:1px solid #f0d080;padding:16px 24px">
+          <p style="font-size:.7rem;font-weight:700;color:#b45309;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Your Internal Notes</p>
+          <pre style="font-size:.75rem;color:#7d5a00;white-space:pre-wrap;font-family:inherit;margin:0;line-height:1.7"><%= pkg.internal_notes %></pre>
+        </div>
+        <% } %>
+
         <!-- EDIT FORM -->
         <details style="padding:24px">
           <summary style="font-size:.88rem;font-weight:700;color:var(--navy);cursor:pointer;margin-bottom:0">Edit This Package</summary>

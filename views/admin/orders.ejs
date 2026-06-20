@@ -30,6 +30,7 @@
               <th>Customer</th>
               <th>Amount</th>
               <th>Add-On</th>
+              <th>Coupon</th>
               <th>Status</th>
               <th>Photos</th>
               <th>Downloads</th>
@@ -47,10 +48,18 @@
               </td>
               <td style="font-size:.82rem;color:var(--gray)">$<%= ((o.amount || 0) / 100).toFixed(2) %></td>
               <td>
-                <% const addonLabels = {none:'—',upload:'Photo Swap',colors:'Brand Colors',payment:'Payment+Email',glove:'White-Glove'}; %>
+                <% const addonLabels = {none:'—',upload:'Photo & Colors',glove:'Done-For-You'}; %>
                 <span style="font-size:.78rem;font-weight:600;color:<%= o.selected_addon && o.selected_addon!='none' ? 'var(--gold)' : 'var(--gray)' %>">
                   <%= addonLabels[o.selected_addon] || o.selected_addon || '—' %>
                 </span>
+              </td>
+              <td>
+                <% if (o.coupon_code) { %>
+                  <span style="font-family:monospace;font-size:.75rem;font-weight:700;color:#166534;background:#f0fdf4;padding:2px 6px;border-radius:4px"><%= o.coupon_code %></span>
+                  <span style="display:block;font-size:.7rem;color:var(--gray);margin-top:2px">−$<%= ((o.discount_amount||0)/100).toFixed(2) %></span>
+                <% } else { %>
+                  <span style="color:var(--gray);font-size:.78rem">—</span>
+                <% } %>
               </td>
               <td><span class="badge <%= o.status === 'paid' ? 'badge-green' : o.status === 'refunded' ? 'badge-red' : 'badge-yellow' %>"><%= o.status %></span></td>
               <td style="min-width:140px">
