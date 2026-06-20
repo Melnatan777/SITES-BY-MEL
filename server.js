@@ -40,8 +40,24 @@ app.use('/preview', (req, res, next) => {
 #sbm-watermark-bar a{color:#C9922B;text-decoration:underline;pointer-events:all;}
 #sbm-watermark-diag{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:999998;}
 #sbm-watermark-diag::before{content:'PREVIEW ONLY — sitesbymel.com — PREVIEW ONLY — sitesbymel.com — PREVIEW ONLY — sitesbymel.com';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:1.4rem;font-weight:800;color:rgba(27,47,78,0.07);white-space:nowrap;font-family:Arial,sans-serif;letter-spacing:.1em;width:200%;text-align:center;}
-body{padding-top:42px !important;}
 </style>
+<script>
+(function(){
+  var BAR_H = 42;
+  function nudge(){
+    document.querySelectorAll('header,nav,.navbar,.nav-bar,.site-nav,[class*="navbar"],[class*="nav-wrap"],[id*="navbar"],[id*="nav-bar"]').forEach(function(el){
+      var s = window.getComputedStyle(el);
+      if(s.position==='fixed'||s.position==='sticky'){
+        var cur = parseInt(el.style.top)||0;
+        if(cur < BAR_H){ el.style.top = BAR_H+'px'; }
+      }
+    });
+    document.body.style.paddingTop = BAR_H+'px';
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',nudge);}else{nudge();}
+  window.addEventListener('load',nudge);
+})();
+</script>
 <div id="sbm-watermark">
   <div id="sbm-watermark-bar">
     PREVIEW ONLY &nbsp;|&nbsp; This design is property of <a href="https://sitesbymel.com/templates" target="_blank">sitesbymel.com</a> &nbsp;|&nbsp; Purchase to use &nbsp;|&nbsp; <a href="https://sitesbymel.com/templates" target="_blank">Buy This Template &rarr;</a>
