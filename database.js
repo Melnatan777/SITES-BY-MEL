@@ -268,6 +268,9 @@ db.exec(`
   )
 `);
 
+// Ensure unique index exists BEFORE upsert so ON CONFLICT works
+try { db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS idx_service_packages_slug ON service_packages(slug)`); } catch(e) {}
+
 // Seed + force-update packages so changes in code always apply
 const upsertPkg = db.prepare(`INSERT INTO service_packages
   (slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes)
@@ -458,8 +461,6 @@ COST TO MEL: Railway $5/mo + domain ~$15/yr
 PROFIT: Depends on scope — target $50-65/hr effective rate`
 );
 
-// Add unique constraint on slug if not exists
-try { db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS idx_service_packages_slug ON service_packages(slug)`); } catch(e) {}
 // Done-For-You Template is internal reference only — hide from public services page
 try { db.prepare("UPDATE service_packages SET is_active=0 WHERE slug='done_for_you_template'").run(); } catch(e) {}
 
