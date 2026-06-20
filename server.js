@@ -501,7 +501,7 @@ app.get('/personalize/:token', (req, res) => {
   const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
   if (!product) return res.status(404).send('Product not found.');
   const placeholder = PLACEHOLDERS[product.slug] || {};
-  res.render('personalize', { token: req.params.token, product, placeholder });
+  res.render('personalize', { token: req.params.token, product, placeholder, selectedAddon: order.selected_addon || 'none' });
 });
 
 // Build personalized zip and deliver it (or route to Stripe for add-ons)

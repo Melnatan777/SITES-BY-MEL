@@ -46,10 +46,46 @@
         </div>
       </div>
 
-      <!-- WHAT HAPPENS NEXT (if they have an add-on) -->
+      <!-- ADD-ON SPECIFIC FIELDS -->
+      <% if (selectedAddon === 'drive') { %>
+      <div style="background:#fff;border:2px solid #C9922B;border-radius:12px;padding:28px;margin-bottom:16px">
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">📸 Photo Swap — Paste Your Google Drive Link</h2>
+        <p style="font-size:.82rem;color:#6B7280;margin-bottom:14px">Share a Google Drive folder with your photos. Mel will swap them into your template within 2 business days and email you the updated version.</p>
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Google Drive Link <span style="color:#C9922B">*</span></label>
+        <input type="url" name="drive_link" placeholder="https://drive.google.com/drive/folders/..." style="width:100%;padding:10px 14px;border:1px solid #C9922B;border-radius:6px;font-size:.9rem" required>
+        <p style="font-size:.72rem;color:#9CA3AF;margin-top:4px">Make sure sharing is set to "Anyone with the link can view" before pasting.</p>
+      </div>
+      <% } else if (selectedAddon === 'upload') { %>
+      <div style="background:#fff;border:2px solid #C9922B;border-radius:12px;padding:28px;margin-bottom:16px">
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">📤 Direct Photo Upload — Upload Your Photos</h2>
+        <p style="font-size:.82rem;color:#6B7280;margin-bottom:14px">Upload up to 5 photos. Mel will embed them into your template within 2 business days and email you the updated version.</p>
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Upload Your Photos (up to 5) <span style="color:#C9922B">*</span></label>
+        <input type="file" name="photos" accept="image/*" multiple style="width:100%;padding:10px 14px;border:1px solid #C9922B;border-radius:6px;font-size:.85rem;background:#fff">
+        <p style="font-size:.72rem;color:#9CA3AF;margin-top:4px">JPG, PNG, or WEBP. Best results with high-resolution photos (at least 1200px wide).</p>
+      </div>
+      <% } else if (selectedAddon === 'colors') { %>
+      <div style="background:#fff;border:2px solid #C9922B;border-radius:12px;padding:28px;margin-bottom:16px">
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">🎨 Custom Brand Colors</h2>
+        <p style="font-size:.82rem;color:#6B7280;margin-bottom:14px">Share your brand colors and Mel will update the entire template to match. If you don't know your hex codes, describe the colors and she'll match them.</p>
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Brand Colors</label>
+        <input type="text" name="brand_colors" placeholder="e.g. Navy blue #1a2a5c and gold #e8a020 — or describe: deep teal and warm orange" style="width:100%;padding:10px 14px;border:1px solid #C9922B;border-radius:6px;font-size:.9rem">
+      </div>
+      <% } else if (selectedAddon === 'glove') { %>
+      <div style="background:#fff;border:2px solid #C9922B;border-radius:12px;padding:28px;margin-bottom:16px">
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">✨ White-Glove Finish</h2>
+        <p style="font-size:.82rem;color:#6B7280;margin-bottom:0">Mel will reach out to your email within 1 business day to get started on your full customization. Make sure your business email above is correct!</p>
+      </div>
+      <% } else if (selectedAddon === 'payment') { %>
+      <div style="background:#fff;border:2px solid #C9922B;border-radius:12px;padding:28px;margin-bottom:16px">
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">💳 Payment Button & Business Email Setup</h2>
+        <p style="font-size:.82rem;color:#6B7280;margin-bottom:0">Mel will reach out to your email within 1 business day to set up your payment button and business email. Make sure your email above is correct!</p>
+      </div>
+      <% } %>
+
+      <!-- WHAT HAPPENS NEXT -->
       <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:12px;padding:20px 24px;margin-bottom:16px">
         <p style="font-size:.85rem;color:#1e40af;line-height:1.7;margin:0">
-          <strong>What happens next:</strong> Your template download will start immediately. If you purchased an add-on, Mel will reach out within 1 business day to complete your order.
+          <strong>What happens next:</strong> Your template download will start immediately.<% if (selectedAddon && selectedAddon !== 'none') { %> Mel will follow up within 1–2 business days to complete your <strong><%= {drive:'Photo Swap',upload:'Photo Upload',colors:'Brand Colors',glove:'White-Glove',payment:'Payment Setup'}[selectedAddon] || 'add-on' %></strong>.<% } %>
         </p>
       </div>
 
