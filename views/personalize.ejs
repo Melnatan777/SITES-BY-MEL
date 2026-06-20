@@ -69,54 +69,45 @@
       </div>
       <% } else if (selectedAddon === 'upload') { %>
       <div style="background:#fff;border:2px solid #C9922B;border-radius:12px;padding:28px;margin-bottom:16px">
-        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">📤 Direct Photo Upload — Upload Your Photos</h2>
-        <p style="font-size:.82rem;color:#6B7280;margin-bottom:16px">Upload your photos below. Mel will embed them into your template and email you the finished version within 2 business days.</p>
-
-        <div style="background:#fdf6e3;border-left:3px solid #C9922B;padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:.82rem;color:#7d5a00">
-          <strong>Tips for best results:</strong>
-          <ul style="margin:8px 0 0 16px;line-height:2">
-            <li>Use <strong>clear, well-lit photos</strong> — natural light works best</li>
-            <li>Landscape (horizontal) photos work better than portrait (vertical) for website headers</li>
-            <li>Photos from your phone camera are perfectly fine</li>
-            <li>You can upload up to <strong>5 photos</strong></li>
-          </ul>
-        </div>
+        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">📸🎨 Photo & Color Customization — Share Your Details</h2>
+        <p style="font-size:.82rem;color:#6B7280;margin-bottom:16px">Upload your photos and share your brand colors below. Mel will swap everything in and return your finished template within 2 business days.</p>
 
         <!-- PHOTO PLACEMENT GUIDE -->
         <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:.82rem;color:#1e40af">
-          <strong style="display:block;margin-bottom:8px">📐 What each photo slot is used for:</strong>
+          <strong style="display:block;margin-bottom:8px">📐 What each photo is used for:</strong>
           <table style="width:100%;border-collapse:collapse;font-size:.78rem">
-            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:5px 8px;font-weight:700;width:28%">Photo 1</td><td style="padding:5px 8px"><strong>Hero / Banner</strong> — wide landscape image at the top of your site. Min 1200px wide. Your best work or your space.</td></tr>
-            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:5px 8px;font-weight:700">Photo 2</td><td style="padding:5px 8px"><strong>About / Team</strong> — a photo of you, your team, or your workspace.</td></tr>
-            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:5px 8px;font-weight:700">Photo 3</td><td style="padding:5px 8px"><strong>Services / Feature</strong> — your product or service in action.</td></tr>
+            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:5px 8px;font-weight:700;width:28%">Photo 1</td><td style="padding:5px 8px"><strong>Hero / Banner</strong> — wide landscape, min 1200px wide. Your best work or your space.</td></tr>
+            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:5px 8px;font-weight:700">Photo 2</td><td style="padding:5px 8px"><strong>About / Team</strong> — you, your team, or your workspace.</td></tr>
+            <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:5px 8px;font-weight:700">Photo 3</td><td style="padding:5px 8px"><strong>Services</strong> — your product or service in action.</td></tr>
             <tr style="border-bottom:1px solid #bfdbfe"><td style="padding:5px 8px;font-weight:700">Photo 4</td><td style="padding:5px 8px"><strong>Gallery</strong> — another work sample or product shot.</td></tr>
-            <tr><td style="padding:5px 8px;font-weight:700">Photo 5</td><td style="padding:5px 8px"><strong>Extra</strong> — optional. Additional work sample or location photo.</td></tr>
+            <tr><td style="padding:5px 8px;font-weight:700">Photo 5</td><td style="padding:5px 8px"><strong>Extra</strong> — optional additional image.</td></tr>
           </table>
-          <p style="margin-top:8px;margin-bottom:0"><strong>Tip:</strong> Name your files Photo1.jpg, Photo2.jpg etc. before uploading — or use the notes box below to tell me where each one goes.</p>
+          <p style="margin-top:8px;margin-bottom:0"><strong>Tip:</strong> Name files Photo1.jpg, Photo2.jpg etc. — or tell Mel in the notes box below.</p>
         </div>
 
-        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Upload Your Photos (up to 5) <span style="color:#C9922B">*</span></label>
+        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Upload Your Photos (up to 5)</label>
         <input type="file" name="photos" accept="image/*" multiple style="width:100%;padding:10px 14px;border:1px solid #C9922B;border-radius:6px;font-size:.85rem;background:#fff">
-        <p style="font-size:.72rem;color:#9CA3AF;margin-top:4px">JPG, PNG, or WEBP accepted. Hold Ctrl (Windows) or Cmd (Mac) while clicking to select multiple photos at once.</p>
+        <p style="font-size:.72rem;color:#9CA3AF;margin-top:4px">JPG, PNG, or WEBP. Hold Ctrl (Windows) or Cmd (Mac) to select multiple at once.</p>
+
+        <!-- BRAND COLORS -->
+        <div style="margin-top:16px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Brand Colors <span style="color:#C9922B">*</span></label>
+          <input type="text" name="brand_colors" placeholder="e.g. Navy blue #1B2F4E and gold #C9922B — or describe: deep teal and warm coral" style="width:100%;padding:10px 14px;border:1px solid #C9922B;border-radius:6px;font-size:.9rem">
+          <p style="font-size:.72rem;color:#9CA3AF;margin-top:4px">Don't know your hex codes? Just describe the colors — Mel will match them.</p>
+        </div>
 
         <!-- PHOTO NOTES -->
         <div style="margin-top:14px">
-          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Photo Placement Notes <span style="font-weight:400;color:#9CA3AF">(optional but helpful)</span></label>
-          <textarea name="photo_notes" rows="3" placeholder="e.g. Photo1 = hero banner of my storefront, Photo2 = headshot of me, Photo3 = my best dish. Or any special placement requests." style="width:100%;padding:10px 14px;border:1px solid #E5E0D8;border-radius:6px;font-size:.85rem;resize:vertical;font-family:inherit"></textarea>
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Photo Placement Notes & Any Special Requests <span style="font-weight:400;color:#9CA3AF">(optional but helpful)</span></label>
+          <textarea name="photo_notes" rows="3" placeholder="e.g. Photo1 = hero banner of my storefront, Photo2 = headshot of me, Photo3 = my signature dish. Any other requests for Mel." style="width:100%;padding:10px 14px;border:1px solid #E5E0D8;border-radius:6px;font-size:.85rem;resize:vertical;font-family:inherit"></textarea>
         </div>
 
         <div style="background:#f9fafb;border:1px solid #E5E0D8;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:.8rem;color:#6B7280">
           <strong style="color:#374151">Having trouble uploading?</strong> Email your photos to
           <a href="mailto:mel@sitesbymel.com" style="color:#C9922B;font-weight:600">mel@sitesbymel.com</a>
-          with the subject line <strong>Order #<%= token.slice(0,8).toUpperCase() %> — Replacement Photos</strong>. Up to 5 photos per email.
+          with subject line <strong>Order #<%= token.slice(0,8).toUpperCase() %> — Photos & Colors</strong>.
         </div>
       </div>
-      <% } else if (selectedAddon === 'colors') { %>
-      <div style="background:#fff;border:2px solid #C9922B;border-radius:12px;padding:28px;margin-bottom:16px">
-        <h2 style="font-size:1rem;font-weight:700;color:#1B2F4E;margin-bottom:6px">🎨 Custom Brand Colors</h2>
-        <p style="font-size:.82rem;color:#6B7280;margin-bottom:14px">Share your brand colors and Mel will update the entire template to match. If you don't know your hex codes, describe the colors and she'll match them.</p>
-        <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px;color:#374151">Your Brand Colors</label>
-        <input type="text" name="brand_colors" placeholder="e.g. Navy blue #1a2a5c and gold #e8a020 — or describe: deep teal and warm orange" style="width:100%;padding:10px 14px;border:1px solid #C9922B;border-radius:6px;font-size:.9rem">
       </div>
       <% } else if (selectedAddon === 'glove') { %>
       <div style="background:#fff;border:2px solid #C9922B;border-radius:12px;padding:28px;margin-bottom:16px">

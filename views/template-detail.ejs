@@ -73,18 +73,8 @@
               <div id="opt-upload" onclick="selectOption('upload')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                   <div>
-                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Photo Swap</span>
-                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Upload up to 5 photos — Mel embeds them into your template within 2 days <em>(total $294)</em></span>
-                  </div>
-                  <span style="font-weight:800;color:var(--gold);font-size:1rem;">+$97</span>
-                </div>
-              </div>
-
-              <div id="opt-colors" onclick="selectOption('colors')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div>
-                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Custom Brand Colors</span>
-                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Tell Mel your colors — she swaps every button, heading &amp; accent to match your brand <em>(total $294)</em></span>
+                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Photo &amp; Color Customization</span>
+                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Upload up to 5 photos + share your brand colors — Mel swaps them all in within 2 business days <em>(total $294)</em></span>
                   </div>
                   <span style="font-weight:800;color:var(--gold);font-size:1rem;">+$97</span>
                 </div>
@@ -119,8 +109,8 @@
           <% } %>
 
           <script>
-            const prices = { none: 197, upload: 294, colors: 294, glove: 597 };
-            const labels = { none: 'Buy & Download — $197', upload: 'Buy Now — $294 total', colors: 'Buy Now — $294 total', glove: 'Buy Now — $597 total' };
+            const prices = { none: 197, upload: 294, glove: 597 };
+            const labels = { none: 'Buy & Download — $197', upload: 'Buy Now — $294 total', glove: 'Buy Now — $597 total' };
 
             const addonDetails = {
               none: {
@@ -140,11 +130,14 @@
                 ]
               },
               upload: {
-                title: '+ Direct Photo Upload — What Mel Does For You',
+                title: '+ Photo & Color Customization — What Mel Does For You',
                 items: [
-                  '✓ Everything in template', '✓ Upload your photos directly',
-                  '✓ Mel embeds them on your pages', '✓ Returned within 2 business days',
-                  '✓ Up to 5 photos placed', '✓ Properly sized & optimized'
+                  '✓ Upload up to 5 photos — Mel places them perfectly',
+                  '✓ Your brand colors applied throughout',
+                  '✓ Every button, heading & accent updated',
+                  '✓ Returned within 2 business days',
+                  '✓ Looks like YOUR brand, not a template',
+                  '✓ Just open & launch when you receive it'
                 ]
               },
               glove: {
@@ -167,7 +160,7 @@
             };
 
             function selectOption(key) {
-              ['none','upload','colors','glove'].forEach(function(k) {
+              ['none','upload','glove'].forEach(function(k) {
                 var el = document.getElementById('opt-' + k);
                 if (el) el.style.borderColor = k === key ? 'var(--gold)' : 'var(--border)';
                 if (el) el.style.background = k === key ? '#fffdf7' : '';
