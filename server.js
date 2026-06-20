@@ -47,6 +47,35 @@ buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e
   } catch(e) { console.error('[seed] fixPreviewUrls error:', e.message); }
 })();
 
+// Ensure all templates have correct thumbnail filenames in DB
+(function fixThumbnails() {
+  const thumbs = [
+    { slug: 'service-pro',    thumbnail: 'service-pro.jpg' },
+    { slug: 'table-ready',    thumbnail: 'Tables.jpg' },
+    { slug: 'key-ready',      thumbnail: 'KeyReady.jpg' },
+    { slug: 'shop-front',     thumbnail: 'ShopReady.jpg' },
+    { slug: 'voice-first',    thumbnail: 'ThoughtfulCreator.jpg' },
+    { slug: 'gather-here',    thumbnail: 'Cornerstone.jpg' },
+    { slug: 'pet-shop',       thumbnail: 'pet-shop.jpg' },
+    { slug: 'beauty-studio',  thumbnail: 'beauty-studio.jpg' },
+    { slug: 'lens-and-light', thumbnail: 'lens-and-light.jpg' },
+    { slug: 'green-cut',      thumbnail: 'green-cut.jpg' },
+    { slug: 'wellness-pro',   thumbnail: 'wellness-pro.jpg' },
+    { slug: 'fit-life',       thumbnail: 'fit-life.jpg' },
+    { slug: 'sparkle-clean',  thumbnail: 'sparkle-clean.jpg' },
+    { slug: 'bright-minds',   thumbnail: 'bright-minds.jpg' },
+    { slug: 'forever-events', thumbnail: 'forever-events.jpg' },
+    { slug: 'auto-shine',     thumbnail: 'auto-shine.jpg' },
+    { slug: 'detail-pro',     thumbnail: 'detail-pro.jpg' },
+  ];
+  try {
+    for (const t of thumbs) {
+      db.prepare('UPDATE products SET thumbnail=? WHERE slug=?').run(t.thumbnail, t.slug);
+    }
+    console.log('[seed] Thumbnails updated for all templates');
+  } catch(e) { console.error('[seed] fixThumbnails error:', e.message); }
+})();
+
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 const app = express();
