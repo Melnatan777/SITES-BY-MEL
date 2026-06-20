@@ -594,13 +594,13 @@ app.get('/personalize/:token', (req, res) => {
     res.render('personalize', { token: req.params.token, product, placeholder, selectedAddon: order.selected_addon || 'none' }, (err, html) => {
       if (err) {
         console.error('[personalize] render error:', err.message, err.stack);
-        return res.status(500).render('error-friendly', { email: 'mel@sitesbymel.com' });
+        return res.status(500).send('<h2>Something went wrong</h2><p>Please email <a href="mailto:mel@sitesbymel.com">mel@sitesbymel.com</a> with your order and she will help you right away.</p>');
       }
       res.send(html);
     });
   } catch(e) {
     console.error('[personalize] crash:', e.message, e.stack);
-    res.status(500).render('error-friendly', { email: 'mel@sitesbymel.com' });
+    res.status(500).send('<h2>Something went wrong</h2><p>Please email <a href="mailto:mel@sitesbymel.com">mel@sitesbymel.com</a> with your order and she will help you right away.</p>');
   }
 });
 
