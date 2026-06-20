@@ -585,12 +585,23 @@ app.get('/order/setup-success', (req, res) => res.render('setup-success'));
 
 // Personalization form — shown after purchase before download
 app.get('/personalize/:token', (req, res) => {
-  const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
-  if (!order) return res.status(404).send('Order not found.');
-  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
-  if (!product) return res.status(404).send('Product not found.');
-  const placeholder = PLACEHOLDERS[product.slug] || {};
-  res.render('personalize', { token: req.params.token, product, placeholder, selectedAddon: order.selected_addon || 'none' });
+  try {
+    const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
+    if (!order) return res.status(404).send('<h2>Order not found</h2><p>This link may have expired. Contact mel@sitesbymel.com</p>');
+    const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+    if (!product) return res.status(404).send('<h2>Product not found</h2><p>Contact mel@sitesbymel.com</p>');
+    const placeholder = PLACEHOLDERS[product.slug] || {};
+    res.render('personalize', { token: req.params.token, product, placeholder, selectedAddon: order.selected_addon || 'none' }, (err, html) => {
+      if (err) {
+        console.error('[personalize] render error:', err.message);
+        return res.status(500).send('<h2>Page error</h2><pre>' + err.message + '</pre><p>Contact mel@sitesbymel.com</p>');
+      }
+      res.send(html);
+    });
+  } catch(e) {
+    console.error('[personalize] crash:', e.message);
+    res.status(500).send('<h2>Something went wrong</h2><pre>' + e.message + '</pre>');
+  }
 });
 
 // Build personalized zip and deliver it (or route to Stripe for add-ons)
