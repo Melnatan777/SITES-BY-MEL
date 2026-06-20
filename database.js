@@ -48,6 +48,7 @@ db.exec(`
   )
 `);
 try { db.exec(`ALTER TABLE orders ADD COLUMN selected_addon TEXT DEFAULT 'none'`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN photo_notes TEXT`); } catch(e) {}
 
 // ── SETUP REQUESTS (done-for-you service) ─────────────────────────────────────
 db.exec(`

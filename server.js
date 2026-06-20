@@ -594,6 +594,8 @@ app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res)
     for (const f of req.files) {
       insertPhoto.run(order.id, f.filename, f.originalname, f.path);
     }
+    const photoNotes = req.body.photo_notes || '';
+    if (photoNotes) db.prepare('UPDATE orders SET photo_notes=? WHERE id=?').run(photoNotes, order.id);
     if (resend) {
       resend.emails.send({
         from: 'Sites by Mel <mel@sitesbymel.com>',
@@ -605,7 +607,8 @@ app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res)
           <table style="width:100%;border-collapse:collapse;font-size:.9rem;margin:16px 0">
             <tr><td style="padding:6px 0;color:#6B7280;width:40%">Order</td><td style="font-weight:600;color:#1B2F4E">#${order.id} — ${order.product_name}</td></tr>
             <tr><td style="padding:6px 0;color:#6B7280">Add-On</td><td style="color:#1B2F4E">${order.selected_addon && order.selected_addon !== 'none' ? order.selected_addon : 'None'}</td></tr>
-            <tr><td style="padding:6px 0;color:#6B7280">Photos</td><td style="color:#1B2F4E">${req.files.map(f => f.originalname).join(', ')}</td></tr>
+            <tr><td style="padding:6px 0;color:#6B7280">Files</td><td style="color:#1B2F4E">${req.files.map(f => f.originalname).join(', ')}</td></tr>
+            ${photoNotes ? `<tr><td style="padding:6px 0;color:#6B7280;vertical-align:top">Notes</td><td style="color:#1B2F4E;font-style:italic">${photoNotes}</td></tr>` : ''}
           </table>
           <a href="${BASE_URL}/admin/orders" style="display:inline-block;background:#1B2F4E;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem">View in Admin →</a>
         </div>`
