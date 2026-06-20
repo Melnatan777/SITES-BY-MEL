@@ -867,7 +867,7 @@ app.get('/admin/check-images', requireAuth, (req, res) => {
 });
 
 // Admin — Force fix thumbnails in DB
-app.post('/admin/fix-thumbnails', requireAuth, (req, res) => {
+app.get('/admin/fix-thumbnails', requireAuth, (req, res) => {
   const thumbs = [
     { slug: 'service-pro',    thumbnail: 'service-pro.jpg' },
     { slug: 'table-ready',    thumbnail: 'Tables.jpg' },
