@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact & Reservations — TableReady Restaurant Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#8b1a1a;--secondary:#5c0f0f;--accent:#e8c020;--text:#2a1a1a;--light:#fdf8f4;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:4px;--transition:all 0.2s;--gray:#6b6560;--border:#e8e0d5;--dark:#1a1208}
+body{font-family:'Lato',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Playfair Display',serif}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:'Lato',sans-serif;font-weight:700;font-size:0.92rem;cursor:pointer;border:none;transition:var(--transition);letter-spacing:0.05em;text-transform:uppercase}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--dark)}
+.btn-accent:hover{background:#c9a800}
+.btn-full{width:100%;display:block;text-align:center;padding:14px}
+
+nav{background:var(--dark);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.8);font-size:0.88rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:var(--transition)}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white)}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px 60px;text-align:center}
+.page-hero .sub{font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px}
+.page-hero p{font-size:1rem;opacity:0.85;max-width:520px;margin:0 auto;font-weight:300}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--dark);color:var(--white)}
+.gold-rule{width:60px;height:2px;background:var(--accent);margin:16px auto 0}
+
+/* CONTACT LAYOUT */
+.contact-grid{display:grid;grid-template-columns:3fr 2fr;gap:56px;align-items:start}
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:40px;box-shadow:var(--shadow)}
+.form-card h2{font-size:1.5rem;margin-bottom:8px}
+.form-card .sub{font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;color:#444}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.92rem;font-family:'Lato',sans-serif;outline:none;transition:var(--transition);background:var(--light)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);background:var(--white)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-note{font-size:0.78rem;color:var(--gray);margin-top:10px;line-height:1.6}
+
+/* SIDEBAR INFO */
+.info-sidebar{display:flex;flex-direction:column;gap:28px}
+.info-block{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.info-block h3{font-size:1rem;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.info-block p{color:var(--gray);font-size:0.88rem;line-height:1.8}
+.info-block a{color:var(--primary);font-size:0.88rem}
+.hours-list{list-style:none}
+.hours-list li{display:flex;justify-content:space-between;font-size:0.88rem;padding:5px 0;border-bottom:1px solid var(--border);color:var(--gray)}
+.hours-list li:last-child{border-bottom:none}
+.hours-list li strong{color:var(--text)}
+
+/* CALENDLY */
+.calendly-section{background:var(--light);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:center}
+.calendly-section h3{font-size:1.1rem;margin-bottom:8px}
+.calendly-section p{font-size:0.88rem;color:var(--gray);margin-bottom:20px;line-height:1.6}
+.calendly-placeholder{background:var(--white);border:2px dashed var(--border);border-radius:var(--radius);padding:40px 24px;text-align:center}
+.calendly-placeholder p{color:var(--gray);font-size:0.85rem;margin-bottom:16px}
+.calendly-placeholder .cal-icon{font-size:2.4rem;margin-bottom:12px}
+
+/* MAP PLACEHOLDER */
+.map-placeholder{height:280px;background:linear-gradient(135deg,#e8e0d5,#fdf8f4);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;border:1px solid var(--border);color:var(--gray);font-size:0.85rem;text-align:center;margin-top:28px}
+
+/* VISIT INFO */
+.visit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.visit-block{padding:32px 24px;text-align:center;border-right:1px solid var(--border)}
+.visit-block:last-child{border-right:none}
+.visit-icon{font-size:2rem;margin-bottom:12px}
+.visit-block h4{font-size:1rem;margin-bottom:8px}
+.visit-block p{color:var(--gray);font-size:0.88rem;line-height:1.7}
+
+/* FAQ */
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+.faq-item h4{font-size:0.97rem;font-weight:700;color:var(--dark);margin-bottom:8px;display:flex;align-items:flex-start;gap:10px}
+.faq-item h4::before{content:'Q';background:var(--primary);color:var(--white);font-size:0.72rem;padding:3px 7px;border-radius:2px;flex-shrink:0;margin-top:1px}
+.faq-item p{color:var(--gray);font-size:0.9rem;line-height:1.7;padding-left:30px}
+
+footer{background:#0d0a04;color:rgba(255,255,255,0.65);padding:60px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--accent)}
+footer h4{font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.6);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){
+  .contact-grid{grid-template-columns:1fr}
+  .visit-grid{grid-template-columns:1fr}
+  .visit-block{border-right:none;border-bottom:1px solid var(--border)}
+  .visit-block:last-child{border-bottom:none}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:72px;left:0;right:0;background:var(--dark);flex-direction:column;padding:20px 24px;gap:16px}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .form-2col{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">La <span>Mesa</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Menu</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="active btn btn-primary" style="padding:8px 18px">Reserve</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="sub">Get in Touch</p>
+  <h1>Reservations & Contact</h1>
+  <p>Reserve your table, book a private event, or simply get in touch with our team.</p>
+</div>
+
+<!-- MAIN CONTACT -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <!-- RESERVATION FORM via Formspree -->
+        <div class="form-card">
+          <p class="sub">Online Reservation</p>
+          <h2>Reserve Your Table</h2>
+          <!-- Replace YOUR_FORM_ID with your Formspree form ID from formspree.io (free) -->
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:24px">
+            <div class="form-2col">
+              <div class="form-group">
+                <label for="fname">First Name *</label>
+                <input type="text" id="fname" name="first_name" placeholder="Jane" required/>
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name *</label>
+                <input type="text" id="lname" name="last_name" placeholder="Smith" required/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" placeholder="jane@email.com" required/>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" required/>
+            </div>
+            <div class="form-2col">
+              <div class="form-group">
+                <label for="date">Preferred Date *</label>
+                <input type="date" id="date" name="date" required/>
+              </div>
+              <div class="form-group">
+                <label for="time">Preferred Time *</label>
+                <select id="time" name="time">
+                  <option>5:00 PM</option>
+                  <option>5:30 PM</option>
+                  <option>6:00 PM</option>
+                  <option>6:30 PM</option>
+                  <option>7:00 PM</option>
+                  <option>7:30 PM</option>
+                  <option>8:00 PM</option>
+                  <option>8:30 PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="guests">Party Size *</label>
+              <select id="guests" name="party_size">
+                <option>1 guest</option>
+                <option selected>2 guests</option>
+                <option>3 guests</option>
+                <option>4 guests</option>
+                <option>5 guests</option>
+                <option>6 guests</option>
+                <option>7+ guests — we'll call to confirm</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="occasion">Special Occasion</label>
+              <select id="occasion" name="occasion">
+                <option value="">None / Regular Dinner</option>
+                <option>Birthday</option>
+                <option>Anniversary</option>
+                <option>Business Dinner</option>
+                <option>Proposal / Engagement</option>
+                <option>Other — see notes</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="notes">Special Requests or Dietary Needs</label>
+              <textarea id="notes" name="notes" rows="3" placeholder="Allergies, high chair needed, window seat preference, etc."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Request My Reservation &rarr;</button>
+            <p class="form-note">&#10003; We'll confirm your reservation by email within 2 hours. For same-day reservations, please call us directly at (555) 123-4567.</p>
+          </form>
+        </div>
+
+        <!-- PRIVATE EVENT BOOKING via Calendly -->
+        <div style="margin-top:32px">
+          <!-- To add online booking: go to calendly.com (free), create your event type, and replace YOUR_CALENDLY_LINK below -->
+          <div class="calendly-placeholder">
+            <div class="cal-icon">📅</div>
+            <p style="font-weight:700;color:var(--dark);margin-bottom:4px">Book a Private Event Consultation</p>
+            <p>Schedule a free 30-minute call with our events team to plan your private dining experience, corporate event, or catered celebration.</p>
+            <!-- Replace YOUR_CALENDLY_LINK with your Calendly URL, e.g. https://calendly.com/yourname/30min -->
+            <a href="https://calendly.com/YOUR_CALENDLY_LINK" target="_blank" class="btn btn-accent">Schedule a Call — Free</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="info-sidebar">
+        <div class="info-block">
+          <h3>📍 Find Us</h3>
+          <p>1234 Main Street<br/>Houston, TX 77002</p>
+          <p style="margin-top:12px"><a href="https://maps.google.com" target="_blank">Get Directions on Google Maps &rarr;</a></p>
+          <div class="map-placeholder">
+            <span style="font-size:1.8rem">🗺️</span>
+            <p>Embed Google Map here</p>
+            <p style="font-size:0.78rem">Go to maps.google.com → Share → Embed a map</p>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <h3>🕐 Hours of Operation</h3>
+          <ul class="hours-list">
+            <li><strong>Monday</strong> <span>Closed</span></li>
+            <li><strong>Tuesday – Thursday</strong> <span>11am – 9pm</span></li>
+            <li><strong>Friday</strong> <span>11am – 10pm</span></li>
+            <li><strong>Saturday</strong> <span>10am – 10pm</span></li>
+            <li><strong>Sunday</strong> <span>10am – 8pm</span></li>
+          </ul>
+          <p style="margin-top:12px;font-size:0.82rem">Kitchen closes 30 minutes before dining room. Bar remains open until close.</p>
+        </div>
+
+        <div class="info-block">
+          <h3>📞 Call or Email</h3>
+          <p>
+            <a href="tel:5551234567" style="font-size:1.05rem;font-weight:700;color:var(--primary)">(555) 123-4567</a><br/>
+            <a href="mailto:hello@lamesa.com">hello@lamesa.com</a>
+          </p>
+          <p style="margin-top:12px">For large parties (8+) or same-day reservations, please call us directly. We love hearing from you.</p>
+        </div>
+
+        <div class="info-block">
+          <h3>🅿️ Parking</h3>
+          <p>Free street parking is available on Main Street and Oak Avenue. A paid parking garage is located one block north at 1300 Main St — La Mesa guests receive a 2-hour validation with dinner.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT INFO -->
+<section class="section section-light">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Good to Know</p>
+      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem)">Before You Visit</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="visit-grid">
+      <div class="visit-block">
+        <div class="visit-icon">👔</div>
+        <h4>Dress Code</h4>
+        <p>Smart casual. We welcome you to dress comfortably — just leave the flip-flops at home for dinner service.</p>
+      </div>
+      <div class="visit-block">
+        <div class="visit-icon">🐾</div>
+        <h4>Pet Policy</h4>
+        <p>Well-behaved dogs are welcome on our covered patio. Please call ahead so we can prepare a water bowl.</p>
+      </div>
+      <div class="visit-block">
+        <div class="visit-icon">🧒</div>
+        <h4>Families Welcome</h4>
+        <p>We love families. High chairs and a children's menu are available. Crayons included — drawing encouraged.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Common Questions</p>
+      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem)">Frequently Asked Questions</h2>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h4>Do you take walk-ins?</h4>
+        <p>Yes! We keep a portion of our tables available for walk-ins every evening. However, we recommend reserving in advance on weekends and holidays as we do fill up quickly.</p>
+      </div>
+      <div class="faq-item">
+        <h4>How far in advance should I book a private event?</h4>
+        <p>We recommend booking private dining and catering events 4–6 weeks in advance for weekday events, and 8–12 weeks for weekend events. Holiday periods book up even earlier.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can you accommodate food allergies?</h4>
+        <p>Absolutely. Please note all dietary restrictions in your reservation request. Our kitchen can accommodate most allergies including gluten-free, dairy-free, nut-free, vegetarian, and vegan. For severe allergies, please call us directly.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Is there a cancellation policy?</h4>
+        <p>We ask for 24-hour notice to cancel or modify reservations. For private events and parties of 8+, a 48-hour cancellation notice is required to avoid a $25/person fee.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do you offer gift cards?</h4>
+        <p>Yes! La Mesa gift cards are available in any amount and can be purchased in-restaurant or by calling us. They make a wonderful gift for any occasion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">La <span>Mesa</span></div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">Authentic cuisine crafted with fresh ingredients and family tradition. Serving Houston since 2015.</p>
+        <a href="contact.html" class="btn btn-accent" style="font-size:0.82rem;padding:9px 20px">Reserve a Table</a>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Full Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit Us</h4>
+        <ul>
+          <li><a href="#">1234 Main St, Houston TX</a></li>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li style="color:rgba(255,255,255,0.45);font-size:0.88rem;margin-top:4px">Tue–Thu: 11am–9pm</li>
+          <li style="color:rgba(255,255,255,0.45);font-size:0.88rem">Fri–Sun: 11am–10pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 La Mesa Restaurant. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:var(--accent)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

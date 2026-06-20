@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services & Pricing | Glow Studio</title>
+  <style>
+    :root {
+      --primary: #5c1a3a;
+      --secondary: #8a2550;
+      --accent: #c94070;
+      --text: #2a1520;
+      --light: #fdf5f7;
+      --white: #ffffff;
+      --blush: #f2c4ce;
+      --gold: #d4af37;
+      --radius: 10px;
+      --shadow: 0 4px 20px rgba(92,26,58,0.12);
+      --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, Helvetica, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.25rem; }
+    .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; display: block; }
+    .section-title { font-family: Georgia, serif; font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 700; color: var(--primary); margin-bottom: 1rem; }
+    .section-title span { color: var(--accent); }
+    .photo-placeholder { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; text-align: center; padding: 1rem; border-radius: var(--radius); color: rgba(255,255,255,0.85); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 999; background: var(--white); box-shadow: 0 2px 12px rgba(92,26,58,0.10); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; max-width: 1140px; margin: 0 auto; }
+    .nav-logo { font-family: Georgia, serif; font-size: 1.45rem; font-weight: 700; color: var(--primary); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 1.8rem; }
+    .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--white) !important; padding: 0.55rem 1.3rem; border-radius: var(--radius); }
+    .nav-cta:hover { background: var(--primary) !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 26px; height: 3px; background: var(--primary); border-radius: 2px; }
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); padding: 1.25rem; gap: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+      .nav-links.open { display: flex; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%); color: var(--white); padding: 4rem 1.25rem; text-align: center; }
+    .page-hero h1 { font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.75rem; }
+    .page-hero h1 span { color: var(--blush); }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.9); max-width: 560px; margin: 0 auto; }
+
+    /* SERVICE CATEGORY */
+    .service-cat { padding: 5rem 1.25rem; }
+    .service-cat:nth-child(odd) { background: var(--light); }
+    .service-cat:nth-child(even) { background: var(--white); }
+    .cat-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; padding-bottom: 1.25rem; border-bottom: 2px solid var(--blush); }
+    .cat-icon { font-size: 2.2rem; }
+    .cat-header h2 { font-family: Georgia, serif; font-size: clamp(1.5rem, 3vw, 2rem); color: var(--primary); }
+    .cat-header p { font-size: 0.9rem; color: #7a4060; }
+
+    /* MENU TABLE */
+    .menu-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+    .menu-table th { background: var(--primary); color: var(--white); padding: 0.85rem 1.25rem; text-align: left; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .menu-table th:last-child { text-align: right; }
+    .menu-table td { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--blush); font-size: 0.93rem; }
+    .menu-table tr:last-child td { border-bottom: none; }
+    .menu-table tr:hover td { background: rgba(242,196,206,0.2); }
+    .menu-table td:last-child { text-align: right; font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .menu-note { font-size: 0.78rem; color: #8a5060; font-style: italic; }
+    .menu-highlight { background: rgba(201,64,112,0.06); }
+
+    /* PACKAGES */
+    .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+    .pkg-card { background: var(--white); border: 2px solid var(--blush); border-radius: var(--radius); padding: 2rem 1.5rem; text-align: center; transition: var(--transition); }
+    .pkg-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .pkg-card.featured { border-color: var(--accent); background: linear-gradient(180deg, #fdf0f4 0%, var(--white) 100%); }
+    .pkg-badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; background: var(--accent); color: var(--white); padding: 0.2rem 0.7rem; border-radius: 20px; display: inline-block; margin-bottom: 0.75rem; }
+    .pkg-name { font-family: Georgia, serif; font-size: 1.25rem; color: var(--primary); margin-bottom: 0.35rem; }
+    .pkg-price { font-size: 2rem; font-weight: 900; color: var(--accent); line-height: 1; margin: 0.5rem 0; }
+    .pkg-includes { margin: 1rem 0; text-align: left; }
+    .pkg-includes li { display: flex; gap: 0.5rem; align-items: center; padding: 0.35rem 0; font-size: 0.86rem; color: #4a2030; border-bottom: 1px solid var(--blush); }
+    .pkg-includes li:last-child { border-bottom: none; }
+    .pkg-includes li::before { content: "✦"; color: var(--accent); font-size: 0.6rem; flex-shrink: 0; }
+    .pkg-btn { display: block; margin-top: 1.25rem; padding: 0.7rem; background: var(--accent); color: var(--white); border-radius: var(--radius); font-weight: 700; font-size: 0.9rem; transition: var(--transition); }
+    .pkg-btn:hover { background: var(--primary); }
+    .pkg-card:not(.featured) .pkg-btn { background: var(--primary); }
+    .pkg-card:not(.featured) .pkg-btn:hover { background: var(--accent); }
+
+    /* ADD-ONS */
+    .addon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.5rem; }
+    .addon-card { background: var(--white); border: 1.5px solid var(--blush); border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center; transition: var(--transition); }
+    .addon-card:hover { border-color: var(--accent); }
+    .addon-icon { font-size: 1.6rem; margin-bottom: 0.4rem; }
+    .addon-name { font-size: 0.88rem; font-weight: 700; color: var(--primary); margin-bottom: 0.2rem; }
+    .addon-price { font-size: 1.1rem; font-weight: 900; color: var(--accent); }
+
+    /* FAQ */
+    .faq-section { padding: 5rem 1.25rem; background: var(--primary); }
+    .faq-inner { max-width: 1140px; margin: 0 auto; }
+    .faq-header { text-align: center; margin-bottom: 3rem; }
+    .faq-header h2 { font-family: Georgia, serif; color: var(--white); }
+    .faq-header p { color: var(--blush); margin-top: 0.5rem; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .faq-item { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); padding: 1.75rem; border-left: 4px solid var(--accent); }
+    .faq-item h4 { font-size: 0.97rem; font-weight: 700; color: var(--blush); margin-bottom: 0.5rem; }
+    .faq-item p { font-size: 0.89rem; color: rgba(255,255,255,0.8); line-height: 1.68; }
+
+    /* CTA */
+    .cta-band { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 4rem 1.25rem; text-align: center; color: var(--white); }
+    .cta-band h2 { font-family: Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.75rem; }
+    .cta-band h2 span { color: var(--blush); }
+    .cta-band p { color: rgba(255,255,255,0.88); margin-bottom: 2rem; }
+    .btn-gold { display: inline-block; background: var(--gold); color: #2a1a10; padding: 0.9rem 2.2rem; border-radius: var(--radius); font-weight: 800; transition: var(--transition); }
+    .btn-gold:hover { background: #c09a28; transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: #2a0a1a; color: rgba(255,255,255,0.8); padding: 4rem 1.25rem 2rem; }
+    .footer-inner { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-bottom: 3rem; }
+    .footer-col h3 { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 1.1rem; }
+    .footer-col p { font-size: 0.9rem; line-height: 1.7; }
+    .footer-logo { font-family: Georgia, serif; font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; display: block; }
+    .footer-logo span { color: var(--blush); }
+    .footer-col ul li { margin-bottom: 0.55rem; }
+    .footer-col ul li a { font-size: 0.9rem; color: rgba(255,255,255,0.7); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--blush); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; text-align: center; font-size: 0.83rem; color: rgba(255,255,255,0.5); max-width: 1140px; margin: 0 auto; }
+    .footer-bottom a { color: var(--blush); }
+
+    @media (max-width: 900px) {
+      .pkg-grid { grid-template-columns: 1fr; }
+      .addon-grid { grid-template-columns: repeat(2, 1fr); }
+      .faq-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .menu-table { font-size: 0.86rem; }
+      .addon-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <!-- To accept online payments: create a free payment link at dashboard.stripe.com/payment-links and replace the href on the "Pay Deposit" or "Book Now" button -->
+      <a href="index.html" class="nav-logo">Glow <span>Studio</span></a>
+      <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label" style="color:var(--blush)">Full Service Beauty</span>
+      <h1>Services & <span>Pricing</span></h1>
+      <p>Hair, nails, lashes, brows, facials, and waxing — all under one roof by licensed professionals. Transparent pricing, no surprises.</p>
+    </div>
+  </section>
+
+  <!-- HAIR SERVICES -->
+  <section class="service-cat">
+    <div class="container">
+      <div class="cat-header">
+        <div class="cat-icon">✂️</div>
+        <div>
+          <h2>Hair Services</h2>
+          <p>Cuts, color, highlights, blowouts, and treatments by licensed stylists</p>
+        </div>
+      </div>
+      <table class="menu-table">
+        <thead>
+          <tr><th>Service</th><th>Description</th><th>Starting Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Women's Haircut & Style</strong></td><td>Shampoo, cut, and blowout</td><td>$65+</td></tr>
+          <tr><td><strong>Men's Haircut</strong></td><td>Shampoo, cut, and style</td><td>$35+</td></tr>
+          <tr><td><strong>Children's Haircut</strong></td><td>Cut and style, age 12 and under</td><td>$28+</td></tr>
+          <tr class="menu-highlight"><td><strong>Blowout</strong></td><td>Shampoo, blow dry, and style (no cut)</td><td>$45+</td></tr>
+          <tr><td><strong>Single Process Color</strong></td><td>Full root-to-tip color application</td><td>$85+</td></tr>
+          <tr><td><strong>Partial Highlights</strong></td><td>Face-framing and crown highlights</td><td>$95+</td></tr>
+          <tr class="menu-highlight"><td><strong>Full Highlights</strong></td><td>Full head highlights or balayage</td><td>$145+</td></tr>
+          <tr><td><strong>Balayage / Ombré</strong></td><td>Hand-painted freeform color technique</td><td>$165+</td></tr>
+          <tr><td><strong>Color Correction</strong></td><td>Consultation required — highly customized</td><td>$200+</td></tr>
+          <tr class="menu-highlight"><td><strong>Gloss / Toner</strong></td><td>Adds shine and refines color tone</td><td>$45+</td></tr>
+          <tr><td><strong>Keratin Treatment</strong></td><td>Smoothing treatment, 3–4 month results</td><td>$175+</td></tr>
+          <tr><td><strong>Deep Conditioning Treatment</strong></td><td>Intensive moisture and repair mask</td><td>$35+</td></tr>
+        </tbody>
+      </table>
+      <p class="menu-note">* Prices vary based on hair length, density, and complexity. Final price confirmed at consultation.</p>
+    </div>
+  </section>
+
+  <!-- NAIL SERVICES -->
+  <section class="service-cat">
+    <div class="container">
+      <div class="cat-header">
+        <div class="cat-icon">💅</div>
+        <div>
+          <h2>Nail Services</h2>
+          <p>Manicures, pedicures, gel, acrylics, and nail art by certified nail technicians</p>
+        </div>
+      </div>
+      <table class="menu-table">
+        <thead>
+          <tr><th>Service</th><th>Description</th><th>Price</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Classic Manicure</strong></td><td>Shape, cuticle care, polish</td><td>$28</td></tr>
+          <tr class="menu-highlight"><td><strong>Gel Manicure</strong></td><td>Long-lasting gel polish, 2–3 week wear</td><td>$42</td></tr>
+          <tr><td><strong>Classic Pedicure</strong></td><td>Soak, shape, scrub, and polish</td><td>$38</td></tr>
+          <tr><td><strong>Spa Pedicure</strong></td><td>Classic + extended massage and mask</td><td>$55</td></tr>
+          <tr class="menu-highlight"><td><strong>Gel Pedicure</strong></td><td>Long-lasting gel polish on toes</td><td>$52</td></tr>
+          <tr><td><strong>Mani + Pedi Combo</strong></td><td>Classic manicure and classic pedicure</td><td>$60</td></tr>
+          <tr><td><strong>Gel Mani + Pedi Combo</strong></td><td>Gel manicure and gel pedicure</td><td>$85</td></tr>
+          <tr class="menu-highlight"><td><strong>Acrylic Full Set</strong></td><td>Full set with tips and polish</td><td>$55+</td></tr>
+          <tr><td><strong>Acrylic Fill</strong></td><td>2–3 week infill and shape</td><td>$38+</td></tr>
+          <tr><td><strong>Nail Art</strong></td><td>Custom designs per nail (quoted separately)</td><td>$5+ per nail</td></tr>
+          <tr><td><strong>Gel Removal</strong></td><td>Safe soak-off gel removal</td><td>$15</td></tr>
+          <tr><td><strong>Acrylic Removal</strong></td><td>Safe soak-off acrylic removal</td><td>$20</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- LASH & BROW -->
+  <section class="service-cat">
+    <div class="container">
+      <div class="cat-header">
+        <div class="cat-icon">👁️</div>
+        <div>
+          <h2>Lash & Brow Services</h2>
+          <p>Extensions, lifts, tints, and shaping for your most expressive features</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+        <div>
+          <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--primary);margin-bottom:1rem;">Lash Services</h4>
+          <table class="menu-table">
+            <thead><tr><th>Service</th><th>Price</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Classic Full Set</strong><br><span class="menu-note">Natural, one lash per natural lash</span></td><td>$95</td></tr>
+              <tr><td><strong>Volume Full Set</strong><br><span class="menu-note">Fluffy, fan technique</span></td><td>$130</td></tr>
+              <tr><td><strong>Mega Volume Full Set</strong><br><span class="menu-note">Maximum drama</span></td><td>$155</td></tr>
+              <tr><td><strong>Classic Fill (2 weeks)</strong></td><td>$55</td></tr>
+              <tr><td><strong>Volume Fill (2 weeks)</strong></td><td>$70</td></tr>
+              <tr><td><strong>Lash Lift & Tint</strong><br><span class="menu-note">No extensions, your natural lashes</span></td><td>$75</td></tr>
+              <tr><td><strong>Lash Removal</strong></td><td>$25</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--primary);margin-bottom:1rem;">Brow Services</h4>
+          <table class="menu-table">
+            <thead><tr><th>Service</th><th>Price</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Brow Shaping (Wax)</strong></td><td>$22</td></tr>
+              <tr><td><strong>Brow Shaping (Thread)</strong></td><td>$18</td></tr>
+              <tr><td><strong>Brow Tint</strong></td><td>$20</td></tr>
+              <tr><td><strong>Brow Wax + Tint</strong></td><td>$38</td></tr>
+              <tr><td><strong>Brow Lamination</strong><br><span class="menu-note">Fluffy brushed-up brows, 6–8 weeks</span></td><td>$65</td></tr>
+              <tr><td><strong>Lamination + Tint</strong></td><td>$80</td></tr>
+              <tr><td><strong>Microblading Consultation</strong></td><td>Free</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACIALS & WAX -->
+  <section class="service-cat">
+    <div class="container">
+      <div class="cat-header">
+        <div class="cat-icon">🌸</div>
+        <div>
+          <h2>Facials & Waxing</h2>
+          <p>Skincare treatments and smooth waxing services for every skin type</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+        <div>
+          <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--primary);margin-bottom:1rem;">Facials</h4>
+          <table class="menu-table">
+            <thead><tr><th>Service</th><th>Price</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Express Glow Facial</strong><br><span class="menu-note">30 min — cleanse, exfoliate, mask</span></td><td>$55</td></tr>
+              <tr><td><strong>Signature Glow Facial</strong><br><span class="menu-note">60 min — full treatment</span></td><td>$85</td></tr>
+              <tr><td><strong>Anti-Aging Facial</strong><br><span class="menu-note">60 min — firming, collagen boost</span></td><td>$95</td></tr>
+              <tr><td><strong>Acne Clear Facial</strong><br><span class="menu-note">60 min — deep cleanse and spot treat</span></td><td>$90</td></tr>
+              <tr><td><strong>Hydro-Glow Facial</strong><br><span class="menu-note">75 min — intense hydration</span></td><td>$110</td></tr>
+              <tr><td><strong>Chemical Peel</strong><br><span class="menu-note">Consultation required</span></td><td>$95+</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--primary);margin-bottom:1rem;">Waxing</h4>
+          <table class="menu-table">
+            <thead><tr><th>Service</th><th>Price</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Upper Lip</strong></td><td>$14</td></tr>
+              <tr><td><strong>Chin</strong></td><td>$14</td></tr>
+              <tr><td><strong>Full Face</strong></td><td>$45</td></tr>
+              <tr><td><strong>Underarms</strong></td><td>$25</td></tr>
+              <tr><td><strong>Half Leg</strong></td><td>$40</td></tr>
+              <tr><td><strong>Full Leg</strong></td><td>$65</td></tr>
+              <tr><td><strong>Bikini</strong></td><td>$40</td></tr>
+              <tr><td><strong>Brazilian</strong></td><td>$65</td></tr>
+              <tr><td><strong>Full Back</strong></td><td>$55</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="service-cat" style="background:var(--light);">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:2.5rem;">
+        <span class="section-label">Best Value</span>
+        <h2 class="section-title">Glow Packages</h2>
+        <p style="color:#7a4060; max-width:520px; margin:0 auto;">Bundle your favorites and save. Perfect for special occasions, self-care days, or treating yourself to the full experience.</p>
+      </div>
+      <div class="pkg-grid">
+        <div class="pkg-card">
+          <div class="pkg-badge" style="background:var(--primary);">Starter Glow</div>
+          <div class="pkg-name">The Mini Glow</div>
+          <div class="pkg-price">$95</div>
+          <ul class="pkg-includes">
+            <li>Women's Haircut & Blowout</li>
+            <li>Classic Manicure</li>
+            <li>Express Glow Facial (30 min)</li>
+            <li>Complimentary Brow Tidy</li>
+          </ul>
+          <a href="contact.html" class="pkg-btn">Book the Mini Glow →</a>
+        </div>
+        <div class="pkg-card featured">
+          <div class="pkg-badge">Most Popular</div>
+          <div class="pkg-name">The Signature Glow</div>
+          <div class="pkg-price">$185</div>
+          <ul class="pkg-includes">
+            <li>Balayage or Single Color</li>
+            <li>Toner + Blowout & Style</li>
+            <li>Gel Manicure</li>
+            <li>Signature Glow Facial (60 min)</li>
+            <li>Brow Wax + Tint</li>
+          </ul>
+          <a href="contact.html" class="pkg-btn">Book the Signature →</a>
+        </div>
+        <div class="pkg-card">
+          <div class="pkg-badge" style="background:var(--gold);color:#2a1a10;">Luxe</div>
+          <div class="pkg-name">The Full Glow</div>
+          <div class="pkg-price">$295</div>
+          <ul class="pkg-includes">
+            <li>Full Highlights or Balayage</li>
+            <li>Toner + Cut & Blowout</li>
+            <li>Gel Mani + Spa Pedi Combo</li>
+            <li>Classic Lash Full Set</li>
+            <li>Anti-Aging Facial (60 min)</li>
+            <li>Brow Lamination + Tint</li>
+          </ul>
+          <a href="contact.html" class="pkg-btn">Book the Full Glow →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADD-ONS -->
+  <section class="service-cat">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:2rem;">
+        <span class="section-label">Enhancements</span>
+        <h2 class="section-title">Popular <span>Add-Ons</span></h2>
+      </div>
+      <div class="addon-grid">
+        <div class="addon-card"><div class="addon-icon">💆</div><div class="addon-name">Scalp Massage</div><div class="addon-price">+$20</div></div>
+        <div class="addon-card"><div class="addon-icon">✨</div><div class="addon-name">Gloss Treatment</div><div class="addon-price">+$35</div></div>
+        <div class="addon-card"><div class="addon-icon">💧</div><div class="addon-name">Deep Condition</div><div class="addon-price">+$25</div></div>
+        <div class="addon-card"><div class="addon-icon">🌿</div><div class="addon-name">Paraffin Hand Wax</div><div class="addon-price">+$18</div></div>
+        <div class="addon-card"><div class="addon-icon">💋</div><div class="addon-name">Lip Wax</div><div class="addon-price">+$14</div></div>
+        <div class="addon-card"><div class="addon-icon">🎨</div><div class="addon-name">Nail Art (per nail)</div><div class="addon-price">+$5</div></div>
+        <div class="addon-card"><div class="addon-icon">🌸</div><div class="addon-name">Face Mask Upgrade</div><div class="addon-price">+$15</div></div>
+        <div class="addon-card"><div class="addon-icon">⚡</div><div class="addon-name">Eyebrow Tint</div><div class="addon-price">+$20</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-header">
+        <span class="section-label" style="color:var(--blush)">Common Questions</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know before your appointment</p>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>Do I need to book in advance?</h4>
+          <p>Yes — we recommend booking at least a few days ahead for most services. For color services, lash extensions, and packages, we suggest booking 1–2 weeks ahead as those slots fill quickly.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What's your cancellation policy?</h4>
+          <p>We ask for 24 hours notice for cancellations or rescheduling. Late cancellations or no-shows may be subject to a cancellation fee of 50% of the service price.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Are your stylists licensed?</h4>
+          <p>Yes — every technician at Glow Studio holds a current state cosmetology or esthetics license and participates in ongoing education to stay current with trends and techniques.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Do you offer consultations?</h4>
+          <p>We offer complimentary consultations for color corrections, balayage, lash extensions, and any service that requires planning. Just give us a call or book a consultation slot online.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What if I'm not happy with my service?</h4>
+          <p>Your satisfaction is our priority. If you're unhappy with any service, contact us within 5 days and we'll do everything we can to make it right at no additional charge.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I bring a child to my appointment?</h4>
+          <p>To maintain a relaxing environment for all guests, we ask that you make childcare arrangements before your appointment. Children receiving services are always welcome!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Ready to <span>Glow?</span></h2>
+      <p>Book your appointment today — your glow-up is just one click away.</p>
+      <a href="contact.html" class="btn-gold">Book Your Appointment ✨</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-logo">Glow <span>Studio</span></span>
+        <p>Full-service licensed beauty studio offering hair, nails, lashes, brows, facials, and waxing in a welcoming, professional environment.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="services.html">Hair Services</a></li>
+          <li><a href="services.html">Nail Services</a></li>
+          <li><a href="services.html">Lash & Brow</a></li>
+          <li><a href="services.html">Facials & Waxing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Studio</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Book Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Glow Studio. All rights reserved. | Website by <a href="#">Sites by Mel</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

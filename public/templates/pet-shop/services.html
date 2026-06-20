@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services & Pricing | PawPerfect Pet Spa</title>
+  <style>
+    :root {
+      --primary: #1a8a7a;
+      --secondary: #0f5c52;
+      --accent: #e8621a;
+      --text: #2a3630;
+      --light: #f5fafa;
+      --white: #ffffff;
+      --radius: 10px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.10);
+      --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, Helvetica, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.25rem; }
+    .section-label { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; color: var(--accent); font-weight: 700; margin-bottom: 0.5rem; display: block; }
+    .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--secondary); margin-bottom: 1rem; }
+    .btn { display: inline-block; padding: 0.75rem 1.75rem; border-radius: var(--radius); font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition); border: 2px solid transparent; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-secondary { background: var(--primary); color: var(--white); }
+    .img-placeholder { width: 100%; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 0.9rem; font-weight: 600; text-align: center; padding: 1rem; }
+
+    /* NAV */
+    header { position: sticky; top: 0; z-index: 1000; background: var(--white); box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; max-width: 1140px; margin: 0 auto; gap: 1rem; }
+    .nav-logo { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: var(--secondary); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+    .nav-links a { color: var(--text); font-size: 0.95rem; font-weight: 600; transition: color var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-cta { background: var(--accent); color: var(--white); padding: 0.6rem 1.4rem; border-radius: var(--radius); font-weight: 700; font-size: 0.9rem; transition: background var(--transition); }
+    .nav-cta:hover { background: var(--secondary); color: var(--white); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .nav-toggle span { display: block; width: 26px; height: 3px; background: var(--text); border-radius: 2px; }
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); flex-direction: column; padding: 1.5rem; gap: 1.25rem; box-shadow: 0 8px 20px rgba(0,0,0,0.10); }
+      .nav-links.open { display: flex; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 60%, #2db8a4 100%); color: var(--white); padding: 4rem 1.25rem; text-align: center; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-family: Georgia, serif; font-weight: 700; margin-bottom: 0.75rem; }
+    .page-hero h1 span { color: #ffd480; }
+    .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.88); max-width: 560px; margin: 0 auto; }
+
+    /* GROOMING PACKAGES */
+    .packages-section { padding: 5rem 1.25rem; background: var(--light); }
+    .packages-header { text-align: center; margin-bottom: 3rem; }
+    .size-tabs { display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .size-tab { padding: 0.6rem 1.5rem; border-radius: var(--radius); font-weight: 700; font-size: 0.9rem; border: 2px solid var(--primary); color: var(--primary); background: transparent; cursor: pointer; transition: var(--transition); }
+    .size-tab.active, .size-tab:hover { background: var(--primary); color: var(--white); }
+    .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+    .package-card { background: var(--white); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border-top: 4px solid var(--primary); position: relative; transition: var(--transition); }
+    .package-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.14); }
+    .package-card.featured { border-top-color: var(--accent); }
+    .featured-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--white); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.25rem 0.9rem; border-radius: 20px; white-space: nowrap; }
+    .package-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.25rem; }
+    .package-size { font-size: 0.82rem; color: #778; margin-bottom: 1rem; }
+    .package-price { font-size: 2.2rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: 0.25rem; }
+    .package-price sup { font-size: 1rem; vertical-align: top; margin-top: 0.5rem; display: inline-block; }
+    .package-note { font-size: 0.78rem; color: #889; margin-bottom: 1.25rem; }
+    .package-includes { margin-bottom: 1.5rem; }
+    .package-includes li { font-size: 0.9rem; padding: 0.4rem 0; border-bottom: 1px solid var(--light); display: flex; gap: 0.5rem; align-items: center; color: var(--text); }
+    .package-includes li::before { content: "✓"; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+    .package-card.featured .package-includes li::before { color: var(--accent); }
+
+    /* ADD-ONS */
+    .addons-section { padding: 5rem 1.25rem; background: var(--white); }
+    .addons-header { text-align: center; margin-bottom: 3rem; }
+    .addons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+    .addon-card { background: var(--light); border-radius: var(--radius); padding: 1.5rem; text-align: center; border: 1.5px solid #d8ecea; transition: var(--transition); }
+    .addon-card:hover { border-color: var(--primary); background: #eaf5f4; }
+    .addon-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+    .addon-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.25rem; }
+    .addon-card p { font-size: 0.82rem; color: #556; margin-bottom: 0.5rem; }
+    .addon-price { font-size: 1rem; font-weight: 800; color: var(--accent); }
+
+    /* BOARDING RATES */
+    .boarding-section { padding: 5rem 1.25rem; background: var(--secondary); color: var(--white); }
+    .boarding-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+    .boarding-text h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--white); margin-bottom: 1rem; }
+    .boarding-text h2 span { color: #ffd480; }
+    .boarding-text p { color: rgba(255,255,255,0.85); line-height: 1.75; margin-bottom: 1rem; font-size: 0.97rem; }
+    .boarding-features { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .boarding-feature { display: flex; gap: 0.75rem; align-items: flex-start; }
+    .boarding-feature-icon { width: 34px; height: 34px; background: rgba(255,255,255,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .boarding-feature-text strong { display: block; font-size: 0.95rem; color: #ffd480; }
+    .boarding-feature-text span { font-size: 0.85rem; color: rgba(255,255,255,0.78); }
+    .boarding-rates-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); padding: 2rem; }
+    .boarding-rates-card h3 { font-size: 1.1rem; font-weight: 700; color: #ffd480; margin-bottom: 1.5rem; }
+    .rate-row { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .rate-row:last-child { border-bottom: none; }
+    .rate-name { font-size: 0.95rem; color: rgba(255,255,255,0.88); }
+    .rate-name span { display: block; font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 0.15rem; }
+    .rate-price { font-size: 1.15rem; font-weight: 800; color: #ffd480; }
+
+    /* DAYCARE SECTION */
+    .daycare-section { padding: 5rem 1.25rem; background: var(--light); }
+    .daycare-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .daycare-photo { width: 100%; height: 380px; background: linear-gradient(135deg, var(--primary), #2db8a4); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 600; box-shadow: var(--shadow); text-align: center; padding: 1rem; }
+    .daycare-text h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--secondary); margin-bottom: 1rem; }
+    .daycare-text p { color: #4a6060; line-height: 1.75; margin-bottom: 1rem; font-size: 0.97rem; }
+    .daycare-schedule { margin-top: 1.5rem; background: var(--white); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); }
+    .daycare-schedule h4 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); margin-bottom: 1rem; }
+    .schedule-row { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--light); font-size: 0.9rem; }
+    .schedule-row:last-child { border-bottom: none; }
+    .schedule-row .time { color: var(--accent); font-weight: 700; }
+
+    /* FAQ */
+    .faq-section { padding: 5rem 1.25rem; background: var(--white); }
+    .faq-header { text-align: center; margin-bottom: 3rem; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .faq-item { background: var(--light); border-radius: var(--radius); padding: 1.75rem; border-left: 4px solid var(--primary); }
+    .faq-item h4 { font-size: 1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.6rem; }
+    .faq-item p { font-size: 0.91rem; color: #4a6060; line-height: 1.7; }
+
+    /* CTA */
+    .cta-band { background: var(--accent); padding: 4rem 1.25rem; text-align: center; }
+    .cta-band h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--white); margin-bottom: 0.75rem; }
+    .cta-band p { color: rgba(255,255,255,0.9); margin-bottom: 2rem; font-size: 1.05rem; }
+    .btn-white { display: inline-block; background: var(--white); color: var(--accent); padding: 0.9rem 2.2rem; border-radius: var(--radius); font-weight: 800; font-size: 1rem; transition: var(--transition); }
+    .btn-white:hover { background: var(--secondary); color: var(--white); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: var(--secondary); color: rgba(255,255,255,0.75); padding: 3.5rem 1.25rem 1.5rem; border-top: 3px solid var(--accent); }
+    .footer-grid { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-top: 0.75rem; }
+    .footer-col h4 { color: var(--white); font-size: 1rem; margin-bottom: 1rem; }
+    .footer-col ul li { margin-bottom: 0.5rem; }
+    .footer-col ul li a { font-size: 0.9rem; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #ffd480; }
+    .footer-bottom { max-width: 1140px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.25rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.82rem; }
+    .footer-bottom a { color: #ffd480; }
+
+    @media (max-width: 900px) {
+      .packages-grid { grid-template-columns: 1fr; }
+      .boarding-inner { grid-template-columns: 1fr; }
+      .daycare-inner { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <!-- To accept online payments: create a free payment link at dashboard.stripe.com/payment-links and replace the href on the "Pay Deposit" or "Book Now" button -->
+      <a class="nav-logo" href="index.html"><span style="color:var(--accent)">🐾</span> PawPerfect</a>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="this.nextElementSibling.classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label" style="color:#ffd480">Everything We Offer</span>
+      <h1>Services & <span>Pricing</span></h1>
+      <p>Grooming packages, boarding rates, daycare plans, and add-on services — clear, honest pricing with no surprises.</p>
+    </div>
+  </section>
+
+  <!-- GROOMING PACKAGES -->
+  <section class="packages-section">
+    <div class="container">
+      <div class="packages-header">
+        <span class="section-label">Full Grooming</span>
+        <h2 class="section-title">Grooming Packages by Dog Size</h2>
+        <p style="color:#556; max-width:520px; margin:0 auto;">All full grooming packages include bath, blow-dry, haircut, nail trim, ear cleaning, and a bandana or bow. Pricing is based on your dog's weight.</p>
+      </div>
+      <div class="packages-grid">
+        <div class="package-card">
+          <h3>Small Dogs</h3>
+          <p class="package-size">Under 20 lbs — Chihuahua, Yorkie, Maltese, Shih Tzu, Pomeranian</p>
+          <div class="package-price"><sup>$</sup>45</div>
+          <p class="package-note">approx. 1.5–2 hours</p>
+          <ul class="package-includes">
+            <li>Full bath with premium shampoo</li>
+            <li>Blow-dry & brush out</li>
+            <li>Breed-specific haircut</li>
+            <li>Nail trim & file</li>
+            <li>Ear cleaning</li>
+            <li>Bow or bandana finish</li>
+          </ul>
+          <a href="contact.html" class="btn btn-secondary" style="width:100%;text-align:center;display:block;">Book Now</a>
+        </div>
+        <div class="package-card featured">
+          <div class="featured-tag">Most Popular</div>
+          <h3>Medium Dogs</h3>
+          <p class="package-size">20–50 lbs — Cocker Spaniel, Beagle, Springer, Shih Tzu, Corgi</p>
+          <div class="package-price"><sup>$</sup>65</div>
+          <p class="package-note">approx. 2–3 hours</p>
+          <ul class="package-includes">
+            <li>Full bath with premium shampoo</li>
+            <li>Blow-dry & brush out</li>
+            <li>Breed-specific haircut</li>
+            <li>Nail trim & file</li>
+            <li>Ear cleaning</li>
+            <li>Teeth brushing included</li>
+            <li>Bow or bandana finish</li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary" style="width:100%;text-align:center;display:block;">Book Now</a>
+        </div>
+        <div class="package-card">
+          <h3>Large Dogs</h3>
+          <p class="package-size">50+ lbs — Golden Retriever, Lab, Husky, Standard Poodle, Bernese</p>
+          <div class="package-price"><sup>$</sup>85</div>
+          <p class="package-note">approx. 3–4 hours</p>
+          <ul class="package-includes">
+            <li>Full bath with premium shampoo</li>
+            <li>Blow-dry & brush out</li>
+            <li>Breed-specific haircut</li>
+            <li>Nail trim & file</li>
+            <li>Ear cleaning</li>
+            <li>De-shedding treatment included</li>
+            <li>Bow or bandana finish</li>
+          </ul>
+          <a href="contact.html" class="btn btn-secondary" style="width:100%;text-align:center;display:block;">Book Now</a>
+        </div>
+      </div>
+      <p style="text-align:center; margin-top:1.5rem; font-size:0.88rem; color:#778;">Cat grooming also available — starting at $55. Call or message us for a cat grooming quote.</p>
+    </div>
+  </section>
+
+  <!-- ADD-ONS -->
+  <section class="addons-section">
+    <div class="container">
+      <div class="addons-header">
+        <span class="section-label">Extras</span>
+        <h2 class="section-title">Grooming Add-Ons</h2>
+        <p style="color:#556; max-width:520px; margin:0 auto;">Enhance your pet's visit with any of our popular add-on services. Available with any grooming package or as a standalone quick service.</p>
+      </div>
+      <div class="addons-grid">
+        <div class="addon-card">
+          <div class="addon-icon">🦷</div>
+          <h4>Teeth Brushing</h4>
+          <p>Pet-safe toothpaste for fresh breath</p>
+          <div class="addon-price">+ $10</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">💧</div>
+          <h4>De-Shedding Treatment</h4>
+          <p>Reduces shedding up to 80%</p>
+          <div class="addon-price">+ $15–$25</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">✨</div>
+          <h4>Blueberry Facial</h4>
+          <p>Gentle facial scrub for clean eyes & face</p>
+          <div class="addon-price">+ $10</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">🐾</div>
+          <h4>Nail Grinding</h4>
+          <p>Smoother finish than clipping alone</p>
+          <div class="addon-price">+ $8</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">🌸</div>
+          <h4>Conditioning Treatment</h4>
+          <p>Deep hydration for coat & skin</p>
+          <div class="addon-price">+ $12</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">👁️</div>
+          <h4>Ear Hair Removal</h4>
+          <p>Prevents infections in prone breeds</p>
+          <div class="addon-price">+ $10</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">🎀</div>
+          <h4>Bandana & Bow Set</h4>
+          <p>Fancy finish with matching accessories</p>
+          <div class="addon-price">+ $5</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">💆</div>
+          <h4>Pawdicure</h4>
+          <p>Nail trim + paw pad moisturizer</p>
+          <div class="addon-price">+ $15</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOARDING -->
+  <section class="boarding-section">
+    <div class="container">
+      <div class="boarding-inner">
+        <div class="boarding-text">
+          <span class="section-label" style="color:#ffd480">Overnight Stays</span>
+          <h2>Boarding <span>Rates</span></h2>
+          <p>Our boarding suites are clean, comfortable, and staffed with caring professionals around the clock. Your pet will be treated like family from check-in to pick-up.</p>
+          <p>All boarding stays include meals (bring your own food or we provide for a small fee), fresh water, outdoor potty breaks every 3–4 hours, and lots of love and attention.</p>
+          <div class="boarding-features">
+            <div class="boarding-feature">
+              <div class="boarding-feature-icon">🏠</div>
+              <div class="boarding-feature-text">
+                <strong>Private Climate-Controlled Suites</strong>
+                <span>Your pet gets their own cozy suite — no shared kennels</span>
+              </div>
+            </div>
+            <div class="boarding-feature">
+              <div class="boarding-feature-icon">📸</div>
+              <div class="boarding-feature-text">
+                <strong>Daily Photo Updates</strong>
+                <span>We text you photos so you can see how happy they are</span>
+              </div>
+            </div>
+            <div class="boarding-feature">
+              <div class="boarding-feature-icon">🌙</div>
+              <div class="boarding-feature-text">
+                <strong>Overnight Supervision</strong>
+                <span>Staff on-site throughout the night for peace of mind</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="boarding-rates-card">
+          <h3>Boarding Rates</h3>
+          <div class="rate-row">
+            <div class="rate-name">Small Dog Suite<span>Under 20 lbs</span></div>
+            <div class="rate-price">$35/night</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">Medium Dog Suite<span>20–50 lbs</span></div>
+            <div class="rate-price">$45/night</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">Large Dog Suite<span>50+ lbs</span></div>
+            <div class="rate-price">$55/night</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">Cat Suite<span>Any size</span></div>
+            <div class="rate-price">$28/night</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">Holiday Rate<span>Major holidays</span></div>
+            <div class="rate-price">+$10/night</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">Extended Stay Discount<span>7+ nights</span></div>
+            <div class="rate-price">10% off</div>
+          </div>
+          <a href="contact.html" class="btn btn-primary" style="width:100%;text-align:center;display:block;margin-top:1.5rem;">Reserve a Suite</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAYCARE -->
+  <section class="daycare-section">
+    <div class="container">
+      <div class="daycare-inner">
+        <div class="daycare-photo">Add your photo here</div>
+        <div class="daycare-text">
+          <span class="section-label">Doggy Daycare</span>
+          <h2 class="section-title">A Full Day of Fun & Friends</h2>
+          <p>Doggy daycare at PawPerfect means supervised playtime, socialization with other friendly dogs, rest periods, and loads of attention from our caring staff.</p>
+          <p>Drop your dog off in the morning on your way to work and pick up a tired, happy pup in the evening. It's great for high-energy dogs, social butterflies, and dogs who struggle with separation anxiety.</p>
+          <p>All daycare dogs must be current on vaccinations and complete a temperament evaluation on their first visit.</p>
+          <div class="daycare-schedule">
+            <h4>Daily Daycare Schedule</h4>
+            <div class="schedule-row"><span>Drop-Off Window</span><span class="time">7:00 AM – 9:00 AM</span></div>
+            <div class="schedule-row"><span>Morning Playtime</span><span class="time">9:00 – 11:30 AM</span></div>
+            <div class="schedule-row"><span>Rest & Snack Period</span><span class="time">11:30 AM – 1:00 PM</span></div>
+            <div class="schedule-row"><span>Afternoon Playtime</span><span class="time">1:00 – 4:00 PM</span></div>
+            <div class="schedule-row"><span>Pick-Up Window</span><span class="time">4:00 – 6:00 PM</span></div>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <p style="font-size:0.9rem; color:#4a6060; margin-bottom:0.5rem;"><strong style="color:var(--secondary)">Full Day (up to 9 hrs):</strong> Starting at $25/day</p>
+            <p style="font-size:0.9rem; color:#4a6060; margin-bottom:0.5rem;"><strong style="color:var(--secondary)">Half Day (up to 5 hrs):</strong> Starting at $18/day</p>
+            <p style="font-size:0.9rem; color:#4a6060;"><strong style="color:var(--secondary)">Monthly Daycare Package (20 days):</strong> Starting at $440/mo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="faq-header">
+        <span class="section-label">Common Questions</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h4>How do I book an appointment?</h4>
+          <p>You can book through our contact form, call us directly, or use our online booking link. We recommend booking at least 3–5 days in advance, especially on weekends and during holiday periods.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What vaccinations are required?</h4>
+          <p>All pets must be current on rabies and DHPP (for dogs) or FVRCP (for cats). Bordetella (kennel cough) is strongly recommended for boarding and daycare clients. Please bring proof of vaccinations on your first visit.</p>
+        </div>
+        <div class="faq-item">
+          <h4>My dog is anxious — can you still groom them?</h4>
+          <p>Absolutely. We have extensive experience with nervous and anxious pets. We use calm handling techniques and take breaks as needed. Please let us know ahead of time if your pet has special needs so we can plan accordingly.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How long does grooming take?</h4>
+          <p>Grooming times vary by breed, coat type, and size. Small dogs typically take 1.5–2 hours, medium dogs 2–3 hours, and large dogs 3–4 hours. We'll give you an estimated pick-up window when you drop off.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Do you groom cats?</h4>
+          <p>Yes! We offer full cat grooming services including bath, blow-dry, brush-out, nail trim, and coat trim if needed. Cat grooming starts at $55. Please call us to book a cat grooming appointment.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What's your cancellation policy?</h4>
+          <p>We ask for at least 24 hours notice for cancellations. Same-day cancellations may be subject to a $15 fee. We understand emergencies happen and will always try to work with you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Ready to Pamper Your Pet?</h2>
+      <p>Book your appointment today — new clients and first visits are always welcome!</p>
+      <a href="contact.html" class="btn-white">Book an Appointment →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="nav-logo" href="index.html"><span style="color:var(--accent)">🐾</span> PawPerfect</a>
+        <p>A family-owned pet spa dedicated to giving every pet the love and care they deserve. Certified groomers. Trustworthy boarding. Tails always wagging.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Our Services</h4>
+        <ul>
+          <li><a href="services.html">Full Grooming</a></li>
+          <li><a href="services.html">Boarding</a></li>
+          <li><a href="services.html">Doggy Daycare</a></li>
+          <li><a href="services.html">Add-Ons</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Book Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 PawPerfect Pet Spa. All rights reserved.</span>
+      <span>Website by <a href="#">Sites by Mel</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>

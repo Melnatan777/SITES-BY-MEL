@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact — VoiceFirst Creator Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#2d4a8a;--secondary:#1a2d5c;--accent:#e05c8a;--text:#1a1a2a;--light:#f4f6fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:8px;--transition:all 0.2s;--gray:#6b6b80;--border:#dde2f0;--ink:#1a1a2e;--lavender:#eef1fa}
+body{font-family:'Inter',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1060px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:11px 26px;font-family:'Inter',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;border:none;transition:var(--transition);border-radius:100px}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-full{width:100%;display:block;text-align:center;padding:13px}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px;max-width:1060px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--ink)}
+.nav-logo span{color:var(--primary)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.88rem;font-weight:500;transition:var(--transition)}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink)}
+
+.page-hero{background:linear-gradient(135deg,var(--lavender),#e8ecf8);padding:72px 24px 60px;text-align:center}
+.hero-tag{display:inline-block;background:var(--primary);color:var(--white);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px;color:var(--ink)}
+.page-hero p{font-size:1rem;color:var(--gray);max-width:520px;margin:0 auto;line-height:1.75;font-weight:300}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.accent-line{width:40px;height:2px;background:var(--accent);margin:14px auto 0}
+
+/* CONTACT LAYOUT */
+.contact-grid{display:grid;grid-template-columns:3fr 2fr;gap:56px;align-items:start}
+
+/* FORM */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:40px;box-shadow:var(--shadow)}
+.form-card h2{font-size:1.4rem;margin-bottom:6px}
+.form-card .sub{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px;color:#555}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:0.92rem;font-family:'Inter',sans-serif;outline:none;transition:var(--transition);background:var(--light)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);background:var(--white)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-note{font-size:0.78rem;color:var(--gray);margin-top:12px;line-height:1.6}
+
+/* INQUIRY TYPES */
+.inquiry-types{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.inquiry-type{padding:12px;border:1.5px solid var(--border);border-radius:var(--radius);text-align:center;cursor:pointer;transition:var(--transition)}
+.inquiry-type:hover{border-color:var(--primary)}
+.inquiry-type input[type="radio"]{display:none}
+.inquiry-type .it-icon{font-size:1.4rem;margin-bottom:4px}
+.inquiry-type .it-label{font-size:0.78rem;font-weight:600;color:var(--gray)}
+
+/* SIDEBAR */
+.contact-sidebar{display:flex;flex-direction:column;gap:20px}
+.sidebar-card{background:var(--lavender);border-radius:var(--radius);padding:24px;border:1px solid var(--border)}
+.sidebar-card h3{font-size:0.97rem;margin-bottom:10px;color:var(--ink)}
+.sidebar-card p{font-size:0.85rem;color:var(--gray);line-height:1.7}
+.sidebar-card a{color:var(--primary);font-size:0.85rem}
+
+/* CALENDLY */
+.calendly-placeholder{background:var(--white);border:2px dashed var(--border);border-radius:var(--radius);padding:32px 24px;text-align:center}
+.calendly-placeholder .cal-icon{font-size:2.2rem;margin-bottom:10px}
+.calendly-placeholder p{font-size:0.85rem;color:var(--gray);margin-bottom:16px;line-height:1.6}
+
+/* SOCIAL LINKS */
+.social-links-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.social-link{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);font-size:0.85rem;font-weight:500;color:var(--gray);transition:var(--transition)}
+.social-link:hover{border-color:var(--primary);color:var(--primary)}
+.social-icon{font-size:1.1rem}
+
+/* FAQ */
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto}
+.faq-item{padding:24px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius)}
+.faq-item h4{font-size:0.95rem;margin-bottom:8px;color:var(--ink)}
+.faq-item p{font-size:0.87rem;color:var(--gray);line-height:1.7}
+
+/* NEWSLETTER CTA */
+.nl-cta{background:linear-gradient(135deg,var(--primary),#6b4fa0);border-radius:var(--radius);padding:56px 48px;text-align:center}
+.nl-cta h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--white);margin-bottom:12px}
+.nl-cta p{color:rgba(255,255,255,0.8);max-width:460px;margin:0 auto 28px;line-height:1.75}
+.nl-form{display:flex;gap:0;max-width:380px;margin:0 auto;border-radius:100px;overflow:hidden;border:1.5px solid rgba(255,255,255,0.35)}
+.nl-form input{flex:1;padding:12px 20px;border:none;outline:none;font-size:0.9rem;font-family:'Inter',sans-serif;background:rgba(255,255,255,0.12);color:var(--white)}
+.nl-form input::placeholder{color:rgba(255,255,255,0.55)}
+.nl-form button{padding:12px 22px;background:var(--white);color:var(--primary);border:none;font-weight:600;font-size:0.85rem;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:#9b7dd4}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:#9b7dd4}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){
+  .contact-grid{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}
+  .nl-cta{padding:40px 24px}
+  .social-links-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .form-2col{grid-template-columns:1fr}
+  .inquiry-types{grid-template-columns:1fr}
+  .nl-form{flex-direction:column;border-radius:var(--radius)}
+  .nl-form input{border-radius:var(--radius) var(--radius) 0 0}
+  .nl-form button{border-radius:0 0 var(--radius) var(--radius)}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">The <span>Thoughtful</span> Creator</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Work With Me</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Media</a></li>
+      <li><a href="contact.html" class="active btn btn-primary" style="padding:8px 18px">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <span class="hero-tag">Speaking · Partnerships · Consulting</span>
+  <h1>Get in Touch</h1>
+  <p>Speaking inquiries, brand partnerships, consulting questions — I read every message and respond within 48 hours.</p>
+</div>
+
+<!-- MAIN CONTACT -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="form-card">
+          <p class="sub">Send a Message</p>
+          <h2>Let&rsquo;s Talk</h2>
+          <!-- Replace YOUR_FORM_ID with your Formspree form ID from formspree.io (free) -->
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="margin-top:24px">
+            <div class="form-2col">
+              <div class="form-group">
+                <label>First Name *</label>
+                <input type="text" name="first_name" placeholder="Alex" required/>
+              </div>
+              <div class="form-group">
+                <label>Last Name *</label>
+                <input type="text" name="last_name" placeholder="Johnson" required/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" name="email" placeholder="you@company.com" required/>
+            </div>
+            <div class="form-group">
+              <label>Company / Organization</label>
+              <input type="text" name="company" placeholder="Your company name"/>
+            </div>
+            <div class="form-group">
+              <label>Inquiry Type *</label>
+              <select name="inquiry_type" required>
+                <option value="">Select inquiry type...</option>
+                <option>Speaking / Keynote</option>
+                <option>Brand Partnership / Sponsorship</option>
+                <option>1:1 Consulting</option>
+                <option>Podcast Guest Appearance</option>
+                <option>Press / Media Interview</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Budget Range (if applicable)</label>
+              <select name="budget">
+                <option value="">Prefer not to say</option>
+                <option>Under $1,000</option>
+                <option>$1,000 – $3,000</option>
+                <option>$3,000 – $7,500</option>
+                <option>$7,500 – $15,000</option>
+                <option>$15,000+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tell Me About Your Project *</label>
+              <textarea name="message" rows="5" placeholder="Share details about your event, campaign goals, timeline, audience size, or what you're hoping to accomplish together..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label>How did you find me?</label>
+              <select name="source">
+                <option value="">Select one...</option>
+                <option>Newsletter</option>
+                <option>Podcast</option>
+                <option>Instagram</option>
+                <option>Twitter / X</option>
+                <option>Google Search</option>
+                <option>Referral / Word of mouth</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Send Message &rarr;</button>
+            <p class="form-note">I respond to all inquiries within 48 business hours. For time-sensitive needs, mention it in your message. I don't take on every project — but I read everything and reply to everyone.</p>
+          </form>
+        </div>
+
+        <!-- DISCOVERY CALL via Calendly -->
+        <div style="margin-top:28px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:32px">
+          <h3 style="font-size:1.1rem;margin-bottom:8px">Prefer to Talk First?</h3>
+          <p style="font-size:0.88rem;color:var(--gray);margin-bottom:20px;line-height:1.6">Book a free 20-minute discovery call. We'll see if we're a good fit before anything else.</p>
+          <!-- To add online booking: go to calendly.com (free), create your event type, and replace YOUR_CALENDLY_LINK below -->
+          <div class="calendly-placeholder">
+            <div class="cal-icon">📅</div>
+            <p><strong style="color:var(--ink)">Book a Free Discovery Call</strong><br/>20 minutes · Video or phone · No commitment</p>
+            <!-- Replace YOUR_CALENDLY_LINK with your Calendly URL, e.g. https://calendly.com/yourname/discovery -->
+            <a href="https://calendly.com/YOUR_CALENDLY_LINK" target="_blank" class="btn btn-accent">See Available Times</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="contact-sidebar">
+        <div class="sidebar-card">
+          <h3>📬 Response Times</h3>
+          <p>I check email Monday–Friday and reply within 48 hours. For weekend inquiries, expect a response Monday morning.</p>
+          <p style="margin-top:10px">For <strong>urgent speaking inquiries</strong> (events within 30 days), mention "URGENT" in your subject line.</p>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>🎤 Speaking Availability</h3>
+          <p>Currently booking for <strong>Q3–Q4 2025</strong> and into 2026. Virtual and in-person keynotes available.</p>
+          <p style="margin-top:10px">Base rate: $3,500 keynote / $1,500 virtual. Nonprofit rates available.</p>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>🤝 Brand Partnerships</h3>
+          <p>I accept 4–6 sponsorships per quarter. <strong>Currently available:</strong> newsletter, podcast, and Instagram.</p>
+          <p style="margin-top:10px">Request a full media kit with audience demographics and rates via the form.</p>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>📱 Follow Along</h3>
+          <p style="margin-bottom:14px">For faster updates, questions, and conversation — find me here:</p>
+          <div class="social-links-grid">
+            <a href="#" class="social-link"><span class="social-icon">📸</span> Instagram</a>
+            <a href="#" class="social-link"><span class="social-icon">🐦</span> Twitter / X</a>
+            <a href="#" class="social-link"><span class="social-icon">💼</span> LinkedIn</a>
+            <a href="#" class="social-link"><span class="social-icon">▶️</span> YouTube</a>
+          </div>
+        </div>
+
+        <div class="sidebar-card" style="background:var(--primary);border-color:var(--primary)">
+          <h3 style="color:var(--white)">💌 Free Newsletter</h3>
+          <p style="color:rgba(255,255,255,0.8)">Not ready to reach out yet? Join 8,400+ readers for one idea every Thursday morning.</p>
+          <a href="index.html#newsletter" class="btn" style="margin-top:14px;background:var(--white);color:var(--primary);width:100%;text-align:center;display:block;border-radius:100px;padding:10px">Subscribe Free</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-light">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:8px">Before You Reach Out</p>
+      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem)">Common Questions</h2>
+      <div class="accent-line"></div>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h4>Do you speak at virtual events?</h4>
+        <p>Yes — about 40% of my speaking is virtual. Virtual keynote rate is $1,500, and I bring the same energy and preparation as an in-person appearance.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What brands do you NOT work with?</h4>
+        <p>I don't partner with brands in tobacco, gambling, MLMs, or any product I wouldn't genuinely recommend to a close friend. Authenticity isn't just a word — it's the reason my audience trusts me.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I pitch myself as a podcast guest?</h4>
+        <p>Yes! Fill out the form with "Podcast Guest" as your inquiry type. Please share who you are, what you'd talk about, and why it serves my audience. Unsolicited bulk pitches are ignored.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do you offer free strategy calls?</h4>
+        <p>I offer a free 20-minute discovery call for potential consulting clients and brand partners. Book one above. General advice calls are paid — my newsletter is free and covers most questions!</p>
+      </div>
+      <div class="faq-item">
+        <h4>How quickly do you respond?</h4>
+        <p>Within 48 business hours, always. If you haven't heard from me in 3 business days, please follow up — sometimes things get buried and a gentle nudge is totally appropriate.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Do you write guest posts or contribute to publications?</h4>
+        <p>Occasionally, for the right fit. I prioritize my own newsletter and podcast, but I'm open to contributing to outlets that genuinely serve thoughtful creators. Pitch via the form.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER CTA -->
+<section class="section">
+  <div class="container">
+    <div class="nl-cta">
+      <h2>Not Ready to Reach Out? That&rsquo;s Okay.</h2>
+      <p>Join 8,400+ creators for The Weekly Letter — one idea, one story, one thing worth your attention. Every Thursday. Always free.</p>
+      <div class="nl-form">
+        <input type="email" placeholder="your@email.com"/>
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">The <span>Thoughtful</span> Creator</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">A newsletter and podcast for creative people building intentional careers. Published weekly since 2020.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Work With Me</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="gallery.html">Media</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 The Thoughtful Creator. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.3)">Template by <a href="https://sitesbymel.com" style="color:#9b7dd4">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

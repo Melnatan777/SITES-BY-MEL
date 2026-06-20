@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | Sparkle Clean Co.</title>
+  <style>
+    :root {
+      --primary: #1a6fa8;
+      --secondary: #0e4d7a;
+      --accent: #f4a61e;
+      --text: #1a2a38;
+      --light: #f0f7ff;
+      --white: #ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.10);
+      --radius: 8px;
+      --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, Helvetica, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.25rem; }
+    .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; display: block; }
+    .section-title { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 1rem; }
+    .section-title span { color: var(--primary); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 999; background: var(--white); box-shadow: 0 2px 12px rgba(0,0,0,0.09); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; max-width: 1140px; margin: 0 auto; }
+    .nav-logo { font-size: 1.45rem; font-weight: 800; color: var(--primary); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 1.8rem; }
+    .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-cta { background: var(--primary); color: var(--white) !important; padding: 0.55rem 1.3rem; border-radius: 6px; }
+    .nav-cta:hover { background: var(--secondary) !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 26px; height: 3px; background: var(--text); border-radius: 2px; }
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); padding: 1.25rem; gap: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+      .nav-links.open { display: flex; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, #0d6eaa 0%, var(--primary) 50%, #2592d4 100%); color: var(--white); padding: 4rem 1.25rem; text-align: center; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; margin-bottom: 0.75rem; }
+    .page-hero h1 span { color: var(--accent); }
+    .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.9); max-width: 560px; margin: 0 auto; }
+
+    /* TIP BANNER */
+    .tip-banner { background: var(--accent); padding: 1rem 1.25rem; text-align: center; }
+    .tip-banner p { font-size: 0.92rem; font-weight: 600; color: #3a2800; }
+    .tip-banner strong { font-weight: 800; }
+
+    /* BEFORE/AFTER */
+    .ba-section { padding: 5rem 1.25rem; background: var(--light); }
+    .ba-header { text-align: center; margin-bottom: 3rem; }
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .ba-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .ba-photos { display: grid; grid-template-columns: 1fr 1fr; }
+    .ba-photo { height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 0.75rem; position: relative; }
+    .ba-photo.before { background: linear-gradient(135deg, #b8b0a8, #8a8078); }
+    .ba-photo.after { background: linear-gradient(135deg, #b8d9f0, #4898c8); }
+    .ba-label { background: rgba(0,0,0,0.55); color: var(--white); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.65rem; border-radius: 20px; }
+    .ba-photo-text { font-size: 0.75rem; color: rgba(255,255,255,0.8); font-weight: 600; text-align: center; margin-bottom: 0.4rem; }
+    .ba-info { padding: 1.25rem 1.5rem; }
+    .ba-info h4 { font-size: 1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.3rem; }
+    .ba-info p { font-size: 0.85rem; color: #4a6070; line-height: 1.55; }
+    .ba-tag { display: inline-block; background: var(--light); color: var(--primary); font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; margin-top: 0.5rem; border: 1px solid #c0d8ef; }
+
+    /* CLEAN SPACES GALLERY */
+    .gallery-section { padding: 5rem 1.25rem; background: var(--white); }
+    .gallery-header { text-align: center; margin-bottom: 3rem; }
+    .gallery-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; box-shadow: var(--shadow); }
+    .gallery-photo { width: 100%; height: 220px; display: flex; align-items: flex-end; }
+    .gallery-caption { width: 100%; background: linear-gradient(transparent, rgba(14,77,122,0.85)); padding: 2rem 1rem 1rem; color: var(--white); font-size: 0.85rem; font-weight: 600; }
+
+    /* DEEP CLEAN GALLERY */
+    .deep-section { padding: 5rem 1.25rem; background: var(--secondary); }
+    .deep-header { text-align: center; margin-bottom: 3rem; }
+    .deep-header h2 { color: var(--white); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; }
+    .deep-header p { color: rgba(255,255,255,0.78); margin-top: 0.5rem; }
+    .deep-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .deep-item { border-radius: var(--radius); overflow: hidden; }
+    .deep-photo { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.85); text-align: center; padding: 0.5rem; }
+    .deep-label { background: rgba(255,255,255,0.1); padding: 0.6rem 0.75rem; }
+    .deep-label span { font-size: 0.82rem; font-weight: 700; color: var(--accent); display: block; }
+    .deep-label p { font-size: 0.75rem; color: rgba(255,255,255,0.7); line-height: 1.4; }
+
+    /* MOVE-OUT GALLERY */
+    .moveout-section { padding: 5rem 1.25rem; background: var(--light); }
+    .moveout-header { text-align: center; margin-bottom: 3rem; }
+    .moveout-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+    .moveout-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .moveout-photo { height: 200px; }
+    .moveout-info { padding: 1.25rem; }
+    .moveout-info h4 { font-size: 0.95rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.3rem; }
+    .moveout-info p { font-size: 0.83rem; color: #4a6070; line-height: 1.55; }
+    .moveout-result { display: flex; align-items: center; gap: 0.4rem; margin-top: 0.75rem; }
+    .result-badge { background: #e8f5e0; color: #2a7a20; font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; }
+
+    /* SUPPLIES SECTION */
+    .supplies-section { padding: 5rem 1.25rem; background: var(--white); }
+    .supplies-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .supplies-text h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; color: var(--secondary); margin-bottom: 1rem; }
+    .supplies-text p { color: #3a5a70; line-height: 1.78; margin-bottom: 1rem; font-size: 0.97rem; }
+    .supply-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1.25rem; }
+    .supply-item { background: var(--light); border-radius: 6px; padding: 0.75rem 1rem; display: flex; gap: 0.6rem; align-items: center; font-size: 0.88rem; font-weight: 600; color: var(--secondary); }
+    .supply-item::before { content: "✓"; color: var(--primary); font-weight: 800; }
+    .supplies-photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .supply-photo { border-radius: var(--radius); overflow: hidden; }
+
+    /* TESTIMONIALS */
+    .testimonials-section { padding: 5rem 1.25rem; background: var(--secondary); }
+    .test-header { text-align: center; margin-bottom: 3rem; }
+    .test-header h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--white); }
+    .test-header p { color: rgba(255,255,255,0.78); margin-top: 0.5rem; }
+    .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .test-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); padding: 2rem 1.75rem; }
+    .stars { color: var(--accent); font-size: 1.1rem; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+    .test-card blockquote { font-size: 0.93rem; color: rgba(255,255,255,0.88); line-height: 1.7; font-style: italic; margin-bottom: 1.25rem; }
+    .test-author { font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+    .test-detail { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 0.15rem; }
+
+    /* CTA */
+    .cta-band { background: linear-gradient(135deg, var(--secondary), var(--primary)); padding: 4rem 1.25rem; text-align: center; color: var(--white); }
+    .cta-band h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 0.75rem; }
+    .cta-band h2 span { color: var(--accent); }
+    .cta-band p { color: rgba(255,255,255,0.88); margin-bottom: 2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-accent { display: inline-block; background: var(--accent); color: var(--white); padding: 0.9rem 2.2rem; border-radius: 6px; font-weight: 800; transition: var(--transition); }
+    .btn-accent:hover { background: #d48c10; transform: translateY(-2px); }
+    .btn-outline { display: inline-block; background: transparent; color: var(--white); border: 2px solid var(--white); padding: 0.86rem 2rem; border-radius: 6px; font-weight: 700; transition: var(--transition); }
+    .btn-outline:hover { background: var(--white); color: var(--primary); }
+
+    /* FOOTER */
+    footer { background: #0d3a5c; color: rgba(255,255,255,0.8); padding: 4rem 1.25rem 2rem; }
+    .footer-inner { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-bottom: 3rem; }
+    .footer-col h3 { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 1.1rem; }
+    .footer-col p { font-size: 0.9rem; line-height: 1.7; }
+    .footer-logo { font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: 0.75rem; display: block; }
+    .footer-logo span { color: var(--accent); }
+    .footer-col ul li { margin-bottom: 0.55rem; }
+    .footer-col ul li a { font-size: 0.9rem; color: rgba(255,255,255,0.75); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--accent); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; text-align: center; font-size: 0.83rem; color: rgba(255,255,255,0.5); max-width: 1140px; margin: 0 auto; }
+    .footer-bottom a { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .ba-grid { grid-template-columns: 1fr; }
+      .gallery-grid-3 { grid-template-columns: 1fr 1fr; }
+      .deep-grid { grid-template-columns: repeat(2, 1fr); }
+      .moveout-grid { grid-template-columns: 1fr 1fr; }
+      .supplies-inner { grid-template-columns: 1fr; }
+      .test-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .ba-photos { grid-template-columns: 1fr 1fr; }
+      .gallery-grid-3 { grid-template-columns: 1fr; }
+      .deep-grid { grid-template-columns: 1fr 1fr; }
+      .moveout-grid { grid-template-columns: 1fr; }
+      .supply-list { grid-template-columns: 1fr; }
+      .supplies-photo-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Sparkle <span>Clean</span> Co.</a>
+      <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-cta">Book a Clean</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label" style="color:var(--accent)">See Our Work</span>
+      <h1>The <span>Sparkle</span> Difference</h1>
+      <p>Real results from real homes. Browse our before-and-after photos and see what a professional clean actually looks like.</p>
+    </div>
+  </section>
+
+  <div class="tip-banner">
+    <p><strong>Pro Tip:</strong> Replace the photo placeholders below with your own before-and-after photos — real results are your best marketing tool!</p>
+  </div>
+
+  <!-- BEFORE / AFTER -->
+  <section class="ba-section">
+    <div class="container">
+      <div class="ba-header">
+        <span class="section-label">Real Results</span>
+        <h2 class="section-title">Before & <span>After</span></h2>
+        <p style="color:#4a6070; max-width:520px; margin:0 auto;">Photos taken before and after our cleans — no filters, no staging, just the real difference a professional clean makes.</p>
+      </div>
+      <div class="ba-grid">
+
+        <div class="ba-card">
+          <div class="ba-photos">
+            <div class="ba-photo before">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-photo after">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">After</span>
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Kitchen Deep Clean</h4>
+            <p>Full deep clean including inside oven, stovetop degreasing, cabinet fronts, and floor mop. Transformation took 2.5 hours.</p>
+            <span class="ba-tag">Deep Clean</span>
+          </div>
+        </div>
+
+        <div class="ba-card">
+          <div class="ba-photos">
+            <div class="ba-photo before" style="background:linear-gradient(135deg,#b0a898,#786860);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-photo after" style="background:linear-gradient(135deg,#90d8f0,#3898c8);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">After</span>
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Master Bathroom Scrub</h4>
+            <p>Hard water stains removed from shower glass, grout scrubbed, toilet sanitized, and mirrors polished streak-free.</p>
+            <span class="ba-tag">Deep Clean</span>
+          </div>
+        </div>
+
+        <div class="ba-card">
+          <div class="ba-photos">
+            <div class="ba-photo before" style="background:linear-gradient(135deg,#c0b8b0,#908880);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-photo after" style="background:linear-gradient(135deg,#a0d0f0,#2888b8);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">After</span>
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Move-Out: Full Apartment</h4>
+            <p>Empty 2-bedroom apartment cleaned top to bottom, including inside all cabinets, closets, appliances, and walls spot-cleaned.</p>
+            <span class="ba-tag">Move-Out Clean</span>
+          </div>
+        </div>
+
+        <div class="ba-card">
+          <div class="ba-photos">
+            <div class="ba-photo before" style="background:linear-gradient(135deg,#a8a098,#706860);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-photo after" style="background:linear-gradient(135deg,#c8e8f8,#5080a8);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">After</span>
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Living Room & Entryway</h4>
+            <p>Dust removed from all surfaces, ceiling fan blades cleaned, floors vacuumed and mopped, baseboards wiped throughout.</p>
+            <span class="ba-tag">Standard Clean</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CLEAN SPACES GALLERY -->
+  <section class="gallery-section">
+    <div class="container">
+      <div class="gallery-header">
+        <span class="section-label">Finished Results</span>
+        <h2 class="section-title">Clean <span>Spaces</span> Gallery</h2>
+        <p style="color:#4a6070; max-width:520px; margin:0 auto;">A sampling of rooms and spaces after our team has been through. Every room gets the same thorough attention to detail.</p>
+      </div>
+      <div class="gallery-grid-3">
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background:linear-gradient(160deg,#90c8e8,#1a6fa8);">
+            <div class="gallery-caption">Spotless Kitchen</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background:linear-gradient(160deg,#70b8d8,#0e4d7a);">
+            <div class="gallery-caption">Sparkling Bathroom</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background:linear-gradient(160deg,#b0d8f0,#3888b8);">
+            <div class="gallery-caption">Fresh Living Room</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background:linear-gradient(160deg,#80c0e0,#1a5a90);">
+            <div class="gallery-caption">Clean Master Bedroom</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background:linear-gradient(160deg,#a0d0e8,#2878a8);">
+            <div class="gallery-caption">Organized Home Office</div>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background:linear-gradient(160deg,#60b0d8,#0d5888);">
+            <div class="gallery-caption">Gleaming Floors</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP CLEAN DETAILS -->
+  <section class="deep-section">
+    <div class="container">
+      <div class="deep-header">
+        <span class="section-label" style="color:var(--accent)">Detail Work</span>
+        <h2>Deep Clean Close-Ups</h2>
+        <p>The areas that get forgotten — until we come through. Our deep clean tackles the spots that make a real difference.</p>
+      </div>
+      <div class="deep-grid">
+        <div class="deep-item">
+          <div class="deep-photo" style="background:linear-gradient(135deg,#3888b8,#0d5888);">Add your photo here</div>
+          <div class="deep-label"><span>Inside Oven</span><p>Grease and baked-on residue removed completely</p></div>
+        </div>
+        <div class="deep-item">
+          <div class="deep-photo" style="background:linear-gradient(135deg,#1a6fa8,#0e4d7a);">Add your photo here</div>
+          <div class="deep-label"><span>Baseboards</span><p>Wiped and polished throughout every room</p></div>
+        </div>
+        <div class="deep-item">
+          <div class="deep-photo" style="background:linear-gradient(135deg,#2878a8,#1a5070);">Add your photo here</div>
+          <div class="deep-label"><span>Shower Grout</span><p>Scrubbed and brightened with eco-safe cleaner</p></div>
+        </div>
+        <div class="deep-item">
+          <div class="deep-photo" style="background:linear-gradient(135deg,#4898c8,#1a6fa8);">Add your photo here</div>
+          <div class="deep-label"><span>Window Tracks</span><p>Debris cleared, tracks wiped and polished</p></div>
+        </div>
+        <div class="deep-item">
+          <div class="deep-photo" style="background:linear-gradient(135deg,#0d5888,#083a60);">Add your photo here</div>
+          <div class="deep-label"><span>Cabinet Fronts</span><p>Grease and fingerprints wiped clean</p></div>
+        </div>
+        <div class="deep-item">
+          <div class="deep-photo" style="background:linear-gradient(135deg,#1a6fa8,#0d4070);">Add your photo here</div>
+          <div class="deep-label"><span>Inside Refrigerator</span><p>Shelves removed, wiped, and deodorized</p></div>
+        </div>
+        <div class="deep-item">
+          <div class="deep-photo" style="background:linear-gradient(135deg,#2888b8,#0e5888);">Add your photo here</div>
+          <div class="deep-label"><span>Ceiling Fans</span><p>Blades dusted and wiped on both sides</p></div>
+        </div>
+        <div class="deep-item">
+          <div class="deep-photo" style="background:linear-gradient(135deg,#3898c8,#1a6898);">Add your photo here</div>
+          <div class="deep-label"><span>Light Switches</span><p>Sanitized and disinfected throughout home</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOVE-OUT GALLERY -->
+  <section class="moveout-section">
+    <div class="container">
+      <div class="moveout-header">
+        <span class="section-label">Move-Out Results</span>
+        <h2 class="section-title">Get Your <span>Deposit Back</span></h2>
+        <p style="color:#4a6070; max-width:520px; margin:0 auto;">Our move-out clients consistently get their security deposits back. Here are some recent examples of our move-out clean work.</p>
+      </div>
+      <div class="moveout-grid">
+        <div class="moveout-card">
+          <div class="moveout-photo" style="background:linear-gradient(160deg,#90c8e8,#1a6fa8); height:200px; display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85);font-size:0.82rem;font-weight:600;text-align:center;padding:1rem;">Add your photo here</div>
+          <div class="moveout-info">
+            <h4>3-Bedroom House — Full Turnover</h4>
+            <p>Complete top-to-bottom clean including garage sweep, inside all appliances, and all closets cleaned out and wiped.</p>
+            <div class="moveout-result"><span class="result-badge">Full Deposit Returned</span></div>
+          </div>
+        </div>
+        <div class="moveout-card">
+          <div class="moveout-photo" style="background:linear-gradient(160deg,#70b8d8,#0e4d7a); height:200px; display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85);font-size:0.82rem;font-weight:600;text-align:center;padding:1rem;">Add your photo here</div>
+          <div class="moveout-info">
+            <h4>1-Bedroom Apartment</h4>
+            <p>Move-out clean for a downtown apartment — kitchen, bathroom, and all surfaces cleaned to landlord inspection standard.</p>
+            <div class="moveout-result"><span class="result-badge">Landlord Approved</span></div>
+          </div>
+        </div>
+        <div class="moveout-card">
+          <div class="moveout-photo" style="background:linear-gradient(160deg,#b0d8f0,#3888b8); height:200px; display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85);font-size:0.82rem;font-weight:600;text-align:center;padding:1rem;">Add your photo here</div>
+          <div class="moveout-info">
+            <h4>2-Bedroom Condo</h4>
+            <p>Post-tenant turnover clean for a property management company — cleaned and ready for showing within 24 hours.</p>
+            <div class="moveout-result"><span class="result-badge">Ready to List</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPLIES -->
+  <section class="supplies-section">
+    <div class="container">
+      <div class="supplies-inner">
+        <div class="supplies-text">
+          <span class="section-label">Our Tools & Products</span>
+          <h2 class="section-title">Eco-Friendly <span>Supplies</span></h2>
+          <p>We use only professional-grade, non-toxic cleaning products that are safe for kids and pets. No harsh bleaches or chemical sprays — just effective, environmentally-responsible cleaning.</p>
+          <p>Our microfiber cloths and reusable equipment minimize waste. We bring everything with us — you don't need to supply a thing.</p>
+          <div class="supply-list">
+            <div class="supply-item">Non-toxic all-purpose cleaner</div>
+            <div class="supply-item">Eco-safe bathroom disinfectant</div>
+            <div class="supply-item">Glass & mirror spray</div>
+            <div class="supply-item">Stainless steel polish</div>
+            <div class="supply-item">Grout scrub brush</div>
+            <div class="supply-item">Microfiber cloths</div>
+            <div class="supply-item">HEPA vacuum cleaner</div>
+            <div class="supply-item">Mop & bucket system</div>
+          </div>
+        </div>
+        <div class="supplies-photo-grid">
+          <div class="supply-photo">
+            <div style="height:180px;background:linear-gradient(135deg,#90c8e8,#1a6fa8);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85);font-size:0.8rem;font-weight:600;text-align:center;padding:0.75rem;">Add your photo here</div>
+          </div>
+          <div class="supply-photo">
+            <div style="height:180px;background:linear-gradient(135deg,#70b8d8,#0e4d7a);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85);font-size:0.8rem;font-weight:600;text-align:center;padding:0.75rem;">Add your photo here</div>
+          </div>
+          <div class="supply-photo">
+            <div style="height:180px;background:linear-gradient(135deg,#b0d8f0,#3888b8);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85);font-size:0.8rem;font-weight:600;text-align:center;padding:0.75rem;">Add your photo here</div>
+          </div>
+          <div class="supply-photo">
+            <div style="height:180px;background:linear-gradient(135deg,#4898c8,#1a6088);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.85);font-size:0.8rem;font-weight:600;text-align:center;padding:0.75rem;">Add your photo here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="test-header">
+        <span class="section-label" style="color:var(--accent)">What Clients Say</span>
+        <h2>Happy Clients, <span style="color:var(--accent)">Spotless Homes</span></h2>
+        <p>Real reviews from real clients who trust Sparkle Clean Co. with their homes every week.</p>
+      </div>
+      <div class="test-grid">
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"I've tried three other cleaning companies before Sparkle Clean and none of them compare. My kitchen has never looked this clean. They got stains off my stovetop I thought were permanent!"</blockquote>
+          <div class="test-author">Sarah M.</div>
+          <div class="test-detail">Bi-Weekly Client · 2 Years</div>
+        </div>
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Used them for a move-out clean on my apartment and got my full deposit back. The landlord was shocked at how clean it was. 100% would recommend to anyone moving out."</blockquote>
+          <div class="test-author">James K.</div>
+          <div class="test-detail">Move-Out Clean</div>
+        </div>
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Trustworthy, thorough, and always on time. I leave them a key and come home to a clean house every other week. It's the best money I spend. My house genuinely sparkles!"</blockquote>
+          <div class="test-author">Priya T.</div>
+          <div class="test-detail">Weekly Client · 3 Years</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Want Results Like <span>These?</span></h2>
+      <p>Book your first clean today and see the Sparkle difference for yourself — satisfaction guaranteed.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-accent">Book a Clean Now</a>
+        <a href="services.html" class="btn-outline">View Services & Pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-logo">Sparkle <span>Clean</span> Co.</span>
+        <p>Professional cleaning services for homes and businesses. Bonded, insured, and background checked for your complete peace of mind.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="services.html">Residential Cleaning</a></li>
+          <li><a href="services.html">Deep Clean</a></li>
+          <li><a href="services.html">Move-In / Move-Out</a></li>
+          <li><a href="services.html">Commercial Cleaning</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Book a Clean</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Sparkle Clean Co. All rights reserved. | Website by <a href="#">Sites by Mel</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

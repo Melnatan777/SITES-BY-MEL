@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoShine — Contact & Book a Detail</title>
+  <style>
+    :root {
+      --primary: #1a2a5c;
+      --secondary: #0d1a3d;
+      --accent: #e8a020;
+      --text: #1a1a2a;
+      --light: #f4f6fb;
+      --white: #ffffff;
+      --shadow: 0 4px 24px rgba(26,42,92,0.12);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: var(--text); background: var(--white); }
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 70px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    }
+    .nav-logo { color: var(--white); font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.85); font-size: 0.97rem; font-weight: 500; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--primary); padding: 0.55rem 1.4rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); }
+    .nav-cta:hover { background: #f5b840; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 26px; height: 3px; background: var(--white); border-radius: 2px; }
+    .mobile-menu { display: none; position: absolute; top: 70px; left: 0; right: 0; background: var(--secondary); padding: 1.5rem 5%; flex-direction: column; gap: 1.2rem; }
+    .mobile-menu a { color: var(--white); font-size: 1rem; font-weight: 500; }
+    .mobile-menu.open { display: flex; }
+
+    .page-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 5rem 5% 4rem; text-align: center;
+    }
+    .page-hero .badge { display: inline-block; background: rgba(232,160,32,0.18); border: 1px solid var(--accent); color: var(--accent); font-size: 0.82rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 50px; margin-bottom: 1.2rem; }
+    .page-hero h1 { font-size: 2.8rem; font-weight: 900; color: var(--white); margin-bottom: 1rem; }
+    .page-hero h1 span { color: var(--accent); }
+    .page-hero p { color: rgba(255,255,255,0.78); font-size: 1.1rem; max-width: 580px; margin: 0 auto; line-height: 1.7; }
+
+    section { padding: 5rem 5%; }
+    .section-label { font-size: 0.82rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .section-title { font-size: 2rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem; }
+    .section-title span { color: var(--accent); }
+    .max-w { max-width: 1100px; margin: 0 auto; }
+
+    /* FORM + SIDEBAR */
+    .contact-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; max-width: 1100px; margin: 0 auto; }
+
+    /* FORM */
+    .form-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2.5rem; }
+    .form-card h2 { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 0.4rem; }
+    .form-card p { color: #666; font-size: 0.93rem; margin-bottom: 2rem; line-height: 1.6; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.88rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 0.75rem 1rem; border: 2px solid #e5e8f0;
+      border-radius: 8px; font-size: 0.95rem; font-family: inherit;
+      color: var(--text); background: var(--light); transition: var(--transition);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { outline: none; border-color: var(--primary); background: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-note { font-size: 0.82rem; color: #888; margin-top: 0.4rem; }
+    .btn-submit {
+      width: 100%; padding: 0.9rem; background: var(--accent); color: var(--primary);
+      border: none; border-radius: 50px; font-size: 1rem; font-weight: 800;
+      cursor: pointer; transition: var(--transition); margin-top: 0.5rem;
+    }
+    .btn-submit:hover { background: #f5b840; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,160,32,0.35); }
+
+    /* SIDEBAR */
+    .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+    .info-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.8rem; }
+    .info-card h3 { font-size: 1.05rem; font-weight: 800; color: var(--primary); margin-bottom: 1.1rem; padding-bottom: 0.7rem; border-bottom: 2px solid var(--light); }
+    .info-item { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 1rem; }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .info-item strong { display: block; font-size: 0.9rem; color: var(--primary); margin-bottom: 0.15rem; }
+    .info-item span { font-size: 0.88rem; color: #666; line-height: 1.5; }
+
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr td { padding: 0.4rem 0; font-size: 0.9rem; color: #555; border-bottom: 1px solid var(--light); }
+    .hours-table tr td:first-child { font-weight: 600; color: var(--primary); }
+    .hours-table tr:last-child td { border-bottom: none; }
+
+    /* CALENDLY */
+    .calendly-section { background: var(--light); }
+    .calendly-box { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2.5rem; max-width: 700px; margin: 0 auto; text-align: center; }
+    .calendly-box h2 { font-size: 1.6rem; font-weight: 800; color: var(--primary); margin-bottom: 0.75rem; }
+    .calendly-box p { color: #666; font-size: 0.97rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .calendly-placeholder {
+      background: linear-gradient(135deg, var(--light), #e8edf8);
+      border: 2px dashed #c5cde8; border-radius: var(--radius);
+      padding: 3rem 2rem; text-align: center;
+    }
+    .calendly-placeholder .cal-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .calendly-placeholder h3 { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
+    .calendly-placeholder p { color: #777; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.25rem; }
+    .btn-calendly { display: inline-block; background: var(--primary); color: var(--white); padding: 0.75rem 1.8rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); }
+    .btn-calendly:hover { background: var(--accent); color: var(--primary); }
+
+    /* SERVICE AREA */
+    .area-section { background: var(--white); }
+    .area-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; max-width: 1100px; margin: 0 auto; }
+    .area-list { columns: 2; gap: 1rem; list-style: none; }
+    .area-list li { padding: 0.4rem 0; padding-left: 1.4rem; position: relative; font-size: 0.93rem; color: #555; break-inside: avoid; }
+    .area-list li::before { content: '📍'; position: absolute; left: 0; font-size: 0.85rem; }
+    .map-placeholder { height: 300px; background: linear-gradient(135deg, var(--primary), #2a4080); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.75); font-size: 0.95rem; font-weight: 600; text-align: center; flex-direction: column; gap: 0.5rem; }
+    .map-placeholder .map-icon { font-size: 2.5rem; }
+
+    footer { background: var(--secondary); color: rgba(255,255,255,0.8); padding: 4rem 5% 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; max-width: 1100px; margin: 0 auto 3rem; }
+    .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 0.9rem; }
+    .footer-brand p { font-size: 0.93rem; line-height: 1.7; color: rgba(255,255,255,0.65); max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-size: 1rem; font-weight: 700; margin-bottom: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); font-size: 0.93rem; transition: var(--transition); }
+    .footer-col ul a:hover { color: var(--accent); }
+    .footer-contact p { font-size: 0.93rem; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.4); max-width: 1100px; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .area-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .page-hero h1 { font-size: 2rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .area-list { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Auto<span>Shine</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book Now</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="about.html">About</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:700;">Book Now</a>
+</div>
+
+<div class="page-hero">
+  <span class="badge">Get In Touch</span>
+  <h1>Book Your <span>Mobile Detail</span></h1>
+  <p>Fill out the form below and we'll confirm your appointment within a few hours. Same-week bookings are usually available.</p>
+</div>
+
+<!-- CONTACT FORM + SIDEBAR -->
+<section style="background:var(--light);">
+  <div class="contact-layout">
+    <!-- FORMSPREE FORM -->
+    <!-- Replace YOUR_FORM_ID with your Formspree form ID from formspree.io (free) -->
+    <div class="form-card">
+      <h2>Request a Booking</h2>
+      <p>Tell us about your vehicle and which service you're interested in. We'll get back to you within a few hours to confirm your appointment.</p>
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name *</label>
+            <input type="text" id="fname" name="first_name" required placeholder="Jane" />
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name *</label>
+            <input type="text" id="lname" name="last_name" required placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required placeholder="jane@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required placeholder="(555) 000-0000" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="vehicle_year">Vehicle Year</label>
+            <input type="text" id="vehicle_year" name="vehicle_year" placeholder="e.g. 2021" />
+          </div>
+          <div class="form-group">
+            <label for="vehicle_type">Vehicle Type *</label>
+            <select id="vehicle_type" name="vehicle_type" required>
+              <option value="">Select vehicle type...</option>
+              <option>Sedan / Coupe</option>
+              <option>SUV / Crossover</option>
+              <option>Truck / Pickup</option>
+              <option>Minivan</option>
+              <option>Sports Car / Exotic</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="vehicle_make">Vehicle Make & Model</label>
+          <input type="text" id="vehicle_make" name="vehicle_make" placeholder="e.g. Toyota Camry" />
+        </div>
+        <div class="form-group">
+          <label for="service">Service Requested *</label>
+          <select id="service" name="service" required>
+            <option value="">Select a service...</option>
+            <option>Basic Wash & Shine ($69)</option>
+            <option>Exterior Detail ($129)</option>
+            <option>Interior Detail ($149)</option>
+            <option>Complete Detail ($299)</option>
+            <option>Paint Correction (from $499)</option>
+            <option>Ceramic Coating (from $599)</option>
+            <option>Add-On Only</option>
+            <option>Not Sure — Help Me Choose</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="location">Service Location / Address *</label>
+          <input type="text" id="location" name="service_location" required placeholder="Your home or work address" />
+          <p class="form-note">We come to you — enter where you'd like us to show up.</p>
+        </div>
+        <div class="form-group">
+          <label for="preferred_date">Preferred Date</label>
+          <input type="date" id="preferred_date" name="preferred_date" />
+        </div>
+        <div class="form-group">
+          <label for="message">Additional Notes</label>
+          <textarea id="message" name="message" placeholder="Any specific concerns, add-ons you're interested in, or pet hair situation we should know about..."></textarea>
+        </div>
+        <p class="form-note" style="margin-bottom:1rem;">By submitting this form you agree to be contacted about your booking. We never share your info.</p>
+        <button type="submit" class="btn-submit">Submit Booking Request →</button>
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="info-card">
+        <h3>Contact Info</h3>
+        <div class="info-item">
+          <span class="info-icon">📞</span>
+          <div><strong>Phone</strong><span>(555) 010-0100</span></div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">✉️</span>
+          <div><strong>Email</strong><span>hello@autoshinedetail.com</span></div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">📍</span>
+          <div><strong>Service Area</strong><span>Greater Metro Area — we come to you</span></div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">💬</span>
+          <div><strong>Response Time</strong><span>We reply within 2–4 hours during business hours</span></div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Business Hours</h3>
+        <table class="hours-table">
+          <tr><td>Monday</td><td>7:00am – 6:00pm</td></tr>
+          <tr><td>Tuesday</td><td>7:00am – 6:00pm</td></tr>
+          <tr><td>Wednesday</td><td>7:00am – 6:00pm</td></tr>
+          <tr><td>Thursday</td><td>7:00am – 6:00pm</td></tr>
+          <tr><td>Friday</td><td>7:00am – 6:00pm</td></tr>
+          <tr><td>Saturday</td><td>8:00am – 4:00pm</td></tr>
+          <tr><td>Sunday</td><td>Closed</td></tr>
+        </table>
+      </div>
+
+      <div class="info-card">
+        <h3>What to Expect</h3>
+        <div class="info-item">
+          <span class="info-icon">1️⃣</span>
+          <div><strong>Submit your request</strong><span>Fill out the form with your vehicle details and preferred service.</span></div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">2️⃣</span>
+          <div><strong>We confirm your slot</strong><span>You'll hear from us within a few hours with a confirmed time.</span></div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">3️⃣</span>
+          <div><strong>We show up ready</strong><span>We arrive with all equipment. You don't need to do a thing.</span></div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">4️⃣</span>
+          <div><strong>Enjoy your clean car</strong><span>Inspect the results and pay when you're 100% satisfied.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDLY SCHEDULING -->
+<section class="calendly-section">
+  <div class="calendly-box">
+    <h2>Prefer to Schedule Online?</h2>
+    <p>Use our online booking calendar to pick a date and time that works for you — no back-and-forth needed. Appointments are confirmed instantly.</p>
+    <!-- To add online booking: go to calendly.com (free), create your event type, and replace YOUR_CALENDLY_LINK below -->
+    <div class="calendly-placeholder">
+      <div class="cal-icon">📅</div>
+      <h3>Online Booking Calendar</h3>
+      <p>Add your Calendly calendar here so customers can self-schedule. Go to <strong>calendly.com</strong> to set up your free account, create your "Mobile Detail" event type, then paste your link below.</p>
+      <a href="https://calendly.com/YOUR_CALENDLY_LINK" class="btn-calendly" target="_blank">Book a Time Slot →</a>
+      <p style="margin-top:1rem;font-size:0.82rem;color:#aaa;"><!-- Replace YOUR_CALENDLY_LINK with your actual Calendly URL --></p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE AREA -->
+<section class="area-section">
+  <div class="area-grid">
+    <div>
+      <p class="section-label">Where We Work</p>
+      <h2 class="section-title">Our <span>Service Area</span></h2>
+      <p style="color:#666;line-height:1.7;margin-bottom:1.5rem;">We service a wide area across the greater metro region. If your city isn't listed below, contact us anyway — we may still be able to accommodate you, especially for ceramic coating bookings.</p>
+      <ul class="area-list">
+        <li>Downtown</li>
+        <li>Northside</li>
+        <li>Westbrook</li>
+        <li>Eastgate</li>
+        <li>Southpark</li>
+        <li>Riverside</li>
+        <li>Lakewood</li>
+        <li>Greenfield</li>
+        <li>Maplewood</li>
+        <li>Cedar Hills</li>
+        <li>Pinecrest</li>
+        <li>Sunridge</li>
+        <li>Valley View</li>
+        <li>Harborside</li>
+        <li>Millbrook</li>
+        <li>Fairview</li>
+      </ul>
+      <p style="font-size:0.88rem;color:#888;margin-top:1rem;">Travel fee may apply for locations beyond 25 miles from city center.</p>
+    </div>
+    <div>
+      <div class="map-placeholder">
+        <div class="map-icon">🗺️</div>
+        <strong>Add Your Service Area Map Here</strong>
+        <span style="font-size:0.85rem;margin-top:0.5rem;">Embed a Google Map or add a custom service area graphic</span>
+      </div>
+      <div style="background:var(--light);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem;">
+        <h4 style="color:var(--primary);font-size:1rem;font-weight:700;margin-bottom:0.75rem;">Mobile Setup — No Hookups Needed</h4>
+        <p style="color:#666;font-size:0.9rem;line-height:1.65;">Our trailer carries its own fresh water, a 2000W generator, and all professional equipment. We can detail your vehicle anywhere — driveway, parking garage, office lot, or apartment complex.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Auto<span style="color:var(--accent);">Shine</span></span>
+      <p>Mobile auto detailing done right. We bring professional-grade products and proven techniques directly to your door.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📞 (555) 010-0100</p>
+      <p>✉️ hello@autoshinedetail.com</p>
+      <p>📍 Serving the Greater Metro Area</p>
+      <p style="margin-top:0.75rem;">Mon–Sat: 7am – 6pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 AutoShine Mobile Detailing. All rights reserved. | Template by <strong>Sites by Mel</strong></p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

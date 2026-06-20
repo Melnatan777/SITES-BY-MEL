@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Buyer & Seller Services — KeyReady Realty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#1a4f8a;--secondary:#0d3360;--accent:#c8880a;--text:#1a2030;--light:#f4f7fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:4px;--transition:all 0.2s;--gray:#6B7280;--border:#E2E8F0;--dark:#0f1a26;--gold:#c8880a;--gold-light:#e8b04a}
+body{font-family:'Inter',sans-serif;color:var(--primary);line-height:1.6}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:'Inter',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition)}
+.btn-navy{background:var(--primary);color:var(--white)}
+.btn-navy:hover{background:var(--secondary)}
+.btn-gold{background:var(--gold);color:var(--white)}
+.btn-gold:hover{background:#a87008}
+.btn-outline-navy{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.btn-outline-navy:hover{background:var(--primary);color:var(--white)}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--primary)}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.88rem;font-weight:500;transition:var(--transition)}
+.nav-links a:hover{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--primary)}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px;text-align:center}
+.page-hero .label{font-size:0.75rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+.page-hero p{font-size:1.05rem;opacity:0.85;max-width:560px;margin:0 auto;line-height:1.8}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--secondary);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:560px;margin:0 auto}
+.section-header.white .label{color:var(--gold-light)}
+.section-header.white h2{color:var(--white)}
+.section-header.white p{color:rgba(255,255,255,0.75)}
+.gold-line{width:48px;height:2px;background:var(--gold);margin:14px auto 0}
+
+/* SERVICE SPLIT */
+.services-split{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.service-panel{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.service-panel-header{padding:36px 32px;color:var(--white)}
+.service-panel-header.buyer{background:linear-gradient(135deg,var(--primary),var(--secondary))}
+.service-panel-header.seller{background:linear-gradient(135deg,var(--accent),#a87008)}
+.service-panel-header .icon{font-size:2.2rem;margin-bottom:12px}
+.service-panel-header h3{font-size:1.6rem;margin-bottom:8px}
+.service-panel-header p{opacity:0.85;font-size:0.95rem;line-height:1.7}
+.service-panel-body{background:var(--white);padding:28px 32px}
+.service-list{list-style:none}
+.service-list li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border)}
+.service-list li:last-child{border-bottom:none}
+.service-check{width:22px;height:22px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--white);font-size:0.7rem;margin-top:1px}
+.service-list li div strong{display:block;font-size:0.92rem;margin-bottom:3px}
+.service-list li div p{color:var(--gray);font-size:0.84rem;line-height:1.6}
+
+/* PROCESS */
+.process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;position:relative}
+.process-step{text-align:center;padding:32px 20px;position:relative}
+.process-step::after{content:'→';position:absolute;right:-12px;top:40px;font-size:1.4rem;color:var(--border)}
+.process-step:last-child::after{display:none}
+.step-num{width:52px;height:52px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--white);font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700}
+.process-step h4{font-size:1rem;margin-bottom:8px;color:var(--primary)}
+.process-step p{color:var(--gray);font-size:0.85rem;line-height:1.6}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.pricing-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:36px;text-align:center;transition:var(--transition)}
+.pricing-card:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.pricing-card.featured{border-color:var(--gold);border-width:2px}
+.pricing-badge{display:inline-block;background:var(--gold);color:var(--white);font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px}
+.pricing-card h3{font-size:1.4rem;margin-bottom:8px}
+.pricing-card .price{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--primary);margin:12px 0}
+.pricing-card .price span{font-size:1rem;color:var(--gray);font-family:'Inter',sans-serif}
+.pricing-card p{color:var(--gray);font-size:0.88rem;line-height:1.7;margin-bottom:20px}
+.pricing-features{text-align:left;margin-bottom:24px}
+.pricing-features li{display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--gray);padding:6px 0;border-bottom:1px solid var(--border)}
+.pricing-features li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0}
+
+/* VALUATION CTA */
+.valuation-box{background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);padding:60px 40px;text-align:center;color:var(--white)}
+.valuation-box h2{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:16px}
+.valuation-box p{opacity:0.85;max-width:540px;margin:0 auto 32px;line-height:1.8}
+.valuation-form{display:flex;gap:12px;max-width:500px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.valuation-form input{flex:1;min-width:200px;padding:12px 16px;border:none;border-radius:var(--radius);font-size:0.92rem;font-family:'Inter',sans-serif;outline:none}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--gold)}
+footer h4{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.6);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){.services-split{grid-template-columns:1fr}}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .process-step::after{display:none}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Key<span>Ready</span> Realty</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="btn btn-gold" style="padding:8px 18px;font-size:0.85rem;">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="label">Buyer &amp; Seller Services</p>
+  <h1>Expert Guidance on Every Side of the Transaction</h1>
+  <p>Whether you&rsquo;re searching for your dream home or ready to sell, I provide a full-service experience from start to closing.</p>
+</section>
+
+<!-- BUYER / SELLER SPLIT -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">How I Can Help</p>
+      <h2>Buyer &amp; Seller Services</h2>
+      <p>Comprehensive support for every real estate need in the Houston metro area.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="services-split">
+      <div class="service-panel">
+        <div class="service-panel-header buyer">
+          <div class="icon">&#127968;</div>
+          <h3>Buyer Services</h3>
+          <p>I take the stress out of finding and purchasing your next home with expert guidance from search to close.</p>
+        </div>
+        <div class="service-panel-body">
+          <ul class="service-list">
+            <li><div class="service-check">&#10003;</div><div><strong>Needs Assessment</strong><p>We start with a detailed conversation about your goals, lifestyle, budget, and timeline.</p></div></li>
+            <li><div class="service-check">&#10003;</div><div><strong>Custom Property Search</strong><p>Access to all MLS listings plus off-market opportunities not found on Zillow or Realtor.com.</p></div></li>
+            <li><div class="service-check">&#10003;</div><div><strong>Neighborhood Expertise</strong><p>Deep knowledge of Houston&rsquo;s diverse neighborhoods, school districts, and market trends.</p></div></li>
+            <li><div class="service-check">&#10003;</div><div><strong>Offer Strategy &amp; Negotiation</strong><p>Crafting offers that win in competitive markets without overpaying.</p></div></li>
+            <li><div class="service-check">&#10003;</div><div><strong>Inspection Coordination</strong><p>Trusted inspectors, contractor referrals, and guidance on repair requests.</p></div></li>
+            <li><div class="service-check">&#10003;</div><div><strong>Closing Support</strong><p>I walk you through every document and make sure you&rsquo;re never surprised at the closing table.</p></div></li>
+          </ul>
+          <a href="contact.html" class="btn btn-navy" style="width:100%;display:block;text-align:center;margin-top:20px">Start Your Home Search &rarr;</a>
+        </div>
+      </div>
+      <div class="service-panel">
+        <div class="service-panel-header seller">
+          <div class="icon">&#127760;</div>
+          <h3>Seller Services</h3>
+          <p>I market your home to the right buyers, at the right price, in the right amount of time.</p>
+        </div>
+        <div class="service-panel-body">
+          <ul class="service-list">
+            <li><div class="service-check" style="background:var(--gold)">&#10003;</div><div><strong>Strategic Pricing</strong><p>Comparative market analysis to price your home to sell for maximum value.</p></div></li>
+            <li><div class="service-check" style="background:var(--gold)">&#10003;</div><div><strong>Professional Photography</strong><p>High-quality listing photos and video walkthroughs that make your home stand out online.</p></div></li>
+            <li><div class="service-check" style="background:var(--gold)">&#10003;</div><div><strong>Staging Consultation</strong><p>Expert advice on preparing your home to show at its absolute best.</p></div></li>
+            <li><div class="service-check" style="background:var(--gold)">&#10003;</div><div><strong>Multi-Channel Marketing</strong><p>MLS, Zillow, Realtor.com, social media, email campaigns, and local outreach.</p></div></li>
+            <li><div class="service-check" style="background:var(--gold)">&#10003;</div><div><strong>Offer Management</strong><p>Evaluating and negotiating all offers to get you the best possible terms.</p></div></li>
+            <li><div class="service-check" style="background:var(--gold)">&#10003;</div><div><strong>Contract to Close</strong><p>Coordinating inspections, appraisals, and title to keep your sale on track.</p></div></li>
+          </ul>
+          <a href="contact.html" class="btn btn-gold" style="width:100%;display:block;text-align:center;margin-top:20px">Get Your Home&rsquo;s Value &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOME BUYING PROCESS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">How It Works</p>
+      <h2>The Home Buying Process</h2>
+      <p>A clear, step-by-step path from first conversation to keys in hand.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <h4>Free Consultation</h4>
+        <p>We talk through your goals, timeline, and what &ldquo;home&rdquo; looks like for your life right now.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <h4>Get Pre-Approved</h4>
+        <p>I connect you with trusted lenders so you know your exact budget before you fall in love with a house.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <h4>Search &amp; Tour</h4>
+        <p>We search together, tour homes, and narrow down options until we find the one that feels right.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <h4>Make an Offer</h4>
+        <p>I help you write a competitive offer and navigate counteroffers with strategy and clarity.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">5</div>
+        <h4>Inspection &amp; Appraisal</h4>
+        <p>I coordinate all due diligence, negotiate any repairs, and keep your deal protected.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">6</div>
+        <h4>Close &amp; Celebrate</h4>
+        <p>Sign the final papers, get your keys, and welcome home. I&rsquo;ll be there every step.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING / COMMISSION -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Transparent Pricing</p>
+      <h2>Commission &amp; Service Options</h2>
+      <p>No surprises. Here&rsquo;s exactly what you get and what you&rsquo;ll pay.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Buyer Representation</h3>
+        <div class="price">No Cost <span>to Buyers</span></div>
+        <p>In most transactions, buyer agent fees are covered by the seller. You get full-service representation at no out-of-pocket cost.</p>
+        <ul class="pricing-features">
+          <li>Full MLS access &amp; custom searches</li>
+          <li>Offer strategy &amp; negotiation</li>
+          <li>Inspection &amp; appraisal support</li>
+          <li>Contract to close management</li>
+          <li>Ongoing support after closing</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline-navy" style="width:100%;display:block;text-align:center">Start Searching</a>
+      </div>
+      <div class="pricing-card featured">
+        <span class="pricing-badge">Most Popular</span>
+        <h3>Full Seller Service</h3>
+        <div class="price">3% <span>of sale price</span></div>
+        <p>My complete listing package. Professional photography, full marketing, negotiation, and close. Everything done right.</p>
+        <ul class="pricing-features">
+          <li>Comparative market analysis</li>
+          <li>Professional photography &amp; video</li>
+          <li>Staging consultation</li>
+          <li>MLS + 20+ portal syndication</li>
+          <li>Social media &amp; email campaigns</li>
+          <li>Offer management &amp; negotiation</li>
+        </ul>
+        <a href="contact.html" class="btn btn-gold" style="width:100%;display:block;text-align:center">Get a Free Valuation</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Relocation Package</h3>
+        <div class="price">Custom <span>pricing</span></div>
+        <p>Moving to Houston from another city or state? I offer specialized relocation services including virtual tours and remote paperwork.</p>
+        <ul class="pricing-features">
+          <li>Virtual home tours &amp; video walkthroughs</li>
+          <li>Neighborhood video guides</li>
+          <li>Remote offer &amp; contract signing</li>
+          <li>Local move-in resources</li>
+          <li>School &amp; community research</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline-navy" style="width:100%;display:block;text-align:center">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOME VALUATION CTA -->
+<section class="section section-light">
+  <div class="container">
+    <div class="valuation-box">
+      <h2>What&rsquo;s Your Home Worth?</h2>
+      <p>Get a free, no-obligation market analysis from me directly. I&rsquo;ll research recent sales in your area and tell you exactly what your home could sell for in today&rsquo;s market.</p>
+      <div class="valuation-form">
+        <input type="text" placeholder="Enter your home address..."/>
+        <a href="contact.html" class="btn btn-gold">Get Free Valuation &rarr;</a>
+      </div>
+      <p style="font-size:0.78rem;opacity:0.65;margin-top:14px">No pressure. No obligation. Just honest market data.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Key<span>Ready</span> Realty</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">Licensed Realtor serving Houston, Katy, Sugar Land, and surrounding communities.</p>
+        <a href="contact.html" class="btn btn-gold" style="font-size:0.82rem;padding:9px 20px">Contact Me</a>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:sarah@keyreadyrealty.com">sarah@keyreadyrealty.com</a></li>
+          <li style="color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:4px">Houston Metro Area</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 KeyReady Realty. All rights reserved. Licensed in Texas.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:var(--gold)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+<script>document.querySelector('.hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open');});</script>
+</body>
+</html>

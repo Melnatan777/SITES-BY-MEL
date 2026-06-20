@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>About — VoiceFirst Creator Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#2d4a8a;--secondary:#1a2d5c;--accent:#e05c8a;--text:#1a1a2a;--light:#f4f6fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:8px;--transition:all 0.2s;--gray:#6b6b80;--border:#dde2f0;--ink:#1a1a2e;--lavender:#eef1fa}
+body{font-family:'Inter',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1060px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:11px 26px;font-family:'Inter',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;border:none;transition:var(--transition);border-radius:100px}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px;max-width:1060px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--ink)}
+.nav-logo span{color:var(--primary)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.88rem;font-weight:500;transition:var(--transition)}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink)}
+
+.page-hero{background:linear-gradient(135deg,var(--lavender),#e8ecf8);padding:72px 24px 60px;text-align:center}
+.hero-tag{display:inline-block;background:var(--primary);color:var(--white);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px;color:var(--ink)}
+.page-hero p{font-size:1rem;color:var(--gray);max-width:520px;margin:0 auto;line-height:1.75;font-weight:300}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-ink{background:var(--ink);color:var(--white)}
+.section-header{text-align:center;margin-bottom:52px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:520px;margin:0 auto;line-height:1.7}
+.section-header .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.accent-line{width:40px;height:2px;background:var(--accent);margin:14px auto 0}
+
+/* BIO */
+.bio-grid{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:start}
+.bio-photo-col{position:sticky;top:90px}
+.bio-photo{height:420px;background:linear-gradient(135deg,var(--primary),#6b4fa0);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.35);font-size:0.82rem;margin-bottom:20px}
+.bio-socials{display:flex;flex-direction:column;gap:8px}
+.bio-social-link{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.85rem;font-weight:500;color:var(--gray);transition:var(--transition)}
+.bio-social-link:hover{border-color:var(--primary);color:var(--primary)}
+.bio-social-link .icon{font-size:1.1rem;width:20px}
+
+.bio-content h2{font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:8px;line-height:1.2}
+.bio-content .tagline{font-size:1.05rem;color:var(--accent);font-style:italic;font-family:'Fraunces',serif;margin-bottom:24px;font-weight:300}
+.bio-content p{color:var(--gray);line-height:1.9;margin-bottom:18px;font-size:0.97rem}
+.bio-content h3{font-size:1.1rem;margin:28px 0 12px;color:var(--ink)}
+
+/* EXPERTISE TAGS */
+.expertise-grid{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 24px}
+.expertise-tag{padding:8px 18px;border-radius:100px;font-size:0.85rem;font-weight:500}
+.tag-primary{background:var(--lavender);color:var(--primary);border:1.5px solid #c8d4f0}
+.tag-accent{background:#fce4ec;color:#c62828;border:1.5px solid #f8bbd0}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:32px 0}
+.stat-block{padding:24px;text-align:center;border-right:1px solid var(--border)}
+.stat-block:last-child{border-right:none}
+.stat-num{font-family:'Fraunces',serif;font-size:2rem;color:var(--primary);font-weight:600}
+.stat-label{font-size:0.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
+
+/* JOURNEY TIMELINE */
+.journey{max-width:680px;margin:0 auto;position:relative;padding-left:32px}
+.journey::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--border)}
+.journey-item{position:relative;padding-bottom:36px}
+.journey-item::before{content:'';position:absolute;left:-39px;top:6px;width:14px;height:14px;background:var(--white);border:2px solid var(--primary);border-radius:50%}
+.journey-item:last-child{padding-bottom:0}
+.journey-year{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.journey-item h4{font-size:1rem;margin-bottom:6px;color:var(--ink)}
+.journey-item p{font-size:0.88rem;color:var(--gray);line-height:1.7}
+
+/* PRESS */
+.press-logos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.press-logo-box{background:var(--lavender);border-radius:var(--radius);padding:20px;text-align:center;font-size:0.85rem;font-weight:600;color:var(--gray);border:1px solid var(--border)}
+.press-quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.press-quote{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;border-left:3px solid var(--accent)}
+.press-source{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.press-quote blockquote{font-family:'Fraunces',serif;font-size:1rem;color:var(--ink);line-height:1.65;font-style:italic;margin-bottom:10px}
+.press-quote cite{font-size:0.8rem;color:var(--gray)}
+
+/* VALUES */
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.value-card{padding:32px 24px;text-align:center}
+.value-icon{font-size:2.4rem;margin-bottom:16px}
+.value-card h3{font-size:1.05rem;margin-bottom:10px}
+.value-card p{font-size:0.88rem;color:rgba(255,255,255,0.75);line-height:1.7}
+
+/* COLLAB CTA */
+.collab-box{background:linear-gradient(135deg,var(--primary),#6b4fa0);border-radius:var(--radius);padding:56px 48px;display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:center}
+.collab-box h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--white);margin-bottom:14px}
+.collab-box p{color:rgba(255,255,255,0.8);line-height:1.8}
+.collab-actions{display:flex;flex-direction:column;gap:12px}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:#9b7dd4}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:#9b7dd4}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){
+  .bio-grid{grid-template-columns:1fr}
+  .bio-photo-col{position:static}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .stat-block:nth-child(2){border-right:none}
+  .stat-block:nth-child(3){border-top:1px solid var(--border)}
+  .press-logos{grid-template-columns:1fr 1fr}
+  .press-quotes{grid-template-columns:1fr}
+  .values-grid{grid-template-columns:1fr 1fr}
+  .collab-box{grid-template-columns:1fr;padding:36px 28px}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .press-logos{grid-template-columns:1fr 1fr}
+  .values-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">The <span>Thoughtful</span> Creator</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Work With Me</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="gallery.html">Media</a></li>
+      <li><a href="contact.html" class="btn btn-primary" style="padding:8px 18px">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <span class="hero-tag">Writer · Podcaster · Speaker</span>
+  <h1>About Alex</h1>
+  <p>The person behind the newsletter, the mic, and the ideas — a little background on who I am and why I do this work.</p>
+</div>
+
+<!-- BIO -->
+<section class="section">
+  <div class="container">
+    <div class="bio-grid">
+      <div class="bio-photo-col">
+        <div class="bio-photo">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Add your photo here
+        </div>
+        <div class="bio-socials">
+          <a href="#" class="bio-social-link"><span class="icon">📸</span> @thoughtfulcreator</a>
+          <a href="#" class="bio-social-link"><span class="icon">🐦</span> @alexwrites</a>
+          <a href="#" class="bio-social-link"><span class="icon">💼</span> LinkedIn</a>
+          <a href="#" class="bio-social-link"><span class="icon">🎙️</span> Podcast RSS</a>
+        </div>
+      </div>
+
+      <div class="bio-content">
+        <h2>Hi, I&rsquo;m Alex</h2>
+        <p class="tagline">Writer, podcaster, and recovering perfectionist.</p>
+
+        <p>I've spent the last decade trying to figure out how to do creative work sustainably — how to keep making things you care about without burning out, losing your voice, or selling out along the way. Everything I publish is my best attempt to share what I've learned.</p>
+
+        <p>I started writing on the internet in 2015, mostly for an audience of twelve people (hi, Mom). I launched my newsletter in 2020 during the pandemic because I needed somewhere to think out loud, and somehow 8,400 people decided they wanted to read my thoughts every Thursday. Still surprised by that.</p>
+
+        <p>The podcast came next — 142 episodes and counting of honest conversations with writers, podcasters, photographers, educators, and entrepreneurs about the real work behind creative careers. Not the highlight reel. The actual struggle, the weird pivots, the late nights, and the moments that made it all worth it.</p>
+
+        <h3>What I Write About</h3>
+        <div class="expertise-grid">
+          <span class="expertise-tag tag-primary">Creative Process</span>
+          <span class="expertise-tag tag-primary">Productivity Systems</span>
+          <span class="expertise-tag tag-primary">Newsletter Strategy</span>
+          <span class="expertise-tag tag-primary">Podcasting</span>
+          <span class="expertise-tag tag-accent">Creator Economy</span>
+          <span class="expertise-tag tag-accent">Mental Health & Burnout</span>
+          <span class="expertise-tag tag-primary">Monetization</span>
+          <span class="expertise-tag tag-primary">Intentional Living</span>
+          <span class="expertise-tag tag-accent">Personal Branding</span>
+        </div>
+
+        <p>I believe the best creative work comes from a place of clarity — knowing why you make what you make, who you make it for, and what you're willing to sacrifice to keep doing it. I'm not here to teach you to go viral. I'm here to help you build something that lasts.</p>
+
+        <div class="stats-row">
+          <div class="stat-block"><div class="stat-num">8.4K</div><div class="stat-label">Subscribers</div></div>
+          <div class="stat-block"><div class="stat-num">142</div><div class="stat-label">Episodes</div></div>
+          <div class="stat-block"><div class="stat-num">5 yrs</div><div class="stat-label">Publishing Weekly</div></div>
+          <div class="stat-block"><div class="stat-num">52%</div><div class="stat-label">Open Rate</div></div>
+        </div>
+
+        <p>When I'm not writing or recording, I'm reading (usually three books at once), hiking with my dog Miso, or overcomplicating my coffee routine. I'm based in Portland, Oregon, and I teach occasional workshops at the local library because giving back matters.</p>
+
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:28px">
+          <a href="contact.html" class="btn btn-primary">Work With Me</a>
+          <a href="services.html" class="btn btn-outline">See What I Offer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">How I Got Here</p>
+      <h2>The Journey</h2>
+      <p>A winding path from corporate marketing to full-time creator — and all the lessons in between.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="journey">
+      <div class="journey-item">
+        <p class="journey-year">2015</p>
+        <h4>First Blog Post</h4>
+        <p>Published my first piece of writing on the internet: a 400-word post about why I quit my agency job to freelance. 12 people read it. I was terrified and exhilarated.</p>
+      </div>
+      <div class="journey-item">
+        <p class="journey-year">2017</p>
+        <h4>Going Full-Time Freelance</h4>
+        <p>Left the last of my corporate clients and committed fully to building my own audience. Scariest and best decision I've ever made. Ate a lot of rice and beans that year.</p>
+      </div>
+      <div class="journey-item">
+        <p class="journey-year">2019</p>
+        <h4>First Speaking Gig</h4>
+        <p>Was invited to speak at a small content marketing conference. 80 people in the audience. I rehearsed 47 times. Got a standing ovation. Cried in the bathroom after.</p>
+      </div>
+      <div class="journey-item">
+        <p class="journey-year">2020</p>
+        <h4>Newsletter Launch</h4>
+        <p>Launched The Weekly Letter during pandemic lockdowns. In the first month: 200 subscribers. By month 6: 2,000. By year's end: 5,000. The internet is a wild place.</p>
+      </div>
+      <div class="journey-item">
+        <p class="journey-year">2021</p>
+        <h4>The Podcast Begins</h4>
+        <p>Launched The Thoughtful Creator Podcast with zero audience, borrowed equipment, and a closet full of coats for soundproofing. Episode 1 got 87 downloads. Episode 50 got 12,000.</p>
+      </div>
+      <div class="journey-item">
+        <p class="journey-year">Today</p>
+        <h4>Still Figuring It Out</h4>
+        <p>8,400 newsletter subscribers, 142 podcast episodes, 24K Instagram followers, and still the same question every Thursday morning: "Does this matter? Will anyone care?" Shipping it anyway.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">In the Media</p>
+      <h2>Press & Features</h2>
+      <div class="accent-line"></div>
+    </div>
+    <div class="press-logos">
+      <div class="press-logo-box">Fast Company</div>
+      <div class="press-logo-box">Creator Economy Report</div>
+      <div class="press-logo-box">Nieman Lab</div>
+      <div class="press-logo-box">Substack Blog</div>
+      <div class="press-logo-box">Morning Brew</div>
+      <div class="press-logo-box">The Hustle</div>
+      <div class="press-logo-box">Podcast Movement</div>
+      <div class="press-logo-box">Add Your Outlet</div>
+    </div>
+    <div class="press-quotes">
+      <div class="press-quote">
+        <p class="press-source">Fast Company</p>
+        <blockquote>"Alex is doing something rare: building a media business entirely on trust. No clickbait, no hot takes, just consistent, thoughtful content that compounds over time."</blockquote>
+        <cite>— Feature on Independent Media Creators, 2024</cite>
+      </div>
+      <div class="press-quote">
+        <p class="press-source">Creator Economy Report</p>
+        <blockquote>"One of the most genuinely helpful voices in the newsletter space. Alex has figured out how to monetize without ever feeling transactional — a rare skill."</blockquote>
+        <cite>— Top 50 Creators to Watch, 2023</cite>
+      </div>
+      <div class="press-quote">
+        <p class="press-source">Morning Brew</p>
+        <blockquote>"The Thoughtful Creator Podcast is the anti-hustle-porn podcast the creator economy desperately needs. Honest, nuanced, and always worth the listen."</blockquote>
+        <cite>— Podcast Recommendations Issue, 2023</cite>
+      </div>
+      <div class="press-quote">
+        <p class="press-source">Nieman Lab</p>
+        <blockquote>"A model for how independent journalists and content creators can build sustainable, reader-supported businesses without compromising their editorial independence."</blockquote>
+        <cite>— Independent Creator Spotlight, 2022</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section-ink">
+  <div style="max-width:1060px;margin:0 auto;padding:80px 24px">
+    <div class="section-header" style="margin-bottom:52px">
+      <p class="label" style="color:#9b7dd4">What Drives Me</p>
+      <h2 style="color:var(--white)">My Values</h2>
+      <p style="color:rgba(255,255,255,0.65)">These aren't just words on a page — they shape every piece of content, every partnership, and every decision I make.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🔍</div>
+        <h3 style="color:var(--white)">Radical Honesty</h3>
+        <p>I don't pretend to have it all figured out. I share the failures as freely as the wins because that's where the real learning happens.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌱</div>
+        <h3 style="color:var(--white)">Long-Term Thinking</h3>
+        <p>Algorithms change. Platforms die. What lasts is trust, quality, and relationships. Everything I build is designed for a decade, not a quarter.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3 style="color:var(--white)">Community Over Audience</h3>
+        <p>Subscribers aren't metrics to me. They're people who gave me their attention and their trust, and I take that seriously every single week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLAB CTA -->
+<section class="section">
+  <div class="container">
+    <div class="collab-box">
+      <div>
+        <h2>Let&rsquo;s Create Something Together</h2>
+        <p>Whether you want me to speak at your event, consult on your content strategy, or partner on a brand campaign — I'd love to hear what you're building.</p>
+      </div>
+      <div class="collab-actions">
+        <a href="contact.html" class="btn btn-accent">Get in Touch</a>
+        <a href="services.html" class="btn" style="background:rgba(255,255,255,0.15);color:var(--white);border:1.5px solid rgba(255,255,255,0.3)">See Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">The <span>Thoughtful</span> Creator</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">A newsletter and podcast for creative people building intentional careers. Published weekly since 2020.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Work With Me</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="gallery.html">Media</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 The Thoughtful Creator. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.3)">Template by <a href="https://sitesbymel.com" style="color:#9b7dd4">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

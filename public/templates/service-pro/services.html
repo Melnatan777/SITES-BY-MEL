@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Services & Pricing — ServicePro</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#1a3d6b;--secondary:#0d2444;--accent:#e05c1a;--text:#1a2030;--light:#f4f6fa;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:6px;--transition:all 0.2s;--gray:#5a6470;--border:#dde3ec;--dark:#0d1a2e}
+body{font-family:'Open Sans',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:700}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-accent:hover{background:#c04a10}
+.btn-outline-dark{background:transparent;color:var(--text);border:2px solid var(--text);border-radius:var(--radius)}
+.btn-outline-dark:hover{background:var(--text);color:var(--white)}
+
+nav{background:var(--secondary);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.85);font-size:0.9rem;font-weight:600;transition:var(--transition)}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:var(--white)!important;padding:8px 20px;border-radius:var(--radius);font-weight:700!important}
+.nav-cta:hover{background:#c04a10!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px;text-align:center}
+.page-hero .label{font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#ff9060;margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+.page-hero p{font-size:1.05rem;opacity:0.85;max-width:560px;margin:0 auto}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--secondary);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.2rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:560px;margin:0 auto}
+.section-header.white .label{color:#ff9060}
+.section-header.white h2{color:var(--white)}
+.section-header.white p{color:rgba(255,255,255,0.75)}
+.accent-bar{width:52px;height:4px;background:var(--accent);margin:14px auto 0;border-radius:2px}
+
+/* SERVICE CATEGORY BLOCKS */
+.service-category{margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid var(--border)}
+.service-category:last-child{border-bottom:none;margin-bottom:0}
+.category-header{display:flex;align-items:center;gap:20px;margin-bottom:28px}
+.category-icon{width:60px;height:60px;background:var(--primary);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+.category-header h2{font-size:1.5rem;margin-bottom:4px}
+.category-header p{color:var(--gray);font-size:0.9rem}
+.services-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.svc-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;transition:var(--transition)}
+.svc-item:hover{border-color:var(--primary);box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.svc-item .name{font-size:0.92rem;font-weight:600;margin-bottom:3px}
+.svc-item .desc{font-size:0.82rem;color:var(--gray)}
+.svc-item .price{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--primary);font-size:0.95rem;white-space:nowrap;margin-left:12px;text-align:right}
+
+/* PRICING TIERS */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.pricing-card{border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.07)}
+.pricing-card-header{padding:28px 28px 20px;color:var(--white)}
+.pricing-card-header.basic{background:linear-gradient(135deg,#4a6a8a,#3a5070)}
+.pricing-card-header.standard{background:linear-gradient(135deg,var(--primary),var(--secondary))}
+.pricing-card-header.premium{background:linear-gradient(135deg,var(--accent),#c04a10)}
+.pricing-card-header .tier{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;opacity:0.8;margin-bottom:6px}
+.pricing-card-header h3{font-size:1.4rem;margin-bottom:6px}
+.pricing-card-header .price{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:800}
+.pricing-card-header .price span{font-size:0.9rem;font-weight:400;opacity:0.75}
+.pricing-card-body{background:var(--white);padding:24px 28px}
+.pricing-card-body p{color:var(--gray);font-size:0.88rem;line-height:1.7;margin-bottom:16px}
+.pricing-features{list-style:none;margin-bottom:20px}
+.pricing-features li{padding:7px 0;font-size:0.86rem;color:var(--gray);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.pricing-features li::before{content:'✓';color:var(--primary);font-weight:700;font-size:0.8rem}
+.pricing-features.orange li::before{color:var(--accent)}
+
+/* SERVICE CONTRACTS */
+.contract-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.contract-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius);padding:28px}
+.contract-card h3{color:var(--white);font-size:1.1rem;margin-bottom:8px}
+.contract-price{color:#ff9060;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:12px}
+.contract-card p{color:rgba(255,255,255,0.7);font-size:0.88rem;line-height:1.7;margin-bottom:16px}
+.contract-features{list-style:none}
+.contract-features li{color:rgba(255,255,255,0.75);font-size:0.85rem;padding:5px 0;display:flex;gap:8px}
+.contract-features li::before{content:'✓';color:#ff9060;font-weight:700}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.75);padding:56px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--accent)}
+footer h4{color:var(--white);font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px}
+footer ul{list-style:none}
+footer ul a{color:rgba(255,255,255,0.65);font-size:0.88rem;transition:var(--transition)}
+footer ul a:hover{color:var(--accent)}
+footer ul li{margin-bottom:8px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--secondary);flex-direction:column;padding:20px 24px;gap:16px}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .category-header{flex-direction:column;align-items:flex-start;gap:12px}
+  .svc-item{flex-direction:column;align-items:flex-start;gap:6px}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Service<span>Pro</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="nav-cta">Free Quote</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="label">Full Service Menu</p>
+  <h1>Every Service Your Home Needs</h1>
+  <p>HVAC, plumbing, electrical, handyman, and more &mdash; with upfront pricing, licensed technicians, and a 1-year labor warranty.</p>
+</section>
+
+<!-- SERVICE CATEGORIES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">What We Do</p>
+      <h2>Services &amp; Pricing</h2>
+      <p>All prices are starting rates. Final pricing is confirmed in your free quote before any work begins.</p>
+      <div class="accent-bar"></div>
+    </div>
+
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">&#10052;</div>
+        <div><h2>HVAC Services</h2><p>Heating &amp; cooling installation, repair, and maintenance. TACLB Licensed. All major brands serviced.</p></div>
+      </div>
+      <div class="services-list">
+        <div class="svc-item"><div><div class="name">AC Diagnostic &amp; Repair</div><div class="desc">Troubleshoot and fix cooling issues</div></div><div class="price">From $89</div></div>
+        <div class="svc-item"><div><div class="name">AC Tune-Up &amp; Filter Change</div><div class="desc">Annual maintenance check</div></div><div class="price">From $79</div></div>
+        <div class="svc-item"><div><div class="name">New AC Unit Installation</div><div class="desc">Full system replacement &amp; setup</div></div><div class="price">From $2,800</div></div>
+        <div class="svc-item"><div><div class="name">Furnace Repair</div><div class="desc">All makes and models</div></div><div class="price">From $99</div></div>
+        <div class="svc-item"><div><div class="name">Ductwork Inspection &amp; Sealing</div><div class="desc">Improve efficiency &amp; air quality</div></div><div class="price">From $249</div></div>
+        <div class="svc-item"><div><div class="name">Air Quality Testing &amp; Filtration</div><div class="desc">HEPA, UV systems, testing</div></div><div class="price">From $149</div></div>
+      </div>
+    </div>
+
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">&#128167;</div>
+        <div><h2>Plumbing</h2><p>Licensed master plumber on staff. Water heaters, leaks, sewer, remodels, and everything in between.</p></div>
+      </div>
+      <div class="services-list">
+        <div class="svc-item"><div><div class="name">Leak Detection &amp; Repair</div><div class="desc">Walls, slabs, and fixtures</div></div><div class="price">From $99</div></div>
+        <div class="svc-item"><div><div class="name">Drain Clearing</div><div class="desc">Kitchen, bath, or main line</div></div><div class="price">From $89</div></div>
+        <div class="svc-item"><div><div class="name">Water Heater Repair</div><div class="desc">Tank &amp; tankless systems</div></div><div class="price">From $129</div></div>
+        <div class="svc-item"><div><div class="name">Water Heater Replacement</div><div class="desc">Installed &amp; permitted</div></div><div class="price">From $799</div></div>
+        <div class="svc-item"><div><div class="name">Toilet &amp; Fixture Installation</div><div class="desc">Supply &amp; install all brands</div></div><div class="price">From $149</div></div>
+        <div class="svc-item"><div><div class="name">Whole-Home Re-pipe</div><div class="desc">PEX or copper, permitted</div></div><div class="price">Custom Quote</div></div>
+      </div>
+    </div>
+
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">&#9889;</div>
+        <div><h2>Electrical</h2><p>Licensed master electrician. Panel upgrades, EV chargers, outlets, lighting, and safety inspections.</p></div>
+      </div>
+      <div class="services-list">
+        <div class="svc-item"><div><div class="name">Outlet &amp; Switch Installation</div><div class="desc">New or replacement outlets</div></div><div class="price">From $119</div></div>
+        <div class="svc-item"><div><div class="name">Ceiling Fan Installation</div><div class="desc">Supply or customer-provided</div></div><div class="price">From $89</div></div>
+        <div class="svc-item"><div><div class="name">Panel Upgrade (100A → 200A)</div><div class="desc">Permitted &amp; inspected</div></div><div class="price">From $1,800</div></div>
+        <div class="svc-item"><div><div class="name">EV Charger Installation</div><div class="desc">Level 2 home charging station</div></div><div class="price">From $399</div></div>
+        <div class="svc-item"><div><div class="name">GFCI Protection</div><div class="desc">Kitchen, bath, exterior required</div></div><div class="price">From $129</div></div>
+        <div class="svc-item"><div><div class="name">Whole-Home Electrical Inspection</div><div class="desc">Code compliance &amp; safety check</div></div><div class="price">From $199</div></div>
+      </div>
+    </div>
+
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">&#128296;</div>
+        <div><h2>Handyman Services</h2><p>One call for all the jobs that pile up. Skilled, background-checked technicians for home and business.</p></div>
+      </div>
+      <div class="services-list">
+        <div class="svc-item"><div><div class="name">Drywall Repair</div><div class="desc">Holes, cracks, texture match</div></div><div class="price">From $75/hr</div></div>
+        <div class="svc-item"><div><div class="name">Interior Painting</div><div class="desc">Rooms, cabinets, trim</div></div><div class="price">Custom Quote</div></div>
+        <div class="svc-item"><div><div class="name">Door &amp; Window Repair</div><div class="desc">Locks, hinges, weatherstrip</div></div><div class="price">From $75/hr</div></div>
+        <div class="svc-item"><div><div class="name">Tile Repair &amp; Grouting</div><div class="desc">Shower, floor, backsplash</div></div><div class="price">From $75/hr</div></div>
+        <div class="svc-item"><div><div class="name">Furniture Assembly</div><div class="desc">Any brand, any complexity</div></div><div class="price">From $60/hr</div></div>
+        <div class="svc-item"><div><div class="name">TV Mounting</div><div class="desc">Up to 85&quot; — includes cord concealment</div></div><div class="price">From $99</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING TIERS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Maintenance Plans</p>
+      <h2>Choose Your Coverage Level</h2>
+      <p>Annual maintenance plans keep your home running smoothly and give you priority service when you need us most.</p>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-card-header basic">
+          <div class="tier">Basic Plan</div>
+          <h3>Essential Care</h3>
+          <div class="price">$149 <span>/ year</span></div>
+        </div>
+        <div class="pricing-card-body">
+          <p>Covers your annual AC tune-up and heating check. Best for newer homes or light use.</p>
+          <ul class="pricing-features">
+            <li>Annual AC tune-up &amp; filter change</li>
+            <li>Annual furnace inspection</li>
+            <li>10% discount on all repairs</li>
+            <li>Priority scheduling (next day)</li>
+          </ul>
+          <a href="contact.html" class="btn btn-outline-dark" style="width:100%;display:block;text-align:center">Get Started</a>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-header standard">
+          <div class="tier">Standard Plan</div>
+          <h3>Total Home</h3>
+          <div class="price">$299 <span>/ year</span></div>
+        </div>
+        <div class="pricing-card-body">
+          <p>HVAC + plumbing inspections + water heater flush. Best value for most homeowners.</p>
+          <ul class="pricing-features">
+            <li>Everything in Basic</li>
+            <li>Annual plumbing inspection</li>
+            <li>Water heater flush &amp; check</li>
+            <li>15% discount on all repairs</li>
+            <li>Same-day emergency scheduling</li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary" style="width:100%;display:block;text-align:center">Get Started</a>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-card-header premium">
+          <div class="tier">Premium Plan</div>
+          <h3>Complete Protection</h3>
+          <div class="price">$499 <span>/ year</span></div>
+        </div>
+        <div class="pricing-card-body">
+          <p>Full coverage: HVAC, plumbing, electrical, and home safety. For homeowners who want zero surprises.</p>
+          <ul class="pricing-features orange">
+            <li>Everything in Standard</li>
+            <li>Annual electrical inspection</li>
+            <li>Whole-home safety check</li>
+            <li>20% discount on all repairs</li>
+            <li>24/7 emergency line access</li>
+            <li>Free service call (waived fee)</li>
+          </ul>
+          <a href="contact.html" class="btn btn-accent" style="width:100%;display:block;text-align:center">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE CONTRACTS -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header white">
+      <p class="label">Commercial &amp; Multi-Unit</p>
+      <h2>Business Service Contracts</h2>
+      <p>Custom service agreements for offices, retail, rental properties, and multi-unit buildings.</p>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="contract-grid">
+      <div class="contract-card">
+        <h3>Office &amp; Retail Contract</h3>
+        <div class="contract-price">Custom Pricing</div>
+        <p>Scheduled maintenance and on-call response for offices, restaurants, and retail spaces.</p>
+        <ul class="contract-features">
+          <li>Quarterly HVAC maintenance</li>
+          <li>Monthly walkthrough inspection</li>
+          <li>4-hour emergency response SLA</li>
+          <li>Dedicated account manager</li>
+          <li>Monthly service report</li>
+        </ul>
+      </div>
+      <div class="contract-card">
+        <h3>Rental Property Contract</h3>
+        <div class="contract-price">From $49/unit/year</div>
+        <p>Flat-rate maintenance contracts for landlords and property managers. Simplify your repair process.</p>
+        <ul class="contract-features">
+          <li>Annual HVAC tune-up per unit</li>
+          <li>Priority repair scheduling</li>
+          <li>25% discount on all labor</li>
+          <li>Tenant-direct service calls</li>
+          <li>Online work order portal</li>
+        </ul>
+      </div>
+      <div class="contract-card">
+        <h3>Multi-Unit / HOA Contract</h3>
+        <div class="contract-price">Custom Pricing</div>
+        <p>Full-property coverage for HOAs, apartment complexes, and commercial buildings. We handle everything.</p>
+        <ul class="contract-features">
+          <li>Common area maintenance included</li>
+          <li>Emergency response 24/7</li>
+          <li>Annual property systems audit</li>
+          <li>Bulk pricing on all repairs</li>
+          <li>Dedicated service team</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="contact.html" class="btn btn-accent">Get a Custom Quote &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Service<span>Pro</span></div>
+        <p style="font-size:0.88rem;line-height:1.7;margin-bottom:16px">Licensed HVAC, plumbing, electrical, and handyman services for homes and businesses across the Houston metro area.</p>
+        <a href="contact.html" class="btn btn-accent" style="font-size:0.85rem;padding:9px 20px">Get a Free Quote</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">HVAC</a></li>
+          <li><a href="services.html">Plumbing</a></li>
+          <li><a href="services.html">Electrical</a></li>
+          <li><a href="services.html">Handyman</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="tel:5559876543">(555) 987-6543 — Emergency</a></li>
+          <li><a href="mailto:hello@servicepro.com">hello@servicepro.com</a></li>
+          <li style="color:rgba(255,255,255,0.5);font-size:0.88rem;margin-top:4px">Mon–Sat: 7am–6pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ServicePro. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.4)">Template by <a href="https://sitesbymel.com" style="color:var(--accent)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+<script>document.querySelector('.hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open');});</script>
+</body>
+</html>

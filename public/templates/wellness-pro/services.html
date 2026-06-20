@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Services & Pricing — WellnessPro Practitioner Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#2d7a6e;--secondary:#1a5248;--accent:#c8a020;--text:#1a2a28;--light:#f4faf9;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:8px;--transition:all 0.22s;--gray:#5a7070;--border:#d4e8e4;--dark:#0f2e28}
+body{font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:100px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-outline-dark{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline-dark:hover{background:var(--primary);color:var(--white)}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(45,122,110,0.07)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1080px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--text)}
+.nav-logo span{color:var(--primary)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.9rem;font-weight:500;transition:var(--transition)}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text)}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px 60px;text-align:center}
+.page-hero .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#a8ddd4;margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px;font-weight:400}
+.page-hero p{font-size:1rem;opacity:0.9;max-width:520px;margin:0 auto;font-weight:300;line-height:1.8}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--dark);color:var(--white)}
+.section-header{text-align:center;margin-bottom:52px}
+.section-header h2{font-size:clamp(1.9rem,3vw,2.6rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:520px;margin:0 auto;line-height:1.75}
+.section-header .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.teal-rule{width:40px;height:2px;background:var(--primary);margin:14px auto 0}
+
+/* SERVICE MENU */
+.service-category{margin-bottom:64px}
+.cat-header{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:14px;border-bottom:2px solid var(--primary)}
+.cat-icon{font-size:1.8rem}
+.cat-header h3{font-size:1.5rem;color:var(--primary)}
+.service-list{display:flex;flex-direction:column;gap:0}
+.service-row{display:grid;grid-template-columns:1fr auto;align-items:start;padding:20px 0;border-bottom:1px solid var(--border);gap:24px}
+.service-row:last-child{border-bottom:none}
+.service-info h4{font-size:1.05rem;margin-bottom:4px;color:var(--text)}
+.service-info p{color:var(--gray);font-size:0.88rem;line-height:1.6}
+.service-info .duration{display:inline-block;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;background:var(--light);color:var(--primary);padding:3px 10px;border-radius:100px;margin-top:6px}
+.service-price-col{text-align:right;white-space:nowrap}
+.service-price-col .price{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--primary);font-weight:600;display:block}
+.service-price-col .note{font-size:0.75rem;color:var(--gray);margin-top:2px}
+
+/* PACKAGES */
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.package-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:32px 24px;text-align:center;transition:var(--transition);background:var(--white)}
+.package-card:hover{border-color:var(--primary);box-shadow:var(--shadow)}
+.package-card.featured{background:var(--primary);color:var(--white);border-color:var(--primary)}
+.package-badge{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.package-card.featured .package-badge{color:#a8ddd4}
+.package-card h3{font-size:1.2rem;margin-bottom:6px}
+.package-desc{font-size:0.85rem;color:var(--gray);margin-bottom:16px;line-height:1.6}
+.package-card.featured .package-desc{color:rgba(255,255,255,0.75)}
+.package-price{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--primary);margin-bottom:4px;font-weight:600}
+.package-card.featured .package-price{color:#a8ddd4}
+.package-savings{font-size:0.78rem;color:var(--gray);margin-bottom:20px}
+.package-card.featured .package-savings{color:rgba(255,255,255,0.6)}
+.package-includes{list-style:none;text-align:left;margin:16px 0 24px}
+.package-includes li{padding:7px 0;font-size:0.88rem;display:flex;gap:8px;border-bottom:1px solid rgba(0,0,0,0.06);color:var(--gray)}
+.package-card.featured .package-includes li{border-color:rgba(255,255,255,0.12);color:rgba(255,255,255,0.85)}
+.package-includes li::before{content:'✓';color:var(--primary);flex-shrink:0;font-weight:700}
+.package-card.featured .package-includes li::before{color:#a8ddd4}
+
+/* ADD-ONS */
+.addons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.addon-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}
+.addon-icon{font-size:1.8rem;margin-bottom:8px}
+.addon-card h4{font-size:0.95rem;margin-bottom:4px}
+.addon-card p{font-size:0.8rem;color:var(--gray);line-height:1.5;margin-bottom:8px}
+.addon-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--primary);font-weight:600}
+
+/* HSA BOX */
+.hsa-box{background:var(--light);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;display:flex;gap:20px;align-items:flex-start}
+.hsa-icon{font-size:2rem;flex-shrink:0}
+.hsa-box h4{font-size:1rem;margin-bottom:6px;color:var(--text)}
+.hsa-box p{font-size:0.88rem;color:var(--gray);line-height:1.7}
+
+/* BOOKING STRIP */
+.booking-strip{background:linear-gradient(135deg,var(--primary),#3a9a8a);padding:56px 24px;text-align:center}
+.booking-strip h2{font-size:clamp(1.6rem,3vw,2.4rem);color:var(--white);margin-bottom:12px}
+.booking-strip p{color:rgba(255,255,255,0.85);max-width:480px;margin:0 auto 28px;line-height:1.8}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.65);padding:60px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:#6ac4b4}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:#6ac4b4}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){
+  .packages-grid{grid-template-columns:1fr}
+  .addons-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .addons-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Serene <span>Wellness</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="btn btn-primary" style="padding:8px 20px">Book Now</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="label">Full Service Menu</p>
+  <h1>Services & Pricing</h1>
+  <p>Every session is tailored to your unique needs. Pricing listed is for standard sessions — customized treatments may vary.</p>
+</div>
+
+<!-- MASSAGE THERAPY -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Hands-On Healing</p>
+      <h2>Massage Therapy</h2>
+      <p>From gentle relaxation to targeted therapeutic work — find the massage style that's right for your body and goals.</p>
+      <div class="teal-rule"></div>
+    </div>
+
+    <div class="service-category">
+      <div class="cat-header">
+        <span class="cat-icon">🌿</span>
+        <h3>Swedish & Relaxation</h3>
+      </div>
+      <div class="service-list">
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Swedish Relaxation Massage</h4>
+            <p>Long, flowing strokes to calm the nervous system, improve circulation, and release everyday tension. Perfect for first-time clients or those seeking stress relief.</p>
+            <span class="duration">60 or 90 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$85 / $115</span><span class="note">60 / 90 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Hot Stone Massage</h4>
+            <p>Smooth, heated basalt stones placed on key energy points and used in massage strokes to melt deep muscle tension and promote profound relaxation.</p>
+            <span class="duration">90 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$135</span><span class="note">90 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Aromatherapy Massage</h4>
+            <p>Swedish massage enhanced with your choice of therapeutic essential oil blends — for relaxation, energy, clarity, or immune support.</p>
+            <span class="duration">60 or 90 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$95 / $125</span><span class="note">60 / 90 minutes</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-category">
+      <div class="cat-header">
+        <span class="cat-icon">💪</span>
+        <h3>Therapeutic & Sports</h3>
+      </div>
+      <div class="service-list">
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Deep Tissue Massage</h4>
+            <p>Targeted, firm pressure techniques that reach deeper muscle layers to release chronic tension patterns, break up adhesions, and restore normal movement.</p>
+            <span class="duration">60 or 90 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$95 / $125</span><span class="note">60 / 90 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Sports Massage</h4>
+            <p>Designed for active individuals — combines deep tissue work with assisted stretching, trigger point therapy, and myofascial release for pre/post-event recovery or injury prevention.</p>
+            <span class="duration">60 or 90 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$100 / $135</span><span class="note">60 / 90 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Trigger Point Therapy</h4>
+            <p>Focused work on specific tender muscle points that refer pain to other areas. Highly effective for headaches, neck pain, and chronic pain conditions.</p>
+            <span class="duration">60 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$95</span><span class="note">60 minutes</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-category">
+      <div class="cat-header">
+        <span class="cat-icon">🤰</span>
+        <h3>Prenatal & Postnatal</h3>
+      </div>
+      <div class="service-list">
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Prenatal Massage</h4>
+            <p>Specifically designed for the needs of pregnant women after the first trimester. Relieves back pain, reduces swelling, improves sleep, and provides much-needed relaxation. Side-lying positioning with supportive bolsters.</p>
+            <span class="duration">60 or 90 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$95 / $125</span><span class="note">60 / 90 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Postnatal Recovery Massage</h4>
+            <p>Supports the body's recovery after birth — addresses shoulder and neck tension from nursing, helps reduce swelling, and provides restorative nurturing for new mothers.</p>
+            <span class="duration">75 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$110</span><span class="note">75 minutes</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACUPUNCTURE -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Traditional Chinese Medicine</p>
+      <h2>Acupuncture Services</h2>
+      <p>Fine, sterile needles placed at specific points to restore the body's natural energy flow and address the root cause of your symptoms.</p>
+      <div class="teal-rule"></div>
+    </div>
+    <div class="service-category">
+      <div class="cat-header">
+        <span class="cat-icon">🪡</span>
+        <h3>Acupuncture Treatments</h3>
+      </div>
+      <div class="service-list">
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Initial Acupuncture Consultation & Treatment</h4>
+            <p>Comprehensive intake including full health history, pulse and tongue diagnosis, and your first full acupuncture treatment. Includes lifestyle and dietary recommendations.</p>
+            <span class="duration">90 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$145</span><span class="note">New clients only</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Follow-Up Acupuncture Treatment</h4>
+            <p>Ongoing treatment sessions building on previous work. Progress review, needle treatment, and any adjunct therapies as appropriate.</p>
+            <span class="duration">60 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$95</span><span class="note">60 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Acupuncture + Massage Combo</h4>
+            <p>The full treatment experience — acupuncture treatment followed by targeted massage work. Ideal for pain management and deep relaxation.</p>
+            <span class="duration">120 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$175</span><span class="note">120 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Community Acupuncture</h4>
+            <p>Affordable group acupuncture in a shared, serene space. Reclined treatment chairs. Perfect for maintenance care and budget-conscious clients.</p>
+            <span class="duration">45 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$45</span><span class="note">Sliding scale available</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BODYWORK -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Holistic Bodywork</p>
+      <h2>Cupping & Specialized Treatments</h2>
+      <p>Ancient healing modalities that complement massage and acupuncture for deeper results.</p>
+      <div class="teal-rule"></div>
+    </div>
+    <div class="service-category">
+      <div class="cat-header"><span class="cat-icon">🌬️</span><h3>Cupping & Gua Sha</h3></div>
+      <div class="service-list">
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Traditional Cupping Therapy</h4>
+            <p>Silicone or glass cups create suction on the skin to lift and separate layers of tissue, improving blood flow, releasing fascia, and reducing inflammation. Often combined with massage.</p>
+            <span class="duration">45 or 60 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$75 / $95</span><span class="note">45 / 60 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Gua Sha Treatment</h4>
+            <p>A smooth-edged tool is used to scrape along the skin's surface, releasing muscle tension, improving microcirculation, and reducing inflammation. Especially effective for neck and shoulder pain.</p>
+            <span class="duration">45 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$75</span><span class="note">45 minutes</span></div>
+        </div>
+        <div class="service-row">
+          <div class="service-info">
+            <h4>Combination Bodywork Session</h4>
+            <p>A fully customized session combining cupping, gua sha, and massage in whatever proportion best addresses your current needs. Discussed before your session begins.</p>
+            <span class="duration">90 min</span>
+          </div>
+          <div class="service-price-col"><span class="price">$130</span><span class="note">90 minutes</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Save with Series</p>
+      <h2>Wellness Packages</h2>
+      <p>Commit to your wellbeing with a multi-session package and save up to 20% off individual pricing.</p>
+      <div class="teal-rule"></div>
+    </div>
+    <div class="packages-grid">
+      <div class="package-card">
+        <p class="package-badge">Starter Series</p>
+        <h3>3-Session Package</h3>
+        <p class="package-desc">Ideal for trying a new modality or addressing a specific short-term concern. Use for any single service type.</p>
+        <div class="package-price">$245</div>
+        <p class="package-savings">Save $40 vs. individual pricing</p>
+        <ul class="package-includes">
+          <li>Any 3 massage or acupuncture sessions</li>
+          <li>Valid for 3 months from purchase</li>
+          <li>Transferable to a friend or family member</li>
+          <li>Book anytime — no expiration rush</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline-dark" style="width:100%;text-align:center">Get Started</a>
+      </div>
+      <div class="package-card featured">
+        <p class="package-badge">Best Value</p>
+        <h3>6-Session Package</h3>
+        <p class="package-desc">The sweet spot for real, lasting results. Six sessions allow us to address root causes and build on each visit.</p>
+        <div class="package-price">$465</div>
+        <p class="package-savings">Save $105 vs. individual pricing</p>
+        <ul class="package-includes">
+          <li>Any 6 sessions (mix & match services)</li>
+          <li>Valid for 6 months from purchase</li>
+          <li>Priority scheduling access</li>
+          <li>Free intake consultation included</li>
+          <li>Progress check-in at session 3</li>
+        </ul>
+        <a href="contact.html" class="btn btn-accent" style="width:100%;text-align:center">Most Popular — Book Now</a>
+      </div>
+      <div class="package-card">
+        <p class="package-badge">Monthly Membership</p>
+        <h3>Wellness Membership</h3>
+        <p class="package-desc">The highest level of care — monthly membership with priority booking and exclusive member benefits.</p>
+        <div class="package-price">$145<small style="font-size:0.75rem;font-family:'DM Sans',sans-serif;color:var(--gray)">/mo</small></div>
+        <p class="package-savings">1 session/month + exclusive perks</p>
+        <ul class="package-includes">
+          <li>1 session per month (roll over 1x)</li>
+          <li>10% off all additional sessions</li>
+          <li>Free add-ons (aromatherapy, etc.)</li>
+          <li>Priority weekend booking</li>
+          <li>Cancel anytime with 30-day notice</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline-dark" style="width:100%;text-align:center">Become a Member</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADD-ONS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Enhance Your Session</p>
+      <h2>Treatment Add-Ons</h2>
+      <p>Elevate any session with one of our therapeutic enhancements — add to any booking.</p>
+      <div class="teal-rule"></div>
+    </div>
+    <div class="addons-grid">
+      <div class="addon-card">
+        <div class="addon-icon">🌺</div>
+        <h4>Aromatherapy Upgrade</h4>
+        <p>Custom essential oil blend added to any massage session.</p>
+        <div class="addon-price">+$15</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-icon">🧊</div>
+        <h4>Hot/Cold Therapy</h4>
+        <p>Alternating heat and ice therapy for acute pain and inflammation.</p>
+        <div class="addon-price">+$20</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-icon">🦶</div>
+        <h4>Foot & Reflexology</h4>
+        <p>15 minutes of targeted foot reflexology added to any session.</p>
+        <div class="addon-price">+$25</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-icon">😌</div>
+        <h4>Scalp Massage</h4>
+        <p>10-minute tension-relief scalp massage — perfect for headache relief.</p>
+        <div class="addon-price">+$20</div>
+      </div>
+    </div>
+
+    <div class="hsa-box" style="margin-top:40px">
+      <div class="hsa-icon">💳</div>
+      <div>
+        <h4>HSA & FSA Accepted</h4>
+        <p>Many massage therapy and acupuncture services qualify as eligible expenses under HSA (Health Savings Account) and FSA (Flexible Spending Account) plans. We accept HSA/FSA cards and can provide detailed receipts for reimbursement. Check with your plan administrator for specific coverage details.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING STRIP -->
+<div class="booking-strip">
+  <h2>Ready to Book Your Session?</h2>
+  <p>New clients receive a complimentary 15-minute health consultation. We'll listen to your goals and design the ideal first treatment for you.</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a href="contact.html" class="btn btn-accent">Book Online</a>
+    <a href="tel:5559876543" class="btn" style="background:rgba(255,255,255,0.15);color:var(--white);border:1.5px solid rgba(255,255,255,0.35)">(555) 987-6543</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Serene <span>Wellness</span></div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">Holistic massage therapy and acupuncture in a calm, welcoming environment. Your healing starts here.</p>
+        <a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:9px 20px">Book a Session</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Massage Therapy</a></li>
+          <li><a href="services.html">Acupuncture</a></li>
+          <li><a href="services.html">Cupping & Bodywork</a></li>
+          <li><a href="services.html">Wellness Packages</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit Us</h4>
+        <ul>
+          <li><a href="#">456 Wellness Way, Suite 12</a></li>
+          <li><a href="#">Portland, OR 97201</a></li>
+          <li><a href="tel:5559876543">(555) 987-6543</a></li>
+          <li style="color:rgba(255,255,255,0.45);font-size:0.88rem;margin-top:4px">Mon–Sat: 9am–7pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Serene Wellness. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:#6ac4b4">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

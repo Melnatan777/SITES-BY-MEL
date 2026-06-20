@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | GreenCut Lawn & Landscape</title>
+  <style>
+    :root {
+      --primary: #1e5c1a;
+      --secondary: #143d11;
+      --accent: #c8a61e;
+      --text: #1a2a18;
+      --light: #f4f7f4;
+      --white: #ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.12);
+      --radius: 8px;
+      --transition: 0.3s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; font-size: 16px; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+    .section-label { display: inline-block; background: var(--accent); color: var(--secondary); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 20px; margin-bottom: 1rem; }
+    .section-title { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: var(--secondary); }
+    .btn { display: inline-block; padding: 0.85rem 2rem; border-radius: var(--radius); font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition); border: 2px solid transparent; text-align: center; }
+    .btn-primary { background: var(--accent); color: var(--secondary); }
+    .btn-primary:hover { background: #b8960e; transform: translateY(-2px); }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 1000; background: var(--secondary); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; max-width: 1180px; margin: 0 auto; }
+    .nav-logo { font-size: 1.5rem; font-weight: 900; color: var(--white); letter-spacing: -0.03em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { color: rgba(255,255,255,0.85); font-weight: 500; font-size: 0.95rem; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--secondary) !important; font-weight: 700 !important; padding: 0.55rem 1.4rem; border-radius: var(--radius); }
+    .nav-cta:hover { background: #b8960e !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); padding: 4rem 1.5rem; text-align: center; color: var(--white); }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; margin-bottom: 0.75rem; }
+    .page-hero h1 span { color: var(--accent); }
+    .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.85); max-width: 560px; margin: 0 auto; }
+
+    /* OWNER STORY */
+    .owner-story { padding: 5rem 1.5rem; background: var(--white); }
+    .owner-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .owner-photo { width: 100%; height: 480px; background: linear-gradient(160deg, #2d7a27 0%, #1e5c1a 100%); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: rgba(255,255,255,0.85); font-weight: 600; box-shadow: var(--shadow); text-align: center; padding: 1rem; }
+    .owner-text h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--secondary); margin-bottom: 1rem; }
+    .owner-text p { color: #4a6047; line-height: 1.8; margin-bottom: 1.1rem; font-size: 1rem; }
+    .owner-sig { margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+    .owner-sig-name strong { display: block; font-size: 1.05rem; color: var(--secondary); }
+    .owner-sig-name span { font-size: 0.88rem; color: #6a8067; }
+
+    /* STATS ROW */
+    .stats-row { background: var(--primary); padding: 3rem 1.5rem; }
+    .stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; max-width: 1180px; margin: 0 auto; }
+    .stat-item strong { display: block; font-size: 2.2rem; font-weight: 900; color: var(--accent); line-height: 1; }
+    .stat-item span { font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-top: 0.4rem; display: block; }
+
+    /* TEAM SECTION */
+    .team-section { padding: 5rem 1.5rem; background: var(--light); }
+    .team-header { text-align: center; margin-bottom: 3rem; }
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .team-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); }
+    .team-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.14); }
+    .team-photo { width: 100%; height: 260px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 600; color: rgba(255,255,255,0.9); text-align: center; padding: 1rem; }
+    .team-info { padding: 1.5rem; }
+    .team-info h3 { font-size: 1.1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.25rem; }
+    .team-info .team-role { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.6rem; }
+    .team-info p { font-size: 0.9rem; color: #4a6047; line-height: 1.6; }
+    .team-years { display: inline-block; background: var(--light); color: var(--primary); font-size: 0.8rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 20px; margin-top: 0.75rem; }
+
+    /* VALUES */
+    .values-section { padding: 5rem 1.5rem; background: var(--white); }
+    .values-header { text-align: center; margin-bottom: 3rem; }
+    .values-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .value-card { display: flex; gap: 1.25rem; padding: 1.75rem; background: var(--light); border-radius: var(--radius); border-left: 4px solid var(--primary); transition: var(--transition); }
+    .value-card:hover { background: #eaf2e8; }
+    .value-icon { font-size: 2rem; flex-shrink: 0; }
+    .value-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.4rem; }
+    .value-card p { font-size: 0.92rem; color: #4a6047; line-height: 1.65; }
+
+    /* CERTIFICATIONS */
+    .certs-section { padding: 5rem 1.5rem; background: var(--secondary); color: var(--white); }
+    .certs-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .certs-text h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--white); margin-bottom: 1rem; }
+    .certs-text h2 span { color: var(--accent); }
+    .certs-text p { color: rgba(255,255,255,0.85); line-height: 1.75; margin-bottom: 1rem; }
+    .cert-badges { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+    .cert-badge { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); padding: 1.25rem; text-align: center; }
+    .cert-badge .cert-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .cert-badge strong { display: block; font-size: 0.9rem; color: var(--accent); font-weight: 700; }
+    .cert-badge span { font-size: 0.8rem; opacity: 0.8; }
+    .certs-photo { width: 100%; height: 380px; background: linear-gradient(160deg, #3a8a34 0%, #143d11 100%); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: rgba(255,255,255,0.85); font-weight: 600; box-shadow: var(--shadow); text-align: center; padding: 1rem; }
+
+    /* CTA */
+    .cta-band { background: linear-gradient(135deg, var(--accent), #b8960e); padding: 4rem 1.5rem; text-align: center; }
+    .cta-band h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; color: var(--secondary); margin-bottom: 0.75rem; }
+    .cta-band p { color: rgba(20,61,17,0.85); margin-bottom: 2rem; font-size: 1.05rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-dark { background: var(--secondary); color: var(--white); padding: 0.85rem 2rem; border-radius: var(--radius); font-weight: 700; font-size: 0.95rem; transition: var(--transition); border: 2px solid transparent; }
+    .btn-dark:hover { background: var(--text); }
+
+    /* FOOTER */
+    .footer { background: var(--secondary); color: rgba(255,255,255,0.8); padding: 3.5rem 1.5rem 1.5rem; }
+    .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; max-width: 1180px; margin: 0 auto; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; margin-top: 0.75rem; }
+    .footer-col h4 { color: var(--accent); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col ul li { margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .footer-col ul li a:hover { color: var(--accent); }
+    .footer-contact-item { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .footer-contact-item strong { color: var(--accent); min-width: 60px; }
+    .footer-bottom { text-align: center; padding-top: 1.5rem; font-size: 0.82rem; opacity: 0.6; max-width: 1180px; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .owner-inner { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .certs-inner { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; background: var(--secondary); padding: 1rem 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); width: 100%; }
+      .nav { position: relative; }
+      .nav-toggle { display: flex; }
+      .team-grid { grid-template-columns: 1fr; }
+      .cert-badges { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Green<span>Cut</span></a>
+      <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-cta">Free Quote</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label">Our Story</div>
+      <h1>Locally Owned. <span>Lawn Obsessed.</span></h1>
+      <p>We're not a franchise or a national chain — we're your neighbors, and we take pride in every lawn we touch.</p>
+    </div>
+  </section>
+
+  <!-- OWNER STORY -->
+  <section class="owner-story">
+    <div class="container">
+      <div class="owner-inner">
+        <div class="owner-photo">Add your photo here</div>
+        <div class="owner-text">
+          <div class="section-label">Meet the Owner</div>
+          <h2>Started With a Mower and a Dream</h2>
+          <p>GreenCut started in 2015 when [Owner Name] grabbed a mower and started knocking on neighbors' doors in [Your City]. What began as a one-person weekend side hustle quickly grew into a full-time business — one satisfied customer at a time.</p>
+          <p>After years of working for a large lawn care company and watching quality slip in the name of speed, [Owner Name] knew there was a better way. A way that put the customer first, paid attention to the details, and actually took pride in the work.</p>
+          <p>Today, GreenCut serves over 800 properties across the greater [City] area with a small, dedicated crew that shares those same values: show up on time, do excellent work, and treat every customer's property like it's your own.</p>
+          <p>When we're not mowing, we're in the community — coaching youth sports, attending neighborhood events, and giving back to the city that has supported us from day one.</p>
+          <div class="owner-sig">
+            <div class="owner-sig-name">
+              <strong>[Owner Name], Founder</strong>
+              <span>GreenCut Lawn & Landscape — Est. 2015</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stats-inner">
+      <div class="stat-item"><strong>800+</strong><span>Properties Served</span></div>
+      <div class="stat-item"><strong>10</strong><span>Years in Business</span></div>
+      <div class="stat-item"><strong>98%</strong><span>Customer Retention</span></div>
+      <div class="stat-item"><strong>4.9★</strong><span>Average Google Rating</span></div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <section class="team-section">
+    <div class="container">
+      <div class="team-header">
+        <div class="section-label">Our Crew</div>
+        <h2 class="section-title">The People Behind the Work</h2>
+        <p style="color: #4a6047; max-width: 560px; margin: 0 auto;">Every member of the GreenCut crew is a trained professional who takes pride in delivering consistent, high-quality results on every property, every visit.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-photo" style="background: linear-gradient(160deg, #2d7a27 0%, #1e5c1a 100%);">Add your photo here</div>
+          <div class="team-info">
+            <h3>[Owner Name]</h3>
+            <div class="team-role">Owner & Lead Operator</div>
+            <p>Founded GreenCut in 2015 with a focus on quality and reliability. Handles client relations, estimates, and leads the most complex landscape projects.</p>
+            <span class="team-years">10 Years Experience</span>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo" style="background: linear-gradient(160deg, #3a8a34 0%, #143d11 100%);">Add your photo here</div>
+          <div class="team-info">
+            <h3>[Team Member Name]</h3>
+            <div class="team-role">Senior Lawn Technician</div>
+            <p>A meticulous professional with an eye for detail. Specializes in precision edging, trimming, and ensuring every property looks its absolute best.</p>
+            <span class="team-years">6 Years Experience</span>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo" style="background: linear-gradient(160deg, #5a8a20 0%, #2a5a10 100%);">Add your photo here</div>
+          <div class="team-info">
+            <h3>[Team Member Name]</h3>
+            <div class="team-role">Landscape Specialist</div>
+            <p>Our mulch and bed care expert. Brings creativity and horticultural knowledge to every landscape project, from small flower beds to full property transformations.</p>
+            <span class="team-years">4 Years Experience</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values-section">
+    <div class="container">
+      <div class="values-header">
+        <div class="section-label">What We Believe</div>
+        <h2 class="section-title">Our Core Values</h2>
+        <p style="color: #4a6047; max-width: 560px; margin: 0 auto;">These aren't just words on a website — they're the principles that drive every decision we make and every lawn we care for.</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">⏰</div>
+          <div>
+            <h3>Reliability Above All</h3>
+            <p>We show up when we say we will, every single time. If something changes, we communicate immediately. Your time is valuable and we treat it that way.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🔍</div>
+          <div>
+            <h3>Attention to Detail</h3>
+            <p>We notice the things others skip — the corner that wasn't blown off, the edge that's slightly off-line, the bed that could use one more pass. Details matter.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">💬</div>
+          <div>
+            <h3>Honest Communication</h3>
+            <p>No upselling, no hidden fees, no vague estimates. We give you straight answers, fair prices, and clear expectations before we start any job.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🏡</div>
+          <div>
+            <h3>Treat It Like Our Own</h3>
+            <p>We care for your property with the same attention we'd give our own home. That means being careful with your landscaping, your gates, and your belongings.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🌿</div>
+          <div>
+            <h3>Environmental Responsibility</h3>
+            <p>We use fuel-efficient equipment, minimize chemical use, and follow responsible lawn care practices that are good for your grass and good for the environment.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🤝</div>
+          <div>
+            <h3>Community First</h3>
+            <p>We're proud to be a local business. We hire locally, buy locally when we can, and give back to the neighborhoods that have supported GreenCut since day one.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="certs-section">
+    <div class="container">
+      <div class="certs-inner">
+        <div class="certs-text">
+          <div class="section-label" style="background: rgba(200,166,30,0.2); color: var(--accent); border: 1px solid var(--accent);">Credentials</div>
+          <h2>Licensed, Insured <span>&amp; Certified</span></h2>
+          <p>Hiring a lawn care company means trusting someone on your property. We take that responsibility seriously. GreenCut carries full liability insurance and workers' compensation coverage, and our operators hold current certifications in safe pesticide application and equipment operation.</p>
+          <p>You can hire us with complete confidence — if anything ever goes wrong (which is rare!), you're fully protected.</p>
+          <div class="cert-badges">
+            <div class="cert-badge">
+              <div class="cert-icon">🛡️</div>
+              <strong>Fully Insured</strong>
+              <span>General Liability + Workers' Comp</span>
+            </div>
+            <div class="cert-badge">
+              <div class="cert-icon">📋</div>
+              <strong>State Licensed</strong>
+              <span>Licensed Contractor #XXXXXX</span>
+            </div>
+            <div class="cert-badge">
+              <div class="cert-icon">🌱</div>
+              <strong>Pesticide Certified</strong>
+              <span>State-certified applicators</span>
+            </div>
+            <div class="cert-badge">
+              <div class="cert-icon">⭐</div>
+              <strong>5-Star Rated</strong>
+              <span>Google & Facebook Reviews</span>
+            </div>
+          </div>
+        </div>
+        <div class="certs-photo">Add your photo here</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Ready to Work With a Crew You Can Trust?</h2>
+      <p>Get your free quote today — no obligation, no pressure, just honest pricing.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-dark">Get a Free Quote</a>
+        <a href="services.html" class="btn-dark" style="background: transparent; border: 2px solid var(--secondary); color: var(--secondary);">View Our Services</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-logo">Green<span>Cut</span></span>
+        <p>Professional lawn care and landscaping services for homeowners who want a beautiful property without the hassle. Serving your community since 2015.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="services.html">Services & Pricing</a></li>
+          <li><a href="gallery.html">Photo Gallery</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact & Quote</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item"><strong>Phone:</strong> (555) 123-4567</div>
+        <div class="footer-contact-item"><strong>Email:</strong> info@greencutlawn.com</div>
+        <div class="footer-contact-item"><strong>Hours:</strong> Mon–Sat 7am–6pm</div>
+        <div class="footer-contact-item"><strong>Area:</strong> Your City, State</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 GreenCut Lawn & Landscape. All rights reserved. | Website by <strong>Sites by Mel</strong></p>
+    </div>
+  </footer>
+
+</body>
+</html>

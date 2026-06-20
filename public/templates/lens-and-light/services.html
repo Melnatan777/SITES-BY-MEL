@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lens & Light — Services & Pricing</title>
+  <style>
+    :root {
+      --primary:#2a2a2a;--secondary:#1a1a1a;--accent:#d4af37;
+      --text:#2a2a2a;--light:#f8f8f8;--white:#ffffff;
+      --shadow:0 4px 24px rgba(0,0,0,0.12);--radius:12px;--transition:all 0.3s ease;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI',Arial,sans-serif;color:var(--text);background:var(--white);}
+    a{text-decoration:none;color:inherit;}
+    nav{position:sticky;top:0;z-index:100;background:var(--secondary);display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:72px;box-shadow:0 2px 20px rgba(0,0,0,0.4);border-bottom:1px solid #333;}
+    .nav-logo{color:var(--white);font-size:1.3rem;font-weight:800;letter-spacing:1px;}
+    .nav-logo span{color:var(--accent);}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{color:rgba(255,255,255,0.75);font-size:0.93rem;font-weight:500;transition:var(--transition);}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+    .nav-cta{background:var(--accent);color:var(--secondary);padding:0.55rem 1.4rem;border-radius:4px;font-weight:700;font-size:0.93rem;}
+    .nav-cta:hover{background:#e8c84a;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .hamburger span{width:26px;height:3px;background:var(--white);border-radius:2px;}
+    .mobile-menu{display:none;position:absolute;top:72px;left:0;right:0;background:var(--secondary);padding:1.5rem 5%;flex-direction:column;gap:1.2rem;border-top:1px solid #333;}
+    .mobile-menu a{color:rgba(255,255,255,0.85);font-size:1rem;}
+    .mobile-menu.open{display:flex;}
+
+    .page-hero{background:var(--secondary);padding:5rem 5% 4rem;text-align:center;border-bottom:1px solid #2a2a2a;}
+    .page-hero .badge{display:inline-block;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.35);color:var(--accent);font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:0.35rem 1rem;border-radius:2px;margin-bottom:1.25rem;}
+    .page-hero h1{font-size:2.8rem;font-weight:900;color:var(--white);margin-bottom:0.9rem;}
+    .page-hero h1 span{color:var(--accent);}
+    .page-hero p{color:rgba(255,255,255,0.6);font-size:1.05rem;max-width:560px;margin:0 auto;line-height:1.75;}
+
+    section{padding:5rem 5%;}
+    .section-label{font-size:0.78rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;}
+    .section-title{font-size:2rem;font-weight:900;color:var(--primary);margin-bottom:1rem;}
+    .section-title span{color:var(--accent);}
+    .text-center{text-align:center;}
+
+    /* PORTRAIT CARDS */
+    .portrait-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1100px;margin:0 auto;}
+    .p-card{border:1px solid #eee;border-radius:var(--radius);overflow:hidden;transition:var(--transition);}
+    .p-card:hover{box-shadow:0 16px 48px rgba(0,0,0,0.12);transform:translateY(-4px);}
+    .p-card.featured{border-color:var(--accent);box-shadow:0 8px 32px rgba(212,175,55,0.2);}
+    .p-card-top{padding:1.5rem 1.5rem 0;}
+    .p-badge{display:inline-block;background:var(--accent);color:var(--secondary);font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:0.25rem 0.65rem;border-radius:2px;margin-bottom:1rem;}
+    .p-badge.popular{background:var(--primary);color:var(--white);}
+    .p-card h3{font-size:1.2rem;font-weight:800;color:var(--primary);margin-bottom:0.3rem;}
+    .p-price{font-size:1.9rem;font-weight:900;color:var(--accent);margin:0.75rem 0 0.25rem;}
+    .p-price span{font-size:0.9rem;font-weight:500;color:#888;}
+    .p-desc{font-size:0.88rem;color:#666;line-height:1.65;padding:0 1.5rem 1rem;}
+    .p-card ul{list-style:none;padding:0 1.5rem 1.5rem;display:flex;flex-direction:column;gap:0.5rem;}
+    .p-card ul li{font-size:0.88rem;color:#555;padding-left:1.2rem;position:relative;}
+    .p-card ul li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+    .p-card-cta{margin:0 1.5rem 1.5rem;display:block;background:var(--primary);color:var(--white);text-align:center;padding:0.75rem;border-radius:4px;font-weight:700;font-size:0.9rem;transition:var(--transition);}
+    .p-card-cta:hover{background:var(--accent);color:var(--secondary);}
+    .p-card.featured .p-card-cta{background:var(--accent);color:var(--secondary);}
+    .p-card.featured .p-card-cta:hover{background:#e8c84a;}
+
+    /* WEDDING PACKAGES */
+    .wedding-section{background:var(--light);}
+    .wedding-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1100px;margin:0 auto;}
+    .w-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+    .w-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;color:rgba(255,255,255,0.8);font-weight:600;flex-direction:column;gap:0.4rem;}
+    .w-body{padding:1.5rem;}
+    .w-body h3{font-size:1.1rem;font-weight:800;color:var(--primary);margin-bottom:0.25rem;}
+    .w-price{font-size:1.6rem;font-weight:900;color:var(--accent);margin:0.5rem 0 0.75rem;}
+    .w-body ul{list-style:none;display:flex;flex-direction:column;gap:0.45rem;margin-bottom:1.25rem;}
+    .w-body ul li{font-size:0.87rem;color:#555;padding-left:1.2rem;position:relative;}
+    .w-body ul li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-weight:700;}
+    .w-cta{display:block;background:var(--primary);color:var(--white);text-align:center;padding:0.7rem;border-radius:4px;font-weight:700;font-size:0.88rem;transition:var(--transition);}
+    .w-cta:hover{background:var(--accent);color:var(--secondary);}
+
+    /* TABLE SECTIONS */
+    .table-section{max-width:1100px;margin:0 auto;}
+    table{width:100%;border-collapse:collapse;font-size:0.93rem;}
+    thead tr{background:var(--primary);color:var(--white);}
+    thead th{padding:1rem 1.25rem;text-align:left;font-weight:700;font-size:0.85rem;letter-spacing:0.5px;}
+    tbody tr{border-bottom:1px solid #f0f0f0;}
+    tbody tr:hover{background:#fafafa;}
+    tbody td{padding:0.9rem 1.25rem;color:#444;vertical-align:top;}
+    tbody td:first-child{font-weight:700;color:var(--primary);}
+    .price-cell{color:var(--accent);font-weight:800;white-space:nowrap;}
+    .tag{display:inline-block;font-size:0.72rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:3px;text-transform:uppercase;letter-spacing:0.5px;}
+    .tag-half{background:#f0f0f0;color:#666;}
+    .tag-full{background:#111;color:var(--accent);}
+
+    /* ADD-ONS */
+    .addons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;max-width:1100px;margin:0 auto;}
+    .addon-card{background:var(--white);border:1px solid #eee;border-radius:var(--radius);padding:1.5rem;text-align:center;transition:var(--transition);}
+    .addon-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(212,175,55,0.15);}
+    .addon-icon{font-size:2rem;margin-bottom:0.75rem;display:block;}
+    .addon-card h4{font-size:0.95rem;font-weight:800;color:var(--primary);margin-bottom:0.35rem;}
+    .addon-card p{font-size:0.82rem;color:#777;line-height:1.6;margin-bottom:0.75rem;}
+    .addon-price{font-size:1.1rem;font-weight:900;color:var(--accent);}
+
+    .cta-banner{background:var(--secondary);padding:5rem 5%;text-align:center;border-top:1px solid #2a2a2a;}
+    .cta-banner h2{font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:1rem;}
+    .cta-banner p{color:rgba(255,255,255,0.6);font-size:1.05rem;margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto;}
+    .btn-gold{background:var(--accent);color:var(--secondary);padding:0.85rem 2.1rem;border-radius:4px;font-weight:800;font-size:0.95rem;transition:var(--transition);display:inline-block;}
+    .btn-gold:hover{background:#e8c84a;transform:translateY(-2px);}
+    .btn-ghost{border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.8);padding:0.85rem 2.1rem;border-radius:4px;font-weight:600;font-size:0.95rem;transition:var(--transition);display:inline-block;}
+    .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+    footer{background:var(--secondary);color:rgba(255,255,255,0.65);padding:4rem 5% 2rem;border-top:1px solid #333;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto 3rem;}
+    .footer-brand .nav-logo{font-size:1.3rem;display:block;margin-bottom:1rem;}
+    .footer-brand p{font-size:0.9rem;line-height:1.75;color:rgba(255,255,255,0.45);max-width:260px;}
+    .footer-col h4{color:rgba(255,255,255,0.85);font-size:0.85rem;font-weight:700;margin-bottom:1.1rem;text-transform:uppercase;letter-spacing:2px;}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.6rem;}
+    .footer-col ul a{color:rgba(255,255,255,0.5);font-size:0.9rem;transition:var(--transition);}
+    .footer-col ul a:hover{color:var(--accent);}
+    .footer-contact p{font-size:0.9rem;color:rgba(255,255,255,0.5);margin-bottom:0.5rem;}
+    .footer-bottom{border-top:1px solid #333;padding-top:1.5rem;text-align:center;font-size:0.82rem;color:rgba(255,255,255,0.3);max-width:1100px;margin:0 auto;}
+
+    @media(max-width:900px){
+      .nav-links,.nav-cta{display:none;}.hamburger{display:flex;}
+      .portrait-grid,.wedding-grid{grid-template-columns:1fr;}
+      .addons-grid{grid-template-columns:repeat(2,1fr);}
+      .footer-grid{grid-template-columns:1fr 1fr;}
+    }
+    @media(max-width:680px){
+      .addons-grid,.footer-grid{grid-template-columns:1fr;}
+      .page-hero h1{font-size:2rem;}
+      table{font-size:0.82rem;}
+      thead th,tbody td{padding:0.7rem 0.75rem;}
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Lens <span>&</span> Light</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="services.html" class="active">Services</a></li>
+    <li><a href="about.html">About</a></li><li><a href="gallery.html">Portfolio</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Session</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="services.html">Services</a><a href="about.html">About</a>
+  <a href="gallery.html">Portfolio</a><a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:700;">Book a Session</a>
+</div>
+
+<div class="page-hero">
+  <span class="badge">Pricing & Services</span>
+  <h1>Sessions, Packages <span>&amp; Rates</span></h1>
+  <p>Transparent pricing for every type of photography. All packages include professional editing and a private online gallery delivered within 3 weeks.</p>
+</div>
+
+<!-- PORTRAIT SESSIONS -->
+<section>
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Portraits</p>
+    <h2 class="section-title">Portrait Session <span>Packages</span></h2>
+    <p style="color:#666;font-size:0.95rem;">Individual, couple, and family portraits — on location or in studio. All sessions include wardrobe guidance and a pre-session consultation.</p>
+  </div>
+  <div class="portrait-grid">
+    <div class="p-card">
+      <div class="p-card-top"><span class="p-badge">Mini</span><h3>Mini Session</h3><div class="p-price">$195<span> / session</span></div></div>
+      <p class="p-desc">Perfect for individuals and couples who want great images without the extended commitment. Quick and focused.</p>
+      <ul>
+        <li>30-minute session</li><li>1 location / look</li><li>15 edited digital images</li>
+        <li>Private online gallery</li><li>Print release included</li>
+      </ul>
+      <a href="contact.html" class="p-card-cta">Book Mini Session</a>
+    </div>
+    <div class="p-card featured">
+      <div class="p-card-top"><span class="p-badge popular">Most Popular</span><h3>Standard Session</h3><div class="p-price">$350<span> / session</span></div></div>
+      <p class="p-desc">Our most popular option. Enough time to relax, explore a couple of looks, and capture a wide variety of shots.</p>
+      <ul>
+        <li>1-hour session</li><li>Up to 2 looks / locations</li><li>35 edited digital images</li>
+        <li>Private online gallery (1 year)</li><li>Print release included</li><li>1 complimentary 8×10 print</li>
+      </ul>
+      <a href="contact.html" class="p-card-cta">Book Standard Session</a>
+    </div>
+    <div class="p-card">
+      <div class="p-card-top"><span class="p-badge">Extended</span><h3>Extended Session</h3><div class="p-price">$550<span> / session</span></div></div>
+      <p class="p-desc">Ideal for families, creative concepts, or anyone who wants a fully relaxed, comprehensive portrait experience.</p>
+      <ul>
+        <li>2-hour session</li><li>Up to 3 looks / locations</li><li>60+ edited digital images</li>
+        <li>Private online gallery (lifetime)</li><li>Print release included</li>
+        <li>$50 print credit included</li><li>Priority booking</li>
+      </ul>
+      <a href="contact.html" class="p-card-cta">Book Extended Session</a>
+    </div>
+  </div>
+</section>
+
+<!-- WEDDING PACKAGES -->
+<section class="wedding-section">
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Weddings</p>
+    <h2 class="section-title">Wedding Photography <span>Packages</span></h2>
+    <p style="color:#666;font-size:0.95rem;">Each wedding package includes a complimentary engagement session, pre-wedding planning consultation, and a custom wedding gallery.</p>
+  </div>
+  <div class="wedding-grid">
+    <div class="w-card">
+      <div class="w-img" style="background:linear-gradient(160deg,#1a1a1a,#3a3a3a);">
+        <span style="font-size:2rem;">📸</span>Add your photo here<small style="font-size:0.78rem;opacity:0.6;">(Wedding ceremony)</small>
+      </div>
+      <div class="w-body">
+        <h3>Coverage</h3>
+        <div class="w-price">$2,200</div>
+        <ul>
+          <li>6 hours coverage</li><li>One photographer</li><li>Engagement session</li>
+          <li>400+ edited images</li><li>Private online gallery</li><li>USB drive delivery</li>
+        </ul>
+        <a href="contact.html" class="w-cta">Book This Package</a>
+      </div>
+    </div>
+    <div class="w-card" style="border:2px solid var(--accent);">
+      <div class="w-img" style="background:linear-gradient(160deg,#2a2010,#4a3a10);">
+        <span style="font-size:2rem;">📸</span>Add your photo here<small style="font-size:0.78rem;opacity:0.6;">(Wedding reception)</small>
+      </div>
+      <div class="w-body">
+        <div style="display:inline-block;background:var(--accent);color:var(--secondary);font-size:0.72rem;font-weight:800;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:2px;margin-bottom:0.5rem;">Most Popular</div>
+        <h3>Full Day</h3>
+        <div class="w-price">$3,500</div>
+        <ul>
+          <li>10 hours coverage</li><li>Lead photographer + second shooter</li>
+          <li>Engagement session</li><li>700+ edited images</li>
+          <li>Private online gallery (lifetime)</li><li>USB drive + print release</li>
+          <li>Online slideshow highlight</li>
+        </ul>
+        <a href="contact.html" class="w-cta" style="background:var(--accent);color:var(--secondary);">Book This Package</a>
+      </div>
+    </div>
+    <div class="w-card">
+      <div class="w-img" style="background:linear-gradient(160deg,#0a1a2a,#1a3a5a);">
+        <span style="font-size:2rem;">📸</span>Add your photo here<small style="font-size:0.78rem;opacity:0.6;">(Wedding details)</small>
+      </div>
+      <div class="w-body">
+        <h3>Full Day + Album</h3>
+        <div class="w-price">$4,800</div>
+        <ul>
+          <li>10 hours coverage</li><li>Lead photographer + second shooter</li>
+          <li>Engagement session</li><li>700+ edited images</li>
+          <li>12×12 custom hardcover album (30 pages)</li>
+          <li>Lifetime online gallery</li><li>USB drive + print release</li>
+        </ul>
+        <a href="contact.html" class="w-cta">Book This Package</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMERCIAL -->
+<section>
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Commercial & Brand</p>
+    <h2 class="section-title">Business <span>Photography Rates</span></h2>
+  </div>
+  <div class="table-section">
+    <table>
+      <thead><tr><th>Service</th><th>Duration</th><th>Deliverables</th><th>Starting Rate</th></tr></thead>
+      <tbody>
+        <tr><td>Executive Headshots</td><td>30–45 min</td><td>10 edited images per subject</td><td class="price-cell">$250/person</td></tr>
+        <tr><td>Team Headshots (3–10 people)</td><td>Half day</td><td>10 edited images per subject</td><td class="price-cell">$180/person</td></tr>
+        <tr><td>Product Photography</td><td>Half day</td><td>20–30 edited product images</td><td class="price-cell">$650</td></tr>
+        <tr><td>Brand Lifestyle Shoot</td><td>2–3 hours</td><td>40+ edited lifestyle images</td><td class="price-cell">$950</td></tr>
+        <tr><td>Full Brand Day</td><td>Full day</td><td>80+ images, 2–3 concepts</td><td class="price-cell">$1,800</td></tr>
+        <tr><td>Social Media Content Pack</td><td>2 hours</td><td>30 images formatted for social</td><td class="price-cell">$550</td></tr>
+        <tr><td>Real Estate Photography</td><td>1–2 hours</td><td>25 edited interior/exterior</td><td class="price-cell">$275</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.83rem;color:#888;margin-top:1rem;">All commercial rates are starting prices. Complex shoots, additional locations, or licensing for large-scale advertising may affect final pricing. Contact for a custom quote.</p>
+  </div>
+</section>
+
+<!-- EVENT COVERAGE -->
+<section style="background:var(--light);">
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Events</p>
+    <h2 class="section-title">Event Coverage <span>Rates</span></h2>
+  </div>
+  <div class="table-section">
+    <table>
+      <thead><tr><th>Event Type</th><th>Duration</th><th>Images</th><th>Rate</th></tr></thead>
+      <tbody>
+        <tr><td>Corporate Event / Gala</td><td>Up to 4 hours</td><td>150+ edited images</td><td class="price-cell">$850</td></tr>
+        <tr><td>Corporate Event / Gala</td><td>Up to 8 hours</td><td>300+ edited images</td><td class="price-cell">$1,400</td></tr>
+        <tr><td>Birthday / Milestone Party</td><td>Up to 3 hours</td><td>100+ edited images</td><td class="price-cell">$550</td></tr>
+        <tr><td>Holiday Party</td><td>Up to 4 hours</td><td>150+ edited images</td><td class="price-cell">$750</td></tr>
+        <tr><td>Conference / Multi-Day Event</td><td>Per day rate</td><td>200+ edited images/day</td><td class="price-cell">$1,100/day</td></tr>
+        <tr><td>Additional Photographer</td><td>Per event</td><td>Coverage of second area</td><td class="price-cell">+$450</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ADD-ONS -->
+<section>
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Extras</p>
+    <h2 class="section-title">Add-On <span>Services</span></h2>
+  </div>
+  <div class="addons-grid">
+    <div class="addon-card"><span class="addon-icon">🖼️</span><h4>Canvas / Fine Art Print</h4><p>Museum-quality canvas prints in a range of sizes, ready to hang.</p><div class="addon-price">from $95</div></div>
+    <div class="addon-card"><span class="addon-icon">📖</span><h4>Custom Photo Album</h4><p>Hardcover layflat albums in 8×8, 10×10, or 12×12 with custom design.</p><div class="addon-price">from $350</div></div>
+    <div class="addon-card"><span class="addon-icon">⚡</span><h4>Rush Delivery</h4><p>Receive your edited gallery in 5 business days instead of the standard 3 weeks.</p><div class="addon-price">+$150</div></div>
+    <div class="addon-card"><span class="addon-icon">✈️</span><h4>Travel to Location</h4><p>Available for travel within 60 miles at no extra charge. Beyond that, travel fees apply.</p><div class="addon-price">from $0.65/mi</div></div>
+    <div class="addon-card"><span class="addon-icon">🎞️</span><h4>Extra Editing Time</h4><p>Additional retouching, background removal, or composite edits per image.</p><div class="addon-price">$25/image</div></div>
+    <div class="addon-card"><span class="addon-icon">💾</span><h4>USB Drive Delivery</h4><p>All images delivered on a branded USB drive in addition to your online gallery.</p><div class="addon-price">+$45</div></div>
+    <div class="addon-card"><span class="addon-icon">🎬</span><h4>Short Highlight Video</h4><p>60-second highlight video from your session or event, edited to music.</p><div class="addon-price">+$275</div></div>
+    <div class="addon-card"><span class="addon-icon">📱</span><h4>Social Media Pack</h4><p>Pre-cropped and resized versions of your top 20 images for Instagram, Facebook, etc.</p><div class="addon-price">+$75</div></div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <h2>Ready to Book Your Session?</h2>
+  <p>Reach out to check availability and reserve your date. Packages fill up quickly — especially on weekends and holiday periods.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="contact.html" class="btn-gold">Book Now</a>
+    <a href="gallery.html" class="btn-ghost">See Portfolio First</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Lens <span style="color:var(--accent);">&</span> Light</span>
+      <p>Professional photography for portraits, weddings, commercial, and events.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li><li><a href="gallery.html">Portfolio</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📞 (555) 040-0400</p><p>✉️ hello@lensandlight.com</p>
+      <p>📍 [Your City, State]</p>
+      <p style="margin-top:0.75rem;">Available 7 days by appointment</p>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 Lens & Light Photography. All rights reserved. | Template by <strong>Sites by Mel</strong></p></div>
+</footer>
+<script>function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}</script>
+</body>
+</html>

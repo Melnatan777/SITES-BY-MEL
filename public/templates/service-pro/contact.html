@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact & Schedule — ServicePro</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#1a3d6b;--secondary:#0d2444;--accent:#e05c1a;--text:#1a2030;--light:#f4f6fa;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:6px;--transition:all 0.2s;--gray:#5a6470;--border:#dde3ec;--dark:#0d1a2e}
+body{font-family:'Open Sans',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:700}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-accent:hover{background:#c04a10}
+
+nav{background:var(--secondary);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.85);font-size:0.9rem;font-weight:600;transition:var(--transition)}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:var(--white)!important;padding:8px 20px;border-radius:var(--radius);font-weight:700!important}
+.nav-cta:hover{background:#c04a10!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px}
+
+/* EMERGENCY BANNER */
+.emergency-banner{background:var(--accent);color:var(--white);text-align:center;padding:12px 24px;font-family:'Montserrat',sans-serif;font-size:0.88rem;font-weight:700}
+.emergency-banner a{color:var(--white);text-decoration:underline}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px;text-align:center}
+.page-hero .label{font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#ff9060;margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+.page-hero p{font-size:1.05rem;opacity:0.85;max-width:560px;margin:0 auto}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--secondary);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.2rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:560px;margin:0 auto}
+.accent-bar{width:52px;height:4px;background:var(--accent);margin:14px auto 0;border-radius:2px}
+
+/* CONTACT GRID */
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:56px;align-items:start}
+.contact-info h2{font-size:clamp(1.6rem,3vw,2rem);margin-bottom:16px}
+.contact-info p{color:var(--gray);line-height:1.85;margin-bottom:28px}
+.info-block{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px}
+.info-icon{width:48px;height:48px;background:var(--primary);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem;color:var(--white)}
+.info-block strong{display:block;font-size:0.92rem;font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:3px}
+.info-block p{color:var(--gray);font-size:0.88rem;margin:0;line-height:1.6}
+.info-block a{color:var(--primary);font-weight:600}
+
+/* FORM */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:40px;box-shadow:0 2px 16px rgba(0,0,0,0.06)}
+.form-card h2{font-size:1.3rem;margin-bottom:6px}
+.form-card .subtitle{color:var(--gray);font-size:0.9rem;margin-bottom:28px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.8rem;font-weight:700;margin-bottom:6px;color:var(--text);text-transform:uppercase;letter-spacing:0.04em}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.92rem;font-family:'Open Sans',sans-serif;outline:none;transition:var(--transition)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(26,61,107,0.1)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn-full{width:100%;display:block;text-align:center;padding:14px;font-size:0.95rem}
+.radio-group{display:flex;gap:20px;flex-wrap:wrap}
+.radio-option{display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--text);cursor:pointer}
+
+/* CALENDLY */
+.calendly-card{background:var(--light);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-top:28px}
+.calendly-card h3{font-size:1.1rem;margin-bottom:8px}
+.calendly-card p{color:var(--gray);font-size:0.9rem;margin-bottom:16px;line-height:1.7}
+.calendly-placeholder{background:var(--white);border:2px dashed var(--border);border-radius:var(--radius);padding:36px 20px;text-align:center}
+.calendly-placeholder .cal-icon{font-size:2.5rem;margin-bottom:10px}
+.calendly-placeholder h4{font-size:1rem;margin-bottom:8px}
+.calendly-placeholder p{color:var(--gray);font-size:0.84rem;line-height:1.7}
+
+/* EMERGENCY BOX */
+.emergency-box{background:linear-gradient(135deg,#8b1a0a,#6a1008);border-radius:var(--radius);padding:40px 36px;color:var(--white);text-align:center}
+.emergency-box .icon{font-size:2.5rem;margin-bottom:12px}
+.emergency-box h2{font-size:1.5rem;margin-bottom:12px}
+.emergency-box p{opacity:0.85;max-width:480px;margin:0 auto 24px;line-height:1.8}
+.emergency-box .phone{font-family:'Montserrat',sans-serif;font-size:2rem;font-weight:800;color:var(--white);display:block;margin-bottom:8px}
+
+/* HOURS TABLE */
+.hours-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.hours-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}
+.hours-card .icon{font-size:1.6rem;margin-bottom:8px}
+.hours-card h4{font-size:0.95rem;margin-bottom:6px}
+.hours-card p{color:var(--gray);font-size:0.85rem;line-height:1.6}
+
+/* MAP */
+.map-placeholder{background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);height:260px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:28px}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.75);padding:56px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--accent)}
+footer h4{color:var(--white);font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px}
+footer ul{list-style:none}
+footer ul a{color:rgba(255,255,255,0.65);font-size:0.88rem;transition:var(--transition)}
+footer ul a:hover{color:var(--accent)}
+footer ul li{margin-bottom:8px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--secondary);flex-direction:column;padding:20px 24px;gap:16px}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .form-2col{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="emergency-banner">
+  &#128293; 24/7 Emergency Line: <a href="tel:5559876543">(555) 987-6543</a> &mdash; We answer every call, day or night.
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Service<span>Pro</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="nav-cta">Free Quote</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="label">Get in Touch</p>
+  <h1>Request a Free Quote or Schedule Service</h1>
+  <p>Fast response, upfront pricing, and no-obligation estimates. We&rsquo;ll get back to you within a few hours.</p>
+</section>
+
+<!-- MAIN CONTACT -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <h2>Contact Us</h2>
+        <p>Whether you need a free quote, want to schedule a repair, or have an emergency &mdash; we&rsquo;re here and we pick up the phone.</p>
+
+        <div class="info-block">
+          <div class="info-icon">&#128222;</div>
+          <div><strong>Main Office</strong><p><a href="tel:5551234567">(555) 123-4567</a><br/>Mon–Sat 7am–6pm</p></div>
+        </div>
+        <div class="info-block">
+          <div class="info-icon" style="background:var(--accent)">&#128293;</div>
+          <div><strong>24/7 Emergency Line</strong><p><a href="tel:5559876543">(555) 987-6543</a><br/>Available nights, weekends, and holidays</p></div>
+        </div>
+        <div class="info-block">
+          <div class="info-icon">&#9993;</div>
+          <div><strong>Email</strong><p><a href="mailto:hello@servicepro.com">hello@servicepro.com</a></p></div>
+        </div>
+        <div class="info-block">
+          <div class="info-icon">&#128205;</div>
+          <div><strong>Service Area</strong><p>Houston, Katy, Sugar Land, Pearland, The Woodlands, Pasadena, and surrounding communities</p></div>
+        </div>
+
+        <div class="map-placeholder">
+          <div style="font-size:2.5rem">&#128205;</div>
+          <span>Embed your Google Map here</span>
+          <span style="font-size:0.78rem">Serving Greater Houston, TX</span>
+        </div>
+      </div>
+
+      <div>
+        <!-- Replace YOUR_FORM_ID with your Formspree form ID from formspree.io (free) -->
+        <div class="form-card">
+          <h2>Request a Free Estimate</h2>
+          <p class="subtitle">Tell us what you need and we&rsquo;ll get back to you within a few hours with a fast, accurate quote.</p>
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-2col">
+              <div class="form-group"><label>Your Name *</label><input type="text" name="name" placeholder="John Smith" required/></div>
+              <div class="form-group"><label>Phone Number *</label><input type="tel" name="phone" placeholder="(555) 000-0000" required/></div>
+            </div>
+            <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="john@email.com"/></div>
+            <div class="form-group"><label>Property Address</label><input type="text" name="address" placeholder="123 Main St, Houston TX"/></div>
+            <div class="form-group">
+              <label>Request Type</label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="request_type" value="scheduled" checked/> Scheduled Service</label>
+                <label class="radio-option"><input type="radio" name="request_type" value="emergency"/> &#128293; Emergency</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Service Needed *</label>
+              <select name="service" required>
+                <option value="">Select a service...</option>
+                <option>HVAC — Repair</option>
+                <option>HVAC — Installation / Replacement</option>
+                <option>HVAC — Tune-Up / Maintenance</option>
+                <option>Plumbing — Leak or Drain</option>
+                <option>Plumbing — Water Heater</option>
+                <option>Electrical — Repair or Install</option>
+                <option>Electrical — Panel Upgrade</option>
+                <option>Handyman Services</option>
+                <option>Appliance Repair</option>
+                <option>Home Safety Check</option>
+                <option>Other / Multiple Services</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Best Time to Call</label>
+              <select name="call_time">
+                <option>Morning (7am–12pm)</option>
+                <option>Afternoon (12pm–5pm)</option>
+                <option>Evening (5pm–7pm)</option>
+                <option>Any time</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Describe the Issue</label><textarea name="message" rows="4" placeholder="Tell us what's going on, how long it's been happening, and any details that might help..." required></textarea></div>
+            <button type="submit" class="btn btn-accent btn-full">Send My Quote Request &rarr;</button>
+            <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:12px">We respond within 2 hours during business hours. For emergencies, call our 24/7 line directly.</p>
+          </form>
+        </div>
+
+        <!-- To add online booking: go to calendly.com (free), create your event type, and replace YOUR_CALENDLY_LINK below -->
+        <div class="calendly-card">
+          <h3>&#128197; Schedule a Service Appointment</h3>
+          <p>Prefer to book online? Pick a time that works for you and we&rsquo;ll confirm the appointment.</p>
+          <div class="calendly-placeholder">
+            <div class="cal-icon">&#128197;</div>
+            <h4>Online Scheduling</h4>
+            <p>To add online booking: go to <strong>calendly.com</strong> (free), create your service appointment event, and paste your embed code here.<br/><br/>Your link: <em>calendly.com/YOUR_CALENDLY_LINK</em></p>
+            <a href="tel:5551234567" class="btn btn-primary" style="margin-top:16px">Call to Schedule: (555) 123-4567</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY -->
+<section class="section section-light">
+  <div class="container">
+    <div class="emergency-box">
+      <div class="icon">&#128293;</div>
+      <h2>24/7 Emergency Service</h2>
+      <p>AC out in July? Burst pipe? No power? We have a technician on call around the clock, every day of the year. Do not wait until morning &mdash; call us now.</p>
+      <a href="tel:5559876543" class="phone">(555) 987-6543</a>
+      <p style="font-size:0.85rem;opacity:0.75">Typical emergency response: 1–3 hours. Always a licensed tech, never a subcontractor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">When We Work</p>
+      <h2>Hours of Operation</h2>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="hours-grid">
+      <div class="hours-card"><div class="icon">&#128198;</div><h4>Monday – Friday</h4><p>7:00 AM – 6:00 PM<br/>Regular service &amp; same-day quotes</p></div>
+      <div class="hours-card"><div class="icon">&#9728;</div><h4>Saturday</h4><p>8:00 AM – 4:00 PM<br/>Service calls &amp; scheduled jobs</p></div>
+      <div class="hours-card"><div class="icon">&#127968;</div><h4>Sunday</h4><p>Emergency calls only<br/>Standard rates apply</p></div>
+      <div class="hours-card"><div class="icon">&#128293;</div><h4>Emergencies</h4><p>24 hours / 7 days<br/>Call (555) 987-6543</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Service<span>Pro</span></div>
+        <p style="font-size:0.88rem;line-height:1.7;margin-bottom:16px">Licensed HVAC, plumbing, electrical, and handyman services for homes and businesses across the Houston metro area.</p>
+        <a href="contact.html" class="btn btn-accent" style="font-size:0.85rem;padding:9px 20px">Get a Free Quote</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">HVAC</a></li>
+          <li><a href="services.html">Plumbing</a></li>
+          <li><a href="services.html">Electrical</a></li>
+          <li><a href="services.html">Handyman</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="tel:5559876543">(555) 987-6543 — Emergency</a></li>
+          <li><a href="mailto:hello@servicepro.com">hello@servicepro.com</a></li>
+          <li style="color:rgba(255,255,255,0.5);font-size:0.88rem;margin-top:4px">Mon–Sat: 7am–6pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ServicePro. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.4)">Template by <a href="https://sitesbymel.com" style="color:var(--accent)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+<script>document.querySelector('.hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open');});</script>
+</body>
+</html>

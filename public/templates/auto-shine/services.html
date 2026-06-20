@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoShine — Services & Pricing</title>
+  <style>
+    :root {
+      --primary: #1a2a5c;
+      --secondary: #0d1a3d;
+      --accent: #e8a020;
+      --text: #1a1a2a;
+      --light: #f4f6fb;
+      --white: #ffffff;
+      --shadow: 0 4px 24px rgba(26,42,92,0.12);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: var(--text); background: var(--white); }
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 70px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    }
+    .nav-logo { color: var(--white); font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.85); font-size: 0.97rem; font-weight: 500; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--primary); padding: 0.55rem 1.4rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); }
+    .nav-cta:hover { background: #f5b840; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 26px; height: 3px; background: var(--white); border-radius: 2px; }
+    .mobile-menu { display: none; position: absolute; top: 70px; left: 0; right: 0; background: var(--secondary); padding: 1.5rem 5%; flex-direction: column; gap: 1.2rem; }
+    .mobile-menu a { color: var(--white); font-size: 1rem; font-weight: 500; }
+    .mobile-menu.open { display: flex; }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 5rem 5% 4rem; text-align: center;
+    }
+    .page-hero .badge { display: inline-block; background: rgba(232,160,32,0.18); border: 1px solid var(--accent); color: var(--accent); font-size: 0.82rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 50px; margin-bottom: 1.2rem; }
+    .page-hero h1 { font-size: 2.8rem; font-weight: 900; color: var(--white); margin-bottom: 1rem; }
+    .page-hero h1 span { color: var(--accent); }
+    .page-hero p { color: rgba(255,255,255,0.78); font-size: 1.1rem; max-width: 580px; margin: 0 auto; line-height: 1.7; }
+
+    section { padding: 5rem 5%; }
+    .section-label { font-size: 0.82rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .section-title { font-size: 2rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem; }
+    .section-title span { color: var(--accent); }
+
+    /* SERVICE BLOCKS */
+    .service-block { max-width: 1100px; margin: 0 auto; margin-bottom: 4rem; }
+    .service-block-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light); }
+    .service-block-header .icon { font-size: 2rem; background: var(--light); width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .service-block-header h2 { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
+    .service-block-header p { color: #666; font-size: 0.95rem; }
+
+    .service-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .service-table thead { background: var(--primary); }
+    .service-table thead th { padding: 1rem 1.25rem; text-align: left; color: var(--white); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .service-table thead th:last-child { text-align: right; }
+    .service-table tbody tr { border-bottom: 1px solid var(--light); transition: var(--transition); }
+    .service-table tbody tr:hover { background: #fef9f0; }
+    .service-table tbody tr:last-child { border-bottom: none; }
+    .service-table td { padding: 1rem 1.25rem; font-size: 0.95rem; color: var(--text); }
+    .service-table td:last-child { text-align: right; font-weight: 800; color: var(--accent); font-size: 1rem; }
+    .service-table td small { display: block; color: #888; font-size: 0.82rem; font-weight: 400; margin-top: 0.2rem; }
+    .badge-popular { display: inline-block; background: var(--accent); color: var(--primary); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; padding: 0.15rem 0.55rem; border-radius: 50px; margin-left: 0.5rem; vertical-align: middle; }
+
+    /* ADDON CARDS */
+    .addon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; max-width: 1100px; margin: 0 auto; }
+    .addon-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; text-align: center; transition: var(--transition); }
+    .addon-card:hover { transform: translateY(-4px); }
+    .addon-card .icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .addon-card h4 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem; }
+    .addon-card .addon-price { font-size: 1.2rem; font-weight: 900; color: var(--accent); margin-bottom: 0.5rem; }
+    .addon-card p { font-size: 0.85rem; color: #666; line-height: 1.5; }
+
+    /* PRICING COMPARISON */
+    .pricing-section { background: var(--light); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+    .pricing-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2.2rem; border-top: 4px solid var(--light); text-align: center; transition: var(--transition); }
+    .pricing-card.best { border-top-color: var(--accent); }
+    .pricing-card:hover { transform: translateY(-5px); }
+    .pricing-card .plan-name { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 0.5rem; }
+    .pricing-card h3 { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 0.75rem; }
+    .pricing-card .big-price { font-size: 2.8rem; font-weight: 900; color: var(--accent); }
+    .pricing-card .big-price sup { font-size: 1.2rem; vertical-align: top; margin-top: 0.6rem; }
+    .pricing-card .price-note { font-size: 0.85rem; color: #888; margin-bottom: 1.5rem; }
+    .pricing-card ul { list-style: none; text-align: left; margin-bottom: 1.8rem; display: flex; flex-direction: column; gap: 0.65rem; }
+    .pricing-card ul li { font-size: 0.92rem; color: #555; padding-left: 1.5rem; position: relative; }
+    .pricing-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    .pricing-card ul li.no::before { content: '✗'; color: #ccc; }
+    .pricing-card ul li.no { color: #bbb; }
+    .btn-book { display: block; background: var(--primary); color: var(--white); padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 700; transition: var(--transition); }
+    .btn-book:hover { background: var(--accent); color: var(--primary); }
+    .pricing-card.best .btn-book { background: var(--accent); color: var(--primary); }
+    .pricing-card.best .btn-book:hover { background: var(--primary); color: var(--white); }
+
+    .cta-banner { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 5rem 5%; text-align: center; }
+    .cta-banner h2 { font-size: 2.2rem; font-weight: 900; color: var(--white); margin-bottom: 1rem; }
+    .cta-banner p { color: rgba(255,255,255,0.8); font-size: 1.05rem; margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .btn-primary { background: var(--accent); color: var(--primary); padding: 0.85rem 2.1rem; border-radius: 50px; font-weight: 800; font-size: 1rem; transition: var(--transition); display: inline-block; }
+    .btn-primary:hover { background: #f5b840; transform: translateY(-2px); }
+    .btn-outline { border: 2px solid rgba(255,255,255,0.5); color: var(--white); padding: 0.85rem 2.1rem; border-radius: 50px; font-weight: 700; font-size: 1rem; transition: var(--transition); display: inline-block; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer { background: var(--secondary); color: rgba(255,255,255,0.8); padding: 4rem 5% 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; max-width: 1100px; margin: 0 auto 3rem; }
+    .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 0.9rem; }
+    .footer-brand p { font-size: 0.93rem; line-height: 1.7; color: rgba(255,255,255,0.65); max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-size: 1rem; font-weight: 700; margin-bottom: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); font-size: 0.93rem; transition: var(--transition); }
+    .footer-col ul a:hover { color: var(--accent); }
+    .footer-contact p { font-size: 0.93rem; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.4); max-width: 1100px; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .page-hero h1 { font-size: 2.1rem; }
+      .addon-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .addon-grid, .pricing-grid, .footer-grid { grid-template-columns: 1fr; }
+      .page-hero h1 { font-size: 1.8rem; }
+      .service-table { font-size: 0.88rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Auto<span>Shine</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book Now</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="about.html">About</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:700;">Book Now</a>
+</div>
+
+<div class="page-hero">
+  <span class="badge">Our Services</span>
+  <h1>Full Service Menu & <span>Pricing</span></h1>
+  <p>Every package is performed with professional-grade products. Pricing varies by vehicle size — sedans, SUVs, trucks, and vans may be priced differently.</p>
+</div>
+
+<!-- EXTERIOR PACKAGES -->
+<section style="background:var(--white);">
+  <div class="service-block">
+    <div class="service-block-header">
+      <div class="icon">🚿</div>
+      <div>
+        <h2>Exterior Packages</h2>
+        <p>Hand-wash techniques that protect your paint — no automated brushes that leave swirls</p>
+      </div>
+    </div>
+    <table class="service-table">
+      <thead>
+        <tr><th>Service</th><th>What's Included</th><th style="text-align:right;">Price</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Express Exterior Wash</strong><br><small>~45 min</small></td>
+          <td>Hand wash, rinse, dry, windows (ext), tire dressing</td>
+          <td>$49</td>
+        </tr>
+        <tr>
+          <td><strong>Exterior Detail</strong><br><small>~2 hrs</small></td>
+          <td>Hand wash, clay bar, carnauba wax, wheel detail, tire dressing, window polish (ext)</td>
+          <td>$129</td>
+        </tr>
+        <tr>
+          <td><strong>Paint Enhancement</strong> <span class="badge-popular">Popular</span><br><small>~4 hrs</small></td>
+          <td>Full decontamination, 1-step machine polish, paint sealant, wheel & tire detail, trim restoration</td>
+          <td>$249</td>
+        </tr>
+        <tr>
+          <td><strong>Paint Correction</strong><br><small>~8 hrs</small></td>
+          <td>Full decon, multi-stage machine polish (swirl removal), paint sealant, glass coating, trim & rubber restoration</td>
+          <td>From $499</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INTERIOR PACKAGES -->
+  <div class="service-block">
+    <div class="service-block-header">
+      <div class="icon">🪑</div>
+      <div>
+        <h2>Interior Packages</h2>
+        <p>Deep cleaning that gets into every crevice, vent, and seam</p>
+      </div>
+    </div>
+    <table class="service-table">
+      <thead>
+        <tr><th>Service</th><th>What's Included</th><th style="text-align:right;">Price</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Interior Vacuum & Wipe</strong><br><small>~45 min</small></td>
+          <td>Full vacuum, dash & console wipe-down, door panels, cup holders, air freshener</td>
+          <td>$59</td>
+        </tr>
+        <tr>
+          <td><strong>Interior Detail</strong><br><small>~3 hrs</small></td>
+          <td>Deep vacuum, full shampoo of carpets & mats, steam clean vents & crevices, leather condition, window clean (int), UV protectant</td>
+          <td>$149</td>
+        </tr>
+        <tr>
+          <td><strong>Premium Interior</strong> <span class="badge-popular">Popular</span><br><small>~5 hrs</small></td>
+          <td>Everything in Interior Detail + seat extraction, headliner cleaning, trunk detail, all plastics restored, ozone deodorize</td>
+          <td>$249</td>
+        </tr>
+        <tr>
+          <td><strong>Pet Hair Removal</strong><br><small>~2 hrs additional</small></td>
+          <td>Specialized pet hair extraction from all upholstery, carpets, and crevices. Enzyme treatment for odor</td>
+          <td>$89</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FULL DETAIL COMBOS -->
+  <div class="service-block">
+    <div class="service-block-header">
+      <div class="icon">✨</div>
+      <div>
+        <h2>Full Detail Combinations</h2>
+        <p>Bundle interior + exterior for the best value — save up to 20% vs. booking separately</p>
+      </div>
+    </div>
+    <table class="service-table">
+      <thead>
+        <tr><th>Package</th><th>What's Included</th><th style="text-align:right;">Price</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>The Weekender</strong><br><small>~3 hrs</small></td>
+          <td>Exterior hand wash + clay + wax, interior vacuum, wipe-down, windows inside & out, air freshener</td>
+          <td>$149</td>
+        </tr>
+        <tr>
+          <td><strong>The Complete Detail</strong> <span class="badge-popular">Best Value</span><br><small>~5–6 hrs</small></td>
+          <td>Full exterior detail + full interior shampoo + leather condition + headlight restoration + windows in & out</td>
+          <td>$299</td>
+        </tr>
+        <tr>
+          <td><strong>The Showroom</strong><br><small>~8–10 hrs</small></td>
+          <td>Paint correction + ceramic sealant + premium interior + engine bay + headlights + glass coat + UV protection</td>
+          <td>From $649</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CERAMIC COATING -->
+  <div class="service-block">
+    <div class="service-block-header">
+      <div class="icon">🏆</div>
+      <div>
+        <h2>Ceramic Coating Packages</h2>
+        <p>Professional nano-ceramic protection applied by certified installers — not a spray-on wax</p>
+      </div>
+    </div>
+    <table class="service-table">
+      <thead>
+        <tr><th>Package</th><th>Protection & Warranty</th><th style="text-align:right;">Starting Price</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Entry Ceramic</strong><br><small>Paint correction + 1 coat ceramic</small></td>
+          <td>1-year hydrophobic protection, UV resistance, chemical resistance</td>
+          <td>$599</td>
+        </tr>
+        <tr>
+          <td><strong>Pro Ceramic</strong> <span class="badge-popular">Most Popular</span><br><small>Paint correction + 2 coat ceramic</small></td>
+          <td>2-year protection + ceramic glass + ceramic wheels, full manufacturer warranty</td>
+          <td>$999</td>
+        </tr>
+        <tr>
+          <td><strong>Elite Ceramic</strong><br><small>Full multi-stage correction + 3 coat</small></td>
+          <td>5-year protection + glass + wheels + trim, priority maintenance scheduling</td>
+          <td>$1,799</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ADD-ONS -->
+<section style="background:var(--light);">
+  <div class="text-center" style="max-width:700px;margin:0 auto 2.5rem;">
+    <p class="section-label">À La Carte</p>
+    <h2 class="section-title">Add-On <span>Services</span></h2>
+    <p style="color:#555;font-size:1rem;line-height:1.7;">Customize any package with these individual services. Great for targeting specific problem areas.</p>
+  </div>
+  <div class="addon-grid">
+    <div class="addon-card">
+      <div class="icon">💡</div>
+      <h4>Headlight Restoration</h4>
+      <div class="addon-price">$59</div>
+      <p>Restore cloudy, yellowed headlights to crystal clarity. UV-sealed to slow re-oxidation.</p>
+    </div>
+    <div class="addon-card">
+      <div class="icon">🔧</div>
+      <h4>Engine Bay Detail</h4>
+      <div class="addon-price">$89</div>
+      <p>Steam clean and dress the engine bay. Protects components and looks great at car shows.</p>
+    </div>
+    <div class="addon-card">
+      <div class="icon">🌫️</div>
+      <h4>Odor Elimination</h4>
+      <div class="addon-price">$79</div>
+      <p>Ozone treatment eliminates smoke, pet, and mildew odors at the molecular level — not just masked.</p>
+    </div>
+    <div class="addon-card">
+      <div class="icon">🪟</div>
+      <h4>Glass Coating</h4>
+      <div class="addon-price">$99</div>
+      <p>Ceramic-infused glass treatment for all windows. Rain beads off, improving visibility in wet weather.</p>
+    </div>
+    <div class="addon-card">
+      <div class="icon">🛡️</div>
+      <h4>Trim Restoration</h4>
+      <div class="addon-price">$49</div>
+      <p>Restore faded black plastic trim to a deep, dark finish. Polymer-bonded to last months.</p>
+    </div>
+    <div class="addon-card">
+      <div class="icon">🖌️</div>
+      <h4>Scratch Touch-Up</h4>
+      <div class="addon-price">From $39</div>
+      <p>Minor surface scratch and swirl removal on specific panels using machine polish.</p>
+    </div>
+    <div class="addon-card">
+      <div class="icon">🐾</div>
+      <h4>Pet Hair Removal</h4>
+      <div class="addon-price">$89</div>
+      <p>Thorough pet hair extraction from all upholstery and carpets using specialized tools.</p>
+    </div>
+    <div class="addon-card">
+      <div class="icon">🌟</div>
+      <h4>Tar & Iron Removal</h4>
+      <div class="addon-price">$45</div>
+      <p>Chemical decontamination to remove embedded tar spots and iron fallout from brake dust.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING COMPARISON -->
+<section class="pricing-section" style="background:var(--white);">
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Packages at a Glance</p>
+    <h2 class="section-title">Choose Your <span>Package</span></h2>
+    <p style="color:#555;font-size:1rem;line-height:1.7;">All prices shown for standard sedans. SUVs/trucks add $20–$50 depending on package. Contact us for custom quotes on large vehicles.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <p class="plan-name">Entry Level</p>
+      <h3>Basic Wash</h3>
+      <div class="big-price"><sup>$</sup>69</div>
+      <p class="price-note">per visit</p>
+      <ul>
+        <li>Exterior hand wash & dry</li>
+        <li>Wheel & tire cleaning</li>
+        <li>Exterior window cleaning</li>
+        <li>Interior vacuum</li>
+        <li>Dash wipe-down</li>
+        <li class="no">Clay bar treatment</li>
+        <li class="no">Wax or sealant</li>
+        <li class="no">Shampoo</li>
+      </ul>
+      <a href="contact.html" class="btn-book">Book This</a>
+    </div>
+    <div class="pricing-card best">
+      <p class="plan-name">⭐ Most Popular</p>
+      <h3>Complete Detail</h3>
+      <div class="big-price"><sup>$</sup>299</div>
+      <p class="price-note">per visit</p>
+      <ul>
+        <li>Everything in Basic Wash</li>
+        <li>Clay bar treatment</li>
+        <li>Carnauba wax protection</li>
+        <li>Full interior shampoo</li>
+        <li>Leather conditioning</li>
+        <li>Steam vent cleaning</li>
+        <li>Headlight restoration</li>
+        <li>Windows inside & out</li>
+      </ul>
+      <a href="contact.html" class="btn-book">Book This</a>
+    </div>
+    <div class="pricing-card">
+      <p class="plan-name">Premium</p>
+      <h3>Ceramic Coating</h3>
+      <div class="big-price"><sup>$</sup>999</div>
+      <p class="price-note">starting price</p>
+      <ul>
+        <li>Full paint decontamination</li>
+        <li>Multi-stage paint correction</li>
+        <li>2-coat ceramic application</li>
+        <li>Ceramic wheel coating</li>
+        <li>Ceramic glass coating</li>
+        <li>2-year warranty</li>
+        <li>Priority rebooking</li>
+        <li>Custom quote provided</li>
+      </ul>
+      <a href="contact.html" class="btn-book">Get a Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <h2>Ready to Book Your Detail?</h2>
+  <p>Use the button below to schedule your appointment — or call us to chat about which package is right for your vehicle.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="contact.html" class="btn-primary">Schedule Now</a>
+    <a href="tel:+15555550100" class="btn-outline">📞 (555) 010-0100</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Auto<span style="color:var(--accent);">Shine</span></span>
+      <p>Mobile auto detailing done right. We bring professional-grade products and proven techniques directly to your door — so your car always looks its best.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📞 (555) 010-0100</p>
+      <p>✉️ hello@autoshinedetail.com</p>
+      <p>📍 Serving the Greater Metro Area</p>
+      <p style="margin-top:0.75rem;">Mon–Sat: 7am – 6pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 AutoShine Mobile Detailing. All rights reserved. | Template by <strong>Sites by Mel</strong></p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

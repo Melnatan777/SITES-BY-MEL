@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrightMinds — Tutoring & Academic Coaching</title>
+  <style>
+    :root {
+      --primary: #1a5c8a;
+      --secondary: #0d3d5c;
+      --accent: #f4a020;
+      --text: #1a2030;
+      --light: #f4f8fb;
+      --white: #ffffff;
+      --shadow: 0 4px 24px rgba(26,92,138,0.12);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: var(--text); background: var(--white); }
+    a { text-decoration: none; color: inherit; }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 70px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    }
+    .nav-logo { color: var(--white); font-size: 1.5rem; font-weight: 800; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.85); font-size: 0.97rem; font-weight: 500; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--secondary); padding: 0.55rem 1.4rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); }
+    .nav-cta:hover { background: #f5b840; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 26px; height: 3px; background: var(--white); border-radius: 2px; }
+    .mobile-menu { display: none; position: absolute; top: 70px; left: 0; right: 0; background: var(--secondary); padding: 1.5rem 5%; flex-direction: column; gap: 1.2rem; }
+    .mobile-menu a { color: var(--white); font-size: 1rem; font-weight: 500; }
+    .mobile-menu.open { display: flex; }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 60%, #081e2e 100%);
+      min-height: 90vh; display: flex; align-items: center; padding: 6rem 5% 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before { content:''; position:absolute; top:-100px; right:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(244,160,32,0.14) 0%,transparent 70%); border-radius:50%; }
+    .hero-content { max-width: 640px; position: relative; z-index: 1; }
+    .hero-badge { display:inline-block; background:rgba(244,160,32,0.18); border:1px solid var(--accent); color:var(--accent); font-size:0.82rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:0.35rem 1rem; border-radius:50px; margin-bottom:1.5rem; }
+    .hero h1 { font-size: 3.2rem; font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 1.3rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { font-size: 1.18rem; color: rgba(255,255,255,0.82); margin-bottom: 2.2rem; line-height: 1.7; max-width: 520px; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background:var(--accent); color:var(--secondary); padding:0.85rem 2.1rem; border-radius:50px; font-weight:800; font-size:1rem; transition:var(--transition); display:inline-block; }
+    .btn-primary:hover { background:#f5b840; transform:translateY(-2px); box-shadow:0 8px 24px rgba(244,160,32,0.35); }
+    .btn-outline { border:2px solid rgba(255,255,255,0.5); color:var(--white); padding:0.85rem 2.1rem; border-radius:50px; font-weight:700; font-size:1rem; transition:var(--transition); display:inline-block; }
+    .btn-outline:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+    .trust-bar { background:var(--white); box-shadow:var(--shadow); padding:2.5rem 5%; }
+    .trust-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; max-width:1100px; margin:0 auto; text-align:center; }
+    .trust-item h3 { font-size:2.2rem; font-weight:900; color:var(--primary); }
+    .trust-item p { font-size:0.88rem; color:#666; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-top:0.25rem; }
+
+    section { padding: 5rem 5%; }
+    .section-label { font-size:0.82rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem; }
+    .section-title { font-size:2.2rem; font-weight:900; color:var(--primary); margin-bottom:1rem; line-height:1.2; }
+    .section-title span { color:var(--accent); }
+    .section-sub { font-size:1.05rem; color:#555; max-width:560px; line-height:1.7; margin-bottom:3rem; }
+    .text-center { text-align:center; }
+    .text-center .section-sub { margin-left:auto; margin-right:auto; }
+
+    .programs { background: var(--light); }
+    .cards-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; max-width:1100px; margin:0 auto; }
+    .card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:2rem 1.5rem; transition:var(--transition); border-top:4px solid transparent; text-align:center; }
+    .card:hover { transform:translateY(-6px); box-shadow:0 12px 40px rgba(26,92,138,0.16); border-top-color:var(--accent); }
+    .card-icon { font-size:2.5rem; margin-bottom:1rem; }
+    .card h3 { font-size:1.1rem; font-weight:800; color:var(--primary); margin-bottom:0.5rem; }
+    .card p { color:#666; font-size:0.92rem; line-height:1.65; margin-bottom:1.25rem; }
+    .card-link { color:var(--primary); font-weight:700; font-size:0.9rem; transition:var(--transition); }
+    .card-link:hover { color:var(--accent); }
+
+    .steps-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; max-width:1100px; margin:0 auto; }
+    .step { text-align:center; padding:1.5rem; }
+    .step-num { width:56px; height:56px; background:var(--primary); color:var(--white); font-size:1.4rem; font-weight:900; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; }
+    .step h3 { font-size:1.05rem; font-weight:800; color:var(--primary); margin-bottom:0.5rem; }
+    .step p { font-size:0.9rem; color:#666; line-height:1.6; }
+
+    .subjects-section { background: var(--light); }
+    .subjects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1100px; margin:0 auto; }
+    .subject-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:2rem; display:flex; gap:1.25rem; align-items:flex-start; transition:var(--transition); }
+    .subject-card:hover { transform:translateY(-4px); }
+    .subject-icon { font-size:2rem; flex-shrink:0; background:var(--light); width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .subject-card h3 { font-size:1.05rem; font-weight:800; color:var(--primary); margin-bottom:0.4rem; }
+    .subject-card p { font-size:0.9rem; color:#666; line-height:1.6; }
+    .grade-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.6rem; }
+    .grade-tag { background:var(--light); color:var(--primary); font-size:0.75rem; font-weight:700; padding:0.2rem 0.6rem; border-radius:50px; }
+
+    .reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1100px; margin:0 auto; }
+    .review-card { background:var(--light); border-radius:var(--radius); padding:1.8rem; border-left:4px solid var(--accent); }
+    .stars { color:var(--accent); font-size:1.1rem; margin-bottom:0.75rem; }
+    .review-card p { color:#555; font-size:0.95rem; line-height:1.7; font-style:italic; margin-bottom:1rem; }
+    .reviewer { display:flex; align-items:center; gap:0.75rem; }
+    .reviewer-avatar { width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--accent)); display:flex; align-items:center; justify-content:center; color:var(--white); font-weight:700; font-size:1rem; }
+    .reviewer-info strong { display:block; font-size:0.92rem; color:var(--primary); }
+    .reviewer-info span { font-size:0.82rem; color:#888; }
+
+    .results-banner { background:linear-gradient(135deg,var(--primary),var(--secondary)); padding:4rem 5%; }
+    .results-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; max-width:1100px; margin:0 auto; text-align:center; }
+    .result-item h3 { font-size:2.5rem; font-weight:900; color:var(--accent); }
+    .result-item p { color:rgba(255,255,255,0.8); font-size:0.9rem; font-weight:600; margin-top:0.3rem; }
+
+    .cta-banner { background:linear-gradient(135deg,var(--accent),#c8801a); padding:5rem 5%; text-align:center; }
+    .cta-banner h2 { font-size:2.3rem; font-weight:900; color:var(--secondary); margin-bottom:1rem; }
+    .cta-banner p { color:rgba(0,0,0,0.65); font-size:1.08rem; margin-bottom:2.2rem; max-width:540px; margin-left:auto; margin-right:auto; }
+    .btn-dark { background:var(--secondary); color:var(--white); padding:0.85rem 2.1rem; border-radius:50px; font-weight:800; font-size:1rem; transition:var(--transition); display:inline-block; }
+    .btn-dark:hover { background:var(--primary); transform:translateY(-2px); }
+    .btn-white { background:var(--white); color:var(--secondary); padding:0.85rem 2.1rem; border-radius:50px; font-weight:700; font-size:1rem; transition:var(--transition); display:inline-block; border:2px solid rgba(0,0,0,0.1); }
+    .btn-white:hover { background:var(--secondary); color:var(--white); }
+
+    footer { background:var(--secondary); color:rgba(255,255,255,0.8); padding:4rem 5% 2rem; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; max-width:1100px; margin:0 auto 3rem; }
+    .footer-brand .nav-logo { font-size:1.4rem; display:block; margin-bottom:0.9rem; }
+    .footer-brand p { font-size:0.93rem; line-height:1.7; color:rgba(255,255,255,0.65); max-width:280px; }
+    .footer-col h4 { color:var(--white); font-size:1rem; font-weight:700; margin-bottom:1.1rem; text-transform:uppercase; letter-spacing:1px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+    .footer-col ul a { color:rgba(255,255,255,0.65); font-size:0.93rem; transition:var(--transition); }
+    .footer-col ul a:hover { color:var(--accent); }
+    .footer-contact p { font-size:0.93rem; color:rgba(255,255,255,0.65); margin-bottom:0.5rem; }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.1); padding-top:1.5rem; text-align:center; font-size:0.85rem; color:rgba(255,255,255,0.4); max-width:1100px; margin:0 auto; }
+
+    @media (max-width:900px) {
+      .nav-links,.nav-cta { display:none; }
+      .hamburger { display:flex; }
+      .hero h1 { font-size:2.4rem; }
+      .cards-grid,.steps-grid { grid-template-columns:repeat(2,1fr); }
+      .subjects-grid,.reviews-grid { grid-template-columns:repeat(2,1fr); }
+      .results-grid,.trust-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:680px) {
+      .hero h1 { font-size:2rem; }
+      .cards-grid,.steps-grid,.subjects-grid,.reviews-grid,.results-grid,.trust-grid,.footer-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Bright<span>Minds</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="services.html">Programs</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Free Assessment</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="services.html">Programs</a>
+  <a href="about.html">About</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:700;">Free Assessment</a>
+</div>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-badge">📚 Academic Tutoring & Coaching</span>
+    <h1>Every Student Deserves to <span>Succeed</span></h1>
+    <p>BrightMinds pairs students with expert tutors for personalized 1-on-1 sessions, small group learning, and proven test prep — in person or online.</p>
+    <div class="hero-btns">
+      <!-- To accept online payments: create a free payment link at dashboard.stripe.com/payment-links and replace the href on the "Pay Deposit" or "Book Now" button -->
+      <a href="contact.html" class="btn-primary">Book Free Assessment</a>
+      <a href="services.html" class="btn-outline">View Programs</a>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-grid">
+    <div class="trust-item"><h3>3,800+</h3><p>Students Helped</p></div>
+    <div class="trust-item"><h3>+1.4 GPA</h3><p>Avg. Grade Improvement</p></div>
+    <div class="trust-item"><h3>40+</h3><p>Certified Tutors</p></div>
+    <div class="trust-item"><h3>98%</h3><p>Parent Satisfaction</p></div>
+  </div>
+</div>
+
+<section class="programs">
+  <div class="text-center" style="max-width:700px;margin:0 auto;">
+    <p class="section-label">What We Offer</p>
+    <h2 class="section-title">Programs for <span>Every Learner</span></h2>
+    <p class="section-sub">Whether your child needs a little extra help or significant academic support, we have a program designed for their needs.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">➕</div>
+      <h3>Math Tutoring</h3>
+      <p>From basic arithmetic through AP Calculus — we break down math so it actually sticks.</p>
+      <a href="services.html" class="card-link">Learn More →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">📖</div>
+      <h3>Reading & Writing</h3>
+      <p>Build comprehension, essay skills, grammar, and vocabulary at every grade level.</p>
+      <a href="services.html" class="card-link">Learn More →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎓</div>
+      <h3>SAT / ACT Prep</h3>
+      <p>Strategic test prep with full practice tests, score analysis, and score-raising techniques.</p>
+      <a href="services.html" class="card-link">Learn More →</a>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <h3>STEM Subjects</h3>
+      <p>Science, technology, engineering — we make STEM approachable and exciting for all ages.</p>
+      <a href="services.html" class="card-link">Learn More →</a>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--white);">
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Our Process</p>
+    <h2 class="section-title">How <span>BrightMinds</span> Works</h2>
+  </div>
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Free Assessment</h3>
+      <p>We evaluate your student's current level, learning style, and specific goals — at no cost.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Personalized Plan</h3>
+      <p>We create a custom learning plan with measurable milestones tailored to your student.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Expert Tutoring</h3>
+      <p>Your student works with a hand-matched tutor — 1-on-1 or small group, in person or online.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Track Progress</h3>
+      <p>We share regular progress reports so parents can see exactly how their student is improving.</p>
+    </div>
+  </div>
+</section>
+
+<section class="subjects-section">
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">All Subjects</p>
+    <h2 class="section-title">We Tutor <span>All Grades & Subjects</span></h2>
+  </div>
+  <div class="subjects-grid">
+    <div class="subject-card">
+      <div class="subject-icon">➕</div>
+      <div>
+        <h3>Mathematics</h3>
+        <p>Arithmetic, Pre-Algebra, Algebra I & II, Geometry, Pre-Calc, Calculus, Statistics</p>
+        <div class="grade-tags"><span class="grade-tag">K–5</span><span class="grade-tag">6–8</span><span class="grade-tag">9–12</span><span class="grade-tag">College</span></div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-icon">📖</div>
+      <div>
+        <h3>English Language Arts</h3>
+        <p>Reading comprehension, essay writing, grammar, vocabulary, literature analysis</p>
+        <div class="grade-tags"><span class="grade-tag">K–5</span><span class="grade-tag">6–8</span><span class="grade-tag">9–12</span></div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-icon">🔬</div>
+      <div>
+        <h3>Science</h3>
+        <p>Earth Science, Biology, Chemistry, Physics, AP Sciences</p>
+        <div class="grade-tags"><span class="grade-tag">6–8</span><span class="grade-tag">9–12</span><span class="grade-tag">AP</span></div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-icon">🌍</div>
+      <div>
+        <h3>Social Studies & History</h3>
+        <p>World History, US History, Geography, Civics, AP History & Government</p>
+        <div class="grade-tags"><span class="grade-tag">K–5</span><span class="grade-tag">6–8</span><span class="grade-tag">9–12</span></div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-icon">🎓</div>
+      <div>
+        <h3>Test Preparation</h3>
+        <p>SAT, ACT, PSAT, GRE, ISEE, SSAT, state standardized tests</p>
+        <div class="grade-tags"><span class="grade-tag">9–12</span><span class="grade-tag">College</span></div>
+      </div>
+    </div>
+    <div class="subject-card">
+      <div class="subject-icon">💻</div>
+      <div>
+        <h3>Computer Science</h3>
+        <p>Python, Java, web development basics, AP Computer Science</p>
+        <div class="grade-tags"><span class="grade-tag">6–8</span><span class="grade-tag">9–12</span><span class="grade-tag">College</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="results-banner">
+  <div class="results-grid">
+    <div class="result-item"><h3>+1.4</h3><p>Average GPA Increase</p></div>
+    <div class="result-item"><h3>+180</h3><p>Avg. SAT Score Gain</p></div>
+    <div class="result-item"><h3>+4 pts</h3><p>Avg. ACT Score Gain</p></div>
+    <div class="result-item"><h3>94%</h3><p>Students Pass Next Exam</p></div>
+  </div>
+</section>
+
+<section style="background:var(--white);">
+  <div class="text-center" style="max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Parent Reviews</p>
+    <h2 class="section-title">What Families <span>Are Saying</span></h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"My daughter went from a C in Algebra to earning a B+ in one semester. Her confidence has completely transformed. BrightMinds matched her with the perfect tutor."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">TL</div>
+        <div class="reviewer-info"><strong>Tanya L.</strong><span>Parent of 9th grader</span></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"My son's SAT score went up 210 points after 8 weeks of prep. The practice test analysis was incredibly targeted — they knew exactly where he was losing points."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">MR</div>
+        <div class="reviewer-info"><strong>Marcus R.</strong><span>Parent of 11th grader</span></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"We started when our son was falling behind in 3rd grade reading. Two years later he's above grade level and actually enjoys reading. The patience from his tutor made all the difference."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">AK</div>
+        <div class="reviewer-info"><strong>Angela K.</strong><span>Parent of 5th grader</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <h2>Start With a Free Assessment Today</h2>
+  <p>No commitment required. We'll evaluate your student, build a personalized plan, and show you exactly how we can help — all for free.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="contact.html" class="btn-dark">Book Free Assessment</a>
+    <a href="services.html" class="btn-white">View Programs & Pricing</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Bright<span style="color:var(--accent);">Minds</span></span>
+      <p>Personalized tutoring and academic coaching for students of all ages. Helping students reach their full potential since 2015.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Programs</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📞 (555) 020-0200</p>
+      <p>✉️ hello@brightminds.com</p>
+      <p>📍 123 Learning Lane, Suite 200</p>
+      <p style="margin-top:0.75rem;">Mon–Fri: 8am – 8pm | Sat: 9am – 5pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 BrightMinds Tutoring. All rights reserved. | Template by <strong>Sites by Mel</strong></p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

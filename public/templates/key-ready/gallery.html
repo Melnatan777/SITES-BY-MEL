@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sold Homes & Gallery — KeyReady Realty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#1a4f8a;--secondary:#0d3360;--accent:#c8880a;--text:#1a2030;--light:#f4f7fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:4px;--transition:all 0.2s;--gray:#6B7280;--border:#E2E8F0;--dark:#0f1a26;--gold:#c8880a;--gold-light:#e8b04a}
+body{font-family:'Inter',sans-serif;color:var(--primary);line-height:1.6}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:'Inter',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition)}
+.btn-navy{background:var(--primary);color:var(--white)}
+.btn-navy:hover{background:var(--secondary)}
+.btn-gold{background:var(--gold);color:var(--white)}
+.btn-gold:hover{background:#a87008}
+.btn-outline-navy{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.btn-outline-navy:hover{background:var(--primary);color:var(--white)}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--primary)}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.88rem;font-weight:500;transition:var(--transition)}
+.nav-links a:hover{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--primary)}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px;text-align:center}
+.page-hero .label{font-size:0.75rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+.page-hero p{font-size:1.05rem;opacity:0.85;max-width:560px;margin:0 auto}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--secondary);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:560px;margin:0 auto}
+.section-header.white .label{color:var(--gold-light)}
+.section-header.white h2{color:var(--white)}
+.section-header.white p{color:rgba(255,255,255,0.75)}
+.gold-line{width:48px;height:2px;background:var(--gold);margin:14px auto 0}
+
+/* LISTING CARDS */
+.listings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.listing-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);transition:var(--transition)}
+.listing-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.listing-img{height:210px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.35);font-size:0.82rem;position:relative}
+.listing-badge{position:absolute;top:14px;left:14px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;border-radius:2px}
+.badge-sold{background:var(--primary);color:var(--white)}
+.badge-sale{background:var(--gold);color:var(--white)}
+.badge-pending{background:#6B7280;color:var(--white)}
+.listing-body{padding:20px}
+.listing-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--primary);margin-bottom:4px}
+.listing-sold-label{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.listing-address{font-size:0.9rem;font-weight:500;color:var(--text);margin-bottom:4px}
+.listing-city{color:var(--gray);font-size:0.84rem;margin-bottom:14px}
+.listing-specs{display:flex;gap:14px;font-size:0.82rem;color:var(--gray);padding-top:14px;border-top:1px solid var(--border)}
+.listing-note{font-size:0.78rem;color:var(--gold);font-weight:600;margin-top:8px}
+
+/* NEIGHBORHOOD PHOTOS */
+.neighborhood-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:260px 180px;gap:12px}
+.neighborhood-grid .feat{grid-column:span 1;grid-row:span 2}
+.photo-tile{border-radius:var(--radius);display:flex;align-items:flex-end;padding:16px;position:relative;overflow:hidden;transition:var(--transition)}
+.photo-tile:hover{opacity:0.92}
+.photo-tile .tile-label{background:rgba(0,0,0,0.55);color:var(--white);font-size:0.78rem;font-weight:600;padding:5px 12px;border-radius:2px}
+.photo-tile .placeholder-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:2rem;opacity:0.3}
+.photo-tile .add-text{position:absolute;top:50%;left:50%;transform:translate(-50%,20%);color:rgba(255,255,255,0.35);font-size:0.78rem}
+
+/* STATS */
+.sold-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.sold-stat{text-align:center;padding:32px 16px}
+.sold-stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--gold-light);margin-bottom:6px}
+.sold-stat span{font-size:0.8rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.06em}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);padding:56px 40px;text-align:center;color:var(--white)}
+.cta-box h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:14px}
+.cta-box p{opacity:0.85;max-width:520px;margin:0 auto 28px;line-height:1.8}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--gold)}
+footer h4{font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.6);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){.neighborhood-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.neighborhood-grid .feat{grid-column:span 1;grid-row:span 1}.sold-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .neighborhood-grid{grid-template-columns:1fr}
+  .sold-stats{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Key<span>Ready</span> Realty</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="btn btn-gold" style="padding:8px 18px;font-size:0.85rem;">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="label">Track Record</p>
+  <h1>Listings, Sales &amp; Neighborhoods</h1>
+  <p>A look at recent sales, current listings, and the Houston communities I serve. Replace placeholders with your own photos and sold data.</p>
+</section>
+
+<!-- CURRENT LISTINGS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Active Listings</p>
+      <h2>Homes for Sale Now</h2>
+      <p>Browse currently available properties I&rsquo;m representing across the Houston metro area.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="listings-grid">
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,var(--primary),var(--secondary))">
+          <span>Add property photo</span>
+          <span class="listing-badge badge-sale">For Sale</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$485,000</div>
+          <div class="listing-address">4218 Magnolia Creek Drive</div>
+          <div class="listing-city">Sugar Land, TX 77479</div>
+          <div class="listing-specs"><span>4 Beds</span><span>3 Baths</span><span>2,840 sqft</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#254070,var(--primary))">
+          <span>Add property photo</span>
+          <span class="listing-badge badge-sale">New Listing</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$319,000</div>
+          <div class="listing-address">812 Cypress Bend Court</div>
+          <div class="listing-city">Katy, TX 77450</div>
+          <div class="listing-specs"><span>3 Beds</span><span>2 Baths</span><span>1,960 sqft</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,var(--secondary),#071a30)">
+          <span>Add property photo</span>
+          <span class="listing-badge badge-sale">Price Reduced</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$728,000</div>
+          <div class="listing-address">2901 River Oaks Boulevard</div>
+          <div class="listing-city">Houston, TX 77019</div>
+          <div class="listing-specs"><span>5 Beds</span><span>4 Baths</span><span>3,650 sqft</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#1a3a6a,var(--secondary))">
+          <span>Add property photo</span>
+          <span class="listing-badge badge-pending">Pending</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$392,500</div>
+          <div class="listing-address">519 Arbor Glen Lane</div>
+          <div class="listing-city">The Woodlands, TX 77380</div>
+          <div class="listing-specs"><span>4 Beds</span><span>2.5 Baths</span><span>2,340 sqft</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#0d2a50,var(--secondary))">
+          <span>Add property photo</span>
+          <span class="listing-badge badge-sale">For Sale</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$255,000</div>
+          <div class="listing-address">1803 Pecan Hollow Drive</div>
+          <div class="listing-city">Pearland, TX 77581</div>
+          <div class="listing-specs"><span>3 Beds</span><span>2 Baths</span><span>1,620 sqft</span></div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#1a4060,#0d2840)">
+          <span>Add property photo</span>
+          <span class="listing-badge badge-sale">New Listing</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$1,195,000</div>
+          <div class="listing-address">7742 Memorial Drive</div>
+          <div class="listing-city">Houston, TX 77024</div>
+          <div class="listing-specs"><span>5 Beds</span><span>5 Baths</span><span>4,820 sqft</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <a href="contact.html" class="btn btn-outline-navy">Request Full Listing Details &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- SOLD HOMES -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Recent Sales</p>
+      <h2>Recently Sold Homes</h2>
+      <p>A sampling of homes I&rsquo;ve helped clients buy or sell in the past 12 months.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="listings-grid">
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#2a4a2a,#1a3020)">
+          <span>Add sold home photo</span>
+          <span class="listing-badge badge-sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-sold-label">Sold for</div>
+          <div class="listing-price">$412,000</div>
+          <div class="listing-address">3308 Cypress Ridge Lane</div>
+          <div class="listing-city">Sugar Land, TX 77479</div>
+          <div class="listing-specs"><span>4 BR</span><span>2 BA</span><span>2,280 sqft</span></div>
+          <p class="listing-note">&#9650; Sold $18,000 over asking in 5 days</p>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#3a2a1a,#201408)">
+          <span>Add sold home photo</span>
+          <span class="listing-badge badge-sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-sold-label">Sold for</div>
+          <div class="listing-price">$289,000</div>
+          <div class="listing-address">901 Meadowbrook Drive</div>
+          <div class="listing-city">Katy, TX 77450</div>
+          <div class="listing-specs"><span>3 BR</span><span>2 BA</span><span>1,740 sqft</span></div>
+          <p class="listing-note">&#9650; Full asking price — sold in 9 days</p>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#2a1a3a,#180a28)">
+          <span>Add sold home photo</span>
+          <span class="listing-badge badge-sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-sold-label">Sold for</div>
+          <div class="listing-price">$647,500</div>
+          <div class="listing-address">14 Haverford Place</div>
+          <div class="listing-city">Houston, TX 77019</div>
+          <div class="listing-specs"><span>4 BR</span><span>3.5 BA</span><span>3,100 sqft</span></div>
+          <p class="listing-note">&#9650; Multiple offers — sold above list</p>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#1a3a3a,#0a2020)">
+          <span>Add sold home photo</span>
+          <span class="listing-badge badge-sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-sold-label">Sold for</div>
+          <div class="listing-price">$199,900</div>
+          <div class="listing-address">225 Briarwood Circle</div>
+          <div class="listing-city">Pearland, TX 77581</div>
+          <div class="listing-specs"><span>3 BR</span><span>2 BA</span><span>1,480 sqft</span></div>
+          <p class="listing-note">&#9650; First-time buyer — smooth closing</p>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#3a3a1a,#202008)">
+          <span>Add sold home photo</span>
+          <span class="listing-badge badge-sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-sold-label">Sold for</div>
+          <div class="listing-price">$875,000</div>
+          <div class="listing-address">6650 Tanglewood Drive</div>
+          <div class="listing-city">Houston, TX 77056</div>
+          <div class="listing-specs"><span>5 BR</span><span>4 BA</span><span>4,200 sqft</span></div>
+          <p class="listing-note">&#9650; Luxury sale — record for the street</p>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img" style="background:linear-gradient(135deg,#1a2a3a,#0a1828)">
+          <span>Add sold home photo</span>
+          <span class="listing-badge badge-sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-sold-label">Sold for</div>
+          <div class="listing-price">$338,000</div>
+          <div class="listing-address">4501 Lake Shore Drive</div>
+          <div class="listing-city">The Woodlands, TX 77381</div>
+          <div class="listing-specs"><span>4 BR</span><span>3 BA</span><span>2,060 sqft</span></div>
+          <p class="listing-note">&#9650; Relocation buyer — closed in 21 days</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLD STATS -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header white">
+      <p class="label">By the Numbers</p>
+      <h2>The Results Speak</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="sold-stats">
+      <div class="sold-stat"><strong>180+</strong><span>Homes Sold</span></div>
+      <div class="sold-stat"><strong>$42M+</strong><span>In Sales Volume</span></div>
+      <div class="sold-stat"><strong>98%</strong><span>List-to-Sale Ratio</span></div>
+      <div class="sold-stat"><strong>18</strong><span>Avg. Days on Market</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEIGHBORHOOD PHOTOS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Where I Work</p>
+      <h2>Houston Neighborhoods</h2>
+      <p>From The Heights to Sugar Land, I know these communities like the back of my hand.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="neighborhood-grid">
+      <div class="photo-tile feat" style="background:linear-gradient(135deg,var(--primary),var(--secondary));min-height:500px">
+        <div class="placeholder-icon">&#127968;</div>
+        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add your photo here</div>
+        <span class="tile-label">Houston Heights</span>
+      </div>
+      <div class="photo-tile" style="background:linear-gradient(135deg,#254070,var(--primary))">
+        <div class="placeholder-icon">&#127960;</div>
+        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add photo</div>
+        <span class="tile-label">Sugar Land</span>
+      </div>
+      <div class="photo-tile" style="background:linear-gradient(135deg,#1a4060,var(--secondary))">
+        <div class="placeholder-icon">&#127966;</div>
+        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add photo</div>
+        <span class="tile-label">Katy</span>
+      </div>
+      <div class="photo-tile" style="background:linear-gradient(135deg,#2a3a60,#1a2040)">
+        <div class="placeholder-icon">&#127775;</div>
+        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add photo</div>
+        <span class="tile-label">The Woodlands</span>
+      </div>
+      <div class="photo-tile" style="background:linear-gradient(135deg,#0d2840,#07182a)">
+        <div class="placeholder-icon">&#127774;</div>
+        <div class="add-text" style="color:rgba(255,255,255,0.3);font-size:0.78rem;position:absolute;top:50%;left:50%;transform:translate(-50%,30%)">Add photo</div>
+        <span class="tile-label">Pearland</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section-light">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Ready to Make Your Move?</h2>
+      <p>Whether you&rsquo;re buying or selling, I&rsquo;d love to help you write your next chapter. Let&rsquo;s start with a free, no-pressure conversation.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="contact.html" class="btn btn-gold">Schedule a Free Consultation &rarr;</a>
+        <a href="services.html" class="btn" style="background:rgba(255,255,255,0.15);color:var(--white)">View All Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Key<span>Ready</span> Realty</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">Licensed Realtor serving Houston, Katy, Sugar Land, and surrounding communities. Helping families find home since 2012.</p>
+        <a href="contact.html" class="btn btn-gold" style="font-size:0.82rem;padding:9px 20px">Contact Me</a>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:sarah@keyreadyrealty.com">sarah@keyreadyrealty.com</a></li>
+          <li style="color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:4px">Houston Metro Area</li>
+          <li style="color:rgba(255,255,255,0.4);font-size:0.85rem">Licensed in Texas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 KeyReady Realty. All rights reserved. Licensed in Texas.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:var(--gold)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+<script>document.querySelector('.hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open');});</script>
+</body>
+</html>

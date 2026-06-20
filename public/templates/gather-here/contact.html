@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Contact & Prayer Requests — Cornerstone Fellowship Church</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#3d5a8a;--secondary:#243654;--accent:#e8a020;--text:#1a2030;--light:#f4f6fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:6px;--transition:all 0.2s;--gray:#6B6560;--border:#E8E0D5;--dark:#1a2030;--gold-light:#f0b840}
+body{font-family:'Source Sans 3',sans-serif;color:var(--dark);line-height:1.65}
+h1,h2,h3,h4{font-family:'Libre Baskerville',serif;font-weight:700;line-height:1.25}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition);letter-spacing:0.02em;border-radius:var(--radius)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-accent:hover{background:#c8880a}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1080px;margin:0 auto;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.nav-logo-mark{width:40px;height:40px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-family:'Libre Baskerville',serif;font-size:1rem}
+.nav-logo-text{font-family:'Libre Baskerville',serif;font-size:1.1rem;font-weight:700;color:var(--dark);line-height:1.2}
+.nav-logo-sub{font-size:0.72rem;color:var(--gray);font-family:'Source Sans 3',sans-serif;font-weight:400}
+.nav-links{display:flex;gap:24px;list-style:none;align-items:center}
+.nav-links a{color:var(--dark);font-size:0.88rem;font-weight:600;transition:var(--transition)}
+.nav-links a:hover{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--dark)}
+
+/* PAGE HERO */
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px;text-align:center}
+.page-hero .label{font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+.page-hero p{font-size:1.05rem;opacity:0.85;max-width:560px;margin:0 auto;line-height:1.8}
+
+/* SECTION */
+.section{padding:76px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--secondary);color:var(--white)}
+
+/* CONTACT LAYOUT */
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:56px;align-items:start}
+.contact-info h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:16px}
+.contact-info p{color:var(--gray);line-height:1.85;margin-bottom:28px}
+.info-block{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px}
+.info-icon{width:44px;height:44px;background:var(--primary);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;color:var(--white)}
+.info-block strong{display:block;font-size:0.88rem;color:var(--dark);margin-bottom:2px}
+.info-block p{color:var(--gray);font-size:0.88rem;margin-bottom:0;line-height:1.6}
+.info-block a{color:var(--primary)}
+
+/* FORM */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:40px;box-shadow:0 2px 16px rgba(0,0,0,0.06)}
+.form-card h2{font-size:1.4rem;margin-bottom:6px}
+.form-card .subtitle{color:var(--gray);font-size:0.9rem;margin-bottom:28px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.8rem;font-weight:700;margin-bottom:5px;color:#444;text-transform:uppercase;letter-spacing:0.04em}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.92rem;font-family:'Source Sans 3',sans-serif;outline:none;transition:var(--transition)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(61,90,138,0.1)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-check-group{display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--gray);margin-bottom:16px}
+.btn-full{width:100%;display:block;text-align:center;padding:13px;font-size:0.95rem}
+
+/* CALENDLY */
+.calendly-section{background:var(--light);border:1px solid var(--border);border-radius:var(--radius);padding:36px;margin-top:36px;text-align:center}
+.calendly-section h3{font-size:1.2rem;margin-bottom:10px}
+.calendly-section p{color:var(--gray);font-size:0.9rem;margin-bottom:20px;line-height:1.7}
+.calendly-placeholder{background:var(--white);border:2px dashed var(--border);border-radius:var(--radius);padding:40px 24px;text-align:center}
+.calendly-placeholder .cal-icon{font-size:2.5rem;margin-bottom:12px}
+.calendly-placeholder h4{font-size:1rem;margin-bottom:8px}
+.calendly-placeholder p{color:var(--gray);font-size:0.85rem;line-height:1.7}
+
+/* HOURS */
+.hours-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.hours-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center}
+.hours-card .icon{font-size:1.8rem;margin-bottom:10px}
+.hours-card h4{font-size:0.95rem;margin-bottom:8px}
+.hours-card p{color:var(--gray);font-size:0.85rem;line-height:1.7}
+
+/* MAP PLACEHOLDER */
+.map-placeholder{background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);height:280px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:28px}
+.map-placeholder .map-icon{font-size:2.5rem}
+
+/* FOOTER */
+footer{background:#110a18;color:rgba(255,255,255,0.65);padding:60px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Libre Baskerville',serif;font-size:1.2rem;color:var(--white);margin-bottom:4px}
+.footer-sub{font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:12px}
+footer h4{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:var(--gold-light)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .form-2col{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="nav-logo-mark">&#10013;</div>
+      <div>
+        <div class="nav-logo-text">Cornerstone Fellowship Church</div>
+        <div class="nav-logo-sub">Houston, Texas</div>
+      </div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Ministries</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="btn btn-primary" style="padding:8px 18px;font-size:0.85rem;">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="label">We'd Love to Hear from You</p>
+  <h1>Contact &amp; Prayer Requests</h1>
+  <p>Whether you have a question, a prayer need, or want to meet with a pastor, we&rsquo;re here for you.</p>
+</section>
+
+<!-- MAIN CONTACT SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Get in Touch</h2>
+        <p>We welcome questions, prayer requests, and visit inquiries. Our pastoral team responds to all messages within one business day.</p>
+
+        <div class="info-block">
+          <div class="info-icon">&#128205;</div>
+          <div>
+            <strong>Address</strong>
+            <p>1234 Elm Street<br/>Houston, TX 77002</p>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-icon">&#128222;</div>
+          <div>
+            <strong>Phone</strong>
+            <p><a href="tel:5551234567">(555) 123-4567</a></p>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-icon">&#9993;</div>
+          <div>
+            <strong>Email</strong>
+            <p><a href="mailto:info@cornerstonefellowship.com">info@cornerstonefellowship.com</a></p>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-icon">&#128337;</div>
+          <div>
+            <strong>Office Hours</strong>
+            <p>Monday – Friday: 9:00 AM – 4:00 PM<br/>Sunday: 8:00 AM – 1:00 PM</p>
+          </div>
+        </div>
+
+        <div class="map-placeholder">
+          <div class="map-icon">&#128205;</div>
+          <span>Embed your Google Map here</span>
+          <span style="font-size:0.78rem">1234 Elm Street, Houston TX 77002</span>
+        </div>
+      </div>
+
+      <div>
+        <!-- Replace YOUR_FORM_ID with your Formspree form ID from formspree.io (free) -->
+        <div class="form-card">
+          <h2>Send Us a Message</h2>
+          <p class="subtitle">For prayer requests, general questions, or visitor inquiries. All messages are read and responded to personally.</p>
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-2col">
+              <div class="form-group"><label>First Name</label><input type="text" name="first_name" placeholder="Jane" required/></div>
+              <div class="form-group"><label>Last Name</label><input type="text" name="last_name" placeholder="Smith"/></div>
+            </div>
+            <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="jane@email.com" required/></div>
+            <div class="form-group"><label>Phone (Optional)</label><input type="tel" name="phone" placeholder="(555) 000-0000"/></div>
+            <div class="form-group">
+              <label>How Can We Help?</label>
+              <select name="request_type">
+                <option value="">Select a reason...</option>
+                <option>Prayer Request</option>
+                <option>Planning a Visit</option>
+                <option>Pastoral Appointment</option>
+                <option>Ministry Question</option>
+                <option>Life Group Information</option>
+                <option>General Question</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Your Message</label><textarea name="message" rows="5" placeholder="Share your question, prayer request, or anything on your heart. Our team reads every message." required></textarea></div>
+            <div class="form-check-group">
+              <input type="checkbox" name="confidential" id="confid"/>
+              <label for="confid">Keep this message confidential (pastoral staff only)</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Send Message &#10013;</button>
+            <p style="font-size:0.78rem;color:var(--gray);text-align:center;margin-top:12px">We respond within one business day. Your information is never shared.</p>
+          </form>
+        </div>
+
+        <!-- To add online booking: go to calendly.com (free), create your event type, and replace YOUR_CALENDLY_LINK below -->
+        <div class="calendly-section">
+          <h3>Book a Pastoral Appointment</h3>
+          <p>Want to meet with one of our pastors? Schedule a time that works for you — in-person or over the phone.</p>
+          <div class="calendly-placeholder">
+            <div class="cal-icon">&#128197;</div>
+            <h4>Online Scheduling Coming Soon</h4>
+            <p>To add online booking: go to <strong>calendly.com</strong> (free), create your event type, and replace this placeholder with your Calendly embed code.<br/><br/>Your link will look like: <em>calendly.com/YOUR_CALENDLY_LINK</em></p>
+            <a href="tel:5551234567" class="btn btn-primary" style="margin-top:16px">Call to Schedule: (555) 123-4567</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE HOURS -->
+<section class="section section-light">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">When We Gather</p>
+      <h2 style="font-family:'Libre Baskerville',serif;font-size:clamp(1.8rem,3vw,2.4rem)">Service Hours</h2>
+      <p style="color:var(--gray);max-width:520px;margin:12px auto 0">All services are held at 1234 Elm Street, Houston TX 77002. Parking is free in our lot and on the street.</p>
+    </div>
+    <div class="hours-grid">
+      <div class="hours-card">
+        <div class="icon">&#9728;</div>
+        <h4>Sunday 9:00 AM</h4>
+        <p>Traditional service with hymns and liturgy. Nursery provided. 1 hour 15 minutes.</p>
+      </div>
+      <div class="hours-card">
+        <div class="icon">&#127758;</div>
+        <h4>Sunday 11:00 AM</h4>
+        <p>Contemporary worship. Kids ministry and youth group run simultaneously. 1 hour 15 min.</p>
+      </div>
+      <div class="hours-card">
+        <div class="icon">&#128214;</div>
+        <h4>Wednesday 7:00 PM</h4>
+        <p>Bible study, prayer, and small group discussion. Open to all. About 1 hour.</p>
+      </div>
+      <div class="hours-card">
+        <div class="icon">&#127932;</div>
+        <h4>Friday 6:30 PM</h4>
+        <p>Youth Night for grades 6–12. Worship, teaching, and community activities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PASTORAL CARE -->
+<section class="section section-dark">
+  <div class="container" style="text-align:center">
+    <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px">Pastoral Care</p>
+    <h2 style="font-family:'Libre Baskerville',serif;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--white);margin-bottom:16px">We Walk With You</h2>
+    <p style="color:rgba(255,255,255,0.75);max-width:600px;margin:0 auto 36px;line-height:1.85">Our pastoral team is available for counseling, hospital visits, crisis support, premarital preparation, memorial services, and life celebrations. No matter what you&rsquo;re facing, you don&rsquo;t face it alone.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="tel:5551234567" class="btn btn-accent">Call the Church Office</a>
+      <a href="mailto:prayer@cornerstonefellowship.com" class="btn" style="background:rgba(255,255,255,0.1);color:var(--white);border:1px solid rgba(255,255,255,0.3)">Email the Prayer Team</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">&#10013; Cornerstone Fellowship Church</div>
+        <div class="footer-sub">Houston, Texas &mdash; Est. 1998</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:8px">1234 Elm Street, Houston TX 77002<br/><a href="tel:5551234567">(555) 123-4567</a> &nbsp;&bull;&nbsp; <a href="mailto:info@cornerstonefellowship.com">info@cornerstonefellowship.com</a></p>
+        <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:8px">Sun 9am &amp; 11am &nbsp;&bull;&nbsp; Wed 7pm</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Ministries &amp; Events</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="contact.html">Prayer Request</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cornerstone Fellowship Church. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.3)">Template by <a href="https://sitesbymel.com" style="color:var(--gold-light)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelector('.hamburger').addEventListener('click',function(){
+  document.getElementById('navLinks').classList.toggle('open');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | Glow Studio</title>
+  <style>
+    :root {
+      --primary: #5c1a3a;
+      --secondary: #8a2550;
+      --accent: #c94070;
+      --text: #2a1520;
+      --light: #fdf5f7;
+      --white: #ffffff;
+      --blush: #f2c4ce;
+      --gold: #d4af37;
+      --radius: 10px;
+      --shadow: 0 4px 20px rgba(92,26,58,0.12);
+      --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, Helvetica, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.25rem; }
+    .section-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; display: block; }
+    .section-title { font-family: Georgia, serif; font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 700; color: var(--primary); margin-bottom: 1rem; }
+    .section-title span { color: var(--accent); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 999; background: var(--white); box-shadow: 0 2px 12px rgba(92,26,58,0.10); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; max-width: 1140px; margin: 0 auto; }
+    .nav-logo { font-family: Georgia, serif; font-size: 1.45rem; font-weight: 700; color: var(--primary); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 1.8rem; }
+    .nav-links a { font-size: 0.95rem; font-weight: 600; color: var(--text); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--white) !important; padding: 0.55rem 1.3rem; border-radius: var(--radius); }
+    .nav-cta:hover { background: var(--primary) !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 26px; height: 3px; background: var(--primary); border-radius: 2px; }
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); padding: 1.25rem; gap: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+      .nav-links.open { display: flex; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%); color: var(--white); padding: 4rem 1.25rem; text-align: center; }
+    .page-hero h1 { font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.75rem; }
+    .page-hero h1 span { color: var(--blush); }
+    .page-hero p { font-size: 1.05rem; color: rgba(255,255,255,0.9); max-width: 560px; margin: 0 auto; }
+
+    /* TIP BANNER */
+    .tip-banner { background: var(--blush); padding: 1rem 1.25rem; text-align: center; }
+    .tip-banner p { font-size: 0.92rem; font-weight: 600; color: var(--primary); }
+
+    /* HAIR BEFORE/AFTER */
+    .ba-section { padding: 5rem 1.25rem; background: var(--light); }
+    .ba-header { text-align: center; margin-bottom: 3rem; }
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .ba-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .ba-photos { display: grid; grid-template-columns: 1fr 1fr; }
+    .ba-photo { height: 240px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 0.85rem; }
+    .ba-photo.before { background: linear-gradient(135deg, #a08090, #6a4050); }
+    .ba-photo.after { background: linear-gradient(135deg, var(--accent), var(--primary)); }
+    .ba-label { background: rgba(0,0,0,0.5); color: var(--white); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.7rem; border-radius: 20px; }
+    .ba-photo-text { font-size: 0.75rem; color: rgba(255,255,255,0.8); font-weight: 600; text-align: center; margin-bottom: 0.4rem; padding: 0 0.5rem; }
+    .ba-info { padding: 1.25rem 1.5rem; }
+    .ba-info h4 { font-family: Georgia, serif; font-size: 1rem; color: var(--primary); margin-bottom: 0.25rem; }
+    .ba-info p { font-size: 0.84rem; color: #7a4060; line-height: 1.55; }
+    .ba-tag { display: inline-block; background: var(--light); color: var(--accent); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; margin-top: 0.5rem; border: 1px solid var(--blush); }
+
+    /* HAIR GALLERY */
+    .hair-section { padding: 5rem 1.25rem; background: var(--white); }
+    .hair-header { text-align: center; margin-bottom: 3rem; }
+    .hair-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .hair-item { border-radius: var(--radius); overflow: hidden; position: relative; box-shadow: var(--shadow); }
+    .hair-photo { width: 100%; height: 260px; display: flex; align-items: flex-end; }
+    .hair-caption { width: 100%; background: linear-gradient(transparent, rgba(92,26,58,0.85)); padding: 2.5rem 1rem 1rem; color: var(--white); font-size: 0.85rem; font-weight: 600; font-family: Georgia, serif; }
+
+    /* NAIL GALLERY */
+    .nail-section { padding: 5rem 1.25rem; background: var(--primary); }
+    .nail-header { text-align: center; margin-bottom: 3rem; }
+    .nail-header h2 { font-family: Georgia, serif; color: var(--white); font-size: clamp(1.6rem, 3vw, 2.2rem); }
+    .nail-header p { color: var(--blush); margin-top: 0.5rem; }
+    .nail-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .nail-item { border-radius: var(--radius); overflow: hidden; }
+    .nail-photo { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.85); text-align: center; padding: 0.75rem; }
+    .nail-label { background: rgba(255,255,255,0.08); padding: 0.65rem 0.85rem; }
+    .nail-label span { font-size: 0.82rem; font-weight: 700; color: var(--blush); display: block; }
+    .nail-label p { font-size: 0.73rem; color: rgba(255,255,255,0.65); }
+
+    /* LASH & BROW */
+    .lash-section { padding: 5rem 1.25rem; background: var(--light); }
+    .lash-header { text-align: center; margin-bottom: 3rem; }
+    .lash-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .lash-col h3 { font-family: Georgia, serif; font-size: 1.2rem; color: var(--primary); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--blush); }
+    .lash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .lash-item { border-radius: var(--radius); overflow: hidden; }
+    .lash-photo { height: 170px; display: flex; align-items: flex-end; border-radius: var(--radius); }
+    .lash-cap { background: linear-gradient(transparent, rgba(92,26,58,0.8)); padding: 1.5rem 0.75rem 0.75rem; color: var(--white); font-size: 0.78rem; font-weight: 600; width: 100%; }
+
+    /* STUDIO SPACE */
+    .studio-section { padding: 5rem 1.25rem; background: var(--white); }
+    .studio-header { text-align: center; margin-bottom: 3rem; }
+    .studio-mosaic { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 200px 200px; gap: 1rem; }
+    .mosaic-item { border-radius: var(--radius); overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.85); text-align: center; padding: 0.75rem; }
+    .mosaic-item.tall { grid-row: span 2; }
+    .mosaic-item.wide { grid-column: span 2; }
+
+    /* TESTIMONIALS */
+    .test-section { padding: 5rem 1.25rem; background: var(--primary); }
+    .test-header { text-align: center; margin-bottom: 3rem; }
+    .test-header h2 { font-family: Georgia, serif; color: var(--white); font-size: clamp(1.6rem, 3vw, 2.2rem); }
+    .test-header p { color: var(--blush); margin-top: 0.5rem; }
+    .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .test-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: var(--radius); padding: 2rem 1.75rem; }
+    .stars { color: var(--gold); font-size: 1.1rem; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+    .test-card blockquote { font-size: 0.93rem; color: rgba(255,255,255,0.88); line-height: 1.7; font-style: italic; margin-bottom: 1.25rem; font-family: Georgia, serif; }
+    .test-author { font-size: 0.85rem; font-weight: 700; color: var(--blush); }
+    .test-service { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.15rem; }
+
+    /* FEATURED TRANSFORMATION */
+    .featured-section { padding: 5rem 1.25rem; background: var(--light); }
+    .featured-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+    .feat-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .feat-photo { border-radius: var(--radius); height: 280px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.85); text-align: center; padding: 1rem; }
+    .feat-text h2 { font-family: Georgia, serif; font-size: clamp(1.5rem, 3vw, 2rem); color: var(--primary); margin-bottom: 1rem; }
+    .feat-text p { color: #5a3040; line-height: 1.78; margin-bottom: 1rem; font-size: 0.95rem; }
+    .feat-text blockquote { border-left: 4px solid var(--accent); padding-left: 1.25rem; margin: 1.5rem 0; font-style: italic; font-family: Georgia, serif; color: var(--primary); font-size: 1rem; line-height: 1.65; }
+
+    /* CTA */
+    .cta-band { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 4rem 1.25rem; text-align: center; color: var(--white); }
+    .cta-band h2 { font-family: Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 0.75rem; }
+    .cta-band h2 span { color: var(--blush); }
+    .cta-band p { color: rgba(255,255,255,0.88); margin-bottom: 2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-gold { display: inline-block; background: var(--gold); color: #2a1a10; padding: 0.9rem 2.2rem; border-radius: var(--radius); font-weight: 800; transition: var(--transition); font-family: Georgia, serif; }
+    .btn-gold:hover { background: #c09a28; transform: translateY(-2px); }
+    .btn-outline { display: inline-block; background: transparent; color: var(--white); border: 2px solid var(--white); padding: 0.86rem 2rem; border-radius: var(--radius); font-weight: 700; transition: var(--transition); }
+    .btn-outline:hover { background: var(--white); color: var(--primary); }
+
+    /* FOOTER */
+    footer { background: #2a0a1a; color: rgba(255,255,255,0.8); padding: 4rem 1.25rem 2rem; }
+    .footer-inner { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-bottom: 3rem; }
+    .footer-col h3 { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 1.1rem; }
+    .footer-col p { font-size: 0.9rem; line-height: 1.7; }
+    .footer-logo { font-family: Georgia, serif; font-size: 1.3rem; color: var(--white); margin-bottom: 0.75rem; display: block; }
+    .footer-logo span { color: var(--blush); }
+    .footer-col ul li { margin-bottom: 0.55rem; }
+    .footer-col ul li a { font-size: 0.9rem; color: rgba(255,255,255,0.7); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--blush); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; text-align: center; font-size: 0.83rem; color: rgba(255,255,255,0.5); max-width: 1140px; margin: 0 auto; }
+    .footer-bottom a { color: var(--blush); }
+
+    @media (max-width: 900px) {
+      .ba-grid { grid-template-columns: 1fr; }
+      .hair-grid { grid-template-columns: 1fr 1fr; }
+      .nail-grid { grid-template-columns: repeat(2, 1fr); }
+      .lash-inner { grid-template-columns: 1fr; }
+      .studio-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .mosaic-item.tall { grid-row: span 1; }
+      .mosaic-item.wide { grid-column: span 2; }
+      .test-grid { grid-template-columns: 1fr; }
+      .featured-inner { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .hair-grid { grid-template-columns: 1fr; }
+      .lash-grid { grid-template-columns: 1fr 1fr; }
+      .feat-photos { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Glow <span>Studio</span></a>
+      <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label" style="color:var(--blush)">Our Work</span>
+      <h1>The <span>Glow</span> Gallery</h1>
+      <p>Browse our hair transformations, nail art, lash sets, and studio space. Real results from real clients — no filters, just skill.</p>
+    </div>
+  </section>
+
+  <div class="tip-banner">
+    <p>Replace the photo placeholders with your own work photos — your portfolio is your best advertisement!</p>
+  </div>
+
+  <!-- HAIR BEFORE/AFTER -->
+  <section class="ba-section">
+    <div class="container">
+      <div class="ba-header">
+        <span class="section-label">Hair Transformations</span>
+        <h2 class="section-title">Before & <span>After</span></h2>
+        <p style="color:#7a4060; max-width:520px; margin:0 auto;">Every transformation starts with a consultation and ends with a client who loves what they see in the mirror.</p>
+      </div>
+      <div class="ba-grid">
+
+        <div class="ba-card">
+          <div class="ba-photos">
+            <div class="ba-photo before">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-photo after">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">After</span>
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Brunette to Balayage Blonde</h4>
+            <p>Full balayage with toner and glossing treatment. Took 4 hours to achieve this seamless sun-kissed result.</p>
+            <span class="ba-tag">Balayage + Toner</span>
+          </div>
+        </div>
+
+        <div class="ba-card">
+          <div class="ba-photos">
+            <div class="ba-photo before" style="background:linear-gradient(135deg,#988080,#604040);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-photo after" style="background:linear-gradient(135deg,#c94070,#5c1a3a);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">After</span>
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Full Color Transformation</h4>
+            <p>Single process color refresh with a cut and blowout. From faded box color to a rich, vibrant result.</p>
+            <span class="ba-tag">Color + Cut</span>
+          </div>
+        </div>
+
+        <div class="ba-card">
+          <div class="ba-photos">
+            <div class="ba-photo before" style="background:linear-gradient(135deg,#b0a090,#706050);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-photo after" style="background:linear-gradient(135deg,#e06090,#8a2550);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">After</span>
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Lob Cut & Style</h4>
+            <p>Removed 5+ inches and added face-framing layers. Finished with a blowout and beach waves.</p>
+            <span class="ba-tag">Cut + Style</span>
+          </div>
+        </div>
+
+        <div class="ba-card">
+          <div class="ba-photos">
+            <div class="ba-photo before" style="background:linear-gradient(135deg,#908080,#504040);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">Before</span>
+            </div>
+            <div class="ba-photo after" style="background:linear-gradient(135deg,#d46090,#7a1a45);">
+              <p class="ba-photo-text">Add your photo here</p>
+              <span class="ba-label">After</span>
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Highlights Refresh</h4>
+            <p>Partial highlights with toner to brighten and blend. Natural, lived-in dimension with zero brassiness.</p>
+            <span class="ba-tag">Highlights + Toner</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HAIR GALLERY -->
+  <section class="hair-section">
+    <div class="container">
+      <div class="hair-header">
+        <span class="section-label">Hair Portfolio</span>
+        <h2 class="section-title">Hair <span>Gallery</span></h2>
+        <p style="color:#7a4060; max-width:520px; margin:0 auto;">From precision cuts to complex color — every style is crafted with care.</p>
+      </div>
+      <div class="hair-grid">
+        <div class="hair-item">
+          <div class="hair-photo" style="background:linear-gradient(160deg,var(--accent),var(--primary));">
+            <div class="hair-caption">Textured Bob with Highlights</div>
+          </div>
+        </div>
+        <div class="hair-item">
+          <div class="hair-photo" style="background:linear-gradient(160deg,#d06090,var(--secondary));">
+            <div class="hair-caption">Beachy Balayage Waves</div>
+          </div>
+        </div>
+        <div class="hair-item">
+          <div class="hair-photo" style="background:linear-gradient(160deg,var(--secondary),#3a0825);">
+            <div class="hair-caption">Deep Brown Gloss Treatment</div>
+          </div>
+        </div>
+        <div class="hair-item">
+          <div class="hair-photo" style="background:linear-gradient(160deg,#e07090,var(--accent));">
+            <div class="hair-caption">Blowout & Barrel Waves</div>
+          </div>
+        </div>
+        <div class="hair-item">
+          <div class="hair-photo" style="background:linear-gradient(160deg,#8a1545,#c94070);">
+            <div class="hair-caption">Curtain Bangs & Long Layers</div>
+          </div>
+        </div>
+        <div class="hair-item">
+          <div class="hair-photo" style="background:linear-gradient(160deg,var(--primary),var(--secondary));">
+            <div class="hair-caption">Full Head Foil Highlights</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAIL GALLERY -->
+  <section class="nail-section">
+    <div class="container">
+      <div class="nail-header">
+        <span class="section-label" style="color:var(--blush)">Nail Art & Design</span>
+        <h2>Nail Gallery</h2>
+        <p>Gel, acrylic, art — whatever your style, we make your nails a statement.</p>
+      </div>
+      <div class="nail-grid">
+        <div class="nail-item">
+          <div class="nail-photo" style="background:linear-gradient(135deg,#c94070,#5c1a3a);">Add your photo here</div>
+          <div class="nail-label"><span>Gel French Tips</span><p>Classic with a modern twist</p></div>
+        </div>
+        <div class="nail-item">
+          <div class="nail-photo" style="background:linear-gradient(135deg,#e080a0,#9a2560);">Add your photo here</div>
+          <div class="nail-label"><span>Floral Nail Art</span><p>Custom hand-painted design</p></div>
+        </div>
+        <div class="nail-item">
+          <div class="nail-photo" style="background:linear-gradient(135deg,#8a2550,var(--primary));">Add your photo here</div>
+          <div class="nail-label"><span>Ombre Acrylics</span><p>Blush to white gradient</p></div>
+        </div>
+        <div class="nail-item">
+          <div class="nail-photo" style="background:linear-gradient(135deg,var(--accent),#8a1545);">Add your photo here</div>
+          <div class="nail-label"><span>Chrome Gel Set</span><p>Mirror finish, gel manicure</p></div>
+        </div>
+        <div class="nail-item">
+          <div class="nail-photo" style="background:linear-gradient(135deg,#d4508a,var(--secondary));">Add your photo here</div>
+          <div class="nail-label"><span>Geometric Nail Art</span><p>Bold lines and shapes</p></div>
+        </div>
+        <div class="nail-item">
+          <div class="nail-photo" style="background:linear-gradient(135deg,var(--primary),var(--accent));">Add your photo here</div>
+          <div class="nail-label"><span>Soft Pink Spa Mani</span><p>Classic timeless look</p></div>
+        </div>
+        <div class="nail-item">
+          <div class="nail-photo" style="background:linear-gradient(135deg,#b83060,#6a1535);">Add your photo here</div>
+          <div class="nail-label"><span>Glitter Gel Pedicure</span><p>Festive sparkle finish</p></div>
+        </div>
+        <div class="nail-item">
+          <div class="nail-photo" style="background:linear-gradient(135deg,#e06080,var(--primary));">Add your photo here</div>
+          <div class="nail-label"><span>Abstract Art Set</span><p>One-of-a-kind freehand</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LASH & BROW -->
+  <section class="lash-section">
+    <div class="container">
+      <div class="lash-header">
+        <span class="section-label">Eyes & Brows</span>
+        <h2 class="section-title">Lash & <span>Brow Gallery</span></h2>
+        <p style="color:#7a4060; max-width:520px; margin:0 auto;">From natural classic sets to dramatic volume lashes — and perfectly shaped, laminated brows.</p>
+      </div>
+      <div class="lash-inner">
+        <div class="lash-col">
+          <h3>Lash Extensions</h3>
+          <div class="lash-grid">
+            <div class="lash-item">
+              <div class="lash-photo" style="background:linear-gradient(160deg,var(--accent),var(--primary));">
+                <div class="lash-cap">Classic Set — Natural</div>
+              </div>
+            </div>
+            <div class="lash-item">
+              <div class="lash-photo" style="background:linear-gradient(160deg,#d06090,var(--secondary));">
+                <div class="lash-cap">Volume Set — Fluffy</div>
+              </div>
+            </div>
+            <div class="lash-item">
+              <div class="lash-photo" style="background:linear-gradient(160deg,var(--secondary),#3a0825);">
+                <div class="lash-cap">Mega Volume — Dramatic</div>
+              </div>
+            </div>
+            <div class="lash-item">
+              <div class="lash-photo" style="background:linear-gradient(160deg,#e07090,var(--accent));">
+                <div class="lash-cap">Lash Lift & Tint</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lash-col">
+          <h3>Brow Services</h3>
+          <div class="lash-grid">
+            <div class="lash-item">
+              <div class="lash-photo" style="background:linear-gradient(160deg,#8a1545,var(--accent));">
+                <div class="lash-cap">Brow Lamination</div>
+              </div>
+            </div>
+            <div class="lash-item">
+              <div class="lash-photo" style="background:linear-gradient(160deg,var(--primary),var(--secondary));">
+                <div class="lash-cap">Brow Wax + Tint</div>
+              </div>
+            </div>
+            <div class="lash-item">
+              <div class="lash-photo" style="background:linear-gradient(160deg,#c94070,#8a1545);">
+                <div class="lash-cap">Lamination + Tint</div>
+              </div>
+            </div>
+            <div class="lash-item">
+              <div class="lash-photo" style="background:linear-gradient(160deg,var(--secondary),var(--primary));">
+                <div class="lash-cap">Arch Shaping</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDIO SPACE -->
+  <section class="studio-section">
+    <div class="container">
+      <div class="studio-header">
+        <span class="section-label">Our Space</span>
+        <h2 class="section-title">Inside <span>Glow Studio</span></h2>
+        <p style="color:#7a4060; max-width:520px; margin:0 auto;">A welcoming, professional studio designed to make you feel comfortable and inspired the moment you walk in.</p>
+      </div>
+      <div class="studio-mosaic">
+        <div class="mosaic-item tall" style="background:linear-gradient(135deg,var(--primary),var(--secondary)); grid-row:span 2;">Add your photo here — Studio Entrance</div>
+        <div class="mosaic-item" style="background:linear-gradient(135deg,var(--accent),var(--primary));">Add your photo here — Styling Station</div>
+        <div class="mosaic-item" style="background:linear-gradient(135deg,var(--secondary),var(--accent));">Add your photo here — Nail Station</div>
+        <div class="mosaic-item wide" style="background:linear-gradient(135deg,#d06090,var(--secondary));">Add your photo here — Lash Room</div>
+        <div class="mosaic-item" style="background:linear-gradient(135deg,var(--accent),#8a1545);">Add your photo here — Products</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="test-section">
+    <div class="container">
+      <div class="test-header">
+        <span class="section-label" style="color:var(--blush)">Client Love</span>
+        <h2>What Our Clients Say</h2>
+        <p>Real reviews from real clients who keep coming back — and sending everyone they know.</p>
+      </div>
+      <div class="test-grid">
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"I came in for a balayage and left absolutely obsessed with my hair. [Owner Name] listened to exactly what I wanted and delivered something even better than my inspiration photo. I get compliments every single day."</blockquote>
+          <div class="test-author">Ashley R.</div>
+          <div class="test-service">Balayage + Toner</div>
+        </div>
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"My lash extensions are absolutely perfect. I've been to three other lash artists and no one comes close to [Stylist Name]'s work. My fills last 4 weeks and they always look fresh. I won't go anywhere else."</blockquote>
+          <div class="test-author">Brittany K.</div>
+          <div class="test-service">Volume Lash Extensions</div>
+        </div>
+        <div class="test-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Got the brow lamination + tint and I'm completely obsessed. I look put together without doing a single thing to my brows in the morning. The studio is gorgeous and everyone is so welcoming. 10/10 every time."</blockquote>
+          <div class="test-author">Maya T.</div>
+          <div class="test-service">Brow Lamination + Tint</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED TRANSFORMATION -->
+  <section class="featured-section">
+    <div class="container">
+      <div class="featured-inner">
+        <div class="feat-photos">
+          <div class="feat-photo" style="background:linear-gradient(135deg,#a08090,#604050);">Before — Add photo</div>
+          <div class="feat-photo" style="background:linear-gradient(135deg,var(--accent),var(--primary));">After — Add photo</div>
+        </div>
+        <div class="feat-text">
+          <span class="section-label">Featured Transformation</span>
+          <h2>From Damaged to Dreamy</h2>
+          <p>This client came in after years of box color and heat damage. We started with a color correction to remove the brassiness, followed by a keratin treatment to restore smoothness and shine.</p>
+          <p>Three months of visits later — healthy, luminous hair and a client who cries happy tears every time she leaves the chair.</p>
+          <blockquote>"I never thought my hair could look like this. [Owner Name] is a miracle worker. I didn't believe her when she told me what we could achieve, but here we are."</blockquote>
+          <a href="contact.html" style="display:inline-block;margin-top:1.25rem;background:var(--accent);color:var(--white);padding:0.85rem 1.75rem;border-radius:var(--radius);font-weight:700;font-family:Georgia,serif;transition:var(--transition);">Book Your Transformation →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Ready for Your <span>Glow Up?</span></h2>
+      <p>Book your appointment today — your transformation is waiting.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-gold">Book Your Appointment ✨</a>
+        <a href="services.html" class="btn-outline">View All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <span class="footer-logo">Glow <span>Studio</span></span>
+        <p>Full-service licensed beauty studio offering hair, nails, lashes, brows, facials, and waxing in a welcoming, professional environment.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="services.html">Hair Services</a></li>
+          <li><a href="services.html">Nail Services</a></li>
+          <li><a href="services.html">Lash & Brow</a></li>
+          <li><a href="services.html">Facials & Waxing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Studio</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Book Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Glow Studio. All rights reserved. | Website by <a href="#">Sites by Mel</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

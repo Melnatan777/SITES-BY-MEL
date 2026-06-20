@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ForeverEvents — Contact & Consultation</title>
+  <style>
+    :root {
+      --primary: #6b2d82; --secondary: #4a1d5c; --accent: #d4af37;
+      --text: #2a1a38; --light: #fdf8ff; --white: #ffffff;
+      --shadow: 0 4px 24px rgba(107,45,130,0.13); --radius: 12px; --transition: all 0.3s ease;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',Georgia,sans-serif; color:var(--text); background:var(--white); }
+    a { text-decoration:none; color:inherit; }
+    nav { position:sticky; top:0; z-index:100; background:var(--secondary); display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:72px; box-shadow:0 2px 20px rgba(0,0,0,0.25); }
+    .nav-logo { color:var(--white); font-size:1.45rem; font-weight:800; }
+    .nav-logo span { color:var(--accent); }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { color:rgba(255,255,255,0.85); font-size:0.95rem; font-weight:500; transition:var(--transition); }
+    .nav-links a:hover,.nav-links a.active { color:var(--accent); }
+    .nav-cta { background:var(--accent); color:var(--secondary); padding:0.55rem 1.4rem; border-radius:50px; font-weight:700; font-size:0.93rem; }
+    .nav-cta:hover { background:#e8c84a; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+    .hamburger span { width:26px; height:3px; background:var(--white); border-radius:2px; }
+    .mobile-menu { display:none; position:absolute; top:72px; left:0; right:0; background:var(--secondary); padding:1.5rem 5%; flex-direction:column; gap:1.2rem; }
+    .mobile-menu a { color:var(--white); font-size:1rem; }
+    .mobile-menu.open { display:flex; }
+
+    .page-hero { background:linear-gradient(145deg,#2a0a38 0%,var(--secondary) 50%,var(--primary) 100%); padding:5rem 5% 4rem; text-align:center; }
+    .page-hero .badge { display:inline-block; background:rgba(212,175,55,0.18); border:1px solid var(--accent); color:var(--accent); font-size:0.8rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:0.35rem 1rem; border-radius:50px; margin-bottom:1.2rem; }
+    .page-hero h1 { font-size:2.8rem; font-weight:900; color:var(--white); margin-bottom:1rem; }
+    .page-hero h1 span { color:var(--accent); }
+    .page-hero p { color:rgba(255,255,255,0.78); font-size:1.1rem; max-width:580px; margin:0 auto; line-height:1.7; }
+
+    section { padding:5rem 5%; }
+    .section-label { font-size:0.8rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem; }
+    .section-title { font-size:2rem; font-weight:900; color:var(--primary); margin-bottom:1rem; }
+    .section-title span { color:var(--accent); }
+
+    .contact-layout { display:grid; grid-template-columns:2fr 1fr; gap:3rem; max-width:1100px; margin:0 auto; }
+    .form-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:2.5rem; }
+    .form-card h2 { font-size:1.5rem; font-weight:800; color:var(--primary); margin-bottom:0.4rem; }
+    .form-card > p { color:#666; font-size:0.93rem; margin-bottom:2rem; line-height:1.65; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+    .form-group { margin-bottom:1.25rem; }
+    .form-group label { display:block; font-size:0.85rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.5px; }
+    .form-group input,.form-group select,.form-group textarea { width:100%; padding:0.75rem 1rem; border:2px solid #e8d8f0; border-radius:8px; font-size:0.95rem; font-family:inherit; color:var(--text); background:var(--light); transition:var(--transition); }
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus { outline:none; border-color:var(--primary); background:var(--white); }
+    .form-group textarea { resize:vertical; min-height:120px; }
+    .form-note { font-size:0.82rem; color:#999; margin-top:0.4rem; }
+    .btn-submit { width:100%; padding:0.9rem; background:var(--accent); color:var(--secondary); border:none; border-radius:50px; font-size:1rem; font-weight:800; cursor:pointer; transition:var(--transition); margin-top:0.5rem; }
+    .btn-submit:hover { background:#e8c84a; transform:translateY(-2px); box-shadow:0 8px 24px rgba(212,175,55,0.4); }
+
+    .sidebar { display:flex; flex-direction:column; gap:1.5rem; }
+    .info-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.8rem; }
+    .info-card h3 { font-size:1rem; font-weight:800; color:var(--primary); margin-bottom:1.1rem; padding-bottom:0.7rem; border-bottom:2px solid var(--light); }
+    .info-item { display:flex; gap:0.75rem; align-items:flex-start; margin-bottom:1rem; }
+    .info-item:last-child { margin-bottom:0; }
+    .info-icon { font-size:1.3rem; flex-shrink:0; }
+    .info-item strong { display:block; font-size:0.88rem; color:var(--primary); margin-bottom:0.15rem; }
+    .info-item span { font-size:0.87rem; color:#666; line-height:1.5; display:block; }
+    .hours-table { width:100%; border-collapse:collapse; }
+    .hours-table tr td { padding:0.4rem 0; font-size:0.88rem; color:#666; border-bottom:1px solid var(--light); }
+    .hours-table tr td:first-child { font-weight:600; color:var(--primary); }
+    .hours-table tr:last-child td { border-bottom:none; }
+
+    .calendly-section { background:var(--light); }
+    .calendly-box { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:2.5rem; max-width:700px; margin:0 auto; text-align:center; }
+    .calendly-box h2 { font-size:1.6rem; font-weight:800; color:var(--primary); margin-bottom:0.75rem; }
+    .calendly-box > p { color:#666; font-size:0.97rem; line-height:1.7; margin-bottom:1.5rem; }
+    .calendly-placeholder { background:linear-gradient(135deg,var(--light),#f0e8ff); border:2px dashed #d0b8e8; border-radius:var(--radius); padding:3rem 2rem; }
+    .cal-icon { font-size:3rem; margin-bottom:1rem; }
+    .calendly-placeholder h3 { font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:0.5rem; }
+    .calendly-placeholder p { color:#888; font-size:0.9rem; line-height:1.6; margin-bottom:1.25rem; }
+    .btn-cal { display:inline-block; background:var(--primary); color:var(--white); padding:0.75rem 1.8rem; border-radius:50px; font-weight:700; font-size:0.95rem; transition:var(--transition); }
+    .btn-cal:hover { background:var(--accent); color:var(--secondary); }
+
+    .faq-section { background:var(--white); }
+    .faq-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; max-width:1100px; margin:0 auto; }
+    .faq-item { background:var(--light); border-radius:var(--radius); padding:1.75rem; border-left:4px solid var(--accent); }
+    .faq-item h4 { font-size:1rem; font-weight:800; color:var(--primary); margin-bottom:0.6rem; }
+    .faq-item p { font-size:0.9rem; color:#666; line-height:1.65; }
+
+    .cta-banner { background:linear-gradient(135deg,var(--primary),var(--secondary)); padding:5rem 5%; text-align:center; }
+    .cta-banner h2 { font-size:2.2rem; font-weight:900; color:var(--white); margin-bottom:1rem; }
+    .cta-banner p { color:rgba(255,255,255,0.8); font-size:1.05rem; margin-bottom:2rem; max-width:520px; margin-left:auto; margin-right:auto; }
+    .btn-gold { background:var(--accent); color:var(--secondary); padding:0.85rem 2.1rem; border-radius:50px; font-weight:800; font-size:1rem; transition:var(--transition); display:inline-block; }
+    .btn-gold:hover { background:#e8c84a; transform:translateY(-2px); }
+
+    footer { background:#1a0a24; color:rgba(255,255,255,0.75); padding:4rem 5% 2rem; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; max-width:1100px; margin:0 auto 3rem; }
+    .footer-brand .nav-logo { font-size:1.4rem; display:block; margin-bottom:0.9rem; }
+    .footer-brand p { font-size:0.92rem; line-height:1.75; color:rgba(255,255,255,0.55); max-width:280px; }
+    .footer-col h4 { color:var(--white); font-size:0.95rem; font-weight:700; margin-bottom:1.1rem; text-transform:uppercase; letter-spacing:1px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+    .footer-col ul a { color:rgba(255,255,255,0.6); font-size:0.92rem; transition:var(--transition); }
+    .footer-col ul a:hover { color:var(--accent); }
+    .footer-contact p { font-size:0.92rem; color:rgba(255,255,255,0.6); margin-bottom:0.5rem; }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:1.5rem; text-align:center; font-size:0.83rem; color:rgba(255,255,255,0.35); max-width:1100px; margin:0 auto; }
+
+    @media (max-width:900px) {
+      .nav-links,.nav-cta { display:none; } .hamburger { display:flex; }
+      .contact-layout { grid-template-columns:1fr; }
+      .form-row { grid-template-columns:1fr; }
+      .faq-grid { grid-template-columns:1fr; }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:680px) { .footer-grid { grid-template-columns:1fr; } .page-hero h1 { font-size:2rem; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Forever<span>Events</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="services.html">Services</a><a href="about.html">About</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:700;">Get a Quote</a>
+</div>
+
+<div class="page-hero">
+  <span class="badge">Let's Connect</span>
+  <h1>Tell Us About Your <span>Event Vision</span></h1>
+  <p>Every great event starts with a conversation. Fill out the form below and we'll be in touch within one business day to schedule your free consultation.</p>
+</div>
+
+<section style="background:var(--light);">
+  <div class="contact-layout">
+    <!-- Replace YOUR_FORM_ID with your Formspree form ID from formspree.io (free) -->
+    <div class="form-card">
+      <h2>Event Inquiry Form</h2>
+      <p>Share your vision, your date, and your budget range — we'll follow up with ideas, availability, and a custom package recommendation. First consultation is always free.</p>
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" name="first_name" required placeholder="Your first name" />
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" name="last_name" required placeholder="Your last name" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" name="email" required placeholder="you@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="(555) 000-0000" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Event Type *</label>
+          <select name="event_type" required>
+            <option value="">Select your event type...</option>
+            <option>Wedding — Full Planning</option>
+            <option>Wedding — Partial Planning</option>
+            <option>Wedding — Day-Of Coordination</option>
+            <option>Corporate Event / Gala</option>
+            <option>Birthday Party</option>
+            <option>Sweet 16 / Quinceañera</option>
+            <option>Baby Shower</option>
+            <option>Graduation Party</option>
+            <option>Anniversary Celebration</option>
+            <option>Engagement Party</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Event Date *</label>
+            <input type="date" name="event_date" required />
+            <p class="form-note">Approximate date is fine if not confirmed</p>
+          </div>
+          <div class="form-group">
+            <label>Estimated Guest Count *</label>
+            <select name="guest_count" required>
+              <option value="">Select range...</option>
+              <option>Under 25</option><option>25–50</option><option>50–100</option>
+              <option>100–200</option><option>200–300</option><option>300–500</option>
+              <option>500+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Budget Range</label>
+          <select name="budget">
+            <option value="">Select approximate budget...</option>
+            <option>Under $5,000</option><option>$5,000 – $10,000</option>
+            <option>$10,000 – $20,000</option><option>$20,000 – $50,000</option>
+            <option>$50,000+</option><option>Not Sure Yet</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Venue</label>
+          <input type="text" name="venue" placeholder="Venue name & city, or 'Not selected yet'" />
+        </div>
+        <div class="form-group">
+          <label>Tell Us About Your Vision *</label>
+          <textarea name="vision" required placeholder="Describe your dream event — the vibe, the style, must-haves, any themes, colors, or specific requests. The more you share, the better we can help!"></textarea>
+        </div>
+        <div class="form-group">
+          <label>How Did You Hear About Us?</label>
+          <select name="referral">
+            <option value="">Select...</option>
+            <option>Google Search</option><option>Instagram</option><option>Facebook</option>
+            <option>Friend / Family Referral</option><option>Wedding Website (The Knot / WeddingWire)</option>
+            <option>Previous Client</option><option>Other</option>
+          </select>
+        </div>
+        <p class="form-note" style="margin-bottom:1rem;">We'll respond within one business day. All inquiries are kept completely confidential.</p>
+        <button type="submit" class="btn-submit">Send My Inquiry →</button>
+      </form>
+    </div>
+
+    <div class="sidebar">
+      <div class="info-card">
+        <h3>Get In Touch</h3>
+        <div class="info-item"><span class="info-icon">📞</span><div><strong>Phone</strong><span>(555) 030-0300</span></div></div>
+        <div class="info-item"><span class="info-icon">✉️</span><div><strong>Email</strong><span>hello@foreverevents.com</span></div></div>
+        <div class="info-item"><span class="info-icon">📍</span><div><strong>Office</strong><span>456 Celebration Ave, Suite 100<br>Your City, State</span></div></div>
+        <div class="info-item"><span class="info-icon">📱</span><div><strong>Instagram</strong><span>@forevereventsco</span></div></div>
+      </div>
+      <div class="info-card">
+        <h3>Office Hours</h3>
+        <table class="hours-table">
+          <tr><td>Monday</td><td>9am – 6pm</td></tr>
+          <tr><td>Tuesday</td><td>9am – 6pm</td></tr>
+          <tr><td>Wednesday</td><td>9am – 6pm</td></tr>
+          <tr><td>Thursday</td><td>9am – 6pm</td></tr>
+          <tr><td>Friday</td><td>9am – 5pm</td></tr>
+          <tr><td>Saturday</td><td>By appointment</td></tr>
+          <tr><td>Sunday</td><td>Closed</td></tr>
+        </table>
+      </div>
+      <div class="info-card">
+        <h3>What to Expect</h3>
+        <div class="info-item"><span class="info-icon">1️⃣</span><div><strong>Submit your inquiry</strong><span>Tell us about your event and vision.</span></div></div>
+        <div class="info-item"><span class="info-icon">2️⃣</span><div><strong>We reach out</strong><span>Within 1 business day to schedule a free consultation.</span></div></div>
+        <div class="info-item"><span class="info-icon">3️⃣</span><div><strong>Free consultation</strong><span>30–60 min call or meeting to discuss your event in detail.</span></div></div>
+        <div class="info-item"><span class="info-icon">4️⃣</span><div><strong>Custom proposal</strong><span>We send a tailored package and pricing within 48 hrs.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDLY -->
+<section class="calendly-section">
+  <div class="calendly-box">
+    <h2>Book a Consultation Online</h2>
+    <p>Prefer to skip the back-and-forth? Use our online booking calendar to pick a time for your free 30-minute consultation call — days, evenings, and Saturdays available.</p>
+    <!-- To add online booking: go to calendly.com (free), create your event type, and replace YOUR_CALENDLY_LINK below -->
+    <div class="calendly-placeholder">
+      <div class="cal-icon">📅</div>
+      <h3>Schedule Your Free Consultation</h3>
+      <p>Go to <strong>calendly.com</strong>, set up your free account, create a "Free Event Consultation" event type, and paste your link here so clients can book instantly.</p>
+      <a href="https://calendly.com/YOUR_CALENDLY_LINK" class="btn-cal" target="_blank">Book a Consultation →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div style="text-align:center;max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Common Questions</p>
+    <h2 class="section-title">FAQ — Before You <span>Reach Out</span></h2>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item"><h4>How far in advance should I book?</h4><p>For weddings, we recommend booking 12–18 months in advance for peak season dates (May–October). Corporate events and parties can often be booked 3–6 months out.</p></div>
+    <div class="faq-item"><h4>Do you have a minimum budget requirement?</h4><p>Our day-of coordination packages start at $1,200. Full planning packages start at $6,500. We're happy to discuss what's realistic for your budget during your consultation.</p></div>
+    <div class="faq-item"><h4>Do you work outside the local area?</h4><p>Yes — we plan destination events and have worked across the country. Travel fees apply for events more than 50 miles from our office.</p></div>
+    <div class="faq-item"><h4>Can I just hire you for one part of the planning?</h4><p>Absolutely. Our partial planning and à la carte services are designed exactly for clients who want help with specific aspects — vendor sourcing, design, timeline, etc.</p></div>
+    <div class="faq-item"><h4>How many events do you take on at once?</h4><p>We deliberately limit our client load so every event gets the attention it deserves. We typically work with no more than 2 weddings per weekend.</p></div>
+    <div class="faq-item"><h4>What if something goes wrong on the day?</h4><p>That's exactly what we're there for. We anticipate issues before they happen and resolve any surprises calmly and invisibly so your day stays perfect.</p></div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <h2>Your Dream Event Starts Here</h2>
+  <p>Reach out today and let's start turning your vision into something you'll remember forever.</p>
+  <a href="tel:+15550300300" class="btn-gold">📞 Call (555) 030-0300</a>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Forever<span style="color:var(--accent);">Events</span></span>
+      <p>Full-service event planning for weddings, corporate events, milestone celebrations, and more.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📞 (555) 030-0300</p><p>✉️ hello@foreverevents.com</p>
+      <p>📍 456 Celebration Ave, Suite 100</p>
+      <p style="margin-top:0.75rem;">Mon–Fri: 9am – 6pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 ForeverEvents Planning Co. All rights reserved. | Template by <strong>Sites by Mel</strong></p></div>
+</footer>
+<script>function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}</script>
+</body>
+</html>

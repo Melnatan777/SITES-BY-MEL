@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Book an Appointment — WellnessPro Practitioner Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#2d7a6e;--secondary:#1a5248;--accent:#c8a020;--text:#1a2a28;--light:#f4faf9;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:8px;--transition:all 0.22s;--gray:#5a7070;--border:#d4e8e4;--dark:#0f2e28}
+body{font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:100px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-full{width:100%;display:block;text-align:center;padding:13px}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(45,122,110,0.07)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1080px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--text)}
+.nav-logo span{color:var(--primary)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.9rem;font-weight:500;transition:var(--transition)}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text)}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px 60px;text-align:center}
+.page-hero .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#a8ddd4;margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px;font-weight:400}
+.page-hero p{font-size:1rem;opacity:0.9;max-width:520px;margin:0 auto;font-weight:300;line-height:1.8}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.teal-rule{width:40px;height:2px;background:var(--primary);margin:14px auto 0}
+
+.contact-grid{display:grid;grid-template-columns:3fr 2fr;gap:56px;align-items:start}
+
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:40px;box-shadow:var(--shadow)}
+.form-card .label{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.form-card h2{font-size:1.5rem;margin-bottom:20px;font-weight:400}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px;color:#444}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--radius);font-size:0.92rem;font-family:'DM Sans',sans-serif;outline:none;transition:var(--transition);background:var(--light)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);background:var(--white)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-note{font-size:0.78rem;color:var(--gray);margin-top:10px;line-height:1.6}
+
+.sidebar{display:flex;flex-direction:column;gap:20px}
+.sidebar-card{background:var(--light);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.sidebar-card h3{font-size:1rem;margin-bottom:10px;color:var(--text);font-family:'Cormorant Garamond',serif}
+.sidebar-card p{font-size:0.85rem;color:var(--gray);line-height:1.75}
+.hours-list{list-style:none}
+.hours-list li{display:flex;justify-content:space-between;font-size:0.85rem;padding:5px 0;border-bottom:1px solid var(--border);color:var(--gray)}
+.hours-list li:last-child{border-bottom:none}
+.hours-list li strong{color:var(--text)}
+
+.calendly-placeholder{background:var(--white);border:2px dashed var(--border);border-radius:var(--radius);padding:28px 20px;text-align:center}
+.calendly-placeholder .cal-icon{font-size:2rem;margin-bottom:10px}
+.calendly-placeholder p{font-size:0.84rem;color:var(--gray);margin-bottom:14px;line-height:1.6}
+
+.intake-note{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px}
+.intake-note p{font-size:0.85rem;color:var(--gray);line-height:1.7}
+
+.map-placeholder{height:200px;background:var(--light);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--gray);font-size:0.82rem;text-align:center;margin-top:14px}
+
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+.faq-item h4{font-size:0.97rem;font-weight:600;color:var(--dark);margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
+.faq-item h4::before{content:'Q';background:var(--primary);color:var(--white);font-size:0.7rem;padding:3px 7px;border-radius:4px;flex-shrink:0;margin-top:2px}
+.faq-item p{color:var(--gray);font-size:0.9rem;line-height:1.7;padding-left:30px}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.65);padding:60px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:#6ac4b4}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:#6ac4b4}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .form-2col{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Serene <span>Wellness</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="active btn btn-primary" style="padding:8px 20px">Book Now</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="label">New &amp; Returning Clients</p>
+  <h1>Book an Appointment</h1>
+  <p>We're accepting new clients. Fill out the form below and we'll confirm your appointment within 24 hours.</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="form-card">
+          <p class="label">Appointment Request</p>
+          <h2>Request Your Session</h2>
+          <!-- Replace YOUR_FORM_ID with your Formspree form ID from formspree.io (free) -->
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-2col">
+              <div class="form-group"><label>First Name *</label><input type="text" name="first_name" placeholder="Maya" required/></div>
+              <div class="form-group"><label>Last Name *</label><input type="text" name="last_name" placeholder="Chen" required/></div>
+            </div>
+            <div class="form-group"><label>Email Address *</label><input type="email" name="email" placeholder="maya@email.com" required/></div>
+            <div class="form-group"><label>Phone Number *</label><input type="tel" name="phone" placeholder="(555) 000-0000" required/></div>
+            <div class="form-group">
+              <label>Service Requested *</label>
+              <select name="service" required>
+                <option value="">Select a service...</option>
+                <option>Swedish Relaxation Massage (60 min)</option>
+                <option>Swedish Relaxation Massage (90 min)</option>
+                <option>Deep Tissue Massage (60 min)</option>
+                <option>Deep Tissue Massage (90 min)</option>
+                <option>Hot Stone Massage (90 min)</option>
+                <option>Sports Massage (60 min)</option>
+                <option>Prenatal Massage (60 min)</option>
+                <option>Initial Acupuncture Consultation (90 min)</option>
+                <option>Follow-Up Acupuncture (60 min)</option>
+                <option>Acupuncture + Massage Combo (120 min)</option>
+                <option>Cupping Therapy</option>
+                <option>Community Acupuncture (45 min)</option>
+                <option>I'm not sure — help me decide</option>
+              </select>
+            </div>
+            <div class="form-2col">
+              <div class="form-group"><label>Preferred Date *</label><input type="date" name="date" required/></div>
+              <div class="form-group">
+                <label>Preferred Time *</label>
+                <select name="time">
+                  <option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+                  <option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option>
+                  <option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Are you a new client? *</label>
+              <select name="new_client">
+                <option>Yes — first visit to Serene Wellness</option>
+                <option>No — returning client</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Health Concerns / Goals</label>
+              <textarea name="health_notes" rows="4" placeholder="Please share any health conditions, injuries, areas of concern, or goals for your session. This helps us prepare the ideal treatment for you."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Allergies or Sensitivities</label>
+              <input type="text" name="allergies" placeholder="E.g., fragrance-free only, nut oil allergy, latex sensitivity"/>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Request Appointment &rarr;</button>
+            <p class="form-note">✓ We'll confirm your appointment by phone or email within 24 hours. A $25 deposit may be required for new clients booking 90-minute or longer sessions.</p>
+          </form>
+        </div>
+
+        <!-- CALENDLY -->
+        <div style="margin-top:28px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:32px">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-bottom:8px;font-weight:400">Prefer to Book Online Instantly?</h3>
+          <p style="font-size:0.88rem;color:var(--gray);margin-bottom:18px;line-height:1.6">Use our online scheduler to see real-time availability and book directly — no waiting for confirmation.</p>
+          <!-- To add online booking: go to calendly.com (free), create your event type, and replace YOUR_CALENDLY_LINK below -->
+          <div class="calendly-placeholder">
+            <div class="cal-icon">📅</div>
+            <p><strong style="color:var(--text)">Online Booking — See Real-Time Availability</strong><br/>Choose your service, practitioner, date &amp; time instantly.</p>
+            <!-- Replace YOUR_CALENDLY_LINK with your Calendly URL -->
+            <a href="https://calendly.com/YOUR_CALENDLY_LINK" target="_blank" class="btn btn-accent">Book Online Now</a>
+          </div>
+        </div>
+
+        <div class="intake-note" style="margin-top:20px">
+          <p><strong>New Client Intake Form:</strong> First-time clients will be sent a health intake form via email after booking. Please complete it at least 24 hours before your appointment. This allows your practitioner to review your health history and design the ideal treatment for you.</p>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <div class="sidebar-card">
+          <h3>📍 Our Location</h3>
+          <p>456 Wellness Way, Suite 12<br/>Portland, OR 97201</p>
+          <p style="margin-top:10px"><a href="https://maps.google.com" target="_blank">Get Directions &rarr;</a></p>
+          <div class="map-placeholder">
+            <span style="font-size:1.6rem">🗺️</span>
+            <p>Embed Google Map here</p>
+            <p style="font-size:0.75rem">maps.google.com → Share → Embed a map</p>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>🕐 Hours</h3>
+          <ul class="hours-list">
+            <li><strong>Monday</strong><span>9am – 6pm</span></li>
+            <li><strong>Tuesday</strong><span>9am – 7pm</span></li>
+            <li><strong>Wednesday</strong><span>9am – 7pm</span></li>
+            <li><strong>Thursday</strong><span>9am – 7pm</span></li>
+            <li><strong>Friday</strong><span>9am – 6pm</span></li>
+            <li><strong>Saturday</strong><span>9am – 4pm</span></li>
+            <li><strong>Sunday</strong><span>Closed</span></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>📞 Call or Text</h3>
+          <p><a href="tel:5559876543" style="font-size:1.1rem;font-weight:600;color:var(--primary)">(555) 987-6543</a></p>
+          <p style="margin-top:8px"><a href="mailto:hello@serenewellness.com">hello@serenewellness.com</a></p>
+          <p style="margin-top:12px;font-size:0.84rem">Text is welcomed for scheduling questions. We respond within a few hours during business hours.</p>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>🅿️ Parking &amp; Access</h3>
+          <p>Free parking available in our building lot off Morrison Street. We are on the second floor — elevator access available. Please ring the buzzer for Suite 12 upon arrival.</p>
+        </div>
+
+        <div class="sidebar-card" style="background:var(--primary);border-color:var(--primary)">
+          <h3 style="color:var(--white)">💳 Payment &amp; Insurance</h3>
+          <p style="color:rgba(255,255,255,0.82)">We accept cash, all major credit cards, HSA/FSA cards, Venmo, and Zelle. We are out-of-network for most insurance plans but provide detailed superbills for reimbursement. Gift certificates also accepted.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-light">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:8px">Before Your Visit</p>
+      <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:400">Frequently Asked Questions</h2>
+      <div class="teal-rule"></div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><h4>What should I wear to my appointment?</h4><p>For massage therapy, you'll undress to your comfort level and be draped with a sheet at all times — only the area being worked is uncovered. For acupuncture, loose, comfortable clothing that rolls up past the knees and elbows is ideal.</p></div>
+      <div class="faq-item"><h4>Is acupuncture painful?</h4><p>Most clients report minimal to no pain from acupuncture needles. You may feel a slight pinch, a mild ache, or a tingling sensation — often described as a "de qi" sensation that signals the treatment is working. Many clients fall asleep during sessions.</p></div>
+      <div class="faq-item"><h4>How many sessions will I need?</h4><p>This varies by individual and condition. For acute issues, 3–6 sessions often provide significant relief. Chronic conditions typically benefit from 8–12 sessions over 2–3 months. We'll give you an honest assessment at your initial consultation.</p></div>
+      <div class="faq-item"><h4>What is your cancellation policy?</h4><p>We ask for 24-hour notice for cancellations or rescheduling. Late cancellations (under 24 hours) or no-shows may incur a $35 fee. We understand emergencies happen — please call us as soon as possible.</p></div>
+      <div class="faq-item"><h4>Can I receive massage if I'm pregnant?</h4><p>Yes — we offer specialized prenatal massage for clients in their second and third trimesters. Please inform us at booking so your therapist can prepare appropriate positioning and avoid contraindicated pressure points.</p></div>
+      <div class="faq-item"><h4>Do you accept insurance?</h4><p>We are currently out-of-network for most insurance plans. However, we provide detailed receipts/superbills that many clients successfully submit for HSA/FSA reimbursement or out-of-network benefits. Check with your insurance provider.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Serene <span>Wellness</span></div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">Holistic massage therapy and acupuncture in a calm, welcoming environment. Your healing starts here.</p>
+        <a href="contact.html" class="btn btn-primary" style="font-size:0.82rem;padding:9px 20px">Book a Session</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Massage Therapy</a></li>
+          <li><a href="services.html">Acupuncture</a></li>
+          <li><a href="services.html">Cupping &amp; Bodywork</a></li>
+          <li><a href="services.html">Wellness Packages</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit Us</h4>
+        <ul>
+          <li><a href="#">456 Wellness Way, Suite 12</a></li>
+          <li><a href="#">Portland, OR 97201</a></li>
+          <li><a href="tel:5559876543">(555) 987-6543</a></li>
+          <li style="color:rgba(255,255,255,0.45);font-size:0.88rem;margin-top:4px">Mon–Sat: 9am–7pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Serene Wellness. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:#6ac4b4">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Community Gallery — Cornerstone Fellowship Church</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#3d5a8a;--secondary:#243654;--accent:#e8a020;--text:#1a2030;--light:#f4f6fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:6px;--transition:all 0.2s;--gray:#6B6560;--border:#E8E0D5;--dark:#1a2030;--gold-light:#f0b840}
+body{font-family:'Source Sans 3',sans-serif;color:var(--dark);line-height:1.65}
+h1,h2,h3,h4{font-family:'Libre Baskerville',serif;font-weight:700;line-height:1.25}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition);letter-spacing:0.02em;border-radius:var(--radius)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-accent:hover{background:#c8880a}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1080px;margin:0 auto;padding:0 24px}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.nav-logo-mark{width:40px;height:40px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-family:'Libre Baskerville',serif;font-size:1rem}
+.nav-logo-text{font-family:'Libre Baskerville',serif;font-size:1.1rem;font-weight:700;color:var(--dark);line-height:1.2}
+.nav-logo-sub{font-size:0.72rem;color:var(--gray);font-family:'Source Sans 3',sans-serif;font-weight:400}
+.nav-links{display:flex;gap:24px;list-style:none;align-items:center}
+.nav-links a{color:var(--dark);font-size:0.88rem;font-weight:600;transition:var(--transition)}
+.nav-links a:hover{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--dark)}
+
+/* PAGE HERO */
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px;text-align:center}
+.page-hero .label{font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+.page-hero p{font-size:1.05rem;opacity:0.85;max-width:560px;margin:0 auto;line-height:1.8}
+
+/* SECTION */
+.section{padding:76px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--secondary);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:520px;margin:0 auto}
+.section-header.white .label{color:var(--gold-light)}
+.section-header.white h2{color:var(--white)}
+.section-header.white p{color:rgba(255,255,255,0.75)}
+.gold-rule{width:56px;height:2px;background:var(--accent);margin:14px auto 0}
+
+/* GALLERY GRIDS */
+.gallery-hero-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:280px 180px;gap:12px;margin-bottom:12px}
+.gallery-hero-grid .photo-1{grid-row:span 2}
+.photo-placeholder{border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.4);font-size:0.8rem;position:relative;overflow:hidden;transition:var(--transition)}
+.photo-placeholder:hover{opacity:0.9}
+.photo-placeholder .label-tag{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.5);color:rgba(255,255,255,0.8);font-size:0.72rem;padding:4px 10px;border-radius:20px}
+
+.gallery-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.gallery-4col{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+.gallery-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+
+.photo-h200{height:200px}
+.photo-h240{height:240px}
+.photo-h280{height:280px}
+.photo-h320{height:320px}
+
+/* BAPTISM SECTION */
+.baptism-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:center}
+.baptism-text .label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.baptism-text h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:16px}
+.baptism-text p{color:var(--gray);line-height:1.85;margin-bottom:14px;font-size:0.97rem}
+.baptism-text blockquote{border-left:3px solid var(--accent);padding-left:20px;font-style:italic;font-family:'Libre Baskerville',serif;color:var(--primary);margin:20px 0;font-size:0.97rem;line-height:1.7}
+.baptism-photos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.baptism-photos .photo-placeholder:first-child{grid-column:span 2}
+
+/* EVENTS GALLERY */
+.events-gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.event-photo-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.event-photo{height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.35);font-size:0.8rem}
+.event-photo-body{padding:16px 20px}
+.event-photo-body h4{font-size:0.97rem;margin-bottom:4px}
+.event-photo-body p{color:var(--gray);font-size:0.85rem}
+
+/* CTA */
+.cta-box{background:var(--primary);color:var(--white);border-radius:var(--radius);padding:56px 40px;text-align:center}
+.cta-box h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:14px}
+.cta-box p{opacity:0.85;max-width:520px;margin:0 auto 28px;line-height:1.8}
+
+/* FOOTER */
+footer{background:#110a18;color:rgba(255,255,255,0.65);padding:60px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Libre Baskerville',serif;font-size:1.2rem;color:var(--white);margin-bottom:4px}
+.footer-sub{font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:12px}
+footer h4{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:var(--gold-light)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){
+  .gallery-hero-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gallery-hero-grid .photo-1{grid-row:span 1}
+  .gallery-3col{grid-template-columns:1fr 1fr}
+  .gallery-4col{grid-template-columns:1fr 1fr}
+  .baptism-grid{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .gallery-hero-grid,.gallery-3col,.gallery-4col,.gallery-2col{grid-template-columns:1fr}
+  .gallery-hero-grid .photo-1{grid-row:span 1}
+  .baptism-photos .photo-placeholder:first-child{grid-column:span 1}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="nav-logo-mark">&#10013;</div>
+      <div>
+        <div class="nav-logo-text">Cornerstone Fellowship Church</div>
+        <div class="nav-logo-sub">Houston, Texas</div>
+      </div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Ministries</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="btn btn-primary" style="padding:8px 18px;font-size:0.85rem;">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="label">Community Life</p>
+  <h1>Our Church Family in Photos</h1>
+  <p>A glimpse into the life, celebrations, and community of Cornerstone Fellowship. Replace all placeholders with your own photos.</p>
+</section>
+
+<!-- MAIN GALLERY -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Sunday Mornings</p>
+      <h2>Worship &amp; Community</h2>
+      <p>Snapshots from our Sunday gatherings, small groups, and shared life together.</p>
+      <div class="gold-rule"></div>
+    </div>
+
+    <div class="gallery-hero-grid">
+      <div class="photo-placeholder photo-1" style="background:linear-gradient(135deg,var(--primary),var(--secondary))">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Add your photo here</span>
+        <span class="label-tag">Sunday Worship</span>
+      </div>
+      <div class="photo-placeholder photo-h200" style="background:linear-gradient(135deg,#2a4a6a,#1a2a44)">
+        <span style="font-size:1.5rem">&#10013;</span>
+        <span>Add your photo here</span>
+        <span class="label-tag">Praise &amp; Worship</span>
+      </div>
+      <div class="photo-placeholder photo-h200" style="background:linear-gradient(135deg,#3a5060,#2a3840)">
+        <span style="font-size:1.5rem">&#128214;</span>
+        <span>Add your photo here</span>
+        <span class="label-tag">Bible Teaching</span>
+      </div>
+      <div class="photo-placeholder photo-h180" style="background:linear-gradient(135deg,#4a3a60,#2a2040)">
+        <span style="font-size:1.5rem">&#127932;</span>
+        <span>Add your photo here</span>
+        <span class="label-tag">Music Ministry</span>
+      </div>
+      <div class="photo-placeholder photo-h180" style="background:linear-gradient(135deg,#2a5050,#1a3030)">
+        <span style="font-size:1.5rem">&#128106;</span>
+        <span>Add your photo here</span>
+        <span class="label-tag">Community</span>
+      </div>
+    </div>
+
+    <div class="gallery-4col">
+      <div class="photo-placeholder photo-h200" style="background:linear-gradient(135deg,#5a3040,#3a1828)">
+        <span>Add your photo here</span><span class="label-tag">Kids Ministry</span>
+      </div>
+      <div class="photo-placeholder photo-h200" style="background:linear-gradient(135deg,#3a5030,#2a3820)">
+        <span>Add your photo here</span><span class="label-tag">Life Groups</span>
+      </div>
+      <div class="photo-placeholder photo-h200" style="background:linear-gradient(135deg,#503a20,#302010)">
+        <span>Add your photo here</span><span class="label-tag">Youth Night</span>
+      </div>
+      <div class="photo-placeholder photo-h200" style="background:linear-gradient(135deg,#2a4060,#1a2840)">
+        <span>Add your photo here</span><span class="label-tag">Prayer Night</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAPTISMS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="baptism-grid">
+      <div class="baptism-text">
+        <p class="label">New Life in Christ</p>
+        <h2>Baptism Celebrations</h2>
+        <p>Each baptism is one of our most joyful moments as a church. When someone publicly declares their faith through baptism, the whole congregation celebrates together.</p>
+        <p>We hold baptism services multiple times a year. If you or someone you love is ready to take this step, we&rsquo;d love to walk through it together.</p>
+        <blockquote>&ldquo;We were therefore buried with him through baptism into death in order that, just as Christ was raised from the dead through the glory of the Father, we too may live a new life.&rdquo;<br/><em style="font-size:0.82rem;color:var(--gray)">Romans 6:4</em></blockquote>
+        <a href="contact.html" class="btn btn-primary">Learn About Baptism &rarr;</a>
+      </div>
+      <div class="baptism-photos">
+        <div class="photo-placeholder photo-h240" style="background:linear-gradient(135deg,var(--primary),var(--secondary))">
+          <span style="font-size:2rem">&#9588;</span>
+          <span>Add baptism photo here</span>
+        </div>
+        <div class="photo-placeholder photo-h180" style="background:linear-gradient(135deg,#2a5070,#1a3050)">
+          <span>Add photo here</span>
+        </div>
+        <div class="photo-placeholder photo-h180" style="background:linear-gradient(135deg,#3a5080,#2a3860)">
+          <span>Add photo here</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS GALLERY -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Community Events</p>
+      <h2>Life Together</h2>
+      <p>Picnics, retreats, outreach days, and celebrations that build our church family.</p>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="events-gallery-grid">
+      <div class="event-photo-card">
+        <div class="event-photo" style="background:linear-gradient(135deg,var(--accent),#c8780a)">
+          <span style="font-size:2rem">&#127965;</span>
+          <span>Add your photo here</span>
+        </div>
+        <div class="event-photo-body">
+          <h4>Summer Family Picnic 2024</h4>
+          <p>Over 300 members gathered at Grace Community Park for food, games, and fellowship.</p>
+        </div>
+      </div>
+      <div class="event-photo-card">
+        <div class="event-photo" style="background:linear-gradient(135deg,#2a5060,#1a3040)">
+          <span style="font-size:2rem">&#127807;</span>
+          <span>Add your photo here</span>
+        </div>
+        <div class="event-photo-body">
+          <h4>Women&rsquo;s Annual Retreat</h4>
+          <p>A weekend at Lake Conroe filled with worship, teaching, and deep friendships formed.</p>
+        </div>
+      </div>
+      <div class="event-photo-card">
+        <div class="event-photo" style="background:linear-gradient(135deg,#3a4050,#2a2c38)">
+          <span style="font-size:2rem">&#128081;</span>
+          <span>Add your photo here</span>
+        </div>
+        <div class="event-photo-body">
+          <h4>25th Anniversary Celebration</h4>
+          <p>A milestone Sunday honoring 25 years of grace, growth, and community in Houston.</p>
+        </div>
+      </div>
+      <div class="event-photo-card">
+        <div class="event-photo" style="background:linear-gradient(135deg,#2a4030,#1a2820)">
+          <span style="font-size:2rem">&#129365;</span>
+          <span>Add your photo here</span>
+        </div>
+        <div class="event-photo-body">
+          <h4>Back-to-School Drive</h4>
+          <p>Our congregation donated over 600 backpacks and supplies for Houston ISD students in need.</p>
+        </div>
+      </div>
+      <div class="event-photo-card">
+        <div class="event-photo" style="background:linear-gradient(135deg,#4a3060,#2a1840)">
+          <span style="font-size:2rem">&#128106;</span>
+          <span>Add your photo here</span>
+        </div>
+        <div class="event-photo-body">
+          <h4>Youth Camp 2024</h4>
+          <p>30 students headed to camp for a week that changed lives. Stories worth hearing.</p>
+        </div>
+      </div>
+      <div class="event-photo-card">
+        <div class="event-photo" style="background:linear-gradient(135deg,#503020,#302010)">
+          <span style="font-size:2rem">&#10084;</span>
+          <span>Add your photo here</span>
+        </div>
+        <div class="event-photo-body">
+          <h4>Community Outreach Day</h4>
+          <p>Teams served across six Houston neighborhoods — painting, cleaning, feeding, and praying.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTREACH -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header white">
+      <p class="label">Serving Houston</p>
+      <h2>Outreach in Action</h2>
+      <p>Faith that moves — into our city, our neighbors&rsquo; lives, and around the world.</p>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="gallery-3col">
+      <div class="photo-placeholder photo-h280" style="background:linear-gradient(135deg,#2a4a3a,#1a2c22)">
+        <span style="font-size:2rem">&#128180;</span>
+        <span>Add your photo here</span>
+        <span class="label-tag">Food Pantry</span>
+      </div>
+      <div class="photo-placeholder photo-h280" style="background:linear-gradient(135deg,#3a2a5a,#221840)">
+        <span style="font-size:2rem">&#127960;</span>
+        <span>Add your photo here</span>
+        <span class="label-tag">Home Repairs</span>
+      </div>
+      <div class="photo-placeholder photo-h280" style="background:linear-gradient(135deg,#5a3020,#381808)">
+        <span style="font-size:2rem">&#127758;</span>
+        <span>Add your photo here</span>
+        <span class="label-tag">Missions Trip</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Be Part of the Story</h2>
+      <p>These photos are just a glimpse. The real story is lived Sunday by Sunday, week by week, relationship by relationship. We&rsquo;d love for you to be in the next one.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="contact.html" class="btn btn-accent">Plan Your Visit &rarr;</a>
+        <a href="services.html" class="btn" style="background:rgba(255,255,255,0.15);color:var(--white)">See Our Ministries</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">&#10013; Cornerstone Fellowship Church</div>
+        <div class="footer-sub">Houston, Texas &mdash; Est. 1998</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:8px">1234 Elm Street, Houston TX 77002<br/><a href="tel:5551234567">(555) 123-4567</a> &nbsp;&bull;&nbsp; <a href="mailto:info@cornerstonefellowship.com">info@cornerstonefellowship.com</a></p>
+        <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:8px">Sun 9am &amp; 11am &nbsp;&bull;&nbsp; Wed 7pm</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Ministries &amp; Events</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="contact.html">Prayer Request</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cornerstone Fellowship Church. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.3)">Template by <a href="https://sitesbymel.com" style="color:var(--gold-light)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelector('.hamburger').addEventListener('click',function(){
+  document.getElementById('navLinks').classList.toggle('open');
+});
+</script>
+</body>
+</html>

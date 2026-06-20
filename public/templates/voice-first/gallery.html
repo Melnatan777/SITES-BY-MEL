@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Media Gallery — VoiceFirst Creator Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#2d4a8a;--secondary:#1a2d5c;--accent:#e05c8a;--text:#1a1a2a;--light:#f4f6fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:8px;--transition:all 0.2s;--gray:#6b6b80;--border:#dde2f0;--ink:#1a1a2e;--lavender:#eef1fa}
+body{font-family:'Inter',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1060px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:11px 26px;font-family:'Inter',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;border:none;transition:var(--transition);border-radius:100px}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px;max-width:1060px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--ink)}
+.nav-logo span{color:var(--primary)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.88rem;font-weight:500;transition:var(--transition)}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink)}
+
+.page-hero{background:linear-gradient(135deg,var(--lavender),#e8ecf8);padding:72px 24px 60px;text-align:center}
+.hero-tag{display:inline-block;background:var(--primary);color:var(--white);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px;color:var(--ink)}
+.page-hero p{font-size:1rem;color:var(--gray);max-width:520px;margin:0 auto;line-height:1.75;font-weight:300}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-ink{background:var(--ink);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:520px;margin:0 auto;line-height:1.7}
+.section-header .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.accent-line{width:40px;height:2px;background:var(--accent);margin:14px auto 0}
+
+/* FILTER */
+.filter-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.filter-tab{padding:8px 20px;border:1.5px solid var(--border);border-radius:100px;font-size:0.82rem;font-weight:600;cursor:pointer;background:transparent;color:var(--gray);transition:var(--transition);font-family:'Inter',sans-serif}
+.filter-tab.active,.filter-tab:hover{background:var(--primary);border-color:var(--primary);color:var(--white)}
+
+/* SPEAKING PHOTOS */
+.speaking-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gallery-item{border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-photo{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.4);font-size:0.8rem;text-align:center}
+.gallery-overlay{position:absolute;inset:0;background:rgba(26,26,46,0.7);opacity:0;transition:var(--transition);display:flex;align-items:flex-end;padding:20px}
+.gallery-overlay-text h4{font-family:'Fraunces',serif;color:var(--white);font-size:0.97rem;margin-bottom:3px}
+.gallery-overlay-text p{color:rgba(255,255,255,0.65);font-size:0.78rem}
+
+.tall{height:320px}
+.medium{height:240px}
+.short{height:180px}
+.wide{grid-column:span 2}
+
+/* FEATURED SPEAKING */
+.speaking-featured{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.speaking-main{height:420px}
+.speaking-stack{display:flex;flex-direction:column;gap:16px}
+.speaking-stack-item{flex:1}
+
+/* PODCAST THUMBNAILS */
+.podcast-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.podcast-thumb{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.podcast-art{height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:rgba(255,255,255,0.4);font-size:0.75rem;text-align:center}
+.podcast-meta{padding:14px}
+.podcast-ep{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.podcast-meta h4{font-size:0.88rem;line-height:1.4;color:var(--ink);margin-bottom:4px}
+.podcast-dur{font-size:0.75rem;color:var(--gray)}
+
+/* VIDEO THUMBNAILS */
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.video-thumb{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);cursor:pointer}
+.video-art{height:180px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;position:relative}
+.play-btn{width:52px;height:52px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.5);position:relative}
+.play-btn::after{content:'';width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:16px solid white;margin-left:3px}
+.video-meta{padding:14px}
+.video-meta h4{font-size:0.9rem;line-height:1.4;margin-bottom:4px;color:var(--ink)}
+.video-meta p{font-size:0.8rem;color:var(--gray)}
+
+/* AUDIENCE PHOTOS */
+.audience-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.audience-photo{height:200px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:rgba(255,255,255,0.35);font-size:0.78rem;text-align:center}
+
+/* PRESS LOGOS */
+.press-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.press-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px 12px;text-align:center;font-size:0.8rem;font-weight:600;color:var(--gray)}
+
+/* IG STRIP */
+.ig-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.ig-item{aspect-ratio:1;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:0.7rem;color:rgba(255,255,255,0.35);cursor:pointer;position:relative}
+.ig-item:hover .ig-ov{opacity:1}
+.ig-ov{position:absolute;inset:0;background:rgba(26,26,46,0.5);opacity:0;transition:var(--transition);display:flex;align-items:center;justify-content:center;border-radius:var(--radius);font-size:1.2rem}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:#9b7dd4}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:#9b7dd4}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){
+  .speaking-featured{grid-template-columns:1fr}
+  .speaking-grid{grid-template-columns:1fr 1fr}
+  .podcast-grid{grid-template-columns:1fr 1fr}
+  .video-grid{grid-template-columns:1fr 1fr}
+  .audience-grid{grid-template-columns:1fr 1fr}
+  .press-row{grid-template-columns:repeat(3,1fr)}
+  .ig-row{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .speaking-grid{grid-template-columns:1fr}
+  .wide{grid-column:span 1}
+  .podcast-grid{grid-template-columns:1fr 1fr}
+  .video-grid{grid-template-columns:1fr}
+  .audience-grid{grid-template-columns:1fr 1fr}
+  .press-row{grid-template-columns:repeat(2,1fr)}
+  .ig-row{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">The <span>Thoughtful</span> Creator</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Work With Me</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html" class="active">Media</a></li>
+      <li><a href="contact.html" class="btn btn-primary" style="padding:8px 18px">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <span class="hero-tag">Photos · Videos · Appearances</span>
+  <h1>Media Gallery</h1>
+  <p>Speaking events, podcast recordings, press appearances, and behind-the-scenes moments from five years of creating.</p>
+</div>
+
+<!-- SPEAKING EVENTS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">On Stage</p>
+      <h2>Speaking Events</h2>
+      <p>From intimate workshops to main-stage keynotes — a look at some recent appearances.</p>
+      <div class="accent-line"></div>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-tab active">All Media</button>
+      <button class="filter-tab">Speaking</button>
+      <button class="filter-tab">Podcast</button>
+      <button class="filter-tab">Video</button>
+      <button class="filter-tab">Press</button>
+    </div>
+
+    <div class="speaking-featured">
+      <div class="gallery-item speaking-main gallery-photo" style="background:linear-gradient(135deg,var(--primary),#6b4fa0)">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your speaking photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Creator Economy Summit 2024</h4><p>Keynote: The Future of Independent Media</p></div></div>
+      </div>
+      <div class="speaking-stack">
+        <div class="gallery-item speaking-stack-item gallery-photo" style="background:linear-gradient(135deg,#6b4fa0,var(--accent))">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add photo here
+          <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Content Marketing World</h4><p>Panel: Creator Burnout & Recovery</p></div></div>
+        </div>
+        <div class="gallery-item speaking-stack-item gallery-photo" style="background:linear-gradient(135deg,var(--accent),#6b4fa0)">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add photo here
+          <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Adobe MAX</h4><p>Workshop: Building Sustainable Creative Practice</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="speaking-grid" style="margin-top:16px">
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,var(--secondary),var(--primary))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Yale SOM Guest Lecture</h4><p>The Creator Economy</p></div></div>
+      </div>
+      <div class="gallery-item medium wide gallery-photo" style="background:linear-gradient(135deg,#6b4fa0,var(--secondary))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your audience shot here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Podcast Movement 2023</h4><p>Audience of 400+ independent podcasters</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCAST THUMBNAILS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">The Podcast</p>
+      <h2>Recent Episodes</h2>
+      <p>142 episodes and counting — here are some fan favorites.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="podcast-grid">
+      <div class="podcast-thumb">
+        <div class="podcast-art" style="background:linear-gradient(135deg,var(--primary),#6b4fa0)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+          Add cover art
+        </div>
+        <div class="podcast-meta">
+          <p class="podcast-ep">Ep. 142</p>
+          <h4>How to Ship Work You're Proud Of</h4>
+          <p class="podcast-dur">⏱ 48 min</p>
+        </div>
+      </div>
+      <div class="podcast-thumb">
+        <div class="podcast-art" style="background:linear-gradient(135deg,#6b4fa0,var(--accent))">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+          Add cover art
+        </div>
+        <div class="podcast-meta">
+          <p class="podcast-ep">Ep. 141</p>
+          <h4>Building a Second Brain w/ Tiago Forte</h4>
+          <p class="podcast-dur">⏱ 54 min</p>
+        </div>
+      </div>
+      <div class="podcast-thumb">
+        <div class="podcast-art" style="background:linear-gradient(135deg,var(--accent),#c94878)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+          Add cover art
+        </div>
+        <div class="podcast-meta">
+          <p class="podcast-ep">Ep. 140</p>
+          <h4>The Fear Behind the Blank Page</h4>
+          <p class="podcast-dur">⏱ 36 min</p>
+        </div>
+      </div>
+      <div class="podcast-thumb">
+        <div class="podcast-art" style="background:linear-gradient(135deg,var(--secondary),#6b4fa0)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+          Add cover art
+        </div>
+        <div class="podcast-meta">
+          <p class="podcast-ep">Ep. 138</p>
+          <h4>From Side Project to Full-Time Income</h4>
+          <p class="podcast-dur">⏱ 52 min</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px">
+      <a href="index.html#podcast" class="btn btn-outline">All 142 Episodes →</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">On Screen</p>
+      <h2>Video Appearances</h2>
+      <p>Interviews, panel recordings, and behind-the-scenes video content.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="video-grid">
+      <div class="video-thumb">
+        <div class="video-art" style="background:linear-gradient(135deg,var(--primary),#6b4fa0)">
+          <div class="play-btn"></div>
+          <p style="color:rgba(255,255,255,0.35);font-size:0.75rem;margin-top:8px">Add video thumbnail</p>
+        </div>
+        <div class="video-meta">
+          <h4>TEDx Talk: The Courage to Create Badly</h4>
+          <p>18 min · 22K views</p>
+        </div>
+      </div>
+      <div class="video-thumb">
+        <div class="video-art" style="background:linear-gradient(135deg,#6b4fa0,var(--accent))">
+          <div class="play-btn"></div>
+          <p style="color:rgba(255,255,255,0.35);font-size:0.75rem;margin-top:8px">Add video thumbnail</p>
+        </div>
+        <div class="video-meta">
+          <h4>Creator Economy Panel — Summit 2024</h4>
+          <p>45 min · 8.4K views</p>
+        </div>
+      </div>
+      <div class="video-thumb">
+        <div class="video-art" style="background:linear-gradient(135deg,var(--accent),var(--secondary))">
+          <div class="play-btn"></div>
+          <p style="color:rgba(255,255,255,0.35);font-size:0.75rem;margin-top:8px">Add video thumbnail</p>
+        </div>
+        <div class="video-meta">
+          <h4>Interview: How I Built an 8K Newsletter</h4>
+          <p>32 min · 14K views</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE / BEHIND THE SCENES -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Behind the Scenes</p>
+      <h2>The People & Moments</h2>
+      <p>Audience shots, backstage, recording days, and the candid moments in between.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-photo" style="background:linear-gradient(135deg,var(--primary),#6b4fa0)">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add photo here
+      </div>
+      <div class="audience-photo" style="background:linear-gradient(135deg,#6b4fa0,var(--accent))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add photo here
+      </div>
+      <div class="audience-photo" style="background:linear-gradient(135deg,var(--accent),#c94878)">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add photo here
+      </div>
+      <div class="audience-photo" style="background:linear-gradient(135deg,var(--secondary),var(--primary))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add photo here
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS LOGOS -->
+<section class="section section-ink">
+  <div style="max-width:1060px;margin:0 auto;padding:0 24px">
+    <div class="section-header" style="margin-bottom:36px">
+      <p class="label" style="color:#9b7dd4">As Seen In</p>
+      <h2 style="color:var(--white)">Press & Media</h2>
+      <div class="accent-line"></div>
+    </div>
+    <div class="press-row">
+      <div class="press-box">Fast Company</div>
+      <div class="press-box">Morning Brew</div>
+      <div class="press-box">Creator Economy Report</div>
+      <div class="press-box">Nieman Lab</div>
+      <div class="press-box">The Hustle</div>
+      <div class="press-box">Add Your Outlet</div>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <a href="contact.html" class="btn" style="background:rgba(255,255,255,0.12);color:var(--white);border:1.5px solid rgba(255,255,255,0.25)">Download Full Press Kit</a>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Follow Along</p>
+      <h2>@thoughtfulcreator</h2>
+      <p>Behind-the-scenes, writing updates, and the occasional candid thought — join the conversation on Instagram.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="ig-row">
+      <div class="ig-item" style="background:linear-gradient(135deg,var(--primary),#6b4fa0)"><span>photo</span><div class="ig-ov">❤️</div></div>
+      <div class="ig-item" style="background:linear-gradient(135deg,#6b4fa0,var(--accent))"><span>photo</span><div class="ig-ov">❤️</div></div>
+      <div class="ig-item" style="background:linear-gradient(135deg,var(--accent),#c94878)"><span>photo</span><div class="ig-ov">❤️</div></div>
+      <div class="ig-item" style="background:linear-gradient(135deg,var(--secondary),var(--primary))"><span>photo</span><div class="ig-ov">❤️</div></div>
+      <div class="ig-item" style="background:linear-gradient(135deg,#6b4fa0,var(--secondary))"><span>photo</span><div class="ig-ov">❤️</div></div>
+      <div class="ig-item" style="background:linear-gradient(135deg,var(--primary),var(--accent))"><span>photo</span><div class="ig-ov">❤️</div></div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <a href="https://instagram.com" target="_blank" class="btn btn-primary">Follow on Instagram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">The <span>Thoughtful</span> Creator</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">A newsletter and podcast for creative people building intentional careers. Published weekly since 2020.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Work With Me</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="gallery.html">Media</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 The Thoughtful Creator. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.3)">Template by <a href="https://sitesbymel.com" style="color:#9b7dd4">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

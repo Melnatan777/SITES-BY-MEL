@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Gallery — Violet&amp;Co.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#5a2d82;--secondary:#3d1f5a;--accent:#8b5cb1;--text:#1a1224;--light:#f8f4fc;--white:#fff;--gray:#6b6070;--border:#e8e0f0;--dark:#120c1e;--lavender:#c4a8e0;--radius:3px;--transition:all 0.2s}
+body{font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'DM Serif Display',serif;font-weight:400}
+a{color:var(--text);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;border:none;transition:var(--transition);letter-spacing:0.04em}
+.btn-dark{background:var(--primary);color:var(--white)}
+.btn-dark:hover{background:var(--secondary)}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+.btn-white{background:var(--white);color:var(--primary)}
+.btn-white:hover{background:var(--light)}
+.btn-outline-white{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.7)}
+.btn-outline-white:hover{background:rgba(255,255,255,0.1)}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 6px rgba(90,45,130,0.07)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--primary)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--text);font-size:0.88rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text)}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));padding:72px 24px;text-align:center;color:var(--white)}
+.page-hero .label{font-size:0.75rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--lavender);margin-bottom:10px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:12px}
+.page-hero p{opacity:0.85;max-width:500px;margin:0 auto;font-size:1rem;line-height:1.7}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--dark);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:480px;margin:0 auto}
+.section-header.white .label{color:var(--lavender)}
+.section-header.white h2{color:var(--white)}
+.section-header.white p{color:rgba(255,255,255,0.75)}
+.purple-line{width:48px;height:1px;background:var(--primary);margin:14px auto 0}
+.lavender-line{width:48px;height:1px;background:var(--lavender);margin:14px auto 0}
+
+/* HERO MOSAIC GRID */
+.mosaic{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:340px 220px;gap:10px}
+.mosaic .tall{grid-row:span 2}
+.mosaic-tile{border-radius:var(--radius);display:flex;align-items:flex-end;padding:16px;position:relative;overflow:hidden;transition:opacity 0.2s}
+.mosaic-tile:hover{opacity:0.92}
+.mosaic-tile .ph{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);opacity:0.3;font-size:2rem;color:var(--white)}
+.mosaic-tile .add{position:absolute;top:50%;left:50%;transform:translate(-50%,30%);color:rgba(255,255,255,0.3);font-size:0.75rem}
+.tile-label{background:rgba(0,0,0,0.45);color:var(--white);font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:2px;letter-spacing:0.04em}
+
+/* PRODUCT LOOKBOOK GRID */
+.lookbook-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.look-card{position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer}
+.look-photo{height:320px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;transition:transform 0.3s}
+.look-card:hover .look-photo{transform:scale(1.03)}
+.look-photo span{color:rgba(255,255,255,0.3);font-size:0.78rem}
+.look-badge{position:absolute;top:14px;left:14px;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:2px}
+.badge-new{background:var(--primary);color:var(--white)}
+.badge-sale{background:#c04a10;color:var(--white)}
+.badge-sold{background:var(--gray);color:var(--white)}
+.look-info{padding:14px 0}
+.look-info h4{font-size:0.95rem;font-weight:500;margin-bottom:3px}
+.look-info p{font-size:0.82rem;color:var(--gray)}
+.look-price{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text)}
+
+/* SHOP INTERIOR */
+.interior-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:260px 180px;gap:10px}
+.interior-grid .wide{grid-column:span 2}
+.int-tile{border-radius:var(--radius);display:flex;align-items:flex-end;padding:12px;position:relative;overflow:hidden}
+.int-tile .ph{position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);opacity:0.25;font-size:1.8rem;color:var(--white)}
+.int-tile .add{position:absolute;top:50%;left:50%;transform:translate(-50%,30%);color:rgba(255,255,255,0.25);font-size:0.75rem}
+
+/* SEASONAL */
+.seasonal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.season-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:0;overflow:hidden}
+.season-photo{height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.3);font-size:0.78rem}
+.season-body{padding:20px}
+.season-body h3{color:var(--white);font-size:1.05rem;margin-bottom:6px}
+.season-body p{color:rgba(255,255,255,0.6);font-size:0.86rem;line-height:1.65}
+.season-tag{display:inline-block;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--lavender);margin-bottom:8px}
+
+/* MAKERS */
+.makers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.maker-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:0;overflow:hidden;text-align:center}
+.maker-photo{height:180px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:rgba(255,255,255,0.3);font-size:0.75rem}
+.maker-body{padding:16px}
+.maker-body h4{font-size:0.92rem;margin-bottom:4px;color:var(--primary)}
+.maker-body p{color:var(--gray);font-size:0.82rem;line-height:1.6}
+
+/* CTA */
+.cta-box{background:var(--light);border:1px solid var(--border);border-radius:var(--radius);padding:56px 40px;text-align:center}
+.cta-box h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:14px;color:var(--text)}
+.cta-box p{color:var(--gray);max-width:500px;margin:0 auto 28px;line-height:1.8}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:36px}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--white);margin-bottom:10px}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:color 0.2s}
+footer a:hover{color:var(--lavender)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){.mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto}.mosaic .tall{grid-row:span 1}.interior-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.interior-grid .wide{grid-column:span 1}}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .mosaic{grid-template-columns:1fr}
+  .interior-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Violet&amp;Co.</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Shop</a></li>
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="label">The Visual Edit</p>
+  <h1>Gallery &amp; Lookbook</h1>
+  <p>A look at what&rsquo;s in the shop, behind the scenes, and what&rsquo;s coming next. Replace all placeholders with your own beautiful photos.</p>
+</div>
+
+<!-- HERO MOSAIC -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">New Arrivals</p>
+      <h2>Summer 2025 Drop</h2>
+      <p>The latest pieces to land on our shelves. Add your product and lifestyle photos below.</p>
+      <div class="purple-line"></div>
+    </div>
+    <div class="mosaic">
+      <div class="mosaic-tile tall" style="background:linear-gradient(160deg,var(--primary),var(--secondary))">
+        <div class="ph">&#127800;</div>
+        <div class="add">Add your photo here</div>
+        <span class="tile-label">Summer Hero — New Arrivals</span>
+      </div>
+      <div class="mosaic-tile" style="background:linear-gradient(135deg,var(--accent),var(--primary))">
+        <div class="ph">&#127800;</div>
+        <div class="add">Add photo</div>
+        <span class="tile-label">Linen Wrap Dress</span>
+      </div>
+      <div class="mosaic-tile" style="background:linear-gradient(135deg,#7a4aaa,var(--accent))">
+        <div class="ph">&#10024;</div>
+        <div class="add">Add photo</div>
+        <span class="tile-label">Accessories Edit</span>
+      </div>
+      <div class="mosaic-tile" style="background:linear-gradient(135deg,var(--secondary),#2a1040)">
+        <div class="ph">&#127873;</div>
+        <div class="add">Add photo</div>
+        <span class="tile-label">Gift Sets</span>
+      </div>
+      <div class="mosaic-tile" style="background:linear-gradient(135deg,#6a3a8a,var(--secondary))">
+        <div class="ph">&#127775;</div>
+        <div class="add">Add photo</div>
+        <span class="tile-label">Home &amp; Decor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOKBOOK -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Current Collection</p>
+      <h2>Shop the Lookbook</h2>
+      <p>Styled photos with direct links to the pieces featured. Replace with your own product shots.</p>
+      <div class="purple-line"></div>
+    </div>
+    <div class="lookbook-grid">
+      <div class="look-card">
+        <div class="look-photo" style="background:linear-gradient(160deg,#e0d0f0,#c8b0e0)">
+          <div style="font-size:2.5rem;opacity:0.4">&#127800;</div>
+          <span>Add product photo</span>
+          <span class="look-badge badge-new">New</span>
+        </div>
+        <div class="look-info">
+          <h4>Linen Wrap Dress</h4>
+          <p>Available in 4 colors</p>
+          <p class="look-price">$78.00</p>
+        </div>
+      </div>
+      <div class="look-card">
+        <div class="look-photo" style="background:linear-gradient(160deg,#d8c8e8,#c4b0d8)">
+          <div style="font-size:2.5rem;opacity:0.4">&#127873;</div>
+          <span>Add product photo</span>
+          <span class="look-badge badge-new">New</span>
+        </div>
+        <div class="look-info">
+          <h4>Woven Straw Tote</h4>
+          <p>Natural &amp; black</p>
+          <p class="look-price">$54.00</p>
+        </div>
+      </div>
+      <div class="look-card">
+        <div class="look-photo" style="background:linear-gradient(160deg,#ece0f8,#d8c8ec)">
+          <div style="font-size:2.5rem;opacity:0.4">&#10024;</div>
+          <span>Add product photo</span>
+          <span class="look-badge badge-sale">Sale</span>
+        </div>
+        <div class="look-info">
+          <h4>Silk Blend Cami</h4>
+          <p>Ivory &amp; dusty plum</p>
+          <p class="look-price">$38.00</p>
+        </div>
+      </div>
+      <div class="look-card">
+        <div class="look-photo" style="background:linear-gradient(160deg,#f0e6ff,#e2d4f4)">
+          <div style="font-size:2.5rem;opacity:0.4">&#127775;</div>
+          <span>Add product photo</span>
+        </div>
+        <div class="look-info">
+          <h4>Gold &amp; Amethyst Earrings</h4>
+          <p>Handmade, one-of-a-kind</p>
+          <p class="look-price">$36.00</p>
+        </div>
+      </div>
+      <div class="look-card">
+        <div class="look-photo" style="background:linear-gradient(160deg,#e4d8f4,#d4c8e8)">
+          <div style="font-size:2.5rem;opacity:0.4">&#127807;</div>
+          <span>Add product photo</span>
+          <span class="look-badge badge-new">Gift Pick</span>
+        </div>
+        <div class="look-info">
+          <h4>Lavender Soy Candle</h4>
+          <p>45 hr burn, hand-poured</p>
+          <p class="look-price">$32.00</p>
+        </div>
+      </div>
+      <div class="look-card">
+        <div class="look-photo" style="background:linear-gradient(160deg,#dccce8,#ccc0dc)">
+          <div style="font-size:2.5rem;opacity:0.4">&#128140;</div>
+          <span>Add product photo</span>
+        </div>
+        <div class="look-info">
+          <h4>Ceramic Bud Vase Set</h4>
+          <p>Set of 3, matte glaze</p>
+          <p class="look-price">$42.00</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <a href="services.html" class="btn btn-outline">Shop the Full Collection</a>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP INTERIOR -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Behind the Scenes</p>
+      <h2>Inside the Shop</h2>
+      <p>A peek at the space, the shelves, and the details that make Violet&amp;Co. a place worth visiting.</p>
+      <div class="purple-line"></div>
+    </div>
+    <div class="interior-grid">
+      <div class="int-tile wide" style="background:linear-gradient(135deg,var(--primary),var(--secondary));min-height:260px">
+        <div class="ph">&#127968;</div>
+        <div class="add">Add shop interior photo here</div>
+        <span class="tile-label">The Shop Floor</span>
+      </div>
+      <div class="int-tile" style="background:linear-gradient(135deg,var(--accent),#6a3a8a);min-height:260px">
+        <div class="ph">&#127775;</div>
+        <div class="add">Add photo</div>
+        <span class="tile-label">Styling Corner</span>
+      </div>
+      <div class="int-tile" style="background:linear-gradient(135deg,var(--secondary),#2a1048);min-height:180px">
+        <div class="ph">&#10024;</div>
+        <div class="add">Add photo</div>
+        <span class="tile-label">Accessory Wall</span>
+      </div>
+      <div class="int-tile" style="background:linear-gradient(135deg,#7a4aaa,var(--primary));min-height:180px">
+        <div class="ph">&#127873;</div>
+        <div class="add">Add photo</div>
+        <span class="tile-label">Gift Wrap Station</span>
+      </div>
+      <div class="int-tile" style="background:linear-gradient(135deg,#5a3070,var(--secondary));min-height:180px">
+        <div class="ph">&#128140;</div>
+        <div class="add">Add photo</div>
+        <span class="tile-label">Fitting Room</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEASONAL COLLECTIONS -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header white">
+      <p class="label">Past Drops</p>
+      <h2>Seasonal Collections</h2>
+      <p>Each season we build a focused collection around a mood, a palette, or a feeling.</p>
+      <div class="lavender-line"></div>
+    </div>
+    <div class="seasonal-grid">
+      <div class="season-card">
+        <div class="season-photo" style="background:linear-gradient(135deg,#6a3a8a,var(--secondary))">
+          <div style="font-size:2rem;opacity:0.4">&#127800;</div>
+          <span>Add collection photo</span>
+        </div>
+        <div class="season-body">
+          <span class="season-tag">Spring 2025</span>
+          <h3>In Bloom</h3>
+          <p>Florals, soft linens, and jewelry that felt like the first warm day. Sold through in 3 weeks.</p>
+        </div>
+      </div>
+      <div class="season-card">
+        <div class="season-photo" style="background:linear-gradient(135deg,var(--primary),#5a2060)">
+          <div style="font-size:2rem;opacity:0.4">&#10052;</div>
+          <span>Add collection photo</span>
+        </div>
+        <div class="season-body">
+          <span class="season-tag">Winter 2024</span>
+          <h3>Quiet Luxury</h3>
+          <p>Cashmere, candles, and ceramics. Understated pieces for cozy season — our bestselling drop to date.</p>
+        </div>
+      </div>
+      <div class="season-card">
+        <div class="season-photo" style="background:linear-gradient(135deg,#4a2870,#3d1f5a)">
+          <div style="font-size:2rem;opacity:0.4">&#127810;</div>
+          <span>Add collection photo</span>
+        </div>
+        <div class="season-body">
+          <span class="season-tag">Fall 2024</span>
+          <h3>Earth &amp; Ember</h3>
+          <p>Terracotta, amber, and rust. A warm, grounded collection that sold alongside the changing leaves.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAKERS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">The People Behind the Products</p>
+      <h2>Meet Our Makers</h2>
+      <p>Every item in the shop comes from a real person. Here&rsquo;s a glimpse at some of the makers we work with.</p>
+      <div class="purple-line"></div>
+    </div>
+    <div class="makers-grid">
+      <div class="maker-card">
+        <div class="maker-photo" style="background:linear-gradient(135deg,var(--primary),var(--secondary))">
+          <div style="font-size:2rem;opacity:0.4">&#128100;</div>
+          <span>Add maker photo</span>
+        </div>
+        <div class="maker-body">
+          <h4>Luna Ceramics</h4>
+          <p>Handmade ceramics from a one-woman studio in Oaxaca, Mexico.</p>
+        </div>
+      </div>
+      <div class="maker-card">
+        <div class="maker-photo" style="background:linear-gradient(135deg,var(--accent),var(--primary))">
+          <div style="font-size:2rem;opacity:0.4">&#128100;</div>
+          <span>Add maker photo</span>
+        </div>
+        <div class="maker-body">
+          <h4>Soleil Textiles</h4>
+          <p>Small-batch linen clothing from a Brooklyn-based designer.</p>
+        </div>
+      </div>
+      <div class="maker-card">
+        <div class="maker-photo" style="background:linear-gradient(135deg,#7a4aaa,var(--accent))">
+          <div style="font-size:2rem;opacity:0.4">&#128100;</div>
+          <span>Add maker photo</span>
+        </div>
+        <div class="maker-body">
+          <h4>Fern &amp; Stone Co.</h4>
+          <p>Soy candles and home fragrance from a family-run studio in Vermont.</p>
+        </div>
+      </div>
+      <div class="maker-card">
+        <div class="maker-photo" style="background:linear-gradient(135deg,#5a3080,#3d1f60)">
+          <div style="font-size:2rem;opacity:0.4">&#128100;</div>
+          <span>Add maker photo</span>
+        </div>
+        <div class="maker-body">
+          <h4>Alma Jewelry</h4>
+          <p>Gold-filled and gemstone pieces made to order in Austin, TX.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Shop the Pieces You Just Fell in Love With</h2>
+      <p>Everything you see in this gallery is available in the shop &mdash; in store and online. New arrivals land every week.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="services.html" class="btn btn-dark">Shop the Collection</a>
+        <a href="contact.html" class="btn btn-outline">Book a Private Appointment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Violet&amp;Co.</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">A curated boutique carrying clothing, accessories, home goods, and gifts. Every piece hand-selected with love.</p>
+        <a href="services.html" class="btn btn-outline-white" style="font-size:0.82rem;padding:8px 18px">Shop Now</a>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="services.html">New Arrivals</a></li>
+          <li><a href="services.html">Clothing</a></li>
+          <li><a href="services.html">Accessories</a></li>
+          <li><a href="services.html">Home &amp; Gifts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:hello@violetandco.com">hello@violetandco.com</a></li>
+          <li style="color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:4px">Tue–Sat 10am–6pm</li>
+          <li style="color:rgba(255,255,255,0.4);font-size:0.85rem">Sun 12pm–4pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Violet&amp;Co. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:var(--lavender)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+<script>document.querySelector('.hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open');});</script>
+</body>
+</html>

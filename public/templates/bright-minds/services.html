@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrightMinds — Programs & Pricing</title>
+  <style>
+    :root {
+      --primary: #1a5c8a; --secondary: #0d3d5c; --accent: #f4a020;
+      --text: #1a2030; --light: #f4f8fb; --white: #ffffff;
+      --shadow: 0 4px 24px rgba(26,92,138,0.12); --radius: 12px; --transition: all 0.3s ease;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',Arial,sans-serif; color:var(--text); background:var(--white); }
+    a { text-decoration:none; color:inherit; }
+    nav { position:sticky; top:0; z-index:100; background:var(--primary); display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:70px; box-shadow:0 2px 16px rgba(0,0,0,0.18); }
+    .nav-logo { color:var(--white); font-size:1.5rem; font-weight:800; }
+    .nav-logo span { color:var(--accent); }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { color:rgba(255,255,255,0.85); font-size:0.97rem; font-weight:500; transition:var(--transition); }
+    .nav-links a:hover,.nav-links a.active { color:var(--accent); }
+    .nav-cta { background:var(--accent); color:var(--secondary); padding:0.55rem 1.4rem; border-radius:50px; font-weight:700; font-size:0.95rem; transition:var(--transition); }
+    .nav-cta:hover { background:#f5b840; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+    .hamburger span { width:26px; height:3px; background:var(--white); border-radius:2px; }
+    .mobile-menu { display:none; position:absolute; top:70px; left:0; right:0; background:var(--secondary); padding:1.5rem 5%; flex-direction:column; gap:1.2rem; }
+    .mobile-menu a { color:var(--white); font-size:1rem; font-weight:500; }
+    .mobile-menu.open { display:flex; }
+
+    .page-hero { background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%); padding:5rem 5% 4rem; text-align:center; }
+    .page-hero .badge { display:inline-block; background:rgba(244,160,32,0.18); border:1px solid var(--accent); color:var(--accent); font-size:0.82rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:0.35rem 1rem; border-radius:50px; margin-bottom:1.2rem; }
+    .page-hero h1 { font-size:2.8rem; font-weight:900; color:var(--white); margin-bottom:1rem; }
+    .page-hero h1 span { color:var(--accent); }
+    .page-hero p { color:rgba(255,255,255,0.78); font-size:1.1rem; max-width:580px; margin:0 auto; line-height:1.7; }
+
+    section { padding:5rem 5%; }
+    .section-label { font-size:0.82rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem; }
+    .section-title { font-size:2rem; font-weight:900; color:var(--primary); margin-bottom:1rem; }
+    .section-title span { color:var(--accent); }
+    .max-w { max-width:1100px; margin:0 auto; }
+
+    /* FORMAT CARDS */
+    .format-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1100px; margin:0 auto; }
+    .format-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:2.2rem; border-top:4px solid var(--accent); transition:var(--transition); }
+    .format-card:hover { transform:translateY(-5px); }
+    .format-icon { font-size:2.5rem; margin-bottom:1rem; }
+    .format-card h3 { font-size:1.25rem; font-weight:800; color:var(--primary); margin-bottom:0.5rem; }
+    .format-card p { color:#666; font-size:0.93rem; line-height:1.65; margin-bottom:1rem; }
+    .format-card ul { list-style:none; display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem; }
+    .format-card ul li { font-size:0.9rem; color:#555; padding-left:1.4rem; position:relative; }
+    .format-card ul li::before { content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+    .format-price { font-size:1.6rem; font-weight:900; color:var(--accent); margin-bottom:1rem; }
+    .format-price span { font-size:0.9rem; font-weight:500; color:#888; }
+    .btn-book { display:inline-block; background:var(--primary); color:var(--white); padding:0.65rem 1.6rem; border-radius:50px; font-weight:700; font-size:0.92rem; transition:var(--transition); }
+    .btn-book:hover { background:var(--accent); color:var(--secondary); }
+
+    /* SUBJECT TABLE */
+    .subject-table { width:100%; border-collapse:collapse; background:var(--white); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+    .subject-table thead { background:var(--primary); }
+    .subject-table thead th { padding:1rem 1.25rem; text-align:left; color:var(--white); font-size:0.9rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+    .subject-table tbody tr { border-bottom:1px solid var(--light); transition:var(--transition); }
+    .subject-table tbody tr:hover { background:#fef9f0; }
+    .subject-table tbody tr:last-child { border-bottom:none; }
+    .subject-table td { padding:1rem 1.25rem; font-size:0.93rem; color:var(--text); vertical-align:top; }
+    .subject-table td small { display:block; color:#888; font-size:0.82rem; margin-top:0.2rem; }
+    .grade-badge { display:inline-block; background:var(--light); color:var(--primary); font-size:0.72rem; font-weight:700; padding:0.2rem 0.6rem; border-radius:50px; margin:0.15rem; }
+    .popular-tag { display:inline-block; background:var(--accent); color:var(--secondary); font-size:0.7rem; font-weight:800; text-transform:uppercase; padding:0.15rem 0.55rem; border-radius:50px; margin-left:0.5rem; }
+
+    /* PRICING CARDS */
+    .pricing-section { background:var(--light); }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1100px; margin:0 auto; }
+    .pricing-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:2.2rem; text-align:center; border-top:4px solid var(--light); transition:var(--transition); }
+    .pricing-card.best { border-top-color:var(--accent); }
+    .pricing-card:hover { transform:translateY(-5px); }
+    .plan-name { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#888; margin-bottom:0.5rem; }
+    .pricing-card h3 { font-size:1.3rem; font-weight:800; color:var(--primary); margin-bottom:0.75rem; }
+    .big-price { font-size:2.8rem; font-weight:900; color:var(--accent); }
+    .big-price sup { font-size:1.2rem; vertical-align:top; margin-top:0.6rem; }
+    .price-note { font-size:0.85rem; color:#888; margin-bottom:1.5rem; }
+    .pricing-card ul { list-style:none; text-align:left; margin-bottom:1.8rem; display:flex; flex-direction:column; gap:0.65rem; }
+    .pricing-card ul li { font-size:0.9rem; color:#555; padding-left:1.5rem; position:relative; }
+    .pricing-card ul li::before { content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+    .pricing-card ul li.no::before { content:'✗'; color:#ccc; }
+    .pricing-card ul li.no { color:#bbb; }
+    .btn-enroll { display:block; background:var(--primary); color:var(--white); padding:0.75rem; border-radius:50px; font-weight:700; transition:var(--transition); }
+    .btn-enroll:hover { background:var(--accent); color:var(--secondary); }
+    .pricing-card.best .btn-enroll { background:var(--accent); color:var(--secondary); }
+    .pricing-card.best .btn-enroll:hover { background:var(--primary); color:var(--white); }
+
+    /* ADD-ONS */
+    .addon-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem; max-width:1100px; margin:0 auto; }
+    .addon-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:1.5rem; text-align:center; transition:var(--transition); }
+    .addon-card:hover { transform:translateY(-4px); }
+    .addon-icon { font-size:2rem; margin-bottom:0.75rem; }
+    .addon-card h4 { font-size:0.97rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem; }
+    .addon-price { font-size:1.2rem; font-weight:900; color:var(--accent); margin-bottom:0.5rem; }
+    .addon-card p { font-size:0.85rem; color:#666; line-height:1.5; }
+
+    .cta-banner { background:linear-gradient(135deg,var(--accent),#c8801a); padding:5rem 5%; text-align:center; }
+    .cta-banner h2 { font-size:2.2rem; font-weight:900; color:var(--secondary); margin-bottom:1rem; }
+    .cta-banner p { color:rgba(0,0,0,0.65); font-size:1.05rem; margin-bottom:2rem; max-width:520px; margin-left:auto; margin-right:auto; }
+    .btn-dark { background:var(--secondary); color:var(--white); padding:0.85rem 2.1rem; border-radius:50px; font-weight:800; font-size:1rem; transition:var(--transition); display:inline-block; }
+    .btn-dark:hover { background:var(--primary); transform:translateY(-2px); }
+    .btn-white { background:var(--white); color:var(--secondary); padding:0.85rem 2.1rem; border-radius:50px; font-weight:700; font-size:1rem; transition:var(--transition); display:inline-block; }
+    .btn-white:hover { background:var(--secondary); color:var(--white); }
+
+    footer { background:var(--secondary); color:rgba(255,255,255,0.8); padding:4rem 5% 2rem; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; max-width:1100px; margin:0 auto 3rem; }
+    .footer-brand .nav-logo { font-size:1.4rem; display:block; margin-bottom:0.9rem; }
+    .footer-brand p { font-size:0.93rem; line-height:1.7; color:rgba(255,255,255,0.65); max-width:280px; }
+    .footer-col h4 { color:var(--white); font-size:1rem; font-weight:700; margin-bottom:1.1rem; text-transform:uppercase; letter-spacing:1px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+    .footer-col ul a { color:rgba(255,255,255,0.65); font-size:0.93rem; transition:var(--transition); }
+    .footer-col ul a:hover { color:var(--accent); }
+    .footer-contact p { font-size:0.93rem; color:rgba(255,255,255,0.65); margin-bottom:0.5rem; }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.1); padding-top:1.5rem; text-align:center; font-size:0.85rem; color:rgba(255,255,255,0.4); max-width:1100px; margin:0 auto; }
+
+    @media (max-width:900px) {
+      .nav-links,.nav-cta { display:none; } .hamburger { display:flex; }
+      .format-grid,.pricing-grid { grid-template-columns:repeat(2,1fr); }
+      .addon-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:680px) {
+      .format-grid,.pricing-grid,.addon-grid,.footer-grid { grid-template-columns:1fr; }
+      .page-hero h1 { font-size:2rem; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Bright<span>Minds</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" class="active">Programs</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Free Assessment</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="services.html">Programs</a><a href="about.html">About</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:700;">Free Assessment</a>
+</div>
+
+<div class="page-hero">
+  <span class="badge">Programs & Pricing</span>
+  <h1>Find the Right <span>Program</span></h1>
+  <p>From single subject sessions to comprehensive monthly coaching plans, we have a format and price point that works for every family.</p>
+</div>
+
+<!-- SESSION FORMATS -->
+<section style="background:var(--white);">
+  <div style="text-align:center;max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Session Formats</p>
+    <h2 class="section-title">How We <span>Deliver Tutoring</span></h2>
+  </div>
+  <div class="format-grid">
+    <div class="format-card">
+      <div class="format-icon">👤</div>
+      <h3>1-on-1 Tutoring</h3>
+      <p>The gold standard. Your student gets the tutor's undivided attention, fully personalized pacing, and targeted support for exactly what they need.</p>
+      <ul>
+        <li>Dedicated tutor matched to student</li>
+        <li>Fully customized curriculum</li>
+        <li>Flexible scheduling</li>
+        <li>In-person or online</li>
+        <li>Progress reports every 4 sessions</li>
+      </ul>
+      <div class="format-price">$65 <span>/ hr</span></div>
+      <a href="contact.html" class="btn-book">Book a Session</a>
+    </div>
+    <div class="format-card">
+      <div class="format-icon">👥</div>
+      <h3>Small Group (2–4 Students)</h3>
+      <p>Collaborative learning in a small setting. Students benefit from peer interaction while still getting personalized attention from an expert tutor.</p>
+      <ul>
+        <li>Maximum 4 students per group</li>
+        <li>Same subject and grade level</li>
+        <li>Structured curriculum</li>
+        <li>In-person or online</li>
+        <li>Cost-effective option</li>
+      </ul>
+      <div class="format-price">$35 <span>/ hr per student</span></div>
+      <a href="contact.html" class="btn-book">Join a Group</a>
+    </div>
+    <div class="format-card">
+      <div class="format-icon">💻</div>
+      <h3>Online Tutoring</h3>
+      <p>All the quality of in-person tutoring delivered via our interactive virtual platform. Available anywhere with an internet connection.</p>
+      <ul>
+        <li>Interactive whiteboard & screen share</li>
+        <li>Session recordings available</li>
+        <li>Same certified tutors</li>
+        <li>Session notes shared after each call</li>
+        <li>Available 7 days a week</li>
+      </ul>
+      <div class="format-price">$55 <span>/ hr</span></div>
+      <a href="contact.html" class="btn-book">Book Online</a>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECT LISTING -->
+<section style="background:var(--light);">
+  <div class="max-w">
+    <div style="text-align:center;max-width:700px;margin:0 auto 2.5rem;">
+      <p class="section-label">All Subjects</p>
+      <h2 class="section-title">Complete <span>Subject Menu</span></h2>
+    </div>
+    <table class="subject-table">
+      <thead><tr><th>Subject</th><th>Topics Covered</th><th>Grade Levels</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Mathematics</strong> <span class="popular-tag">Most Popular</span><small>Includes all levels</small></td>
+          <td>Arithmetic, Pre-Algebra, Algebra I & II, Geometry, Pre-Calculus, Calculus AB/BC, Statistics, SAT Math</td>
+          <td><span class="grade-badge">K–5</span><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span><span class="grade-badge">College</span></td>
+        </tr>
+        <tr>
+          <td><strong>English Language Arts</strong><small>Reading & Writing</small></td>
+          <td>Phonics, reading comprehension, essay writing, grammar, vocabulary, literary analysis, creative writing</td>
+          <td><span class="grade-badge">K–5</span><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span></td>
+        </tr>
+        <tr>
+          <td><strong>Science</strong><small>All branches</small></td>
+          <td>Earth Science, Biology, Chemistry, Physics, AP Sciences, Environmental Science, lab report writing</td>
+          <td><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span><span class="grade-badge">AP</span></td>
+        </tr>
+        <tr>
+          <td><strong>Social Studies & History</strong></td>
+          <td>World History, US History & Government, Geography, Civics, Economics, AP History</td>
+          <td><span class="grade-badge">K–5</span><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span></td>
+        </tr>
+        <tr>
+          <td><strong>SAT / ACT Prep</strong> <span class="popular-tag">High Demand</span></td>
+          <td>Full practice tests, section analysis, math strategies, reading & writing, time management, test-day prep</td>
+          <td><span class="grade-badge">9–12</span></td>
+        </tr>
+        <tr>
+          <td><strong>ISEE / SSAT / PSAT</strong><small>Private school & scholarship prep</small></td>
+          <td>Verbal reasoning, quantitative reasoning, reading comprehension, math achievement, essay</td>
+          <td><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span></td>
+        </tr>
+        <tr>
+          <td><strong>Computer Science</strong></td>
+          <td>Python, Java, HTML/CSS basics, algorithms, data structures, AP Computer Science A & Principles</td>
+          <td><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span><span class="grade-badge">College</span></td>
+        </tr>
+        <tr>
+          <td><strong>Foreign Languages</strong></td>
+          <td>Spanish, French, Mandarin (conversational and academic), AP Language prep</td>
+          <td><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span></td>
+        </tr>
+        <tr>
+          <td><strong>Homework Help</strong><small>General academic support</small></td>
+          <td>Cross-subject homework assistance, organization skills, study habit coaching, assignment management</td>
+          <td><span class="grade-badge">K–5</span><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span></td>
+        </tr>
+        <tr>
+          <td><strong>Executive Function Coaching</strong></td>
+          <td>Time management, study skills, organization, note-taking, ADHD support strategies</td>
+          <td><span class="grade-badge">6–8</span><span class="grade-badge">9–12</span><span class="grade-badge">College</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PRICING PLANS -->
+<section class="pricing-section">
+  <div style="text-align:center;max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Monthly Plans</p>
+    <h2 class="section-title">Simple, Transparent <span>Pricing</span></h2>
+    <p style="color:#555;font-size:1rem;line-height:1.7;">All plans include a free initial assessment and progress reports. Commit monthly or pay per session — no long-term contracts required.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <p class="plan-name">Starter</p>
+      <h3>4 Sessions / Month</h3>
+      <div class="big-price"><sup>$</sup>220</div>
+      <p class="price-note">per month (~$55/session)</p>
+      <ul>
+        <li>4 × 1-hr 1-on-1 sessions</li>
+        <li>Personalized study plan</li>
+        <li>Monthly progress report</li>
+        <li>Email support between sessions</li>
+        <li class="no">Practice materials included</li>
+        <li class="no">SAT/ACT full mock tests</li>
+        <li class="no">Parent coaching calls</li>
+      </ul>
+      <a href="contact.html" class="btn-enroll">Get Started</a>
+    </div>
+    <div class="pricing-card best">
+      <p class="plan-name">⭐ Most Popular</p>
+      <h3>8 Sessions / Month</h3>
+      <div class="big-price"><sup>$</sup>399</div>
+      <p class="price-note">per month (~$50/session)</p>
+      <ul>
+        <li>8 × 1-hr 1-on-1 sessions</li>
+        <li>Personalized study plan</li>
+        <li>Bi-weekly progress reports</li>
+        <li>Email & text support</li>
+        <li>Practice materials included</li>
+        <li>1 SAT/ACT mock test/month</li>
+        <li class="no">Parent coaching calls</li>
+      </ul>
+      <a href="contact.html" class="btn-enroll">Get Started</a>
+    </div>
+    <div class="pricing-card">
+      <p class="plan-name">Intensive</p>
+      <h3>12 Sessions / Month</h3>
+      <div class="big-price"><sup>$</sup>540</div>
+      <p class="price-note">per month (~$45/session)</p>
+      <ul>
+        <li>12 × 1-hr 1-on-1 sessions</li>
+        <li>Personalized study plan</li>
+        <li>Weekly progress reports</li>
+        <li>Priority support (same-day reply)</li>
+        <li>All practice materials</li>
+        <li>Unlimited SAT/ACT mock tests</li>
+        <li>Monthly parent coaching call</li>
+      </ul>
+      <a href="contact.html" class="btn-enroll">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- ADD-ONS -->
+<section style="background:var(--white);">
+  <div style="text-align:center;max-width:700px;margin:0 auto 2.5rem;">
+    <p class="section-label">Extra Services</p>
+    <h2 class="section-title">Specialty <span>Add-Ons</span></h2>
+  </div>
+  <div class="addon-grid">
+    <div class="addon-card">
+      <div class="addon-icon">📊</div>
+      <h4>Learning Assessment</h4>
+      <div class="addon-price">Free</div>
+      <p>Comprehensive academic evaluation to identify strengths, gaps, and the right approach.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-icon">📝</div>
+      <h4>SAT Full Mock Test</h4>
+      <div class="addon-price">$49</div>
+      <p>Full-length proctored SAT mock with detailed score analysis and tutor debrief.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-icon">✍️</div>
+      <h4>College Essay Review</h4>
+      <div class="addon-price">$89</div>
+      <p>3 rounds of expert editing and coaching on your college application essay.</p>
+    </div>
+    <div class="addon-card">
+      <div class="addon-icon">📅</div>
+      <h4>Study Skills Workshop</h4>
+      <div class="addon-price">$35</div>
+      <p>Group workshop on note-taking, time management, and exam strategies — 90 mins.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <h2>Start with a Free Assessment</h2>
+  <p>No cost, no commitment. We evaluate your student and build a personalized plan before you spend a dollar.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="contact.html" class="btn-dark">Book Free Assessment</a>
+    <a href="about.html" class="btn-white">Meet Our Tutors</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Bright<span style="color:var(--accent);">Minds</span></span>
+      <p>Personalized tutoring and academic coaching for students of all ages. Helping students reach their full potential since 2015.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Programs</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📞 (555) 020-0200</p>
+      <p>✉️ hello@brightminds.com</p>
+      <p>📍 123 Learning Lane, Suite 200</p>
+      <p style="margin-top:0.75rem;">Mon–Fri: 8am – 8pm | Sat: 9am – 5pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 BrightMinds Tutoring. All rights reserved. | Template by <strong>Sites by Mel</strong></p>
+  </div>
+</footer>
+<script>function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}</script>
+</body>
+</html>

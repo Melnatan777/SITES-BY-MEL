@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Gallery — TableReady Restaurant Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#8b1a1a;--secondary:#5c0f0f;--accent:#e8c020;--text:#2a1a1a;--light:#fdf8f4;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:4px;--transition:all 0.2s;--gray:#6b6560;--border:#e8e0d5;--dark:#1a1208}
+body{font-family:'Lato',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Playfair Display',serif}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:'Lato',sans-serif;font-weight:700;font-size:0.92rem;cursor:pointer;border:none;transition:var(--transition);letter-spacing:0.05em;text-transform:uppercase}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--dark)}
+.btn-accent:hover{background:#c9a800}
+
+nav{background:var(--dark);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.8);font-size:0.88rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:var(--transition)}
+.nav-links a:hover,.nav-links a.active{color:var(--accent)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white)}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px 60px;text-align:center}
+.page-hero .sub{font-size:0.78rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px}
+.page-hero p{font-size:1rem;opacity:0.85;max-width:520px;margin:0 auto;font-weight:300}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--dark);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:500px;margin:0 auto}
+.section-header .sub{font-size:0.78rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.gold-rule{width:60px;height:2px;background:var(--accent);margin:16px auto 0}
+
+/* FILTER TABS */
+.filter-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.filter-tab{padding:8px 22px;border:2px solid var(--border);border-radius:2px;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:transparent;color:var(--gray);transition:var(--transition);font-family:'Lato',sans-serif}
+.filter-tab.active,.filter-tab:hover{background:var(--primary);border-color:var(--primary);color:var(--white)}
+
+/* MASONRY GRID */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gallery-item{border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-photo{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,0.45);font-size:0.8rem;text-align:center}
+.gallery-photo svg{opacity:0.4}
+.gallery-overlay{position:absolute;inset:0;background:rgba(26,18,8,0.65);opacity:0;transition:var(--transition);display:flex;align-items:flex-end;padding:20px}
+.gallery-overlay-text h4{font-family:'Playfair Display',serif;color:var(--white);font-size:1rem;margin-bottom:4px}
+.gallery-overlay-text p{color:rgba(255,255,255,0.7);font-size:0.8rem}
+
+.tall{height:340px}
+.medium{height:240px}
+.short{height:180px}
+.wide{grid-column:span 2}
+
+/* FEATURED ROW */
+.featured-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.featured-main{height:460px}
+.featured-stack{display:flex;flex-direction:column;gap:16px}
+.featured-stack-item{flex:1}
+
+/* INSTAGRAM STRIP */
+.ig-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.ig-item{aspect-ratio:1;border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer}
+.ig-item:hover .ig-overlay{opacity:1}
+.ig-overlay{position:absolute;inset:0;background:rgba(26,18,8,0.55);opacity:0;transition:var(--transition);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1.4rem}
+
+/* VIDEO SECTION */
+.video-placeholder{height:400px;background:linear-gradient(135deg,var(--dark),var(--secondary));border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;cursor:pointer}
+.play-btn{width:72px;height:72px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.4);transition:var(--transition)}
+.play-btn:hover,.video-placeholder:hover .play-btn{background:var(--primary);border-color:var(--primary)}
+.play-btn::after{content:'';width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:20px solid var(--white);margin-left:4px}
+
+/* SEASONAL SECTION */
+.seasonal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.seasonal-card{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.seasonal-photo{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:rgba(255,255,255,0.4);font-size:0.78rem;text-align:center}
+.seasonal-body{padding:16px}
+.seasonal-body h4{font-size:0.95rem;margin-bottom:4px}
+.seasonal-body p{color:var(--gray);font-size:0.82rem;line-height:1.5}
+
+footer{background:#0d0a04;color:rgba(255,255,255,0.65);padding:60px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--accent)}
+footer h4{font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--white);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.6);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .wide{grid-column:span 1}
+  .featured-row{grid-template-columns:1fr}
+  .seasonal-grid{grid-template-columns:1fr 1fr}
+  .ig-strip{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:72px;left:0;right:0;background:var(--dark);flex-direction:column;padding:20px 24px;gap:16px}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .gallery-grid{grid-template-columns:1fr}
+  .seasonal-grid{grid-template-columns:1fr}
+  .ig-strip{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">La <span>Mesa</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Menu</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="contact.html" class="btn btn-primary" style="padding:8px 18px">Reserve</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="sub">Behind the Kitchen</p>
+  <h1>Photo Gallery</h1>
+  <p>A visual taste of La Mesa — our food, our space, our people, and the moments that bring it all together.</p>
+</div>
+
+<!-- FOOD PHOTOGRAPHY -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="sub">Our Dishes</p>
+      <h2>Food Photography</h2>
+      <p>Every plate tells a story. Here's a look at some of our favorites.</p>
+      <div class="gold-rule"></div>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-tab active">All Photos</button>
+      <button class="filter-tab">Food</button>
+      <button class="filter-tab">Interior</button>
+      <button class="filter-tab">Events</button>
+      <button class="filter-tab">Seasonal</button>
+    </div>
+
+    <!-- FEATURED LAYOUT -->
+    <div class="featured-row">
+      <div class="gallery-item featured-main gallery-photo" style="background:linear-gradient(135deg,var(--primary),#c9922b)">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your hero food photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Pan-Seared Salmon</h4><p>Wild-caught, lemon caper butter</p></div></div>
+      </div>
+      <div class="featured-stack">
+        <div class="gallery-item featured-stack-item gallery-photo" style="background:linear-gradient(135deg,#5c0f0f,var(--primary))">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add your photo here
+          <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Braised Short Rib</h4><p>12-hour braise</p></div></div>
+        </div>
+        <div class="gallery-item featured-stack-item gallery-photo" style="background:linear-gradient(135deg,#c9922b,#8b1a1a)">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add your photo here
+          <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Tuna Tartare</h4><p>Citrus ponzu, wonton crisps</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div class="gallery-grid">
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,var(--primary),var(--secondary))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Burrata & Peach</h4><p>Seasonal starter</p></div></div>
+      </div>
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,#c9922b,var(--secondary))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Chocolate Lava Cake</h4><p>Pastry chef's signature dessert</p></div></div>
+      </div>
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,#3d1a08,var(--primary))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Charcuterie Board</h4><p>Local meats & aged cheeses</p></div></div>
+      </div>
+      <div class="gallery-item tall wide gallery-photo" style="background:linear-gradient(135deg,var(--secondary),#c9922b)">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your restaurant interior photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>La Mesa Dining Room</h4><p>Our warm, intimate space</p></div></div>
+      </div>
+      <div class="gallery-item tall gallery-photo" style="background:linear-gradient(135deg,var(--primary),#c9922b)">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Chef at Work</h4><p>Behind the pass</p></div></div>
+      </div>
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,#5c0f0f,#c9922b)">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Bar Program</h4><p>Craft cocktails</p></div></div>
+      </div>
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,#c9922b,var(--primary))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Private Dining</h4><p>Events space</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="sub">Private Events</p>
+      <h2>Events & Celebrations</h2>
+      <p>From intimate anniversaries to corporate dinners — moments that matter, captured beautifully.</p>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,var(--dark),var(--secondary))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your event photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Wedding Reception</h4><p>Private dining room</p></div></div>
+      </div>
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,var(--primary),var(--dark))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your event photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Corporate Dinner</h4><p>60-person buyout</p></div></div>
+      </div>
+      <div class="gallery-item medium gallery-photo" style="background:linear-gradient(135deg,#c9922b,var(--dark))">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add your event photo here
+        <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Birthday Celebration</h4><p>Custom menu for 20</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEASONAL -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="sub">Throughout the Year</p>
+      <h2>Seasonal Highlights</h2>
+      <p>Our menu evolves with the seasons — here are some dishes we love from each time of year.</p>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="seasonal-grid">
+      <div class="seasonal-card">
+        <div class="seasonal-photo medium" style="background:linear-gradient(135deg,#8b3a1a,#c9922b)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add photo
+        </div>
+        <div class="seasonal-body">
+          <h4>🍂 Fall Harvest</h4>
+          <p>Roasted squash, apple-braised pork, wild mushroom risotto, pear tart</p>
+        </div>
+      </div>
+      <div class="seasonal-card">
+        <div class="seasonal-photo medium" style="background:linear-gradient(135deg,#1a3d6b,#2d7a6e)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add photo
+        </div>
+        <div class="seasonal-body">
+          <h4>❄️ Winter Warmth</h4>
+          <p>Truffle bisque, braised short rib, chestnut gnocchi, chocolate fondant</p>
+        </div>
+      </div>
+      <div class="seasonal-card">
+        <div class="seasonal-photo medium" style="background:linear-gradient(135deg,#2d7a2d,#6ba02b)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add photo
+        </div>
+        <div class="seasonal-body">
+          <h4>🌸 Spring Garden</h4>
+          <p>Pea shoot salad, asparagus tart, spring lamb, lemon sorbet</p>
+        </div>
+      </div>
+      <div class="seasonal-card">
+        <div class="seasonal-photo medium" style="background:linear-gradient(135deg,#c9922b,#8b1a1a)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add photo
+        </div>
+        <div class="seasonal-body">
+          <h4>☀️ Summer Harvest</h4>
+          <p>Heirloom tomato salad, grilled swordfish, peach burrata, berry tart</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM SECTION -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header">
+      <p class="sub" style="color:var(--accent)">Follow Along</p>
+      <h2 style="color:var(--white)">@LaMesaHouston</h2>
+      <p style="color:rgba(255,255,255,0.65)">Join us on Instagram for daily specials, behind-the-scenes kitchen moments, and table-worthy food photography.</p>
+      <div class="gold-rule"></div>
+    </div>
+    <div class="ig-strip">
+      <div class="ig-item gallery-photo short" style="background:linear-gradient(135deg,var(--primary),#c9922b)">
+        <span style="font-size:0.7rem">Add photo</span>
+        <div class="ig-overlay">❤️</div>
+      </div>
+      <div class="ig-item gallery-photo short" style="background:linear-gradient(135deg,#c9922b,var(--secondary))">
+        <span style="font-size:0.7rem">Add photo</span>
+        <div class="ig-overlay">❤️</div>
+      </div>
+      <div class="ig-item gallery-photo short" style="background:linear-gradient(135deg,var(--secondary),#c9922b)">
+        <span style="font-size:0.7rem">Add photo</span>
+        <div class="ig-overlay">❤️</div>
+      </div>
+      <div class="ig-item gallery-photo short" style="background:linear-gradient(135deg,#8b3a1a,var(--primary))">
+        <span style="font-size:0.7rem">Add photo</span>
+        <div class="ig-overlay">❤️</div>
+      </div>
+      <div class="ig-item gallery-photo short" style="background:linear-gradient(135deg,var(--primary),#3d1a08)">
+        <span style="font-size:0.7rem">Add photo</span>
+        <div class="ig-overlay">❤️</div>
+      </div>
+      <div class="ig-item gallery-photo short" style="background:linear-gradient(135deg,#c9922b,var(--primary))">
+        <span style="font-size:0.7rem">Add photo</span>
+        <div class="ig-overlay">❤️</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px">
+      <a href="https://instagram.com" target="_blank" class="btn btn-accent">Follow @LaMesaHouston</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="text-align:center;background:var(--light)">
+  <div class="container">
+    <p style="font-size:0.78rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px">Ready to Dine?</p>
+    <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:16px">Come Experience It in Person</h2>
+    <p style="color:var(--gray);max-width:480px;margin:0 auto 32px;line-height:1.8">A photo can only show you so much. The real magic is the aroma of the kitchen, the sound of a busy dining room, and the first bite. Reserve your table tonight.</p>
+    <a href="contact.html" class="btn btn-primary">Reserve a Table</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">La <span>Mesa</span></div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">Authentic cuisine crafted with fresh ingredients and family tradition. Serving Houston since 2015.</p>
+        <a href="contact.html" class="btn btn-accent" style="font-size:0.82rem;padding:9px 20px">Reserve a Table</a>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Full Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit Us</h4>
+        <ul>
+          <li><a href="#">1234 Main St, Houston TX</a></li>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li style="color:rgba(255,255,255,0.45);font-size:0.88rem;margin-top:4px">Tue–Thu: 11am–9pm</li>
+          <li style="color:rgba(255,255,255,0.45);font-size:0.88rem">Fri–Sun: 11am–10pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 La Mesa Restaurant. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:var(--accent)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Before & After Gallery — ServicePro</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#1a3d6b;--secondary:#0d2444;--accent:#e05c1a;--text:#1a2030;--light:#f4f6fa;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:6px;--transition:all 0.2s;--gray:#5a6470;--border:#dde3ec;--dark:#0d1a2e}
+body{font-family:'Open Sans',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:700}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-accent:hover{background:#c04a10}
+
+nav{background:var(--secondary);position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white)}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.85);font-size:0.9rem;font-weight:600;transition:var(--transition)}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:var(--white)!important;padding:8px 20px;border-radius:var(--radius);font-weight:700!important}
+.nav-cta:hover{background:#c04a10!important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px}
+
+.page-hero{background:linear-gradient(135deg,var(--secondary),var(--primary));color:var(--white);padding:72px 24px;text-align:center}
+.page-hero .label{font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#ff9060;margin-bottom:12px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+.page-hero p{font-size:1.05rem;opacity:0.85;max-width:560px;margin:0 auto}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--secondary);color:var(--white)}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .label{font-size:0.75rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.2rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:560px;margin:0 auto}
+.section-header.white .label{color:#ff9060}
+.section-header.white h2{color:var(--white)}
+.section-header.white p{color:rgba(255,255,255,0.75)}
+.accent-bar{width:52px;height:4px;background:var(--accent);margin:14px auto 0;border-radius:2px}
+
+/* BEFORE/AFTER CARDS */
+.ba-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:28px}
+.ba-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.07)}
+.ba-photos{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.ba-photo{height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;position:relative}
+.ba-photo span{color:rgba(255,255,255,0.35);font-size:0.78rem}
+.ba-label{position:absolute;top:10px;left:10px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:3px 10px;border-radius:3px}
+.label-before{background:rgba(0,0,0,0.6);color:rgba(255,255,255,0.8)}
+.label-after{background:var(--accent);color:var(--white)}
+.ba-body{padding:20px 24px}
+.ba-body h3{font-size:1rem;margin-bottom:6px}
+.ba-body p{color:var(--gray);font-size:0.87rem;line-height:1.65}
+.ba-service-tag{display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+
+/* TEAM GRID */
+.team-photo-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:280px 200px;gap:12px}
+.team-photo-grid .wide{grid-column:span 2}
+.photo-tile{border-radius:var(--radius);display:flex;align-items:flex-end;padding:14px;position:relative;overflow:hidden}
+.photo-tile .tile-label{background:rgba(0,0,0,0.55);color:var(--white);font-size:0.78rem;font-weight:600;padding:4px 10px;border-radius:3px}
+.photo-tile .ph-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-70%);font-size:2rem;opacity:0.3;color:var(--white)}
+.photo-tile .ph-text{position:absolute;top:50%;left:50%;transform:translate(-50%,40%);color:rgba(255,255,255,0.3);font-size:0.78rem}
+
+/* STATS DARK */
+.project-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.ps-item{text-align:center;padding:28px 16px}
+.ps-item strong{display:block;font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:800;color:#ff9060;margin-bottom:6px}
+.ps-item span{font-size:0.8rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.06em}
+
+/* CTA */
+.cta-box{background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);padding:56px 40px;text-align:center;color:var(--white)}
+.cta-box h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:14px}
+.cta-box p{opacity:0.85;max-width:520px;margin:0 auto 28px;line-height:1.8}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.75);padding:56px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:var(--accent)}
+footer h4{color:var(--white);font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px}
+footer ul{list-style:none}
+footer ul a{color:rgba(255,255,255,0.65);font-size:0.88rem;transition:var(--transition)}
+footer ul a:hover{color:var(--accent)}
+footer ul li{margin-bottom:8px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){.team-photo-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.team-photo-grid .wide{grid-column:span 1}.project-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--secondary);flex-direction:column;padding:20px 24px;gap:16px}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .ba-grid{grid-template-columns:1fr}
+  .team-photo-grid{grid-template-columns:1fr}
+  .project-stats{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Service<span>Pro</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="nav-cta">Free Quote</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="label">Completed Projects</p>
+  <h1>Before &amp; After — Real Work, Real Results</h1>
+  <p>Replace these placeholders with your actual project photos. Before/after pairs tell your story better than anything else.</p>
+</section>
+
+<!-- HVAC B&A -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">HVAC Projects</p>
+      <h2>Heating &amp; Cooling Work</h2>
+      <p>From failing units to full replacements — the difference our team makes.</p>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo" style="background:linear-gradient(135deg,#3a2a1a,#221808)">
+            <span class="ba-label label-before">Before</span>
+            <div style="font-size:2rem;opacity:0.3">&#10052;</div>
+            <span>Add your photo</span>
+          </div>
+          <div class="ba-photo" style="background:linear-gradient(135deg,var(--primary),#102a48)">
+            <span class="ba-label label-after">After</span>
+            <div style="font-size:2rem;opacity:0.3">&#10052;</div>
+            <span>Add your photo</span>
+          </div>
+        </div>
+        <div class="ba-body">
+          <span class="ba-service-tag">HVAC — Full Replacement</span>
+          <h3>18-Year-Old Unit Replaced — Sugar Land, TX</h3>
+          <p>Replaced a failing 4-ton Carrier unit with a new Trane 16 SEER system. Energy bills dropped 32% the following month. Installed and running in one day.</p>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo" style="background:linear-gradient(135deg,#2a1a1a,#180a0a)">
+            <span class="ba-label label-before">Before</span>
+            <div style="font-size:2rem;opacity:0.3">&#10052;</div>
+            <span>Add your photo</span>
+          </div>
+          <div class="ba-photo" style="background:linear-gradient(135deg,#1a3040,#0d1e2a)">
+            <span class="ba-label label-after">After</span>
+            <div style="font-size:2rem;opacity:0.3">&#10052;</div>
+            <span>Add your photo</span>
+          </div>
+        </div>
+        <div class="ba-body">
+          <span class="ba-service-tag">HVAC — Ductwork</span>
+          <h3>Collapsed Ductwork — Katy, TX</h3>
+          <p>Customer had rooms that wouldn&rsquo;t cool below 82°. Found collapsed flex duct in two runs. Replaced all ductwork, rebalanced airflow. Problem solved same day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLUMBING B&A -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Plumbing Projects</p>
+      <h2>Plumbing Work</h2>
+      <p>Leaks, water heaters, re-pipes, and drain repairs &mdash; before and after.</p>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo" style="background:linear-gradient(135deg,#1a1a3a,#0a0a24)">
+            <span class="ba-label label-before">Before</span>
+            <div style="font-size:2rem;opacity:0.3">&#128167;</div>
+            <span>Add your photo</span>
+          </div>
+          <div class="ba-photo" style="background:linear-gradient(135deg,#1a3a2a,#0a2016)">
+            <span class="ba-label label-after">After</span>
+            <div style="font-size:2rem;opacity:0.3">&#128167;</div>
+            <span>Add your photo</span>
+          </div>
+        </div>
+        <div class="ba-body">
+          <span class="ba-service-tag">Plumbing — Water Heater</span>
+          <h3>Water Heater Replacement — Houston Heights</h3>
+          <p>40-gallon tank failed after 14 years. Installed a new 50-gallon Rheem high-efficiency unit, permitted and inspected, in under 3 hours.</p>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo" style="background:linear-gradient(135deg,#2a1a1a,#180a0a)">
+            <span class="ba-label label-before">Before</span>
+            <div style="font-size:2rem;opacity:0.3">&#128167;</div>
+            <span>Add your photo</span>
+          </div>
+          <div class="ba-photo" style="background:linear-gradient(135deg,#1a2a3a,#0a1828)">
+            <span class="ba-label label-after">After</span>
+            <div style="font-size:2rem;opacity:0.3">&#128167;</div>
+            <span>Add your photo</span>
+          </div>
+        </div>
+        <div class="ba-body">
+          <span class="ba-service-tag">Plumbing — Slab Leak</span>
+          <h3>Slab Leak Repair — Pearland, TX</h3>
+          <p>Located slab leak using acoustic detection — no guesswork, minimal floor damage. Re-routed the line through the attic. Clean, code-compliant, no mess left behind.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ELECTRICAL B&A -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Electrical Projects</p>
+      <h2>Electrical Work</h2>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo" style="background:linear-gradient(135deg,#2a2a10,#181806)">
+            <span class="ba-label label-before">Before</span>
+            <div style="font-size:2rem;opacity:0.3">&#9889;</div>
+            <span>Add your photo</span>
+          </div>
+          <div class="ba-photo" style="background:linear-gradient(135deg,#1a3040,#0d2030)">
+            <span class="ba-label label-after">After</span>
+            <div style="font-size:2rem;opacity:0.3">&#9889;</div>
+            <span>Add your photo</span>
+          </div>
+        </div>
+        <div class="ba-body">
+          <span class="ba-service-tag">Electrical — Panel Upgrade</span>
+          <h3>100A → 200A Panel Upgrade — West Houston</h3>
+          <p>Outdated 100A Federal Pacific panel replaced with a new 200A Square D breaker box. Permitted, inspected, and passed same day. Now handles full home load plus EV charger.</p>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo" style="background:linear-gradient(135deg,#3a2a10,#201808)">
+            <span class="ba-label label-before">Before</span>
+            <div style="font-size:2rem;opacity:0.3">&#9889;</div>
+            <span>Add your photo</span>
+          </div>
+          <div class="ba-photo" style="background:linear-gradient(135deg,#1a3a2a,#0d2018)">
+            <span class="ba-label label-after">After</span>
+            <div style="font-size:2rem;opacity:0.3">&#9889;</div>
+            <span>Add your photo</span>
+          </div>
+        </div>
+        <div class="ba-body">
+          <span class="ba-service-tag">Electrical — EV Charger</span>
+          <h3>Level 2 EV Charger Install — The Woodlands</h3>
+          <p>Ran a dedicated 60A circuit from panel to garage, installed a hardwired Chargepoint Home Flex. Permitted and fully inspected. Car now charges overnight in 4 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM AT WORK -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-header white">
+      <p class="label">Our Team</p>
+      <h2>The People Doing the Work</h2>
+      <p>Background-checked, licensed, and proud of the quality they deliver every day.</p>
+      <div class="accent-bar"></div>
+    </div>
+    <div class="team-photo-grid">
+      <div class="photo-tile wide" style="background:linear-gradient(135deg,var(--primary),var(--secondary));min-height:280px">
+        <div class="ph-icon">&#128296;</div>
+        <div class="ph-text">Add your team photo here</div>
+        <span class="tile-label">The ServicePro Team</span>
+      </div>
+      <div class="photo-tile" style="background:linear-gradient(135deg,#2a3a50,#1a2840);min-height:280px">
+        <div class="ph-icon">&#10052;</div>
+        <div class="ph-text">Add photo</div>
+        <span class="tile-label">HVAC Installation</span>
+      </div>
+      <div class="photo-tile" style="background:linear-gradient(135deg,#1a2a40,#0d1828);min-height:200px">
+        <div class="ph-icon">&#128167;</div>
+        <div class="ph-text">Add photo</div>
+        <span class="tile-label">Plumbing Work</span>
+      </div>
+      <div class="photo-tile" style="background:linear-gradient(135deg,#2a2040,#181028);min-height:200px">
+        <div class="ph-icon">&#9889;</div>
+        <div class="ph-text">Add photo</div>
+        <span class="tile-label">Electrical Panel</span>
+      </div>
+      <div class="photo-tile" style="background:linear-gradient(135deg,#1a3028,#0d1e18);min-height:200px">
+        <div class="ph-icon">&#128296;</div>
+        <div class="ph-text">Add photo</div>
+        <span class="tile-label">Handyman Work</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT STATS -->
+<section class="section section-dark" style="padding-top:0">
+  <div class="container">
+    <div class="project-stats">
+      <div class="ps-item"><strong>1,200+</strong><span>Completed Projects</span></div>
+      <div class="ps-item"><strong>16 yrs</strong><span>In Business</span></div>
+      <div class="ps-item"><strong>5&#9733;</strong><span>Average Rating</span></div>
+      <div class="ps-item"><strong>98%</strong><span>Return Customers</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Ready to See Results Like These?</h2>
+      <p>Whether you have a big repair or a small job, we show up, we do it right, and we leave your home better than we found it.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="contact.html" class="btn btn-accent">Get a Free Quote &rarr;</a>
+        <a href="services.html" class="btn" style="background:rgba(255,255,255,0.15);color:var(--white)">See All Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Service<span>Pro</span></div>
+        <p style="font-size:0.88rem;line-height:1.7;margin-bottom:16px">Licensed HVAC, plumbing, electrical, and handyman services for homes and businesses across the Houston metro area.</p>
+        <a href="contact.html" class="btn btn-accent" style="font-size:0.85rem;padding:9px 20px">Get a Free Quote</a>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">HVAC</a></li>
+          <li><a href="services.html">Plumbing</a></li>
+          <li><a href="services.html">Electrical</a></li>
+          <li><a href="services.html">Handyman</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="tel:5559876543">(555) 987-6543 — Emergency</a></li>
+          <li><a href="mailto:hello@servicepro.com">hello@servicepro.com</a></li>
+          <li style="color:rgba(255,255,255,0.5);font-size:0.88rem;margin-top:4px">Mon–Sat: 7am–6pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ServicePro. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.4)">Template by <a href="https://sitesbymel.com" style="color:var(--accent)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+<script>document.querySelector('.hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open');});</script>
+</body>
+</html>

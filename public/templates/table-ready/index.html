@@ -128,11 +128,11 @@ footer a:hover{color:var(--gold)}
   <div class="nav-inner">
     <div class="nav-logo">La <span>Mesa</span></div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#menu">Menu</a></li>
-      <li><a href="#specials">Specials</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#reserve">Reserve</a></li>
-      <li><a href="#reserve" style="color:var(--gold)">Order Online</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Menu</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="btn btn-red" style="padding:8px 18px">Reserve</a></li>
     </ul>
     <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -146,6 +146,7 @@ footer a:hover{color:var(--gold)}
     <h1>Where Every Meal<br/>Tells a Story</h1>
     <p>Fresh ingredients, family recipes, and a dining experience you'll want to return to again and again.</p>
     <div class="hero-btns">
+      <!-- To accept online payments: create a free payment link at dashboard.stripe.com/payment-links and replace the href on the "Pay Deposit" or "Book Now" button -->
       <a href="#reserve" class="btn btn-red">Reserve a Table</a>
       <a href="#menu" class="btn btn-outline">View Our Menu</a>
     </div>

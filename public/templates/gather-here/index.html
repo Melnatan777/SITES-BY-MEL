@@ -7,71 +7,71 @@
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--burgundy:#6B2737;--burgundy-dark:#4a1827;--gold:#C9922B;--gold-light:#e8b04a;--cream:#FBF9F5;--white:#fff;--gray:#6B6560;--border:#E8E0D5;--dark:#1C1208;--green:#2D5016}
+:root{--primary:#3d5a8a;--secondary:#243654;--accent:#e8a020;--text:#1a2030;--light:#f4f6fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:6px;--transition:all 0.2s;--burgundy:#6B2737;--burgundy-dark:#4a1827;--gold:#e8a020;--gold-light:#f0b840;--cream:#f4f6fb;--gray:#6B6560;--border:#E8E0D5;--dark:#1a2030}
 body{font-family:'Source Sans 3',sans-serif;color:var(--dark);line-height:1.65}
 h1,h2,h3,h4{font-family:'Libre Baskerville',serif;font-weight:700;line-height:1.25}
-a{color:var(--burgundy);text-decoration:none}
+a{color:var(--primary);text-decoration:none}
 .container{max-width:1080px;margin:0 auto;padding:0 24px}
-.btn{display:inline-block;padding:12px 28px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;border:none;transition:all 0.2s;letter-spacing:0.02em}
-.btn-burgundy{background:var(--burgundy);color:var(--white)}
-.btn-burgundy:hover{background:var(--burgundy-dark)}
-.btn-gold{background:var(--gold);color:var(--white)}
-.btn-gold:hover{background:#b8821f}
+.btn{display:inline-block;padding:12px 28px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;border:none;transition:var(--transition);letter-spacing:0.02em;border-radius:var(--radius)}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-accent:hover{background:#c8880a}
 .btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.6)}
 .btn-outline:hover{background:rgba(255,255,255,0.1);border-color:var(--white)}
-.btn-outline-dark{background:transparent;color:var(--dark);border:2px solid var(--dark)}
+.btn-outline-dark{background:transparent;color:var(--dark);border:2px solid var(--dark);border-radius:var(--radius)}
 .btn-outline-dark:hover{background:var(--dark);color:var(--white)}
 
 /* NAV */
-nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.06)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1080px;margin:0 auto;padding:0 24px}
 .nav-logo{display:flex;align-items:center;gap:12px}
-.nav-logo-mark{width:40px;height:40px;background:var(--burgundy);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-family:'Libre Baskerville',serif;font-size:1rem}
+.nav-logo-mark{width:40px;height:40px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-family:'Libre Baskerville',serif;font-size:1rem}
 .nav-logo-text{font-family:'Libre Baskerville',serif;font-size:1.1rem;font-weight:700;color:var(--dark);line-height:1.2}
 .nav-logo-sub{font-size:0.72rem;color:var(--gray);font-family:'Source Sans 3',sans-serif;font-weight:400}
 .nav-links{display:flex;gap:24px;list-style:none;align-items:center}
-.nav-links a{color:var(--dark);font-size:0.88rem;font-weight:600;transition:color 0.2s}
-.nav-links a:hover{color:var(--burgundy)}
+.nav-links a{color:var(--dark);font-size:0.88rem;font-weight:600;transition:var(--transition)}
+.nav-links a:hover{color:var(--primary)}
 .hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
 .hamburger span{display:block;width:22px;height:2px;background:var(--dark)}
 
 /* HERO */
-.hero{background:linear-gradient(rgba(27,8,8,0.68),rgba(27,8,8,0.68)),linear-gradient(135deg,var(--burgundy-dark),#2a0e14);color:var(--white);padding:100px 24px 80px;text-align:center;min-height:560px;display:flex;align-items:center}
+.hero{background:linear-gradient(rgba(27,8,8,0.68),rgba(27,8,8,0.68)),linear-gradient(135deg,var(--secondary),#1a2a44);color:var(--white);padding:100px 24px 80px;text-align:center;min-height:560px;display:flex;align-items:center}
 .hero-inner{width:100%}
 .hero-cross{font-size:2.4rem;color:var(--gold-light);margin-bottom:16px;opacity:0.85}
 .hero h1{font-size:clamp(2.2rem,5vw,3.4rem);margin-bottom:18px;max-width:640px;margin-left:auto;margin-right:auto}
 .hero p{font-size:1.05rem;opacity:0.85;max-width:520px;margin:0 auto 36px;font-weight:300;line-height:1.8}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .service-times{margin-top:44px;display:flex;gap:32px;justify-content:center;flex-wrap:wrap}
-.service-time{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:16px 24px;text-align:center;border-radius:4px}
+.service-time{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:16px 24px;text-align:center;border-radius:var(--radius)}
 .service-time strong{display:block;font-size:0.88rem;color:var(--gold-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px}
 .service-time span{font-size:1rem}
 
 /* SECTION */
 .section{padding:76px 0}
-.section-cream{background:var(--cream)}
-.section-dark{background:var(--dark);color:var(--white)}
-.section-burgundy{background:var(--burgundy);color:var(--white)}
+.section-cream{background:var(--light)}
+.section-dark{background:var(--secondary);color:var(--white)}
+.section-primary{background:var(--primary);color:var(--white)}
 .section-header{text-align:center;margin-bottom:48px}
-.section-header .label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.section-header .label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
 .section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
 .section-header p{color:var(--gray);max-width:520px;margin:0 auto}
 .section-header.white .label{color:var(--gold-light)}
 .section-header.white h2{color:var(--white)}
 .section-header.white p{color:rgba(255,255,255,0.7)}
-.gold-rule{width:56px;height:2px;background:var(--gold);margin:14px auto 0}
+.gold-rule{width:56px;height:2px;background:var(--accent);margin:14px auto 0}
 
 /* WELCOME */
 .welcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.welcome-img{height:400px;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));border-radius:4px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,0.3);font-size:0.82rem}
-.welcome-text .label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.welcome-img{height:400px;background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,0.3);font-size:0.82rem}
+.welcome-text .label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
 .welcome-text h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:16px}
 .welcome-text p{color:var(--gray);line-height:1.85;margin-bottom:14px;font-size:0.97rem}
-.welcome-text blockquote{border-left:3px solid var(--gold);padding-left:20px;font-style:italic;font-family:'Libre Baskerville',serif;color:var(--burgundy);margin:24px 0;font-size:1rem;line-height:1.7}
+.welcome-text blockquote{border-left:3px solid var(--accent);padding-left:20px;font-style:italic;font-family:'Libre Baskerville',serif;color:var(--primary);margin:24px 0;font-size:1rem;line-height:1.7}
 
 /* SERMONS */
 .sermons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-.sermon-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:24px}
+.sermon-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:24px}
 .sermon-series{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
 .sermon-card h3{font-size:1.05rem;color:var(--white);margin-bottom:8px;line-height:1.4}
 .sermon-card p{color:rgba(255,255,255,0.6);font-size:0.85rem;line-height:1.6;margin-bottom:16px}
@@ -80,58 +80,61 @@ nav{background:var(--white);border-bottom:1px solid var(--border);position:stick
 
 /* MINISTRIES */
 .min-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.min-card{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:24px;text-align:center}
+.min-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;transition:var(--shadow);box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.min-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
 .min-icon{font-size:2rem;margin-bottom:12px}
 .min-card h3{font-size:1rem;margin-bottom:8px;color:var(--dark)}
 .min-card p{color:var(--gray);font-size:0.85rem;line-height:1.6}
-.min-card a{display:inline-block;margin-top:12px;font-size:0.82rem;font-weight:700;color:var(--burgundy)}
+.min-card a{display:inline-block;margin-top:12px;font-size:0.82rem;font-weight:700;color:var(--primary)}
 
 /* EVENTS */
-.events-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.events-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .event-row{display:grid;grid-template-columns:100px 1fr auto;gap:20px;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--white)}
 .event-row:last-child{border-bottom:none}
-.event-date{text-align:center;background:var(--burgundy);color:var(--white);border-radius:4px;padding:10px}
+.event-date{text-align:center;background:var(--primary);color:var(--white);border-radius:var(--radius);padding:10px}
 .event-date strong{display:block;font-size:1.3rem}
 .event-date span{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;opacity:0.8}
 .event-info h4{font-size:0.97rem;margin-bottom:4px}
 .event-info p{color:var(--gray);font-size:0.85rem}
-.event-time{font-size:0.82rem;font-weight:700;color:var(--burgundy);white-space:nowrap}
+.event-time{font-size:0.82rem;font-weight:700;color:var(--primary);white-space:nowrap}
 
 /* GIVE / PRAYER */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px}
-.give-box{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:36px;text-align:center}
+.give-box{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius);padding:36px;text-align:center}
 .give-box h3{font-size:1.3rem;color:var(--white);margin-bottom:12px}
 .give-box p{color:rgba(255,255,255,0.7);font-size:0.9rem;line-height:1.7;margin-bottom:24px}
 .give-box .btn{display:block;width:100%}
 
 /* PRAYER FORM */
-.prayer-form{background:var(--cream);border-radius:4px;padding:36px}
+.prayer-form{background:var(--cream);border-radius:var(--radius);padding:36px}
 .prayer-form h3{font-size:1.2rem;margin-bottom:16px}
 .form-group{margin-bottom:14px}
 .form-group label{display:block;font-size:0.8rem;font-weight:700;margin-bottom:5px;color:#444}
-.form-group input,.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:3px;font-size:0.92rem;font-family:'Source Sans 3',sans-serif;outline:none}
-.form-group input:focus{border-color:var(--burgundy)}
+.form-group input,.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.92rem;font-family:'Source Sans 3',sans-serif;outline:none}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--primary)}
 .form-check{display:flex;align-items:center;gap:8px;font-size:0.88rem;color:var(--gray)}
 
 /* FOOTER */
-footer{background:#110608;color:rgba(255,255,255,0.65);padding:60px 0 28px}
+footer{background:#110a18;color:rgba(255,255,255,0.65);padding:60px 0 28px}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
 .footer-logo{font-family:'Libre Baskerville',serif;font-size:1.2rem;color:var(--white);margin-bottom:4px}
 .footer-sub{font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:12px}
 footer h4{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
 footer ul{list-style:none}
 footer ul li{margin-bottom:8px}
-footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:color 0.2s}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
 footer a:hover{color:var(--gold-light)}
 .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .footer-bottom p{font-size:0.82rem}
 
-@media(max-width:768px){
+@media(max-width:900px){
+  .welcome-grid,.two-col{grid-template-columns:1fr}
+  .welcome-img{height:220px}
+}
+@media(max-width:680px){
   .nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
   .nav-links.open{display:flex}
   .hamburger{display:flex}
-  .welcome-grid,.two-col{grid-template-columns:1fr}
-  .welcome-img{height:220px}
   .event-row{grid-template-columns:80px 1fr}
   .event-time{display:none}
   .footer-grid{grid-template-columns:1fr}
@@ -140,6 +143,8 @@ footer a:hover{color:var(--gold-light)}
 </style>
 </head>
 <body>
+
+<!-- To accept online payments: create a free payment link at dashboard.stripe.com/payment-links and replace the href on the "Give Now" button below -->
 
 <nav>
   <div class="nav-inner">
@@ -151,11 +156,11 @@ footer a:hover{color:var(--gold-light)}
       </div>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#welcome">About</a></li>
-      <li><a href="#sermons">Sermons</a></li>
-      <li><a href="#ministries">Ministries</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="#give" class="btn btn-burgundy" style="padding:8px 18px;font-size:0.85rem;">Give</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Ministries</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="btn btn-primary" style="padding:8px 18px;font-size:0.85rem;">Contact</a></li>
     </ul>
     <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -169,8 +174,8 @@ footer a:hover{color:var(--gold-light)}
     <h1>You Are Welcome Here</h1>
     <p>A community of faith rooted in grace, growing in love, and sent to serve. Wherever you are on your journey &mdash; there&rsquo;s a place for you here.</p>
     <div class="hero-btns">
-      <a href="#welcome" class="btn btn-gold">Plan Your Visit</a>
-      <a href="#sermons" class="btn btn-outline">Watch Online</a>
+      <a href="about.html" class="btn btn-accent">Plan Your Visit</a>
+      <a href="services.html" class="btn btn-outline">Watch Online</a>
     </div>
     <div class="service-times">
       <div class="service-time"><strong>Sunday Services</strong><span>9:00 AM &amp; 11:00 AM</span></div>
@@ -185,7 +190,7 @@ footer a:hover{color:var(--gold-light)}
     <div class="welcome-grid">
       <div class="welcome-img">
         <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>Add church photo here</span>
+        <span>Add your photo here</span>
       </div>
       <div class="welcome-text">
         <p class="label">Welcome</p>
@@ -193,7 +198,7 @@ footer a:hover{color:var(--gold-light)}
         <p>Cornerstone Fellowship Church has been serving the Houston community since 1998. We believe that every person is known and loved by God &mdash; and we&rsquo;re here to help people discover that truth for themselves.</p>
         <p>Whether you&rsquo;re returning to faith, exploring for the first time, or looking for a spiritual home, we want to walk that road with you.</p>
         <blockquote>&ldquo;Come to me, all who are weary and burdened, and I will give you rest.&rdquo;<br/><em style="font-size:0.85rem;color:var(--gray)">Matthew 11:28</em></blockquote>
-        <a href="#" class="btn btn-burgundy" style="margin-top:8px">Plan Your Visit &rarr;</a>
+        <a href="about.html" class="btn btn-primary" style="margin-top:8px">Plan Your Visit &rarr;</a>
       </div>
     </div>
   </div>
@@ -227,7 +232,7 @@ footer a:hover{color:var(--gold-light)}
         <div class="sermon-meta"><span>May 25, 2025</span><a href="#">Watch &rarr;</a></div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:36px"><a href="#" class="btn btn-gold">View All Sermons</a></div>
+    <div style="text-align:center;margin-top:36px"><a href="services.html" class="btn btn-accent">View All Sermons</a></div>
   </div>
 </section>
 
@@ -241,52 +246,40 @@ footer a:hover{color:var(--gold-light)}
     </div>
     <div class="min-grid">
       <div class="min-card">
-        <div class="min-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--burgundy)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
+        <div class="min-icon">&#128106;</div>
         <h3>Family Ministry</h3>
         <p>Programs for every age — nursery, kids church, and teen groups meeting weekly.</p>
-        <a href="#">Learn More &rarr;</a>
+        <a href="services.html">Learn More &rarr;</a>
       </div>
       <div class="min-card">
-        <div class="min-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--burgundy)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        </div>
+        <div class="min-icon">&#128214;</div>
         <h3>Life Groups</h3>
         <p>Small groups meeting in homes across the city for Bible study, prayer, and community.</p>
-        <a href="#">Find a Group &rarr;</a>
+        <a href="services.html">Find a Group &rarr;</a>
       </div>
       <div class="min-card">
-        <div class="min-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--burgundy)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        </div>
+        <div class="min-icon">&#127925;</div>
         <h3>Worship Team</h3>
         <p>Singers, musicians, and tech volunteers who lead our congregation into worship each week.</p>
-        <a href="#">Join the Team &rarr;</a>
+        <a href="services.html">Join the Team &rarr;</a>
       </div>
       <div class="min-card">
-        <div class="min-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--burgundy)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
+        <div class="min-icon">&#10084;</div>
         <h3>Outreach &amp; Serve</h3>
         <p>Volunteering, food pantry, community events, and local missions opportunities.</p>
-        <a href="#">Get Involved &rarr;</a>
+        <a href="services.html">Get Involved &rarr;</a>
       </div>
       <div class="min-card">
-        <div class="min-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--burgundy)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M12 12v8"/></svg>
-        </div>
+        <div class="min-icon">&#127807;</div>
         <h3>Women&rsquo;s Ministry</h3>
         <p>Bible studies, retreats, and connection events for women in every season of life.</p>
-        <a href="#">Learn More &rarr;</a>
+        <a href="services.html">Learn More &rarr;</a>
       </div>
       <div class="min-card">
-        <div class="min-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--burgundy)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="16" x2="12" y2="20"/></svg>
-        </div>
+        <div class="min-icon">&#9965;</div>
         <h3>Men&rsquo;s Ministry</h3>
         <p>Monthly gatherings, accountability groups, and service projects for men of all ages.</p>
-        <a href="#">Learn More &rarr;</a>
+        <a href="services.html">Learn More &rarr;</a>
       </div>
     </div>
   </div>
@@ -306,7 +299,7 @@ footer a:hover{color:var(--gold-light)}
         <div class="event-time">8:00 AM</div>
       </div>
       <div class="event-row">
-        <div class="event-date" style="background:var(--gold)"><strong>29</strong><span>Jun</span></div>
+        <div class="event-date" style="background:var(--accent)"><strong>29</strong><span>Jun</span></div>
         <div class="event-info"><h4>Summer Family Picnic</h4><p>Grace Community Park &mdash; Bring a dish to share. Games for all ages.</p></div>
         <div class="event-time">12:00 PM</div>
       </div>
@@ -321,18 +314,18 @@ footer a:hover{color:var(--gold-light)}
         <div class="event-time">Both Services</div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:28px"><a href="#" class="btn btn-outline-dark">View Full Calendar</a></div>
+    <div style="text-align:center;margin-top:28px"><a href="services.html" class="btn btn-outline-dark">View Full Calendar</a></div>
   </div>
 </section>
 
-<section class="section section-burgundy" id="give">
+<section class="section section-primary" id="give">
   <div class="container">
     <div class="two-col">
       <div class="give-box">
         <div style="font-size:2rem;margin-bottom:12px">&#128141;</div>
         <h3>Give Online</h3>
         <p>Your generosity makes ministry possible. Give securely online &mdash; one-time or recurring. Every gift makes a difference in our community and beyond.</p>
-        <a href="#" class="btn btn-gold">Give Now &rarr;</a>
+        <a href="#" class="btn btn-accent">Give Now &rarr;</a>
         <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-top:16px">Secure giving via Stripe. Receipt emailed automatically.</p>
       </div>
       <div class="prayer-form">
@@ -341,9 +334,9 @@ footer a:hover{color:var(--gold-light)}
         <form>
           <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Smith"/></div>
           <div class="form-group"><label>Email</label><input type="email" placeholder="jane@email.com"/></div>
-          <div class="form-group"><label>Prayer Request</label><textarea rows="4" placeholder="Share what&apos;s on your heart..."></textarea></div>
+          <div class="form-group"><label>Prayer Request</label><textarea rows="4" placeholder="Share what's on your heart..."></textarea></div>
           <label class="form-check" style="margin-bottom:16px"><input type="checkbox" style="margin-right:4px"/> Keep my request confidential</label>
-          <button type="submit" class="btn btn-burgundy" style="width:100%;display:block;text-align:center;padding:13px">Submit Request</button>
+          <button type="submit" class="btn btn-primary" style="width:100%;display:block;text-align:center;padding:13px">Submit Request</button>
         </form>
       </div>
     </div>
@@ -354,19 +347,19 @@ footer a:hover{color:var(--gold-light)}
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-logo">Cornerstone Fellowship Church</div>
+        <div class="footer-logo">&#10013; Cornerstone Fellowship Church</div>
         <div class="footer-sub">Houston, Texas &mdash; Est. 1998</div>
-        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:8px">1234 Elm Street, Houston TX 77002<br/><a href="tel:5551234567">(555) 123-4567</a> &nbsp;&bull;&nbsp; <a href="mailto:info@gracecchouston.com">info@gracecchouston.com</a></p>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:8px">1234 Elm Street, Houston TX 77002<br/><a href="tel:5551234567">(555) 123-4567</a> &nbsp;&bull;&nbsp; <a href="mailto:info@cornerstonefellowship.com">info@cornerstonefellowship.com</a></p>
         <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:8px">Sun 9am &amp; 11am &nbsp;&bull;&nbsp; Wed 7pm</p>
       </div>
       <div>
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="#welcome">About Us</a></li>
-          <li><a href="#sermons">Sermons</a></li>
-          <li><a href="#ministries">Ministries</a></li>
-          <li><a href="#events">Events</a></li>
-          <li><a href="#give">Give</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Ministries &amp; Events</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
       <div>
@@ -375,8 +368,8 @@ footer a:hover{color:var(--gold-light)}
           <li><a href="#">Facebook</a></li>
           <li><a href="#">Instagram</a></li>
           <li><a href="#">YouTube</a></li>
-          <li><a href="#">Prayer Request</a></li>
-          <li><a href="#">Contact Us</a></li>
+          <li><a href="contact.html">Prayer Request</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
         </ul>
       </div>
     </div>
@@ -387,5 +380,10 @@ footer a:hover{color:var(--gold-light)}
   </div>
 </footer>
 
+<script>
+document.querySelector('.hamburger').addEventListener('click',function(){
+  document.getElementById('navLinks').classList.toggle('open');
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Shop — Violet&amp;Co.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#5a2d82;--secondary:#3d1f5a;--accent:#8b5cb1;--text:#1a1224;--light:#f8f4fc;--white:#fff;--gray:#6b6070;--border:#e8e0f0;--dark:#120c1e;--lavender:#c4a8e0;--radius:3px;--transition:all 0.2s}
+body{font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'DM Serif Display',serif;font-weight:400}
+a{color:var(--text);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:12px 28px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;border:none;transition:var(--transition);letter-spacing:0.04em}
+.btn-dark{background:var(--primary);color:var(--white)}
+.btn-dark:hover{background:var(--secondary)}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+.btn-outline-white{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.7)}
+.btn-outline-white:hover{background:rgba(255,255,255,0.1)}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 6px rgba(90,45,130,0.07)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1100px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--primary)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--text);font-size:0.88rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text)}
+
+.page-hero{background:var(--light);border-bottom:1px solid var(--border);padding:60px 24px;text-align:center}
+.page-hero .label{font-size:0.75rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+.page-hero h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:12px}
+.page-hero p{color:var(--gray);max-width:500px;margin:0 auto;font-size:1rem;line-height:1.7}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-dark{background:var(--dark);color:var(--white)}
+.section-header{text-align:center;margin-bottom:52px}
+.section-header .label{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:480px;margin:0 auto}
+.purple-line{width:48px;height:1px;background:var(--primary);margin:14px auto 0}
+
+/* FILTER TABS */
+.filter-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.filter-tab{padding:8px 20px;border:1.5px solid var(--border);border-radius:100px;font-size:0.85rem;font-weight:500;color:var(--gray);cursor:pointer;transition:var(--transition)}
+.filter-tab.active,.filter-tab:hover{border-color:var(--primary);color:var(--primary);background:var(--light)}
+
+/* PRODUCTS */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.product-card{cursor:pointer;transition:var(--transition)}
+.product-img{height:300px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,0.25);font-size:0.82rem;margin-bottom:14px;position:relative;overflow:hidden;transition:opacity 0.2s}
+.product-card:hover .product-img{opacity:0.9}
+.product-badge{position:absolute;top:12px;left:12px;background:var(--primary);color:var(--white);font-size:0.7rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:4px 9px;border-radius:2px}
+.product-badge.sale{background:#c04a10}
+.product-name{font-size:0.95rem;font-weight:500;margin-bottom:4px}
+.product-sub{font-size:0.82rem;color:var(--gray);margin-bottom:8px}
+.product-price{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text)}
+.product-price .old{font-size:0.85rem;color:var(--gray);text-decoration:line-through;margin-left:6px;font-family:'DM Sans',sans-serif}
+.wishlist-btn{position:absolute;top:12px;right:12px;background:var(--white);border:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;box-shadow:0 1px 6px rgba(0,0,0,0.1);transition:var(--transition)}
+.wishlist-btn:hover{background:var(--light)}
+
+/* PRICING RANGES */
+.pricing-ranges{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.pr-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center}
+.pr-card .range{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--primary);margin-bottom:6px}
+.pr-card h3{font-size:1rem;margin-bottom:8px}
+.pr-card p{color:var(--gray);font-size:0.86rem;line-height:1.7}
+
+/* CUSTOM ORDERS */
+.custom-box{background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:var(--radius);padding:56px 40px;text-align:center;color:var(--white)}
+.custom-box h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:14px}
+.custom-box p{opacity:0.85;max-width:520px;margin:0 auto 28px;line-height:1.8}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:36px}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--white);margin-bottom:10px}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:color 0.2s}
+footer a:hover{color:var(--lavender)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Violet&amp;Co.</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Shop</a></li>
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <p class="label">The Collection</p>
+  <h1>Shop Violet&amp;Co.</h1>
+  <p>Clothing, accessories, home goods, and gifts — every piece hand-selected and ready to love.</p>
+</div>
+
+<!-- CLOTHING -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Category</p>
+      <h2>Clothing</h2>
+      <p>Elevated basics and statement pieces for every season. Sustainably sourced when possible, always made to last.</p>
+      <div class="purple-line"></div>
+    </div>
+    <div class="filter-tabs">
+      <span class="filter-tab active">All Clothing</span>
+      <span class="filter-tab">Dresses</span>
+      <span class="filter-tab">Tops</span>
+      <span class="filter-tab">Bottoms</span>
+      <span class="filter-tab">Outerwear</span>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#e0d0f0,#c8b0e0)">
+          <span>Add product photo</span>
+          <span class="product-badge">New</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Linen Wrap Dress</div>
+        <div class="product-sub">Sage, cream &amp; dusty rose</div>
+        <div class="product-price">$78.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#d8c8e8,#c8b8da)">
+          <span>Add product photo</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Relaxed Cotton Blouse</div>
+        <div class="product-sub">White, lavender &amp; stripe</div>
+        <div class="product-price">$52.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#ece0f8,#d8c8f0)">
+          <span>Add product photo</span>
+          <span class="product-badge">Bestseller</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Wide-Leg Linen Trousers</div>
+        <div class="product-sub">Natural &amp; black</div>
+        <div class="product-price">$66.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#e4d4f4,#d0bce8)">
+          <span>Add product photo</span>
+          <span class="product-badge sale">Sale</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Silk Blend Cami</div>
+        <div class="product-sub">Ivory &amp; dusty plum</div>
+        <div class="product-price">$38.00 <span class="old">$54.00</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESSORIES -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Category</p>
+      <h2>Accessories</h2>
+      <p>Jewelry, bags, scarves, and all the finishing touches that make an outfit yours.</p>
+      <div class="purple-line"></div>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#f0e4ff,#e0d0f0)">
+          <span>Add product photo</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Gold &amp; Amethyst Earrings</div>
+        <div class="product-sub">Handmade, one-of-a-kind</div>
+        <div class="product-price">$36.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#e8d8f8,#d8c4ec)">
+          <span>Add product photo</span>
+          <span class="product-badge">New</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Woven Straw Tote</div>
+        <div class="product-sub">Natural &amp; black</div>
+        <div class="product-price">$54.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#f4eaff,#e8d6f8)">
+          <span>Add product photo</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Silk Scarf</div>
+        <div class="product-sub">Botanical print</div>
+        <div class="product-price">$48.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#eedeff,#dec8f4)">
+          <span>Add product photo</span>
+          <span class="product-badge">Bestseller</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Beaded Bracelet Stack</div>
+        <div class="product-sub">Set of 3 — assorted tones</div>
+        <div class="product-price">$28.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOME & GIFTS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Category</p>
+      <h2>Home &amp; Gifts</h2>
+      <p>Candles, prints, ceramics, and thoughtful gifts for the people and spaces you love.</p>
+      <div class="purple-line"></div>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#dccce8,#ccc0de)">
+          <span>Add product photo</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Ceramic Bud Vase Set</div>
+        <div class="product-sub">Set of 3, matte glaze</div>
+        <div class="product-price">$42.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#e8daf4,#d8cae8)">
+          <span>Add product photo</span>
+          <span class="product-badge">New</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Lavender &amp; Vanilla Candle</div>
+        <div class="product-sub">Soy wax, 45 hr burn</div>
+        <div class="product-price">$32.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#f0e6fa,#e4d6f0)">
+          <span>Add product photo</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Art Print — Botanical</div>
+        <div class="product-sub">5&times;7, 8&times;10 &amp; 11&times;14</div>
+        <div class="product-price">From $18.00</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img" style="background:linear-gradient(135deg,#e6dcf8,#d6ccea)">
+          <span>Add product photo</span>
+          <span class="product-badge">Gift Pick</span>
+          <button class="wishlist-btn">&#9825;</button>
+        </div>
+        <div class="product-name">Curated Gift Set</div>
+        <div class="product-sub">Candle, scarf &amp; card</div>
+        <div class="product-price">$88.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING RANGES -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Budget Guide</p>
+      <h2>Something for Every Budget</h2>
+      <p>From thoughtful gifts under $30 to statement investment pieces, we have you covered.</p>
+      <div class="purple-line"></div>
+    </div>
+    <div class="pricing-ranges">
+      <div class="pr-card">
+        <div class="range">Under $30</div>
+        <h3>Stocking Stuffers &amp; Cards</h3>
+        <p>Small jewelry, cards, prints, and accessories that make a big impression without the big price tag.</p>
+      </div>
+      <div class="pr-card">
+        <div class="range">$30–$65</div>
+        <h3>Thoughtful Gifts</h3>
+        <p>Candles, silk scarves, jewelry sets, and pieces you&rsquo;ll reach for again and again.</p>
+      </div>
+      <div class="pr-card">
+        <div class="range">$65–$100</div>
+        <h3>Wardrobe Essentials</h3>
+        <p>Investment clothing, quality bags, and curated gift sets that feel luxurious without being excessive.</p>
+      </div>
+      <div class="pr-card">
+        <div class="range">$100+</div>
+        <h3>Statement Pieces</h3>
+        <p>One-of-a-kind items, limited edition collections, and pieces made to become heirlooms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOM ORDERS -->
+<section class="section">
+  <div class="container">
+    <div class="custom-box">
+      <h2>Custom Orders &amp; Private Shopping</h2>
+      <p>Looking for a specific piece, building a gift basket, or want a private shopping appointment for a special occasion? We love helping make it happen.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="contact.html" class="btn btn-white">Request a Custom Order</a>
+        <a href="contact.html" class="btn btn-outline-white">Book Private Shopping</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Violet&amp;Co.</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">A curated boutique carrying clothing, accessories, home goods, and gifts. Every piece hand-selected with love.</p>
+        <a href="contact.html" class="btn btn-outline-white" style="font-size:0.82rem;padding:8px 18px">Visit Us</a>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="services.html">New Arrivals</a></li>
+          <li><a href="services.html">Clothing</a></li>
+          <li><a href="services.html">Accessories</a></li>
+          <li><a href="services.html">Home &amp; Gifts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:hello@violetandco.com">hello@violetandco.com</a></li>
+          <li style="color:rgba(255,255,255,0.4);font-size:0.85rem;margin-top:4px">Tue–Sat 10am–6pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Violet&amp;Co. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.35)">Template by <a href="https://sitesbymel.com" style="color:var(--lavender)">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+<script>document.querySelector('.hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open');});</script>
+</body>
+</html>

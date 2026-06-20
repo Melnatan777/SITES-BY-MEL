@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoShine — Photo Gallery</title>
+  <style>
+    :root {
+      --primary: #1a2a5c;
+      --secondary: #0d1a3d;
+      --accent: #e8a020;
+      --text: #1a1a2a;
+      --light: #f4f6fb;
+      --white: #ffffff;
+      --shadow: 0 4px 24px rgba(26,42,92,0.12);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: var(--text); background: var(--white); }
+    a { text-decoration: none; color: inherit; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 70px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    }
+    .nav-logo { color: var(--white); font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.85); font-size: 0.97rem; font-weight: 500; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--primary); padding: 0.55rem 1.4rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem; transition: var(--transition); }
+    .nav-cta:hover { background: #f5b840; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 26px; height: 3px; background: var(--white); border-radius: 2px; }
+    .mobile-menu { display: none; position: absolute; top: 70px; left: 0; right: 0; background: var(--secondary); padding: 1.5rem 5%; flex-direction: column; gap: 1.2rem; }
+    .mobile-menu a { color: var(--white); font-size: 1rem; font-weight: 500; }
+    .mobile-menu.open { display: flex; }
+
+    .page-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 5rem 5% 4rem; text-align: center;
+    }
+    .page-hero .badge { display: inline-block; background: rgba(232,160,32,0.18); border: 1px solid var(--accent); color: var(--accent); font-size: 0.82rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 50px; margin-bottom: 1.2rem; }
+    .page-hero h1 { font-size: 2.8rem; font-weight: 900; color: var(--white); margin-bottom: 1rem; }
+    .page-hero h1 span { color: var(--accent); }
+    .page-hero p { color: rgba(255,255,255,0.78); font-size: 1.1rem; max-width: 580px; margin: 0 auto; line-height: 1.7; }
+
+    section { padding: 5rem 5%; }
+    .section-label { font-size: 0.82rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+    .section-title { font-size: 2rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem; }
+    .section-title span { color: var(--accent); }
+
+    /* FILTER TABS */
+    .filter-tabs { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
+    .filter-tab { padding: 0.55rem 1.4rem; border-radius: 50px; font-size: 0.9rem; font-weight: 700; cursor: pointer; border: 2px solid var(--light); background: var(--white); color: #666; transition: var(--transition); }
+    .filter-tab:hover, .filter-tab.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+
+    /* GALLERY GRID */
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1100px; margin: 0 auto; }
+    .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; transition: var(--transition); cursor: pointer; }
+    .gallery-item:hover { transform: scale(1.02); box-shadow: 0 12px 36px rgba(26,42,92,0.22); }
+    .gallery-item.wide { grid-column: span 2; }
+    .gallery-item.tall { grid-row: span 2; }
+    .photo-box {
+      width: 100%; height: 240px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.88rem; color: rgba(255,255,255,0.8); font-weight: 600;
+      text-align: center; padding: 1rem; flex-direction: column; gap: 0.5rem;
+    }
+    .gallery-item.wide .photo-box { height: 280px; }
+    .gallery-item.tall .photo-box { height: 505px; }
+    .photo-box .photo-icon { font-size: 2rem; opacity: 0.7; }
+    .photo-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
+      color: var(--white); padding: 1.5rem 1rem 0.85rem;
+      font-size: 0.85rem; font-weight: 600; opacity: 0; transition: var(--transition);
+    }
+    .gallery-item:hover .photo-caption { opacity: 1; }
+
+    /* BEFORE / AFTER */
+    .ba-section { background: var(--secondary); padding: 5rem 5%; }
+    .ba-section .section-title { color: var(--white); }
+    .ba-section .section-label { color: var(--accent); }
+    .ba-intro { color: rgba(255,255,255,0.72); font-size: 0.97rem; line-height: 1.7; max-width: 600px; margin: 0 auto 3rem; text-align: center; }
+    .ba-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .ba-card { border-radius: var(--radius); overflow: hidden; background: rgba(255,255,255,0.05); }
+    .ba-pair { display: grid; grid-template-columns: 1fr 1fr; }
+    .ba-photo { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; text-align: center; flex-direction: column; gap: 0.4rem; }
+    .ba-before { background: linear-gradient(180deg, #2a2a2a, #1a1a1a); color: rgba(255,255,255,0.4); }
+    .ba-before::after { content: 'BEFORE'; display: block; font-size: 0.65rem; letter-spacing: 2px; }
+    .ba-after { background: linear-gradient(180deg, var(--primary), #2a4080); color: rgba(255,255,255,0.85); }
+    .ba-after::after { content: 'AFTER'; display: block; font-size: 0.65rem; letter-spacing: 2px; color: var(--accent); }
+    .ba-label { padding: 0.75rem 1rem; font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.7); text-align: center; }
+
+    /* VEHICLE TYPE GALLERY */
+    .vehicle-section { background: var(--light); }
+    .vehicle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; max-width: 1100px; margin: 0 auto; }
+    .vehicle-card { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: var(--white); transition: var(--transition); }
+    .vehicle-card:hover { transform: translateY(-5px); }
+    .vehicle-photo { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: rgba(255,255,255,0.8); font-weight: 600; text-align: center; flex-direction: column; gap: 0.4rem; }
+    .vehicle-card-body { padding: 1rem; }
+    .vehicle-card-body h4 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem; }
+    .vehicle-card-body p { font-size: 0.82rem; color: #777; }
+
+    /* CERAMIC SECTION */
+    .ceramic-section { background: var(--white); }
+    .ceramic-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1100px; margin: 0 auto; }
+    .ceramic-item { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); position: relative; }
+    .ceramic-photo { height: 260px; display: flex; align-items: flex-end; justify-content: flex-start; padding: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+    .ceramic-tag { display: inline-block; background: var(--accent); color: var(--primary); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; padding: 0.25rem 0.65rem; border-radius: 4px; margin-bottom: 0.3rem; }
+
+    .cta-banner { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 5rem 5%; text-align: center; }
+    .cta-banner h2 { font-size: 2.2rem; font-weight: 900; color: var(--white); margin-bottom: 1rem; }
+    .cta-banner p { color: rgba(255,255,255,0.8); font-size: 1.05rem; margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .btn-primary { background: var(--accent); color: var(--primary); padding: 0.85rem 2.1rem; border-radius: 50px; font-weight: 800; font-size: 1rem; transition: var(--transition); display: inline-block; }
+    .btn-primary:hover { background: #f5b840; transform: translateY(-2px); }
+    .btn-outline { border: 2px solid rgba(255,255,255,0.5); color: var(--white); padding: 0.85rem 2.1rem; border-radius: 50px; font-weight: 700; font-size: 1rem; transition: var(--transition); display: inline-block; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer { background: var(--secondary); color: rgba(255,255,255,0.8); padding: 4rem 5% 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; max-width: 1100px; margin: 0 auto 3rem; }
+    .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 0.9rem; }
+    .footer-brand p { font-size: 0.93rem; line-height: 1.7; color: rgba(255,255,255,0.65); max-width: 280px; }
+    .footer-col h4 { color: var(--white); font-size: 1rem; font-weight: 700; margin-bottom: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); font-size: 0.93rem; transition: var(--transition); }
+    .footer-col ul a:hover { color: var(--accent); }
+    .footer-contact p { font-size: 0.93rem; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.4); max-width: 1100px; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item.wide { grid-column: span 1; }
+      .gallery-item.tall { grid-row: span 1; }
+      .gallery-item.tall .photo-box { height: 240px; }
+      .ba-grid { grid-template-columns: repeat(2, 1fr); }
+      .vehicle-grid { grid-template-columns: repeat(2, 1fr); }
+      .ceramic-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .gallery-grid, .ba-grid, .vehicle-grid, .ceramic-grid, .footer-grid { grid-template-columns: 1fr; }
+      .page-hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Auto<span>Shine</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book Now</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="about.html">About</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:700;">Book Now</a>
+</div>
+
+<div class="page-hero">
+  <span class="badge">Our Work</span>
+  <h1>Real Results, Real <span>Transformations</span></h1>
+  <p>Every photo below is a real vehicle we've detailed. Replace these placeholders with your own before-and-after shots to show off your work.</p>
+</div>
+
+<!-- MAIN GALLERY -->
+<section style="background:var(--white);">
+  <div style="text-align:center;max-width:700px;margin:0 auto 2rem;">
+    <p class="section-label">Full Portfolio</p>
+    <h2 class="section-title">Our <span>Work</span></h2>
+  </div>
+  <div class="filter-tabs">
+    <div class="filter-tab active">All Work</div>
+    <div class="filter-tab">Exterior</div>
+    <div class="filter-tab">Interior</div>
+    <div class="filter-tab">Ceramic Coating</div>
+    <div class="filter-tab">Paint Correction</div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item wide">
+      <div class="photo-box" style="background:linear-gradient(135deg,var(--primary),#2a4a8c);height:280px;">
+        <span class="photo-icon">📸</span>Add your photo here<small>Full exterior detail — sedan</small>
+      </div>
+      <div class="photo-caption">Full Exterior Detail — 2022 Honda Accord</div>
+    </div>
+    <div class="gallery-item tall">
+      <div class="photo-box" style="background:linear-gradient(160deg,var(--accent),#c8801a);" >
+        <span class="photo-icon">📸</span>Add your photo here<small>Interior transformation</small>
+      </div>
+      <div class="photo-caption">Premium Interior Detail — 2020 GMC Terrain</div>
+    </div>
+    <div class="gallery-item">
+      <div class="photo-box" style="background:linear-gradient(135deg,#1a4060,#0d2a40);">
+        <span class="photo-icon">📸</span>Add your photo here<small>Wheel detail close-up</small>
+      </div>
+      <div class="photo-caption">Wheel & Tire Detail</div>
+    </div>
+    <div class="gallery-item">
+      <div class="photo-box" style="background:linear-gradient(135deg,#2a5c2a,#1a3d1a);">
+        <span class="photo-icon">📸</span>Add your photo here<small>Ceramic coating water bead</small>
+      </div>
+      <div class="photo-caption">Ceramic Coating — Water Bead Test</div>
+    </div>
+    <div class="gallery-item">
+      <div class="photo-box" style="background:linear-gradient(135deg,#5c1a2a,#3d0d1a);">
+        <span class="photo-icon">📸</span>Add your photo here<small>Leather seat conditioning</small>
+      </div>
+      <div class="photo-caption">Leather Conditioning & Restoration</div>
+    </div>
+    <div class="gallery-item">
+      <div class="photo-box" style="background:linear-gradient(135deg,#3a2a5c,#1a0d3d);">
+        <span class="photo-icon">📸</span>Add your photo here<small>Engine bay cleaning</small>
+      </div>
+      <div class="photo-caption">Engine Bay Detail</div>
+    </div>
+    <div class="gallery-item wide">
+      <div class="photo-box" style="background:linear-gradient(135deg,#1a3a5c,var(--primary));height:280px;">
+        <span class="photo-icon">📸</span>Add your photo here<small>Truck full detail</small>
+      </div>
+      <div class="photo-caption">Complete Detail — 2021 Ford F-150</div>
+    </div>
+    <div class="gallery-item">
+      <div class="photo-box" style="background:linear-gradient(135deg,#5c4a1a,#3d2f0d);">
+        <span class="photo-icon">📸</span>Add your photo here<small>Headlight restoration</small>
+      </div>
+      <div class="photo-caption">Headlight Restoration — Before & After</div>
+    </div>
+    <div class="gallery-item">
+      <div class="photo-box" style="background:linear-gradient(135deg,#2a4a2a,#1a3020);">
+        <span class="photo-icon">📸</span>Add your photo here<small>Glass coating rain repel</small>
+      </div>
+      <div class="photo-caption">Glass Ceramic Coating</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE & AFTER -->
+<section class="ba-section">
+  <div style="text-align:center;max-width:700px;margin:0 auto;">
+    <p class="section-label">Transformations</p>
+    <h2 class="section-title" style="color:var(--white);">Before & <span>After</span></h2>
+    <p class="ba-intro">We photograph every full detail job before we start and after we finish. No filters, no tricks — just the results of professional detailing.</p>
+  </div>
+  <div class="ba-grid">
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-photo ba-before">Add photo<br>here</div>
+        <div class="ba-photo ba-after">Add photo<br>here</div>
+      </div>
+      <div class="ba-label">Interior Detail — 2018 Toyota Sienna (Pet Hair Removal)</div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-photo ba-before">Add photo<br>here</div>
+        <div class="ba-photo ba-after">Add photo<br>here</div>
+      </div>
+      <div class="ba-label">Paint Correction — 2019 BMW 5 Series (Swirl Removal)</div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-photo ba-before">Add photo<br>here</div>
+        <div class="ba-photo ba-after">Add photo<br>here</div>
+      </div>
+      <div class="ba-label">Headlight Restoration — 2015 Honda Pilot</div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-photo ba-before">Add photo<br>here</div>
+        <div class="ba-photo ba-after">Add photo<br>here</div>
+      </div>
+      <div class="ba-label">Full Interior Detail — 2017 Chevrolet Tahoe</div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-photo ba-before">Add photo<br>here</div>
+        <div class="ba-photo ba-after">Add photo<br>here</div>
+      </div>
+      <div class="ba-label">Trim Restoration — 2016 Jeep Wrangler</div>
+    </div>
+    <div class="ba-card">
+      <div class="ba-pair">
+        <div class="ba-photo ba-before">Add photo<br>here</div>
+        <div class="ba-photo ba-after">Add photo<br>here</div>
+      </div>
+      <div class="ba-label">Engine Bay Detail — 2020 Dodge Ram 1500</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERAMIC COATING GALLERY -->
+<section class="ceramic-section">
+  <div style="text-align:center;max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Ceramic Coating Results</p>
+    <h2 class="section-title">Long-Lasting <span>Protection</span></h2>
+    <p style="color:#666;font-size:1rem;line-height:1.7;">Ceramic coating transforms how your car looks and how easy it is to keep clean. These photos show real coating results.</p>
+  </div>
+  <div class="ceramic-grid">
+    <div class="ceramic-item">
+      <div class="ceramic-photo" style="background:linear-gradient(160deg,var(--primary),#3a5090);">
+        <div><div class="ceramic-tag">Pro Ceramic</div><br>Add your photo here<br><small style="font-size:0.78rem;opacity:0.75;">2022 Audi A4 — Water bead</small></div>
+      </div>
+    </div>
+    <div class="ceramic-item">
+      <div class="ceramic-photo" style="background:linear-gradient(160deg,#1a1a1a,#3a3a3a);">
+        <div><div class="ceramic-tag">Elite Ceramic</div><br>Add your photo here<br><small style="font-size:0.78rem;opacity:0.75;">2023 Porsche 911 — Gloss finish</small></div>
+      </div>
+    </div>
+    <div class="ceramic-item">
+      <div class="ceramic-photo" style="background:linear-gradient(160deg,#2a4a1a,#1a3010);">
+        <div><div class="ceramic-tag">Entry Ceramic</div><br>Add your photo here<br><small style="font-size:0.78rem;opacity:0.75;">2021 Tesla Model 3 — UV test</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VEHICLE TYPES -->
+<section class="vehicle-section">
+  <div style="text-align:center;max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">All Vehicle Types</p>
+    <h2 class="section-title">We Detail <span>Everything</span></h2>
+    <p style="color:#555;font-size:1rem;line-height:1.7;">From compact sedans to full-size pickup trucks, exotic sports cars to family minivans — we've got the right approach for every vehicle.</p>
+  </div>
+  <div class="vehicle-grid">
+    <div class="vehicle-card">
+      <div class="vehicle-photo" style="background:linear-gradient(135deg,var(--primary),#2a4a8c);">
+        <span style="font-size:2rem;">🚗</span>Add photo here
+      </div>
+      <div class="vehicle-card-body">
+        <h4>Sedans & Coupes</h4>
+        <p>Compact through full-size — our most common vehicle type.</p>
+      </div>
+    </div>
+    <div class="vehicle-card">
+      <div class="vehicle-photo" style="background:linear-gradient(135deg,#2a5c2a,#1a4a1a);">
+        <span style="font-size:2rem;">🚙</span>Add photo here
+      </div>
+      <div class="vehicle-card-body">
+        <h4>SUVs & Crossovers</h4>
+        <p>More surface area, more interior space — we handle it all.</p>
+      </div>
+    </div>
+    <div class="vehicle-card">
+      <div class="vehicle-photo" style="background:linear-gradient(135deg,#5c3a1a,#3d2010);">
+        <span style="font-size:2rem;">🛻</span>Add photo here
+      </div>
+      <div class="vehicle-card-body">
+        <h4>Trucks & Pickups</h4>
+        <p>Cab interior, bed, running boards, wheel arches — the works.</p>
+      </div>
+    </div>
+    <div class="vehicle-card">
+      <div class="vehicle-photo" style="background:linear-gradient(135deg,#3a1a5c,#1a0d3d);">
+        <span style="font-size:2rem;">🏎️</span>Add photo here
+      </div>
+      <div class="vehicle-card-body">
+        <h4>Sports & Exotics</h4>
+        <p>Extra care, specialized products, and full paint protection.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <h2>Ready for Your Transformation?</h2>
+  <p>Book a detail and join thousands of satisfied AutoShine customers. Your car deserves to look this good.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="contact.html" class="btn-primary">Book a Detail</a>
+    <a href="services.html" class="btn-outline">See Pricing</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Auto<span style="color:var(--accent);">Shine</span></span>
+      <p>Mobile auto detailing done right. We bring professional-grade products and proven techniques directly to your door.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📞 (555) 010-0100</p>
+      <p>✉️ hello@autoshinedetail.com</p>
+      <p>📍 Serving the Greater Metro Area</p>
+      <p style="margin-top:0.75rem;">Mon–Sat: 7am – 6pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 AutoShine Mobile Detailing. All rights reserved. | Template by <strong>Sites by Mel</strong></p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  // Filter tabs (visual only — add JS filtering logic when real images are added)
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

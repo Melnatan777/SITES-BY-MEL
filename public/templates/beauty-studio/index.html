@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glow Studio – Licensed Beauty Studio</title>
+  <style>
+    /* ── CSS VARIABLES ── */
+    :root {
+      --primary:   #5c1a3a;
+      --secondary: #8a2550;
+      --accent:    #c94070;
+      --text:      #2a1520;
+      --light:     #fdf5f7;
+      --white:     #ffffff;
+      --blush:     #f2c4ce;
+      --radius:    10px;
+      --shadow:    0 4px 20px rgba(92,26,58,0.12);
+      --transition: 0.25s ease;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, Helvetica, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ── TYPOGRAPHY ── */
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-family: Georgia, serif; line-height: 1.15; }
+    h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-family: Georgia, serif; margin-bottom: 0.5rem; }
+    h3 { font-size: 1.2rem; margin-bottom: 0.4rem; }
+
+    /* ── UTILITY ── */
+    .container    { max-width: 1140px; margin: 0 auto; padding: 0 1.25rem; }
+    .section      { padding: 5rem 0; }
+    .section-label { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; color: var(--accent); font-weight: 700; margin-bottom: 0.5rem; }
+    .section-title { color: var(--primary); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      border: 2px solid transparent;
+    }
+    .btn:hover     { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+    .btn-primary   { background: var(--accent); color: var(--white); }
+    .btn-outline   { background: transparent; border-color: var(--white); color: var(--white); }
+    .btn-outline:hover { background: var(--white); color: var(--accent); }
+    .btn-secondary { background: var(--primary); color: var(--white); }
+
+    /* ── IMAGE PLACEHOLDER ── */
+    .img-placeholder {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 1rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* ════════════════════════════════
+       NAVIGATION
+    ════════════════════════════════ */
+    /* ── NAV ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--white);
+      box-shadow: 0 2px 12px rgba(92,26,58,0.10);
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      max-width: 1140px;
+      margin: 0 auto;
+      gap: 1rem;
+    }
+    .nav-logo {
+      font-family: Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--white); padding: 0.6rem 1.4rem; border-radius: var(--radius); font-weight: 700; font-size: 0.9rem; transition: background var(--transition); }
+    .nav-cta:hover { background: var(--primary); color: var(--white); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .nav-toggle span { display: block; width: 26px; height: 3px; background: var(--primary); border-radius: 2px; }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-links  { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); flex-direction: column; padding: 1.5rem; gap: 1.25rem; box-shadow: 0 8px 20px rgba(0,0,0,0.10); }
+      .nav-links.open { display: flex; }
+    }
+
+    /* ════════════════════════════════
+       HERO SECTION
+    ════════════════════════════════ */
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, #c94070 100%);
+      color: var(--white);
+      padding: 5.5rem 1.25rem 4.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 30%, rgba(242,196,206,0.15) 0%, transparent 60%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: var(--white);
+      border-radius: 50px;
+      padding: 0.35rem 1.1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.04em;
+      position: relative;
+    }
+    .hero h1 { color: var(--white); margin-bottom: 1rem; position: relative; }
+    .hero h1 span { color: var(--blush); }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(255,255,255,0.88);
+      max-width: 580px;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    /* ════════════════════════════════
+       TRUST BAR
+    ════════════════════════════════ */
+    /* ── TRUST BAR ── */
+    .trust-bar { background: var(--primary); color: var(--white); padding: 1.25rem; }
+    .trust-bar-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+    }
+    .trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .trust-item strong { font-size: 1.25rem; color: var(--blush); }
+    .trust-item span   { font-size: 0.82rem; opacity: 0.85; }
+
+    /* ════════════════════════════════
+       SERVICES SECTION
+    ════════════════════════════════ */
+    /* ── SERVICES ── */
+    .services { background: var(--light); }
+    .services-header { text-align: center; margin-bottom: 3rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform var(--transition);
+      border-top: 4px solid var(--accent);
+    }
+    .service-card:hover { transform: translateY(-4px); }
+    .service-icon {
+      width: 58px; height: 58px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .service-card h3 { color: var(--primary); font-size: 1.05rem; }
+    .service-card p  { font-size: 0.88rem; color: #776; margin-top: 0.4rem; }
+
+    /* ════════════════════════════════
+       ABOUT SECTION
+    ════════════════════════════════ */
+    /* ── ABOUT THE STYLIST ── */
+    .about { background: var(--white); }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-photo .img-placeholder {
+      height: 480px;
+      background: linear-gradient(160deg, var(--blush), var(--secondary));
+    }
+    .about-text .section-label { margin-bottom: 0.5rem; }
+    .about-text h2 { margin-bottom: 1rem; }
+    .about-text p  { color: #554; font-size: 0.97rem; margin-bottom: 1rem; line-height: 1.75; }
+    .about-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .about-stat strong { display: block; font-size: 1.8rem; color: var(--accent); font-family: Georgia, serif; }
+    .about-stat span   { font-size: 0.85rem; color: #776; }
+
+    @media (max-width: 768px) {
+      .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .about-photo .img-placeholder { height: 320px; }
+    }
+
+    /* ════════════════════════════════
+       GALLERY SECTION
+    ════════════════════════════════ */
+    /* ── GALLERY ── */
+    .gallery { background: var(--light); }
+    .gallery-header { text-align: center; margin-bottom: 3rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .gallery-item .img-placeholder { height: 220px; }
+    .gallery-item:nth-child(1) .img-placeholder { background: linear-gradient(135deg, var(--primary), #9a3060); }
+    .gallery-item:nth-child(2) .img-placeholder { background: linear-gradient(135deg, var(--accent), #e06080); }
+    .gallery-item:nth-child(3) .img-placeholder { background: linear-gradient(135deg, #c060a0, var(--secondary)); }
+    .gallery-item:nth-child(4) .img-placeholder { background: linear-gradient(135deg, var(--secondary), var(--primary)); }
+    .gallery-item:nth-child(5) .img-placeholder { background: linear-gradient(135deg, #a03060, var(--accent)); }
+    .gallery-item:nth-child(6) .img-placeholder { background: linear-gradient(135deg, var(--blush), var(--secondary)); }
+
+    @media (max-width: 600px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ════════════════════════════════
+       PRICING SECTION
+    ════════════════════════════════ */
+    /* ── PRICING ── */
+    .pricing { background: var(--white); }
+    .pricing-header { text-align: center; margin-bottom: 3rem; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.75rem;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+    }
+    .pricing-card.featured {
+      background: var(--white);
+      border: 2px solid var(--accent);
+      transform: scale(1.04);
+    }
+    .featured-badge {
+      position: absolute;
+      top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 1rem;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+    .pricing-card h3    { color: var(--primary); font-size: 1.15rem; margin-bottom: 0.25rem; }
+    .pricing-desc       { font-size: 0.85rem; color: #887; margin-bottom: 1rem; }
+    .price-amount       { font-size: 3rem; font-weight: 700; color: var(--accent); line-height: 1; margin: 0.75rem 0; }
+    .price-amount sup   { font-size: 1.2rem; vertical-align: top; margin-top: 0.7rem; display: inline-block; }
+    .pricing-includes   { margin: 1.25rem 0; text-align: left; }
+    .pricing-includes li { font-size: 0.9rem; padding: 0.35rem 0; border-bottom: 1px solid rgba(92,26,58,0.08); display: flex; gap: 0.5rem; }
+    .pricing-includes li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+
+    /* ════════════════════════════════
+       REVIEWS SECTION
+    ════════════════════════════════ */
+    /* ── REVIEWS ── */
+    .reviews { background: var(--light); }
+    .reviews-header { text-align: center; margin-bottom: 3rem; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.75rem;
+    }
+    .review-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem 1.75rem;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--accent);
+    }
+    .stars       { color: #e8a; font-size: 1.1rem; margin-bottom: 0.75rem; letter-spacing: 2px; }
+    .review-text { font-style: italic; font-size: 0.97rem; color: var(--text); margin-bottom: 1.25rem; line-height: 1.7; }
+    .reviewer    { display: flex; align-items: center; gap: 0.75rem; }
+    .reviewer-info strong { display: block; font-size: 0.95rem; color: var(--primary); }
+    .reviewer-info span   { font-size: 0.82rem; color: #998; }
+
+    /* ════════════════════════════════
+       CONTACT / CTA SECTION
+    ════════════════════════════════ */
+    /* ── CONTACT CTA ── */
+    .contact-cta { background: var(--primary); color: var(--white); }
+    .contact-cta-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .contact-info h2 { color: var(--white); margin-bottom: 1rem; }
+    .contact-info p  { color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; }
+    .contact-details { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-details li {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      font-size: 0.95rem; color: rgba(255,255,255,0.88);
+    }
+    .contact-details li strong { color: var(--blush); min-width: 70px; }
+    .booking-form   { background: rgba(255,255,255,0.08); border-radius: var(--radius); padding: 2rem; }
+    .booking-form h3 { color: var(--white); margin-bottom: 1.25rem; }
+    .form-group     { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.88rem; margin-bottom: 0.35rem; color: rgba(255,255,255,0.8); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 0.7rem 1rem; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.12);
+      color: var(--white); font-size: 0.95rem; font-family: Arial, sans-serif;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.5); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    @media (max-width: 768px) {
+      .contact-cta-inner { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    /* ── FOOTER ── */
+    footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.72);
+      padding: 3.5rem 1.25rem 1.5rem;
+      border-top: 3px solid var(--accent);
+    }
+    .footer-grid {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; }
+    .footer-col h4  { color: var(--white); font-size: 1rem; margin-bottom: 1rem; }
+    .footer-col ul li { margin-bottom: 0.5rem; }
+    .footer-col ul li a { font-size: 0.9rem; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: var(--blush); }
+    .footer-bottom {
+      max-width: 1140px; margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 1.25rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap;
+      gap: 0.5rem; font-size: 0.82rem;
+    }
+    .footer-bottom a { color: var(--blush); }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <header>
+    <nav>
+      <!-- To accept online payments: create a free payment link at dashboard.stripe.com/payment-links and replace the href on the "Pay Deposit" or "Book Now" button -->
+      <a class="nav-logo" href="index.html">Glow <span>Studio</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="this.nextElementSibling.classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ── HERO SECTION ── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">Licensed &amp; Insured Beauty Studio</div>
+      <h1>Where Beauty <span>Meets Confidence</span></h1>
+      <p class="hero-sub">Expert hair, lash extensions, brow shaping, waxing, and skincare — all in a warm, welcoming studio designed just for you.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary">Book Your Appointment</a>
+        <a href="#services" class="btn btn-outline">View Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRUST BAR ── -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <div class="trust-item"><strong>500+</strong><span>Clients Served</span></div>
+      <div class="trust-item"><strong>Licensed</strong><span>Cosmetologist</span></div>
+      <div class="trust-item"><strong>All</strong><span>Hair Types Welcome</span></div>
+      <div class="trust-item"><strong>Luxury</strong><span>Products Used</span></div>
+    </div>
+  </div>
+
+  <!-- ── SERVICES SECTION ── -->
+  <section class="services section" id="services">
+    <div class="container">
+      <div class="services-header">
+        <p class="section-label">What We Offer</p>
+        <h2 class="section-title">Our Beauty Services</h2>
+        <p style="color:#776; max-width:520px; margin:0 auto;">From a fresh cut to a complete transformation, we offer a full menu of luxury beauty services tailored to you.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">✂️</div>
+          <h3>Haircut &amp; Style</h3>
+          <p>Precision cuts and blowouts for every hair type and texture.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🎨</div>
+          <h3>Color &amp; Highlights</h3>
+          <p>Full color, highlights, balayage, ombre, and color corrections.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">👁️</div>
+          <h3>Lash Extensions</h3>
+          <p>Classic, hybrid, and volume lash sets for a stunning, long-lasting look.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🌿</div>
+          <h3>Brow Shaping</h3>
+          <p>Threading, waxing, and tinting to frame your face beautifully.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">✨</div>
+          <h3>Waxing Services</h3>
+          <p>Full-body waxing with gentle, skin-safe wax formulas.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💆</div>
+          <h3>Facials &amp; Skincare</h3>
+          <p>Customized facial treatments for glowing, healthy skin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT THE STYLIST SECTION ── -->
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-photo">
+          <div class="img-placeholder" style="height:480px">Add your photo here</div>
+        </div>
+        <div class="about-text">
+          <p class="section-label">Your Stylist</p>
+          <h2 class="section-title">Meet [Stylist Name]</h2>
+          <p>With over 10 years of experience in the beauty industry, [Stylist Name] has built a reputation for delivering exceptional results with a personal touch. Licensed and trained at [Beauty School Name], she's passionate about helping every client look and feel their absolute best.</p>
+          <p>Whether you're coming in for a quick trim or a full transformation, you'll always leave feeling refreshed, confident, and beautiful. She specializes in all hair types and textures, and stays up-to-date with the latest trends and techniques through ongoing education.</p>
+          <p>The studio is a judgment-free, inclusive space where every client is welcomed with warmth and treated like family. Your comfort and satisfaction are always the top priority.</p>
+          <div class="about-stats">
+            <div class="about-stat"><strong>10+</strong><span>Years Experience</span></div>
+            <div class="about-stat"><strong>500+</strong><span>Happy Clients</span></div>
+            <div class="about-stat"><strong>100%</strong><span>Licensed &amp; Insured</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY SECTION ── -->
+  <section class="gallery section" id="gallery">
+    <div class="container">
+      <div class="gallery-header">
+        <p class="section-label">Our Work</p>
+        <h2 class="section-title">Transformations &amp; Looks</h2>
+        <p style="color:#776; max-width:500px; margin:0 auto;">A look at some of our favorite client transformations. Add your own photos to showcase your work!</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item"><div class="img-placeholder" style="height:240px">Add your photo here</div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:240px">Add your photo here</div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:240px">Add your photo here</div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:240px">Add your photo here</div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:240px">Add your photo here</div></div>
+        <div class="gallery-item"><div class="img-placeholder" style="height:240px">Add your photo here</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING SECTION ── -->
+  <section class="pricing section" id="pricing">
+    <div class="container">
+      <div class="pricing-header">
+        <p class="section-label">Investment in You</p>
+        <h2 class="section-title">Service Packages</h2>
+        <p style="color:#776; max-width:500px; margin:0 auto;">Choose the package that fits your needs. Custom quotes available for color services and special requests.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Essential</h3>
+          <p class="pricing-desc">Perfect for maintenance and everyday beauty</p>
+          <div class="price-amount"><sup>$</sup>65</div>
+          <ul class="pricing-includes">
+            <li>Haircut &amp; blowout</li>
+            <li>Brow shaping</li>
+            <li>Deep conditioning treatment</li>
+            <li>Style consultation</li>
+          </ul>
+          <a href="#contact" class="btn btn-secondary" style="width:100%; text-align:center;">Book Essential</a>
+        </div>
+        <div class="pricing-card featured">
+          <div class="featured-badge">Most Popular</div>
+          <h3>Signature</h3>
+          <p class="pricing-desc">The full beauty experience you deserve</p>
+          <div class="price-amount"><sup>$</sup>120</div>
+          <ul class="pricing-includes">
+            <li>Haircut, color &amp; blowout</li>
+            <li>Brow shaping &amp; tint</li>
+            <li>Scalp treatment</li>
+            <li>Style &amp; finish products</li>
+            <li>Complimentary gloss</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary" style="width:100%; text-align:center;">Book Signature</a>
+        </div>
+        <div class="pricing-card">
+          <h3>Luxe</h3>
+          <p class="pricing-desc">The ultimate head-to-toe glow-up</p>
+          <div class="price-amount"><sup>$</sup>185</div>
+          <ul class="pricing-includes">
+            <li>Full color service &amp; cut</li>
+            <li>Lash set (classic)</li>
+            <li>Facial treatment</li>
+            <li>Brow design &amp; tint</li>
+            <li>Take-home product gift</li>
+          </ul>
+          <a href="#contact" class="btn btn-secondary" style="width:100%; text-align:center;">Book Luxe</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REVIEWS SECTION ── -->
+  <section class="reviews section" id="reviews">
+    <div class="container">
+      <div class="reviews-header">
+        <p class="section-label">Client Love</p>
+        <h2 class="section-title">What Our Clients Say</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"I've been going to Glow Studio for two years now and I will never go anywhere else. Every single time I walk out feeling like a completely new person. The color work is absolutely stunning — she understood exactly what I wanted."</p>
+          <div class="reviewer">
+            <div class="reviewer-info">
+              <strong>Aisha M.</strong>
+              <span>Color &amp; Highlights Client</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"My lash extensions are always perfect — full, fluffy, and they last forever. I get compliments constantly and always tell everyone where I go. The studio is so clean, cozy, and professional. Highly recommend!"</p>
+          <div class="reviewer">
+            <div class="reviewer-info">
+              <strong>Brittany K.</strong>
+              <span>Lash Extension Client</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"As someone with curly, thick hair I've had so many bad haircuts from stylists who just didn't understand my texture. Not here. She took her time, asked great questions, and gave me the most beautiful cut I've ever had."</p>
+          <div class="reviewer">
+            <div class="reviewer-info">
+              <strong>Danielle R.</strong>
+              <span>Haircut &amp; Style Client</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT / CTA SECTION ── -->
+  <section class="contact-cta section" id="contact">
+    <div class="container">
+      <div class="contact-cta-inner">
+        <div class="contact-info">
+          <p class="section-label" style="color:var(--blush)">Let's Connect</p>
+          <h2>Ready for Your Glow-Up?</h2>
+          <p>Book your appointment today and let's create a look you'll absolutely love. New clients always welcome!</p>
+          <ul class="contact-details">
+            <li><strong>Phone:</strong> (555) 000-0000</li>
+            <li><strong>Address:</strong> 456 Beauty Lane, Your City, State 00000</li>
+            <li><strong>Email:</strong> hello@glowstudio.com</li>
+            <li><strong>Hours:</strong> Tue–Sat: 9am–7pm &nbsp;|&nbsp; Sun: 10am–5pm</li>
+          </ul>
+        </div>
+        <div class="booking-form">
+          <h3>Request an Appointment</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" placeholder="Jane Smith" />
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" placeholder="(555) 000-0000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Service Interested In</label>
+            <select>
+              <option>Haircut &amp; Style</option>
+              <option>Color &amp; Highlights</option>
+              <option>Lash Extensions</option>
+              <option>Brow Shaping</option>
+              <option>Waxing Services</option>
+              <option>Facials &amp; Skincare</option>
+              <option>Signature Package</option>
+              <option>Luxe Package</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred Date &amp; Time</label>
+            <input type="text" placeholder="e.g. Saturday afternoon" />
+          </div>
+          <div class="form-group">
+            <label>Anything else we should know?</label>
+            <textarea placeholder="Hair type, allergies, special requests..."></textarea>
+          </div>
+          <a href="#" class="btn btn-primary" style="width:100%; text-align:center; display:block;">Send Appointment Request</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" style="font-family:Georgia,serif; font-size:1.4rem; font-weight:700; color:var(--white);">Glow <span style="color:var(--blush)">Studio</span></a>
+        <p>A licensed beauty studio dedicated to helping every client look and feel their most confident. All hair types welcome. All beauty celebrated.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Haircut &amp; Style</a></li>
+          <li><a href="#services">Color &amp; Highlights</a></li>
+          <li><a href="#services">Lash Extensions</a></li>
+          <li><a href="#services">Brow Shaping</a></li>
+          <li><a href="#services">Waxing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About the Stylist</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#contact">Book Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Glow Studio. All rights reserved.</span>
+      <span>Website by <a href="#">Sites by Mel</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>

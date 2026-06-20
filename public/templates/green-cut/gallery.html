@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Gallery | GreenCut Lawn & Landscape</title>
+  <style>
+    :root {
+      --primary: #1e5c1a;
+      --secondary: #143d11;
+      --accent: #c8a61e;
+      --text: #1a2a18;
+      --light: #f4f7f4;
+      --white: #ffffff;
+      --shadow: 0 4px 20px rgba(0,0,0,0.12);
+      --radius: 8px;
+      --transition: 0.3s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; font-size: 16px; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+    .section-label { display: inline-block; background: var(--accent); color: var(--secondary); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 20px; margin-bottom: 1rem; }
+    .section-title { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: var(--secondary); }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 1000; background: var(--secondary); box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; max-width: 1180px; margin: 0 auto; }
+    .nav-logo { font-size: 1.5rem; font-weight: 900; color: var(--white); letter-spacing: -0.03em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { color: rgba(255,255,255,0.85); font-weight: 500; font-size: 0.95rem; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--secondary) !important; font-weight: 700 !important; padding: 0.55rem 1.4rem; border-radius: var(--radius); }
+    .nav-cta:hover { background: #b8960e !important; }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); padding: 4rem 1.5rem; text-align: center; color: var(--white); }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; margin-bottom: 0.75rem; }
+    .page-hero h1 span { color: var(--accent); }
+    .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.85); max-width: 560px; margin: 0 auto; }
+
+    /* BEFORE & AFTER */
+    .before-after-section { padding: 5rem 1.5rem; background: var(--light); }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .before-after-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .ba-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .ba-images { display: grid; grid-template-columns: 1fr 1fr; }
+    .ba-img { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.9); text-align: center; padding: 1rem; position: relative; }
+    .ba-img-label { position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(0,0,0,0.5); color: #fff; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.25rem 0.6rem; border-radius: 4px; }
+    .ba-info { padding: 1.25rem 1.5rem; }
+    .ba-info h4 { font-size: 1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.3rem; }
+    .ba-info p { font-size: 0.88rem; color: #4a6047; }
+    .ba-service-tag { display: inline-block; background: var(--light); color: var(--primary); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; margin-top: 0.5rem; }
+
+    /* MOWING GALLERY */
+    .gallery-section { padding: 5rem 1.5rem; background: var(--white); }
+    .gallery-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .gallery-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .gallery-item { position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); }
+    .gallery-item:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.18); }
+    .gallery-photo { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.9); text-align: center; padding: 1rem; }
+    .gallery-photo.tall { height: 300px; }
+    .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.6)); padding: 1.5rem 1rem 0.75rem; color: #fff; font-size: 0.82rem; font-weight: 600; }
+
+    /* SEASONAL SECTION */
+    .seasonal-section { padding: 5rem 1.5rem; background: var(--secondary); color: var(--white); }
+    .seasonal-header { text-align: center; margin-bottom: 3rem; }
+    .seasonal-header h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--white); margin-bottom: 0.5rem; }
+    .seasonal-header p { color: rgba(255,255,255,0.8); }
+    .seasonal-tabs { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .season-tab { padding: 0.6rem 1.5rem; border-radius: 20px; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: var(--transition); border: 2px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.75); background: transparent; }
+    .season-tab:hover, .season-tab.active { background: var(--accent); color: var(--secondary); border-color: var(--accent); }
+    .seasonal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .seasonal-item { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .seasonal-photo { height: 220px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.9); text-align: center; padding: 1rem; }
+    .seasonal-label { background: rgba(255,255,255,0.06); padding: 0.75rem 1rem; font-size: 0.88rem; color: rgba(255,255,255,0.85); }
+    .seasonal-label strong { display: block; color: var(--accent); font-size: 0.9rem; }
+
+    /* SNOW GALLERY */
+    .snow-section { padding: 5rem 1.5rem; background: #f0f5ff; }
+    .snow-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .snow-item { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .snow-photo { height: 230px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.9); text-align: center; padding: 1rem; }
+
+    /* ADD PHOTOS TIP */
+    .tip-banner { background: var(--accent); padding: 2rem 1.5rem; text-align: center; }
+    .tip-banner p { font-size: 1rem; font-weight: 600; color: var(--secondary); max-width: 700px; margin: 0 auto; }
+    .tip-banner strong { font-size: 1.1rem; display: block; margin-bottom: 0.4rem; }
+
+    /* CTA */
+    .cta-band { background: linear-gradient(135deg, var(--secondary), var(--primary)); padding: 4rem 1.5rem; text-align: center; color: var(--white); }
+    .cta-band h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 0.75rem; }
+    .cta-band h2 span { color: var(--accent); }
+    .cta-band p { color: rgba(255,255,255,0.85); margin-bottom: 2rem; font-size: 1.05rem; }
+    .btn-gold { display: inline-block; background: var(--accent); color: var(--secondary); padding: 0.9rem 2.2rem; border-radius: var(--radius); font-weight: 800; font-size: 1rem; transition: var(--transition); }
+    .btn-gold:hover { background: #b8960e; transform: translateY(-2px); }
+
+    /* FOOTER */
+    .footer { background: var(--secondary); color: rgba(255,255,255,0.8); padding: 3.5rem 1.5rem 1.5rem; }
+    .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; max-width: 1180px; margin: 0 auto; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; opacity: 0.8; margin-top: 0.75rem; }
+    .footer-col h4 { color: var(--accent); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col ul li { margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .footer-col ul li a:hover { color: var(--accent); }
+    .footer-contact-item { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .footer-contact-item strong { color: var(--accent); min-width: 60px; }
+    .footer-bottom { text-align: center; padding-top: 1.5rem; font-size: 0.82rem; opacity: 0.6; max-width: 1180px; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .before-after-grid { grid-template-columns: 1fr; }
+      .gallery-grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .seasonal-grid { grid-template-columns: repeat(2, 1fr); }
+      .snow-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; background: var(--secondary); padding: 1rem 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); width: 100%; }
+      .nav { position: relative; }
+      .nav-toggle { display: flex; }
+      .gallery-grid-3 { grid-template-columns: 1fr; }
+      .gallery-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .seasonal-grid { grid-template-columns: 1fr; }
+      .snow-grid { grid-template-columns: 1fr; }
+      .ba-images { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Green<span>Cut</span></a>
+      <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="nav-cta">Free Quote</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="section-label">Our Work</div>
+      <h1>See the <span>GreenCut Difference</span></h1>
+      <p>Browse before & after photos, seasonal projects, and examples of the quality work we deliver to hundreds of properties every week.</p>
+    </div>
+  </section>
+
+  <!-- TIP BANNER -->
+  <div class="tip-banner">
+    <p><strong>📸 This is Your Gallery</strong>Replace these placeholder boxes with your own before & after photos — the more real photos you add, the more clients you'll book!</p>
+  </div>
+
+  <!-- BEFORE & AFTER -->
+  <section class="before-after-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Before & After</div>
+        <h2 class="section-title">Transformations That Speak for Themselves</h2>
+        <p style="color: #4a6047; max-width: 560px; margin: 0 auto;">Real results from real properties. Add your own before & after photos to show potential clients exactly what you can do.</p>
+      </div>
+      <div class="before-after-grid">
+        <div class="ba-card">
+          <div class="ba-images">
+            <div class="ba-img" style="background: linear-gradient(135deg, #8a7a40 0%, #6a5a30 100%);">
+              <span class="ba-img-label">Before</span>
+              Add your photo here
+            </div>
+            <div class="ba-img" style="background: linear-gradient(135deg, #2d7a27 0%, #1e5c1a 100%);">
+              <span class="ba-img-label">After</span>
+              Add your photo here
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Overgrown Backyard — Maplewood</h4>
+            <p>Full mowing, trimming, edging, and bed cleanup. Transformed in a single afternoon visit.</p>
+            <span class="ba-service-tag">Mowing + Cleanup</span>
+          </div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-images">
+            <div class="ba-img" style="background: linear-gradient(135deg, #7a6a30 0%, #5a4a20 100%);">
+              <span class="ba-img-label">Before</span>
+              Add your photo here
+            </div>
+            <div class="ba-img" style="background: linear-gradient(135deg, #3a8a34 0%, #143d11 100%);">
+              <span class="ba-img-label">After</span>
+              Add your photo here
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Front Bed Renovation — Cedarville</h4>
+            <p>Weeds removed, borders redefined, fresh dark mulch installed. Completed in 3 hours.</p>
+            <span class="ba-service-tag">Mulch & Bed Care</span>
+          </div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-images">
+            <div class="ba-img" style="background: linear-gradient(135deg, #9a8850 0%, #7a6838 100%);">
+              <span class="ba-img-label">Before</span>
+              Add your photo here
+            </div>
+            <div class="ba-img" style="background: linear-gradient(135deg, #4a9a44 0%, #1e5c1a 100%);">
+              <span class="ba-img-label">After</span>
+              Add your photo here
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Spring Cleanup — Brookfield</h4>
+            <p>Winter debris cleared, dethatch completed, first mow of the season. Ready for summer!</p>
+            <span class="ba-service-tag">Spring Cleanup</span>
+          </div>
+        </div>
+        <div class="ba-card">
+          <div class="ba-images">
+            <div class="ba-img" style="background: linear-gradient(135deg, #b87040 0%, #8a4a20 100%);">
+              <span class="ba-img-label">Before</span>
+              Add your photo here
+            </div>
+            <div class="ba-img" style="background: linear-gradient(135deg, #5a8a20 0%, #2a5a10 100%);">
+              <span class="ba-img-label">After</span>
+              Add your photo here
+            </div>
+          </div>
+          <div class="ba-info">
+            <h4>Fall Leaf Removal — Riverside Heights</h4>
+            <p>Complete leaf removal from a property with 12 large trees. Hauled away 20+ bags of debris.</p>
+            <span class="ba-service-tag">Fall Cleanup</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOWING GALLERY -->
+  <section class="gallery-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Lawn Mowing</div>
+        <h2 class="section-title">Freshly Cut Lawns</h2>
+        <p style="color: #4a6047; max-width: 560px; margin: 0 auto;">Crisp stripes, clean edges, and perfectly maintained grass — this is what every GreenCut visit looks like.</p>
+      </div>
+      <div class="gallery-grid-3">
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #2d7a27, #1e5c1a);">Add your photo here</div>
+          <div class="gallery-caption">Freshly mowed lawn with stripe pattern</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #3a8a34, #143d11);">Add your photo here</div>
+          <div class="gallery-caption">Clean edge along driveway</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #4a9a44, #1e5c1a);">Add your photo here</div>
+          <div class="gallery-caption">Front yard — weekly maintenance customer</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #1e5c1a, #2d7a27);">Add your photo here</div>
+          <div class="gallery-caption">Large backyard — bi-weekly plan</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #143d11, #3a8a34);">Add your photo here</div>
+          <div class="gallery-caption">Sharp trimming around garden beds</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #2a5a10, #4a9a44);">Add your photo here</div>
+          <div class="gallery-caption">Commercial property — weekly service</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEASONAL GALLERY -->
+  <section class="seasonal-section">
+    <div class="container">
+      <div class="seasonal-header">
+        <div class="section-label" style="background: rgba(200,166,30,0.2); color: var(--accent); border: 1px solid var(--accent);">Year-Round Service</div>
+        <h2>Every Season, We've Got You Covered</h2>
+        <p>From spring greenup to fall leaf removal, GreenCut works year-round to keep your property looking great in every season.</p>
+      </div>
+      <div class="seasonal-tabs">
+        <span class="season-tab active">🌱 Spring</span>
+        <span class="season-tab">☀️ Summer</span>
+        <span class="season-tab">🍂 Fall</span>
+        <span class="season-tab">❄️ Winter</span>
+      </div>
+      <div class="seasonal-grid">
+        <div class="seasonal-item">
+          <div class="seasonal-photo" style="background: linear-gradient(160deg, #5a9a20, #2d6a10);">Add your photo here</div>
+          <div class="seasonal-label"><strong>Spring Dethatch</strong>Getting the lawn ready for growing season</div>
+        </div>
+        <div class="seasonal-item">
+          <div class="seasonal-photo" style="background: linear-gradient(160deg, #3a8a34, #1e5c1a);">Add your photo here</div>
+          <div class="seasonal-label"><strong>Spring Mulch Install</strong>Fresh mulch in all flower beds</div>
+        </div>
+        <div class="seasonal-item">
+          <div class="seasonal-photo" style="background: linear-gradient(160deg, #2d7a27, #143d11);">Add your photo here</div>
+          <div class="seasonal-label"><strong>First Mow of Spring</strong>Clean cut after winter dormancy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LANDSCAPE & MULCH GALLERY -->
+  <section class="gallery-section" style="background: var(--light);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Landscaping</div>
+        <h2 class="section-title">Mulch, Beds & Landscaping Work</h2>
+        <p style="color: #4a6047; max-width: 560px; margin: 0 auto;">Fresh mulch and clean bed borders take a property from good to great. See examples of our landscaping and bed care work.</p>
+      </div>
+      <div class="gallery-grid-4">
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #5a7a20, #3a5a10);">Add your photo here</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #6a8a30, #4a6a18);">Add your photo here</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #4a6a18, #2a4a08);">Add your photo here</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #3a5a10, #1e3a08);">Add your photo here</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #7a9a40, #5a7a28);">Add your photo here</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #4a7a20, #2a5a10);">Add your photo here</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #2a6a18, #1a4a10);">Add your photo here</div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-photo" style="background: linear-gradient(160deg, #5a8a28, #3a6018);">Add your photo here</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SNOW REMOVAL -->
+  <section class="snow-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Snow Removal</div>
+        <h2 class="section-title">Winter Snow Removal Work</h2>
+        <p style="color: #4a6070; max-width: 560px; margin: 0 auto;">We plow and shovel so you don't have to. Clear driveways, safe walkways — fast, reliable service after every storm.</p>
+      </div>
+      <div class="snow-grid">
+        <div class="snow-item">
+          <div class="snow-photo" style="background: linear-gradient(160deg, #6ab0d8, #2a70a8);">Add your photo here</div>
+        </div>
+        <div class="snow-item">
+          <div class="snow-photo" style="background: linear-gradient(160deg, #4a90b8, #1a5088);">Add your photo here</div>
+        </div>
+        <div class="snow-item">
+          <div class="snow-photo" style="background: linear-gradient(160deg, #8ad0f0, #4a90c0);">Add your photo here</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Like What You See? <span>Let's Get Started.</span></h2>
+      <p>Get a free quote today and your property could be in our next gallery update.</p>
+      <a href="contact.html" class="btn-gold">Get My Free Quote →</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-logo">Green<span>Cut</span></span>
+        <p>Professional lawn care and landscaping services for homeowners who want a beautiful property without the hassle. Serving your community since 2015.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="services.html">Services & Pricing</a></li>
+          <li><a href="gallery.html">Photo Gallery</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact & Quote</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item"><strong>Phone:</strong> (555) 123-4567</div>
+        <div class="footer-contact-item"><strong>Email:</strong> info@greencutlawn.com</div>
+        <div class="footer-contact-item"><strong>Hours:</strong> Mon–Sat 7am–6pm</div>
+        <div class="footer-contact-item"><strong>Area:</strong> Your City, State</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 GreenCut Lawn & Landscape. All rights reserved. | Website by <strong>Sites by Mel</strong></p>
+    </div>
+  </footer>
+
+</body>
+</html>

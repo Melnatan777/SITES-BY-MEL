@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Work With Me — VoiceFirst Creator Template</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--primary:#2d4a8a;--secondary:#1a2d5c;--accent:#e05c8a;--text:#1a1a2a;--light:#f4f6fb;--white:#fff;--shadow:0 4px 24px rgba(0,0,0,0.10);--radius:8px;--transition:all 0.2s;--gray:#6b6b80;--border:#dde2f0;--ink:#1a1a2e;--lavender:#eef1fa}
+body{font-family:'Inter',sans-serif;color:var(--text);line-height:1.6}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600}
+a{color:var(--primary);text-decoration:none}
+.container{max-width:1060px;margin:0 auto;padding:0 24px}
+.btn{display:inline-block;padding:11px 26px;font-family:'Inter',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;border:none;transition:var(--transition);border-radius:100px}
+.btn-primary{background:var(--primary);color:var(--white)}
+.btn-primary:hover{background:var(--secondary)}
+.btn-accent{background:var(--accent);color:var(--white)}
+.btn-accent:hover{background:#c94878}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+
+nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px;max-width:1060px;margin:0 auto;padding:0 24px}
+.nav-logo{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--ink)}
+.nav-logo span{color:var(--primary)}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{color:var(--gray);font-size:0.88rem;font-weight:500;transition:var(--transition)}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink)}
+
+.page-hero{background:linear-gradient(135deg,var(--lavender),#e8ecf8);padding:72px 24px 60px;text-align:center}
+.hero-tag{display:inline-block;background:var(--primary);color:var(--white);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.page-hero h1{font-size:clamp(2rem,5vw,3rem);margin-bottom:16px;color:var(--ink)}
+.page-hero p{font-size:1rem;color:var(--gray);max-width:520px;margin:0 auto;line-height:1.75;font-weight:300}
+
+.section{padding:80px 0}
+.section-light{background:var(--light)}
+.section-ink{background:var(--ink);color:var(--white)}
+.section-header{text-align:center;margin-bottom:52px}
+.section-header h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:10px}
+.section-header p{color:var(--gray);max-width:520px;margin:0 auto;line-height:1.7}
+.section-header .label{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.accent-line{width:40px;height:2px;background:var(--accent);margin:14px auto 0}
+
+/* SPEAKING */
+.speaking-grid{display:grid;grid-template-columns:2fr 1fr;gap:56px;align-items:start}
+.speaking-content h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:16px}
+.speaking-content p{color:var(--gray);line-height:1.8;margin-bottom:16px}
+.speaking-topics{display:flex;flex-direction:column;gap:14px;margin:24px 0}
+.topic-item{display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--lavender);border-radius:var(--radius);border-left:3px solid var(--primary)}
+.topic-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.topic-item h4{font-size:0.95rem;margin-bottom:4px}
+.topic-item p{font-size:0.85rem;color:var(--gray);margin:0}
+
+.speaking-sidebar{display:flex;flex-direction:column;gap:20px}
+.sidebar-card{background:var(--lavender);border-radius:var(--radius);padding:24px}
+.sidebar-card h4{font-size:0.95rem;margin-bottom:10px;color:var(--ink)}
+.sidebar-card p{font-size:0.85rem;color:var(--gray);line-height:1.7}
+.rate-display{font-family:'Fraunces',serif;font-size:1.8rem;color:var(--primary);margin:8px 0 4px}
+.rate-display small{font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--gray)}
+.logo-strip{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.logo-item{background:var(--white);border-radius:6px;padding:10px 14px;font-size:0.82rem;font-weight:600;color:var(--gray);text-align:center}
+
+/* SERVICES GRID */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.service-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:32px 24px;transition:var(--transition)}
+.service-card:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateY(-2px)}
+.service-card.featured{background:var(--primary);color:var(--white);border-color:var(--primary)}
+.service-icon{font-size:2rem;margin-bottom:16px}
+.service-card h3{font-size:1.1rem;margin-bottom:8px}
+.service-card.featured h3{color:var(--white)}
+.service-card p{font-size:0.88rem;line-height:1.7;color:var(--gray);margin-bottom:16px}
+.service-card.featured p{color:rgba(255,255,255,0.8)}
+.service-rate{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--primary);margin-bottom:4px;font-weight:600}
+.service-card.featured .service-rate{color:#f9d4e2}
+.service-period{font-size:0.78rem;color:var(--gray)}
+.service-card.featured .service-period{color:rgba(255,255,255,0.6)}
+.service-features{list-style:none;margin:16px 0;font-size:0.85rem}
+.service-features li{padding:5px 0;color:var(--gray);display:flex;gap:8px}
+.service-card.featured .service-features li{color:rgba(255,255,255,0.85)}
+.service-features li::before{content:'✓';color:var(--accent);flex-shrink:0;font-weight:600}
+
+/* MEDIA KIT */
+.media-kit{background:linear-gradient(135deg,var(--secondary),var(--primary));border-radius:var(--radius);padding:56px 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.media-kit-text h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--white);margin-bottom:14px}
+.media-kit-text p{color:rgba(255,255,255,0.8);line-height:1.8;margin-bottom:24px}
+.media-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.media-stat{background:rgba(255,255,255,0.1);border-radius:var(--radius);padding:20px;text-align:center}
+.media-stat-num{font-family:'Fraunces',serif;font-size:1.8rem;color:var(--white);font-weight:600}
+.media-stat-label{font-size:0.75rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px}
+
+/* PARTNERSHIPS */
+.partnership-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.partnership-card{border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.partnership-type{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.partnership-card h3{font-size:1.05rem;margin-bottom:8px}
+.partnership-card p{font-size:0.88rem;color:var(--gray);line-height:1.7;margin-bottom:16px}
+.partnership-card ul{list-style:none;font-size:0.85rem}
+.partnership-card ul li{padding:4px 0;color:var(--gray);display:flex;gap:8px}
+.partnership-card ul li::before{content:'→';color:var(--primary)}
+
+/* COURSES */
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.course-card{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.course-thumb{height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;font-size:0.8rem;color:rgba(255,255,255,0.4)}
+.course-body{padding:20px}
+.course-badge{display:inline-block;font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:8px}
+.badge-live{background:#fce4ec;color:#c62828}
+.badge-self{background:#e8f5e9;color:#2e7d32}
+.badge-free{background:#e3f2fd;color:#1565c0}
+.course-body h3{font-size:1rem;margin-bottom:6px}
+.course-body p{font-size:0.85rem;color:var(--gray);line-height:1.6;margin-bottom:12px}
+.course-price{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--primary);font-weight:600}
+
+/* PROCESS */
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.process-steps::before{content:'';position:absolute;top:28px;left:12.5%;right:12.5%;height:2px;background:var(--border)}
+.step{text-align:center;padding:0 16px}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--primary);color:var(--white);font-family:'Fraunces',serif;font-size:1.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative;z-index:1}
+.step h4{font-size:0.92rem;margin-bottom:6px}
+.step p{font-size:0.82rem;color:var(--gray);line-height:1.6}
+
+footer{background:var(--ink);color:rgba(255,255,255,0.65);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--white);margin-bottom:10px}
+.footer-logo span{color:#9b7dd4}
+footer h4{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:8px}
+footer a{color:rgba(255,255,255,0.55);font-size:0.88rem;transition:var(--transition)}
+footer a:hover{color:#9b7dd4}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-bottom p{font-size:0.82rem}
+
+@media(max-width:900px){
+  .speaking-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .media-kit{grid-template-columns:1fr;padding:36px 28px}
+  .partnership-grid{grid-template-columns:1fr}
+  .courses-grid{grid-template-columns:1fr 1fr}
+  .process-steps{grid-template-columns:1fr 1fr;gap:24px}
+  .process-steps::before{display:none}
+}
+@media(max-width:680px){
+  .nav-links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--white);flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .services-grid{grid-template-columns:1fr}
+  .courses-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr}
+  .media-stats{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">The <span>Thoughtful</span> Creator</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html" class="active">Work With Me</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Media</a></li>
+      <li><a href="contact.html" class="btn btn-primary" style="padding:8px 18px">Contact</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <span class="hero-tag">Speaking · Consulting · Courses</span>
+  <h1>Work With Me</h1>
+  <p>From keynote stages to brand partnerships and digital courses — here's how we can create something meaningful together.</p>
+</div>
+
+<!-- SPEAKING -->
+<section class="section">
+  <div class="container">
+    <div class="speaking-grid">
+      <div class="speaking-content">
+        <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:10px">Keynotes & Panels</p>
+        <h2>Speaking & Events</h2>
+        <p>I speak to audiences of creators, marketers, and business leaders about building creative careers with intention — the mindset, the mechanics, and the meaning behind the work.</p>
+        <p>Available for conferences, corporate events, podcasts, panels, and university engagements. Past clients include Fortune 500 marketing teams, top-tier creator conferences, and leading universities.</p>
+        <div class="speaking-topics">
+          <div class="topic-item">
+            <span class="topic-icon">🎤</span>
+            <div>
+              <h4>The Creator Economy is Changing — Here's How to Stay Relevant</h4>
+              <p>A data-backed look at where content creation is heading and how to future-proof your career</p>
+            </div>
+          </div>
+          <div class="topic-item">
+            <span class="topic-icon">🧠</span>
+            <div>
+              <h4>From Burnout to Breakthrough: A Creator's Mental Health Playbook</h4>
+              <p>Honest, practical strategies for sustainable creativity without sacrificing wellbeing</p>
+            </div>
+          </div>
+          <div class="topic-item">
+            <span class="topic-icon">💡</span>
+            <div>
+              <h4>Monetize Without Selling Out: Building a Business Around Your Voice</h4>
+              <p>How to earn from your content in ways that amplify your values rather than compromise them</p>
+            </div>
+          </div>
+          <div class="topic-item">
+            <span class="topic-icon">📊</span>
+            <div>
+              <h4>The Content Strategy That Actually Works in 2025</h4>
+              <p>A workshop-style session on building an audience-first content system that compounds over time</p>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="contact.html" class="btn btn-primary">Inquire About Speaking</a>
+          <a href="#media-kit" class="btn btn-outline">Download Media Kit</a>
+        </div>
+      </div>
+
+      <div class="speaking-sidebar">
+        <div class="sidebar-card">
+          <h4>Speaking Fees</h4>
+          <div class="rate-display">$3,500 <small>keynote</small></div>
+          <p>Virtual keynotes from $1,500. Workshop pricing available. Nonprofit and educational rates offered — ask us.</p>
+        </div>
+        <div class="sidebar-card">
+          <h4>Past Stages</h4>
+          <div class="logo-strip">
+            <div class="logo-item">Creator Economy Summit</div>
+            <div class="logo-item">Content Marketing World</div>
+            <div class="logo-item">TedX — Add Your Event</div>
+            <div class="logo-item">Adobe MAX</div>
+            <div class="logo-item">Yale School of Management</div>
+          </div>
+        </div>
+        <div class="sidebar-card">
+          <h4>What You Get</h4>
+          <p style="font-size:0.85rem;color:var(--gray);line-height:1.7">✓ Pre-event call to customize content<br/>✓ Custom slide deck for your audience<br/>✓ Q&A and audience interaction<br/>✓ Post-event resource guide for attendees</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSULTING SERVICES -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">1:1 & Group Work</p>
+      <h2>Consulting Services</h2>
+      <p>Deep-dive work for creators and brands ready to level up their content strategy, audience growth, and monetization.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🗺️</div>
+        <h3>Content Strategy Intensive</h3>
+        <p>A two-hour deep dive into your content ecosystem. We'll audit your current output, define your niche positioning, and build a 90-day content roadmap you can actually execute.</p>
+        <div class="service-rate">$750</div>
+        <div class="service-period">2-hour session + written roadmap</div>
+        <ul class="service-features">
+          <li>Full content audit</li>
+          <li>Audience persona workshop</li>
+          <li>90-day content calendar</li>
+          <li>Channel optimization recommendations</li>
+          <li>2 weeks of async follow-up support</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="width:100%;text-align:center">Book a Session</a>
+      </div>
+      <div class="service-card featured">
+        <div class="service-icon">⭐</div>
+        <h3>Creator Accelerator (Monthly)</h3>
+        <p>Ongoing monthly support for creators serious about growth. Weekly check-ins, content reviews, strategy pivots, and direct access to me via Slack throughout the month.</p>
+        <div class="service-rate">$1,800 <small style="font-size:0.75rem;font-family:Inter,sans-serif;color:rgba(255,255,255,0.6)">/mo</small></div>
+        <div class="service-period">3-month minimum commitment</div>
+        <ul class="service-features">
+          <li>Weekly 45-min strategy calls</li>
+          <li>Content review & feedback</li>
+          <li>Slack access (M–F response)</li>
+          <li>Monthly analytics review</li>
+          <li>Monetization planning</li>
+        </ul>
+        <a href="contact.html" class="btn btn-accent" style="width:100%;text-align:center">Apply Now</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏢</div>
+        <h3>Brand Content Advisory</h3>
+        <p>For marketing teams and brand leaders who want to think like creators. I'll help you build a content culture, creator partnership strategy, and audience-first brand voice.</p>
+        <div class="service-rate">Custom</div>
+        <div class="service-period">Retainer or project basis</div>
+        <ul class="service-features">
+          <li>Team content strategy workshops</li>
+          <li>Creator partnership framework</li>
+          <li>Editorial calendar systems</li>
+          <li>Voice & positioning guide</li>
+          <li>Quarterly strategy reviews</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="width:100%;text-align:center">Let's Talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA KIT / STATS -->
+<section class="section" id="media-kit">
+  <div class="container">
+    <div class="media-kit">
+      <div class="media-kit-text">
+        <h2>Audience & Reach</h2>
+        <p>I've spent five years building a highly engaged audience of thoughtful creators, marketers, and entrepreneurs. Here's what that looks like by the numbers.</p>
+        <a href="contact.html" class="btn" style="background:var(--white);color:var(--primary)">Request Full Media Kit</a>
+      </div>
+      <div class="media-stats">
+        <div class="media-stat">
+          <div class="media-stat-num">8.4K</div>
+          <div class="media-stat-label">Newsletter Subscribers</div>
+        </div>
+        <div class="media-stat">
+          <div class="media-stat-num">52%</div>
+          <div class="media-stat-label">Email Open Rate</div>
+        </div>
+        <div class="media-stat">
+          <div class="media-stat-num">24K</div>
+          <div class="media-stat-label">Instagram Followers</div>
+        </div>
+        <div class="media-stat">
+          <div class="media-stat-num">142</div>
+          <div class="media-stat-label">Podcast Episodes</div>
+        </div>
+        <div class="media-stat">
+          <div class="media-stat-num">18K</div>
+          <div class="media-stat-label">Monthly Podcast Listeners</div>
+        </div>
+        <div class="media-stat">
+          <div class="media-stat-num">4.9★</div>
+          <div class="media-stat-label">Average Review Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND PARTNERSHIPS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Sponsorships & Collabs</p>
+      <h2>Brand Partnerships</h2>
+      <p>I only work with brands I genuinely use and believe in. My audience notices the difference — and so do the results.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="partnership-grid">
+      <div class="partnership-card">
+        <p class="partnership-type">Newsletter Sponsorship</p>
+        <h3>Dedicated Issue Feature</h3>
+        <p>A full feature in my Thursday newsletter — read by 8,400+ creators, marketers, and builders with a 52% open rate.</p>
+        <ul>
+          <li>Full-issue sponsor placement</li>
+          <li>Custom copy written by me, in my voice</li>
+          <li>Dedicated CTA with trackable link</li>
+          <li>Performance report within 48 hours</li>
+        </ul>
+        <p style="margin-top:14px;font-family:'Fraunces',serif;font-size:1.2rem;color:var(--primary)">$800 / issue</p>
+      </div>
+      <div class="partnership-card">
+        <p class="partnership-type">Podcast Sponsorship</p>
+        <h3>Episode Integration</h3>
+        <p>Pre-roll, mid-roll, or post-roll sponsorship on The Thoughtful Creator Podcast — 18K monthly listeners averaging 38-minute listen time.</p>
+        <ul>
+          <li>Host-read, personally crafted ad</li>
+          <li>Show notes mention with link</li>
+          <li>Social promotion on episode launch</li>
+          <li>Downloads report post-publication</li>
+        </ul>
+        <p style="margin-top:14px;font-family:'Fraunces',serif;font-size:1.2rem;color:var(--primary)">$600 – $1,200 / episode</p>
+      </div>
+      <div class="partnership-card">
+        <p class="partnership-type">Social Collaboration</p>
+        <h3>Instagram & Stories</h3>
+        <p>Authentic, story-driven sponsored posts and Instagram stories that fit naturally into my content — not disruptive ads.</p>
+        <ul>
+          <li>1 feed post + 3 stories minimum</li>
+          <li>Creative direction from me</li>
+          <li>FTC-compliant disclosure</li>
+          <li>Engagement report at 7 and 30 days</li>
+        </ul>
+        <p style="margin-top:14px;font-family:'Fraunces',serif;font-size:1.2rem;color:var(--primary)">Starting at $1,200</p>
+      </div>
+      <div class="partnership-card">
+        <p class="partnership-type">Custom Campaign</p>
+        <h3>Multi-Channel Package</h3>
+        <p>For brands wanting maximum reach and depth — newsletter + podcast + social campaign designed as a cohesive storytelling arc over 4–8 weeks.</p>
+        <ul>
+          <li>Cross-channel campaign strategy</li>
+          <li>4–8 week narrative arc</li>
+          <li>Co-created content pieces</li>
+          <li>Campaign performance dashboard</li>
+        </ul>
+        <p style="margin-top:14px;font-family:'Fraunces',serif;font-size:1.2rem;color:var(--primary)">From $4,500</p>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:0.85rem;color:var(--gray);margin-top:24px">I only accept 4–6 brand partnerships per quarter to maintain quality and audience trust. <a href="contact.html">Check availability →</a></p>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">Learn From Me</p>
+      <h2>Courses & Products</h2>
+      <p>Self-paced courses and live cohorts for creators at every stage.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-thumb" style="background:linear-gradient(135deg,var(--primary),#4a6ab0)">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Add course image here
+        </div>
+        <div class="course-body">
+          <span class="course-badge badge-self">Self-Paced</span>
+          <h3>Newsletter from Zero</h3>
+          <p>Everything I know about building a newsletter audience from scratch — list growth, content strategy, monetization, and the tools that make it sustainable.</p>
+          <div class="course-price">$197</div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-thumb" style="background:linear-gradient(135deg,var(--accent),#d4377a)">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Add course image here
+        </div>
+        <div class="course-body">
+          <span class="course-badge badge-live">Live Cohort</span>
+          <h3>The Podcast Launch Blueprint</h3>
+          <p>A 6-week live cohort for first-time podcasters. From concept and equipment to recording, editing, launch strategy, and growth — with weekly group calls.</p>
+          <div class="course-price">$497 <small style="font-size:0.78rem;color:var(--gray);font-family:Inter,sans-serif">/ cohort</small></div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-thumb" style="background:linear-gradient(135deg,#2d7a6e,var(--primary))">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          Add course image here
+        </div>
+        <div class="course-body">
+          <span class="course-badge badge-free">Free</span>
+          <h3>5-Day Content Clarity Challenge</h3>
+          <p>A free email course that helps you define your niche, find your voice, and create a content system in just five days. Joined by 3,200+ creators.</p>
+          <div class="course-price">Free</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <p class="label">How It Works</p>
+      <h2>Working Together</h2>
+      <p>A simple, straightforward process from first contact to delivered results.</p>
+      <div class="accent-line"></div>
+    </div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Reach Out</h4>
+        <p>Fill out my contact form with details about your project, event, or goals. I respond within 48 hours.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Discovery Call</h4>
+        <p>A 30-minute call to understand your needs, share ideas, and determine the best way to work together.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Proposal & Agreement</h4>
+        <p>I'll send a clear scope of work, timeline, and investment. Simple contract, quick signature.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>We Create</h4>
+        <p>I get to work. You get regular updates, my full attention, and results you're proud to share.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">The <span>Thoughtful</span> Creator</div>
+        <p style="font-size:0.88rem;line-height:1.8;margin-bottom:16px">A newsletter and podcast for creative people building intentional careers. Published weekly since 2020.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Work With Me</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="gallery.html">Media</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 The Thoughtful Creator. All rights reserved.</p>
+      <p style="color:rgba(255,255,255,0.3)">Template by <a href="https://sitesbymel.com" style="color:#9b7dd4">Sites by Mel</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

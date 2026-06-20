@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ForeverEvents — About Us</title>
+  <style>
+    :root {
+      --primary: #6b2d82; --secondary: #4a1d5c; --accent: #d4af37;
+      --text: #2a1a38; --light: #fdf8ff; --white: #ffffff;
+      --shadow: 0 4px 24px rgba(107,45,130,0.13); --radius: 12px; --transition: all 0.3s ease;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',Georgia,sans-serif; color:var(--text); background:var(--white); }
+    a { text-decoration:none; color:inherit; }
+    nav { position:sticky; top:0; z-index:100; background:var(--secondary); display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:72px; box-shadow:0 2px 20px rgba(0,0,0,0.25); }
+    .nav-logo { color:var(--white); font-size:1.45rem; font-weight:800; }
+    .nav-logo span { color:var(--accent); }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { color:rgba(255,255,255,0.85); font-size:0.95rem; font-weight:500; transition:var(--transition); }
+    .nav-links a:hover,.nav-links a.active { color:var(--accent); }
+    .nav-cta { background:var(--accent); color:var(--secondary); padding:0.55rem 1.4rem; border-radius:50px; font-weight:700; font-size:0.93rem; }
+    .nav-cta:hover { background:#e8c84a; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+    .hamburger span { width:26px; height:3px; background:var(--white); border-radius:2px; }
+    .mobile-menu { display:none; position:absolute; top:72px; left:0; right:0; background:var(--secondary); padding:1.5rem 5%; flex-direction:column; gap:1.2rem; }
+    .mobile-menu a { color:var(--white); font-size:1rem; }
+    .mobile-menu.open { display:flex; }
+
+    .page-hero { background:linear-gradient(145deg,#2a0a38 0%,var(--secondary) 50%,var(--primary) 100%); padding:5rem 5% 4rem; text-align:center; }
+    .page-hero .badge { display:inline-block; background:rgba(212,175,55,0.18); border:1px solid var(--accent); color:var(--accent); font-size:0.8rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:0.35rem 1rem; border-radius:50px; margin-bottom:1.2rem; }
+    .page-hero h1 { font-size:2.8rem; font-weight:900; color:var(--white); margin-bottom:1rem; }
+    .page-hero h1 span { color:var(--accent); }
+    .page-hero p { color:rgba(255,255,255,0.78); font-size:1.1rem; max-width:580px; margin:0 auto; line-height:1.7; }
+
+    section { padding:5rem 5%; }
+    .section-label { font-size:0.8rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem; }
+    .section-title { font-size:2rem; font-weight:900; color:var(--primary); margin-bottom:1rem; }
+    .section-title span { color:var(--accent); }
+    .max-w { max-width:1100px; margin:0 auto; }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .img-ph { border-radius:var(--radius); display:flex; align-items:center; justify-content:center; font-size:0.88rem; color:rgba(255,255,255,0.82); font-weight:600; text-align:center; flex-direction:column; gap:0.5rem; }
+
+    .bio-text p { color:#555; line-height:1.82; margin-bottom:1.25rem; font-size:1rem; }
+    .cert-row { display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:1.5rem; }
+    .cert-badge { display:flex; align-items:center; gap:0.5rem; background:var(--light); border:1px solid #e0d0f0; border-radius:50px; padding:0.5rem 1rem; font-size:0.85rem; font-weight:700; color:var(--primary); }
+
+    .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:3rem; }
+    .stat-box { text-align:center; background:var(--light); border-radius:var(--radius); padding:1.5rem 1rem; }
+    .stat-box h3 { font-size:2rem; font-weight:900; color:var(--primary); }
+    .stat-box p { font-size:0.83rem; color:#777; font-weight:600; text-transform:uppercase; letter-spacing:1px; }
+
+    .values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1100px; margin:0 auto; }
+    .value-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:2rem; border-top:4px solid var(--accent); transition:var(--transition); }
+    .value-card:hover { transform:translateY(-5px); }
+    .value-icon { font-size:2.2rem; margin-bottom:1rem; }
+    .value-card h3 { font-size:1.1rem; font-weight:800; color:var(--primary); margin-bottom:0.5rem; }
+    .value-card p { color:#666; font-size:0.92rem; line-height:1.65; }
+
+    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; max-width:1100px; margin:0 auto; }
+    .team-card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; transition:var(--transition); text-align:center; }
+    .team-card:hover { transform:translateY(-5px); }
+    .team-photo { height:220px; display:flex; align-items:center; justify-content:center; font-size:0.88rem; color:rgba(255,255,255,0.82); font-weight:600; flex-direction:column; gap:0.4rem; }
+    .team-body { padding:1.5rem; }
+    .team-body h3 { font-size:1.1rem; font-weight:800; color:var(--primary); margin-bottom:0.25rem; }
+    .team-body .role { font-size:0.85rem; color:var(--accent); font-weight:700; margin-bottom:0.75rem; }
+    .team-body p { font-size:0.88rem; color:#666; line-height:1.6; }
+
+    .timeline { display:flex; flex-direction:column; gap:2rem; position:relative; padding-left:2.5rem; }
+    .timeline::before { content:''; position:absolute; left:12px; top:0; bottom:0; width:2px; background:linear-gradient(var(--accent),var(--primary)); }
+    .tl-item { position:relative; }
+    .tl-dot { position:absolute; left:-2.5rem; top:0.4rem; width:16px; height:16px; background:var(--accent); border-radius:50%; border:3px solid var(--white); box-shadow:0 0 0 2px var(--accent); }
+    .tl-item .year { font-size:0.78rem; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:2px; }
+    .tl-item h4 { font-size:1.05rem; font-weight:700; color:var(--primary); margin:0.2rem 0; }
+    .tl-item p { font-size:0.92rem; color:#666; line-height:1.6; }
+
+    .memberships { display:flex; flex-wrap:wrap; gap:1rem; margin-top:1.5rem; }
+    .membership-badge { display:flex; align-items:center; gap:0.6rem; background:var(--light); border:2px solid #e0d0f0; border-radius:var(--radius); padding:0.75rem 1.25rem; }
+    .membership-badge .icon { font-size:1.5rem; }
+    .membership-badge div strong { display:block; font-size:0.88rem; color:var(--primary); }
+    .membership-badge div span { font-size:0.78rem; color:#888; }
+
+    .cta-banner { background:linear-gradient(135deg,var(--primary),var(--secondary)); padding:5rem 5%; text-align:center; }
+    .cta-banner h2 { font-size:2.2rem; font-weight:900; color:var(--white); margin-bottom:1rem; }
+    .cta-banner p { color:rgba(255,255,255,0.8); font-size:1.05rem; margin-bottom:2rem; max-width:520px; margin-left:auto; margin-right:auto; }
+    .btn-gold { background:var(--accent); color:var(--secondary); padding:0.85rem 2.1rem; border-radius:50px; font-weight:800; font-size:1rem; transition:var(--transition); display:inline-block; }
+    .btn-gold:hover { background:#e8c84a; transform:translateY(-2px); }
+    .btn-outline-w { border:2px solid rgba(255,255,255,0.5); color:var(--white); padding:0.85rem 2.1rem; border-radius:50px; font-weight:700; font-size:1rem; transition:var(--transition); display:inline-block; }
+    .btn-outline-w:hover { border-color:var(--accent); color:var(--accent); }
+
+    footer { background:#1a0a24; color:rgba(255,255,255,0.75); padding:4rem 5% 2rem; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; max-width:1100px; margin:0 auto 3rem; }
+    .footer-brand .nav-logo { font-size:1.4rem; display:block; margin-bottom:0.9rem; }
+    .footer-brand p { font-size:0.92rem; line-height:1.75; color:rgba(255,255,255,0.55); max-width:280px; }
+    .footer-col h4 { color:var(--white); font-size:0.95rem; font-weight:700; margin-bottom:1.1rem; text-transform:uppercase; letter-spacing:1px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+    .footer-col ul a { color:rgba(255,255,255,0.6); font-size:0.92rem; transition:var(--transition); }
+    .footer-col ul a:hover { color:var(--accent); }
+    .footer-contact p { font-size:0.92rem; color:rgba(255,255,255,0.6); margin-bottom:0.5rem; }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:1.5rem; text-align:center; font-size:0.83rem; color:rgba(255,255,255,0.35); max-width:1100px; margin:0 auto; }
+
+    @media (max-width:900px) {
+      .nav-links,.nav-cta { display:none; } .hamburger { display:flex; }
+      .two-col { grid-template-columns:1fr; }
+      .values-grid,.team-grid { grid-template-columns:repeat(2,1fr); }
+      .stats-row { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:680px) {
+      .values-grid,.team-grid,.stats-row,.footer-grid { grid-template-columns:1fr; }
+      .page-hero h1 { font-size:2rem; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Forever<span>Events</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="services.html">Services</a><a href="about.html">About</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:700;">Get a Quote</a>
+</div>
+
+<div class="page-hero">
+  <span class="badge">Our Story</span>
+  <h1>Passion, Precision &amp; <span>Pure Joy</span></h1>
+  <p>ForeverEvents was born from a belief that every celebration — big or small — deserves a planner who is fully invested in making it extraordinary.</p>
+</div>
+
+<!-- FOUNDER -->
+<section style="background:var(--white);">
+  <div class="two-col max-w">
+    <div>
+      <div class="img-ph" style="height:500px;background:linear-gradient(145deg,var(--secondary),var(--primary));">
+        <span style="font-size:2.5rem;">📸</span>Add your photo here<small style="font-size:0.78rem;opacity:0.75;">(Lead Planner / Founder)</small>
+      </div>
+    </div>
+    <div class="bio-text">
+      <p class="section-label">Meet the Founder</p>
+      <h2 class="section-title">Hi, I'm <span>[Your Name]</span></h2>
+      <p>I planned my first wedding at 24 — a complete accident that turned into a calling. A friend's planner cancelled two months out, and I stepped in. Somehow, it was perfect. And I was hooked.</p>
+      <p>Over 12 years and 850+ events later, that same feeling drives me every single day. There is nothing quite like watching a couple's eyes light up when they walk into their reception for the first time, or seeing a company's team genuinely surprised and delighted by an event that exceeded their expectations.</p>
+      <p>ForeverEvents exists because I believe every person deserves to be fully present at their own celebration — not chasing down a caterer or fixing a floral arrangement. <strong>That's our job. Your only job is to enjoy every moment.</strong></p>
+      <p>Our team of planners shares the same obsessive attention to detail, the same warmth with clients, and the same commitment to flawless execution. Every event gets our full heart.</p>
+      <div class="cert-row">
+        <div class="cert-badge">🏅 Certified Wedding Planner (CWP)</div>
+        <div class="cert-badge">🏅 ILEA Member</div>
+        <div class="cert-badge">🏅 ABC Certified</div>
+        <div class="cert-badge">🏅 12 Years Experience</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-row max-w" style="margin-top:4rem;">
+    <div class="stat-box"><h3>850+</h3><p>Events Planned</p></div>
+    <div class="stat-box"><h3>12 yrs</h3><p>In Business</p></div>
+    <div class="stat-box"><h3>200+</h3><p>Vendor Partners</p></div>
+    <div class="stat-box"><h3>5★</h3><p>Average Rating</p></div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section style="background:var(--light);">
+  <div class="two-col max-w">
+    <div>
+      <p class="section-label">How We Work</p>
+      <h2 class="section-title">Our Planning <span>Philosophy</span></h2>
+      <p style="color:#666;line-height:1.8;margin-bottom:1.75rem;">We believe that great event planning is equal parts creative vision and precise logistics. Beautiful events don't just happen — they're the result of months of careful planning, clear communication, and a refusal to cut corners.</p>
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="font-size:1.6rem;flex-shrink:0;">👂</span>
+          <div><strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">We Listen First</strong><p style="color:#666;font-size:0.92rem;line-height:1.65;">Before we suggest a single venue, we spend time understanding your vision, your priorities, and your story. Your event should feel like <em>you</em>.</p></div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="font-size:1.6rem;flex-shrink:0;">📐</span>
+          <div><strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">Details Are Everything</strong><p style="color:#666;font-size:0.92rem;line-height:1.65;">The best events feel effortless to guests because every detail has been thought through. We create master timelines with 15-minute increments so nothing is left to chance.</p></div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="font-size:1.6rem;flex-shrink:0;">🔄</span>
+          <div><strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">We Adapt in Real Time</strong><p style="color:#666;font-size:0.92rem;line-height:1.65;">No matter how well you plan, surprises happen. Our team is trained to resolve issues before you even notice them — calmly and invisibly.</p></div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start;">
+          <span style="font-size:1.6rem;flex-shrink:0;">💬</span>
+          <div><strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">Communication Is Our Promise</strong><p style="color:#666;font-size:0.92rem;line-height:1.65;">You'll never wonder what's happening with your event. Regular updates, a shared planning portal, and a dedicated planner mean you're always in the loop.</p></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="section-label">Our Journey</p>
+      <h2 class="section-title">How We <span>Got Here</span></h2>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="year">2013</div><h4>First Wedding Planned</h4><p>A favor for a friend turned into a passion. That first wedding received rave reviews and three referrals before the night was over.</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="year">2015</div><h4>ForeverEvents Founded</h4><p>Officially launched the business, earned CWP certification, and planned 22 weddings in the first year.</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="year">2018</div><h4>Expanded to Corporate Events</h4><p>Added a corporate events division, serving companies from small team retreats to 400-person galas.</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="year">2021</div><h4>Team of Planners</h4><p>Brought on two additional lead planners, allowing us to serve more clients without compromising quality.</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="year">2024</div><h4>850+ Events & Counting</h4><p>Hit a major milestone — over 850 events planned with a 5-star average rating across all platforms.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section style="background:var(--white);">
+  <div style="text-align:center;max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">What We Believe</p>
+    <h2 class="section-title">Our Core <span>Values</span></h2>
+  </div>
+  <div class="values-grid">
+    <div class="value-card"><div class="value-icon">💍</div><h3>Every Event is Sacred</h3><p>Whether it's an intimate dinner party or a 500-person wedding, every event receives our complete attention and care. No event is "small" to us.</p></div>
+    <div class="value-card"><div class="value-icon">🤝</div><h3>Relationships Over Transactions</h3><p>We want to be the planner you recommend to every friend. That means treating every client like a long-term relationship, not a single contract.</p></div>
+    <div class="value-card"><div class="value-icon">🎯</div><h3>Precision in Execution</h3><p>Beautiful ideas mean nothing if execution fails. We build systems, timelines, and backup plans so the day unfolds exactly as envisioned.</p></div>
+    <div class="value-card"><div class="value-icon">💡</div><h3>Creative Problem Solving</h3><p>Budget constraints, venue limitations, last-minute changes — we find creative solutions that keep your vision intact and your stress level low.</p></div>
+    <div class="value-card"><div class="value-icon">🌿</div><h3>Sustainable Practices</h3><p>We actively recommend eco-friendly vendors, digital invitations, and sustainable décor options for clients who share our commitment to the planet.</p></div>
+    <div class="value-card"><div class="value-icon">🌟</div><h3>Above &amp; Beyond Always</h3><p>The extra effort is never optional for us. We stay until the last guest leaves, handle the unexpected with grace, and always deliver more than promised.</p></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section style="background:var(--light);">
+  <div style="text-align:center;max-width:700px;margin:0 auto 3rem;">
+    <p class="section-label">Our Team</p>
+    <h2 class="section-title">The People Behind <span>Your Perfect Day</span></h2>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-photo" style="background:linear-gradient(135deg,var(--primary),var(--secondary));">📸 Add photo here</div>
+      <div class="team-body"><h3>[Your Name]</h3><div class="role">Founder & Lead Planner</div><p>12 years of experience, CWP certified, specializing in luxury weddings and large-scale corporate events.</p></div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo" style="background:linear-gradient(135deg,#3a0a50,#6b2d82);">📸 Add photo here</div>
+      <div class="team-body"><h3>[Planner Name]</h3><div class="role">Senior Event Planner</div><p>Specializes in corporate events and milestone celebrations. Known for her creative design eye and unflappable calm under pressure.</p></div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo" style="background:linear-gradient(135deg,#5c2a6b,#3a1a4a);">📸 Add photo here</div>
+      <div class="team-body"><h3>[Coordinator Name]</h3><div class="role">Day-Of Coordinator</div><p>The detail-obsessed wizard who makes sure every timeline is followed, every vendor is where they need to be, and every moment is flawless.</p></div>
+    </div>
+  </div>
+  <div style="max-width:700px;margin:3rem auto 0;text-align:center;">
+    <div class="memberships">
+      <div class="membership-badge"><span class="icon">🏅</span><div><strong>ILEA Member</strong><span>Int'l Live Events Association</span></div></div>
+      <div class="membership-badge"><span class="icon">🏅</span><div><strong>ABC Certified</strong><span>Association of Bridal Consultants</span></div></div>
+      <div class="membership-badge"><span class="icon">🏅</span><div><strong>The Knot Pro</strong><span>Top Planner Designation</span></div></div>
+      <div class="membership-badge"><span class="icon">🏅</span><div><strong>WeddingWire Couples Choice</strong><span>2020–2025</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <h2>Let's Plan Your Perfect Event</h2>
+  <p>Start with a free consultation — no pressure, no commitment. We'd love to hear about your vision.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="contact.html" class="btn-gold">Book Free Consultation</a>
+    <a href="services.html" class="btn-outline-w">View Our Packages</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Forever<span style="color:var(--accent);">Events</span></span>
+      <p>Full-service event planning for weddings, corporate events, milestone celebrations, and more.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>📞 (555) 030-0300</p><p>✉️ hello@foreverevents.com</p>
+      <p>📍 456 Celebration Ave, Suite 100</p>
+      <p style="margin-top:0.75rem;">Mon–Fri: 9am – 6pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 ForeverEvents Planning Co. All rights reserved. | Template by <strong>Sites by Mel</strong></p></div>
+</footer>
+<script>function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}</script>
+</body>
+</html>
