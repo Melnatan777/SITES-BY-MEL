@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Projects — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'clients' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Client Projects (<%= clients.length %>)</h1>
+      <div style="display:flex;gap:10px">
+        <a href="/admin/clients/new" class="btn btn-gold btn-sm">+ New Client</a>
+        <form action="/admin/logout" method="POST" style="margin:0">
+          <button class="btn btn-outline btn-sm">Sign Out</button>
+        </form>
+      </div>
+    </div>
+    <div class="admin-content">
+
+      <% if (clients.length === 0) { %>
+        <div style="text-align:center;padding:60px 24px;color:var(--gray)">
+          <p style="font-size:1.1rem;margin-bottom:16px">No client projects yet.</p>
+          <a href="/admin/clients/new" class="btn btn-gold">Add Your First Client</a>
+        </div>
+      <% } else { %>
+
+      <!-- STATS -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px">
+        <% const active = clients.filter(c=>c.status==='active').length; %>
+        <% const mrr = clients.filter(c=>c.status==='active').reduce((s,c)=>s+(c.monthly_fee||0),0); %>
+        <% const costs = clients.filter(c=>c.status==='active').reduce((s,c)=>s+(c.railway_monthly_cost||0),0); %>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:20px">
+          <div style="font-size:1.6rem;font-weight:800;color:var(--navy)"><%= active %></div>
+          <div style="font-size:.8rem;color:var(--gray)">Active Clients</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:20px">
+          <div style="font-size:1.6rem;font-weight:800;color:var(--gold)">$<%= mrr.toFixed(0) %>/mo</div>
+          <div style="font-size:.8rem;color:var(--gray)">Monthly Revenue</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:20px">
+          <div style="font-size:1.6rem;font-weight:800;color:#ef4444">$<%= costs.toFixed(0) %>/mo</div>
+          <div style="font-size:.8rem;color:var(--gray)">Railway Costs</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:20px">
+          <div style="font-size:1.6rem;font-weight:800;color:#22c55e">$<%= (mrr-costs).toFixed(0) %>/mo</div>
+          <div style="font-size:.8rem;color:var(--gray)">Net Profit</div>
+        </div>
+      </div>
+
+      <div class="admin-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Package</th>
+              <th>Domain</th>
+              <th>Renewal</th>
+              <th>Monthly Fee</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% clients.forEach(function(c) { %>
+            <%
+              const pkgLabels = { template_launch: 'Template Launch', custom_build: 'Custom Build', diy: 'DIY' };
+              const statusColors = { active: 'badge-green', paused: 'badge-yellow', handed_off: 'badge-red', cancelled: 'badge-red' };
+              const renewal = c.domain_renewal_date ? new Date(c.domain_renewal_date) : null;
+              const daysLeft = renewal ? Math.ceil((renewal - new Date()) / (1000*60*60*24)) : null;
+            %>
+            <tr>
+              <td>
+                <strong style="font-size:.9rem"><%= c.customer_name %></strong><br>
+                <span style="font-size:.75rem;color:var(--gray)"><%= c.customer_email %></span>
+              </td>
+              <td><span style="font-size:.8rem;font-weight:600;color:var(--navy)"><%= pkgLabels[c.package_type] || c.package_type %></span></td>
+              <td style="font-size:.82rem"><%= c.domain_name || '—' %></td>
+              <td style="font-size:.78rem">
+                <% if (daysLeft !== null) { %>
+                  <span style="color:<%= daysLeft < 30 ? '#ef4444' : daysLeft < 60 ? '#f59e0b' : 'var(--gray)' %>">
+                    <%= c.domain_renewal_date %><br>(<%= daysLeft %> days)
+                  </span>
+                <% } else { %>—<% } %>
+              </td>
+              <td style="font-weight:600;color:var(--gold)">$<%= (c.monthly_fee||0).toFixed(0) %>/mo</td>
+              <td><span class="badge <%= statusColors[c.status] || 'badge-yellow' %>"><%= c.status %></span></td>
+              <td>
+                <a href="/admin/clients/<%= c.id %>" class="btn btn-outline btn-sm">View</a>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

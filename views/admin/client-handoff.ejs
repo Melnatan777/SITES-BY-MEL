@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Handoff — <%= client.customer_name %></title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a2e; background: #fff; padding: 48px; max-width: 760px; margin: 0 auto; }
+    .no-print { margin-bottom: 24px; }
+    @media print { .no-print { display: none; } body { padding: 24px; } }
+    h1 { font-size: 1.6rem; color: #1B2F4E; margin-bottom: 6px; }
+    h2 { font-size: 1rem; color: #1B2F4E; margin: 28px 0 12px; border-bottom: 2px solid #C9922B; padding-bottom: 6px; }
+    .logo { font-size: 1rem; font-weight: 700; color: #1B2F4E; margin-bottom: 32px; }
+    .logo span { color: #C9922B; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    td { padding: 10px 12px; font-size: .88rem; border-bottom: 1px solid #E5E0D8; }
+    td:first-child { color: #6B7280; width: 38%; font-family: Arial, sans-serif; }
+    td:last-child { font-weight: 600; font-family: Arial, sans-serif; }
+    .note { background: #fdf6e3; border-left: 4px solid #C9922B; padding: 14px 18px; font-size: .85rem; line-height: 1.7; color: #7d5a00; font-family: Arial, sans-serif; border-radius: 0 6px 6px 0; margin: 16px 0; }
+    .footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid #E5E0D8; font-size: .78rem; color: #9CA3AF; font-family: Arial, sans-serif; text-align: center; }
+    .btn { display: inline-block; background: #1B2F4E; color: #fff; padding: 10px 22px; border-radius: 6px; text-decoration: none; font-size: .88rem; font-family: Arial, sans-serif; cursor: pointer; border: none; margin-right: 8px; }
+    .btn-gold { background: #C9922B; }
+  </style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="btn btn-gold" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  <a href="/admin/clients/<%= client.id %>" class="btn">← Back to Client</a>
+</div>
+
+<div class="logo">Sites by <span>Mel</span></div>
+
+<h1>Website Handoff Document</h1>
+<p style="font-size:.88rem;color:#6B7280;margin-bottom:8px;font-family:Arial,sans-serif">Prepared for: <strong style="color:#1B2F4E"><%= client.customer_name %></strong> &nbsp;|&nbsp; <%= new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) %></p>
+
+<div class="note">
+  This document contains everything you need to know about your website. Keep it somewhere safe — it's your reference if you ever need to make changes or work with another developer.
+</div>
+
+<h2>Your Website</h2>
+<table>
+  <tr><td>Website Address</td><td><%= client.domain_name ? 'https://' + client.domain_name : '—' %></td></tr>
+  <tr><td>Professional Email</td><td><%= client.professional_email || '—' %></td></tr>
+  <tr><td>Email Forwards To</td><td>Your personal inbox (the one you provided during setup)</td></tr>
+</table>
+
+<h2>Your Domain Name</h2>
+<table>
+  <tr><td>Domain</td><td><%= client.domain_name || '—' %></td></tr>
+  <tr><td>Annual Renewal</td><td><%= client.domain_renewal_date ? 'Renews ' + client.domain_renewal_date + ' — you will receive an invoice before this date' : 'Contact mel@sitesbymel.com for renewal info' %></td></tr>
+  <tr><td>Who Manages It</td><td>Sites by Mel on your behalf</td></tr>
+</table>
+
+<div class="note">
+  <strong>About your domain:</strong> Your domain name (<%= client.domain_name || 'yourdomain.com' %>) is registered in your name and belongs to you. If you ever need to move it to another provider, contact mel@sitesbymel.com and we will transfer it at no charge.
+</div>
+
+<h2>Your Website Hosting</h2>
+<table>
+  <tr><td>Hosting</td><td>Managed hosting provided by Sites by Mel</td></tr>
+  <tr><td>Monthly Cost</td><td>$<%= (client.monthly_fee||15).toFixed(0) %>/month (billed after year 1)</td></tr>
+  <tr><td>What's Included</td><td>Your site stays live, secure, and backed up</td></tr>
+  <tr><td>To Cancel</td><td>Give 30 days notice to mel@sitesbymel.com</td></tr>
+</table>
+
+<div class="note">
+  <strong>If you want to take over hosting yourself:</strong> Contact mel@sitesbymel.com. She will provide all your website files and assist with migration to a hosting provider of your choice. A one-time transfer fee of $150 applies.
+</div>
+
+<% if (client.stripe_status && client.stripe_status !== 'not_needed' && client.stripe_status !== 'not_started') { %>
+<h2>Your Payment Processing (Stripe)</h2>
+<table>
+  <tr><td>Provider</td><td>Stripe (stripe.com)</td></tr>
+  <tr><td>Status</td><td><%= client.stripe_status === 'verified' ? 'Active and accepting payments' : 'Set up — complete verification at stripe.com' %></td></tr>
+  <tr><td>Your Login</td><td>Log in at dashboard.stripe.com with the email you used during setup</td></tr>
+  <tr><td>Payouts</td><td>Paid directly to your bank account on file with Stripe</td></tr>
+</table>
+<% } %>
+
+<h2>Getting Help</h2>
+<table>
+  <tr><td>Email</td><td>mel@sitesbymel.com</td></tr>
+  <tr><td>Website</td><td>sitesbymel.com</td></tr>
+  <tr><td>Response Time</td><td>Within 1–2 business days</td></tr>
+  <tr><td>Minor Changes</td><td>Text and photo updates available — contact for pricing</td></tr>
+</table>
+
+<h2>If You Work With Another Developer</h2>
+<p style="font-size:.85rem;color:#374151;line-height:1.75;font-family:Arial,sans-serif;margin-bottom:12px">
+  Your website files are yours. If you choose to work with another developer, Sites by Mel will provide:
+</p>
+<ul style="font-size:.85rem;color:#374151;line-height:2;font-family:Arial,sans-serif;padding-left:20px;margin-bottom:12px">
+  <li>All HTML, CSS, and any other source files</li>
+  <li>Domain transfer assistance</li>
+  <li>A technical summary for your new developer</li>
+</ul>
+<p style="font-size:.85rem;color:#374151;font-family:Arial,sans-serif">Contact mel@sitesbymel.com to initiate a handoff.</p>
+
+<div class="footer">
+  Sites by Mel &nbsp;|&nbsp; mel@sitesbymel.com &nbsp;|&nbsp; sitesbymel.com<br>
+  Document prepared <%= new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) %>
+</div>
+
+</body>
+</html>

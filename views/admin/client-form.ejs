@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Client — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'clients' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>New Client Project</h1>
+      <a href="/admin/clients" class="btn btn-outline btn-sm">&larr; Back</a>
+    </div>
+    <div class="admin-content">
+      <form method="POST" action="/admin/clients/new" style="max-width:760px">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+
+          <!-- CLIENT INFO -->
+          <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px">
+            <h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:18px">Client Info</h2>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Client Name *</label>
+              <input type="text" name="customer_name" required style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Client Email *</label>
+              <input type="email" name="customer_email" required style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Package</label>
+              <select name="package_type" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+                <option value="template_launch">Template Launch — $797</option>
+                <option value="custom_build">Full Custom Build — $1,500+</option>
+                <option value="diy">DIY Template — $197</option>
+              </select>
+            </div>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Package Price Paid ($)</label>
+              <input type="number" name="package_price" placeholder="797" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Monthly Fee After Year 1 ($)</label>
+              <input type="number" name="monthly_fee" value="15" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+          </div>
+
+          <!-- INFRASTRUCTURE -->
+          <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px">
+            <h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:18px">Infrastructure <span style="font-size:.72rem;font-weight:400;color:var(--gray)">(internal only)</span></h2>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Domain Name</label>
+              <input type="text" name="domain_name" placeholder="theirbusiness.com" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Domain Renewal Date</label>
+              <input type="date" name="domain_renewal_date" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Railway Project Name</label>
+              <input type="text" name="railway_project_name" placeholder="client-business-name" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Railway Project URL</label>
+              <input type="text" name="railway_project_url" placeholder="https://railway.app/project/..." style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Railway Monthly Cost ($)</label>
+              <input type="number" name="railway_monthly_cost" value="5" step="0.01" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">GitHub Repo URL</label>
+              <input type="text" name="github_repo_url" placeholder="https://github.com/your-account/repo" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+          </div>
+
+        </div>
+
+        <!-- EMAIL + STRIPE -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:24px">
+          <h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:18px">Email & Payments</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Professional Email Set Up</label>
+              <input type="text" name="professional_email" placeholder="hello@theirbusiness.com" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Cloudflare Zone / Domain</label>
+              <input type="text" name="cloudflare_zone" placeholder="theirbusiness.com" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Resend Domain</label>
+              <input type="text" name="resend_domain" placeholder="theirbusiness.com" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+            </div>
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:5px">Stripe Status</label>
+              <select name="stripe_status" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem">
+                <option value="not_started">Not Started</option>
+                <option value="configured">Configured (pending client verification)</option>
+                <option value="verified">Verified & Live</option>
+                <option value="not_needed">Not Needed</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTES -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:24px">
+          <h2 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:12px">Internal Notes</h2>
+          <textarea name="notes" rows="4" placeholder="Any specifics about this client, their requests, preferences, passwords stored elsewhere, etc." style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;font-size:.88rem;resize:vertical"></textarea>
+        </div>
+
+        <div style="display:flex;gap:12px">
+          <button type="submit" class="btn btn-gold">Create Client Project</button>
+          <a href="/admin/clients" class="btn btn-outline">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

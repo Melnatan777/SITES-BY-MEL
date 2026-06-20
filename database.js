@@ -139,6 +139,33 @@ db.exec(`
   )
 `);
 
+// ── CLIENT PROJECTS (Mel's internal project tracker) ─────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS client_projects (
+    id                    INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_name         TEXT NOT NULL,
+    customer_email        TEXT NOT NULL,
+    package_type          TEXT NOT NULL DEFAULT 'template_launch',
+    status                TEXT NOT NULL DEFAULT 'active',
+    domain_name           TEXT,
+    domain_renewal_date   TEXT,
+    railway_project_name  TEXT,
+    railway_project_url   TEXT,
+    railway_monthly_cost  REAL DEFAULT 5.00,
+    github_repo_url       TEXT,
+    cloudflare_zone       TEXT,
+    professional_email    TEXT,
+    resend_domain         TEXT,
+    stripe_status         TEXT DEFAULT 'not_started',
+    package_price         REAL,
+    monthly_fee           REAL DEFAULT 15.00,
+    checklist_done        TEXT DEFAULT '[]',
+    notes                 TEXT,
+    handed_off_at         TEXT,
+    created_at            DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
 // ── BLOG SUBSCRIBERS ─────────────────────────────────────────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS subscribers (

@@ -827,6 +827,117 @@ app.get('/admin/subscribers', requireAuth, (req, res) => {
   res.render('admin/subscribers', { subscribers });
 });
 
+// ── ADMIN CLIENT PROJECTS ────────────────────────────────────────────────────
+const PACKAGE_CHECKLISTS = {
+  template_launch: [
+    'Domain purchased in client name',
+    'Cloudflare account set up (DNS + security)',
+    'Railway project created',
+    'GitHub repo created and connected to Railway',
+    'Template deployed and live on Railway',
+    'Domain pointed to Railway',
+    'SSL verified (https working)',
+    'Professional email set up (forwarding to client inbox)',
+    'Resend configured for their domain',
+    'Contact forms tested and delivering',
+    'Stripe payment button set up (if applicable)',
+    'Client verified Stripe identity',
+    'Full site review and test on mobile',
+    'Client handoff email sent with login info',
+  ],
+  custom_build: [
+    'Custom design mockup created and approved by client',
+    'Full site built from scratch',
+    'Domain purchased in client name',
+    'Cloudflare account set up (DNS + security)',
+    'Railway project created',
+    'GitHub repo created and connected to Railway',
+    'Site deployed and live on Railway',
+    'Domain pointed to Railway',
+    'SSL verified (https working)',
+    'Professional email set up (forwarding to client inbox)',
+    'Resend configured for their domain',
+    'Contact forms tested and delivering',
+    'Stripe payment button set up (if applicable)',
+    'Client verified Stripe identity',
+    'SEO: meta titles + descriptions on all pages',
+    'SEO: schema markup added',
+    'SEO: sitemap.xml created and submitted',
+    'Google Search Console set up and verified',
+    'Google Analytics 4 installed and goals configured',
+    'GA4 linked to Search Console',
+    'CMS additions complete (per client request)',
+    'Full site review and test on mobile + desktop',
+    'Client handoff email sent with login info',
+  ],
+  diy: [],
+};
+
+app.get('/admin/clients', requireAuth, (req, res) => {
+  const clients = db.prepare('SELECT * FROM client_projects ORDER BY created_at DESC').all();
+  res.render('admin/clients', { clients });
+});
+
+app.get('/admin/clients/new', requireAuth, (req, res) => {
+  res.render('admin/client-form', { client: null, PACKAGE_CHECKLISTS });
+});
+
+app.post('/admin/clients/new', requireAuth, (req, res) => {
+  const { customer_name, customer_email, package_type, domain_name, domain_renewal_date,
+    railway_project_name, railway_project_url, railway_monthly_cost, github_repo_url,
+    cloudflare_zone, professional_email, resend_domain, stripe_status,
+    package_price, monthly_fee, notes } = req.body;
+  db.prepare(`INSERT INTO client_projects
+    (customer_name,customer_email,package_type,domain_name,domain_renewal_date,
+     railway_project_name,railway_project_url,railway_monthly_cost,github_repo_url,
+     cloudflare_zone,professional_email,resend_domain,stripe_status,
+     package_price,monthly_fee,notes)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
+    .run(customer_name, customer_email, package_type, domain_name, domain_renewal_date,
+      railway_project_name, railway_project_url, parseFloat(railway_monthly_cost)||5,
+      github_repo_url, cloudflare_zone, professional_email, resend_domain, stripe_status,
+      parseFloat(package_price)||0, parseFloat(monthly_fee)||15, notes);
+  res.redirect('/admin/clients');
+});
+
+app.get('/admin/clients/:id', requireAuth, (req, res) => {
+  const client = db.prepare('SELECT * FROM client_projects WHERE id=?').get(req.params.id);
+  if (!client) return res.redirect('/admin/clients');
+  client.checklist_done = JSON.parse(client.checklist_done || '[]');
+  const checklist = PACKAGE_CHECKLISTS[client.package_type] || [];
+  res.render('admin/client-detail', { client, checklist, PACKAGE_CHECKLISTS });
+});
+
+app.post('/admin/clients/:id/edit', requireAuth, (req, res) => {
+  const { customer_name, customer_email, package_type, status, domain_name, domain_renewal_date,
+    railway_project_name, railway_project_url, railway_monthly_cost, github_repo_url,
+    cloudflare_zone, professional_email, resend_domain, stripe_status,
+    package_price, monthly_fee, notes } = req.body;
+  db.prepare(`UPDATE client_projects SET
+    customer_name=?,customer_email=?,package_type=?,status=?,domain_name=?,domain_renewal_date=?,
+    railway_project_name=?,railway_project_url=?,railway_monthly_cost=?,github_repo_url=?,
+    cloudflare_zone=?,professional_email=?,resend_domain=?,stripe_status=?,
+    package_price=?,monthly_fee=?,notes=? WHERE id=?`)
+    .run(customer_name, customer_email, package_type, status, domain_name, domain_renewal_date,
+      railway_project_name, railway_project_url, parseFloat(railway_monthly_cost)||5,
+      github_repo_url, cloudflare_zone, professional_email, resend_domain, stripe_status,
+      parseFloat(package_price)||0, parseFloat(monthly_fee)||15, notes, req.params.id);
+  res.redirect('/admin/clients/' + req.params.id);
+});
+
+app.post('/admin/clients/:id/checklist', requireAuth, (req, res) => {
+  const done = Array.isArray(req.body.done) ? req.body.done : (req.body.done ? [req.body.done] : []);
+  db.prepare('UPDATE client_projects SET checklist_done=? WHERE id=?')
+    .run(JSON.stringify(done), req.params.id);
+  res.redirect('/admin/clients/' + req.params.id);
+});
+
+app.get('/admin/clients/:id/handoff', requireAuth, (req, res) => {
+  const client = db.prepare('SELECT * FROM client_projects WHERE id=?').get(req.params.id);
+  if (!client) return res.redirect('/admin/clients');
+  res.render('admin/client-handoff', { client });
+});
+
 // Admin — Setup requests
 app.get('/admin/setups', requireAuth, (req, res) => {
   const setups = db.prepare('SELECT * FROM setup_requests ORDER BY created_at DESC').all();

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= client.customer_name %> — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'clients' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1><%= client.customer_name %></h1>
+        <span style="font-size:.82rem;color:var(--gray)"><%= client.customer_email %></span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="/admin/clients/<%= client.id %>/handoff" target="_blank" class="btn btn-outline btn-sm">📄 Handoff PDF</a>
+        <a href="/admin/clients" class="btn btn-outline btn-sm">&larr; All Clients</a>
+      </div>
+    </div>
+    <div class="admin-content">
+
+      <%
+        const pkgLabels = { template_launch: 'Template Launch', custom_build: 'Full Custom Build', diy: 'DIY Template' };
+        const pkgPrices = { template_launch: '$797', custom_build: '$1,500+', diy: '$197' };
+        const stripeLabels = { not_started: 'Not Started', configured: 'Configured — Awaiting Client Verification', verified: 'Verified & Live', not_needed: 'Not Needed' };
+        const stripeColors = { not_started: '#9CA3AF', configured: '#f59e0b', verified: '#22c55e', not_needed: '#9CA3AF' };
+        const statusColors = { active: '#22c55e', paused: '#f59e0b', handed_off: '#9CA3AF', cancelled: '#ef4444' };
+        const renewal = client.domain_renewal_date ? new Date(client.domain_renewal_date) : null;
+        const daysLeft = renewal ? Math.ceil((renewal - new Date()) / (1000*60*60*24)) : null;
+        const profit = (client.monthly_fee||0) - (client.railway_monthly_cost||0);
+      %>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+
+        <!-- PACKAGE + STATUS -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px">
+          <h2 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px">Package & Status</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:var(--light);border-radius:8px;padding:14px">
+              <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Package</div>
+              <div style="font-weight:700;color:var(--navy)"><%= pkgLabels[client.package_type] || client.package_type %></div>
+            </div>
+            <div style="background:var(--light);border-radius:8px;padding:14px">
+              <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Amount Paid</div>
+              <div style="font-weight:700;color:var(--gold)">$<%= client.package_price ? client.package_price.toFixed(0) : '—' %></div>
+            </div>
+            <div style="background:var(--light);border-radius:8px;padding:14px">
+              <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Monthly Fee</div>
+              <div style="font-weight:700;color:var(--navy)">$<%= (client.monthly_fee||0).toFixed(0) %>/mo</div>
+            </div>
+            <div style="background:var(--light);border-radius:8px;padding:14px">
+              <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Your Profit</div>
+              <div style="font-weight:700;color:#22c55e">$<%= profit.toFixed(0) %>/mo</div>
+            </div>
+            <div style="background:var(--light);border-radius:8px;padding:14px;grid-column:span 2">
+              <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Status</div>
+              <div style="font-weight:700" style="color:<%= statusColors[client.status] %>"><%= client.status.toUpperCase() %></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFRASTRUCTURE -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px">
+          <h2 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:16px">Infrastructure <span style="font-size:.72rem;font-weight:400;color:var(--gray)">(never share with client)</span></h2>
+          <table style="width:100%;font-size:.82rem;border-collapse:collapse">
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 0;color:var(--gray);width:40%">Domain</td><td style="padding:8px 0;font-weight:600"><%= client.domain_name || '—' %></td></tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:8px 0;color:var(--gray)">Domain Renewal</td>
+              <td style="padding:8px 0;font-weight:600;color:<%= daysLeft !== null && daysLeft < 30 ? '#ef4444' : 'inherit' %>">
+                <%= client.domain_renewal_date || '—' %><% if (daysLeft !== null) { %> (<%= daysLeft %> days)<% } %>
+              </td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 0;color:var(--gray)">Railway Project</td><td style="padding:8px 0"><% if (client.railway_project_url) { %><a href="<%= client.railway_project_url %>" target="_blank" style="color:var(--gold)"><%= client.railway_project_name || 'View' %></a><% } else { %><span style="font-weight:600"><%= client.railway_project_name || '—' %></span><% } %></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 0;color:var(--gray)">Railway Cost</td><td style="padding:8px 0;font-weight:600">$<%= (client.railway_monthly_cost||5).toFixed(0) %>/mo</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 0;color:var(--gray)">GitHub</td><td style="padding:8px 0"><% if (client.github_repo_url) { %><a href="<%= client.github_repo_url %>" target="_blank" style="color:var(--gold)">View Repo</a><% } else { %>—<% } %></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 0;color:var(--gray)">Cloudflare</td><td style="padding:8px 0;font-weight:600"><%= client.cloudflare_zone || '—' %></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 0;color:var(--gray)">Business Email</td><td style="padding:8px 0;font-weight:600"><%= client.professional_email || '—' %></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 0;color:var(--gray)">Resend Domain</td><td style="padding:8px 0;font-weight:600"><%= client.resend_domain || '—' %></td></tr>
+            <tr><td style="padding:8px 0;color:var(--gray)">Stripe</td><td style="padding:8px 0;font-weight:600;color:<%= stripeColors[client.stripe_status] || '#9CA3AF' %>"><%= stripeLabels[client.stripe_status] || '—' %></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- CHECKLIST -->
+      <% if (checklist.length > 0) { %>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:24px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+          <h2 style="font-size:.95rem;font-weight:700;color:var(--navy)">
+            Build Checklist
+            <span style="font-size:.78rem;font-weight:400;color:var(--gray);margin-left:8px"><%= client.checklist_done.length %>/<%= checklist.length %> complete</span>
+          </h2>
+          <div style="background:var(--light);border-radius:100px;height:8px;width:160px;overflow:hidden">
+            <div style="background:var(--gold);height:100%;width:<%= Math.round((client.checklist_done.length/checklist.length)*100) %>%;transition:width .3s"></div>
+          </div>
+        </div>
+        <form method="POST" action="/admin/clients/<%= client.id %>/checklist">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+            <% checklist.forEach(function(item) { %>
+            <label style="display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:<%= client.checklist_done.includes(item) ? '#f0fdf4' : '#fff' %>">
+              <input type="checkbox" name="done" value="<%= item %>" <%= client.checklist_done.includes(item) ? 'checked' : '' %> style="margin-top:2px;flex-shrink:0">
+              <span style="font-size:.83rem;color:<%= client.checklist_done.includes(item) ? '#15803d' : 'var(--navy)' %>;text-decoration:<%= client.checklist_done.includes(item) ? 'line-through' : 'none' %>"><%= item %></span>
+            </label>
+            <% }); %>
+          </div>
+          <button type="submit" class="btn btn-gold btn-sm">Save Checklist</button>
+        </form>
+      </div>
+      <% } %>
+
+      <!-- NOTES -->
+      <% if (client.notes) { %>
+      <div style="background:#fdf6e3;border:1px solid #f0d080;border-radius:10px;padding:24px;margin-bottom:24px">
+        <h2 style="font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:8px">Internal Notes</h2>
+        <p style="font-size:.88rem;color:#7d5a00;line-height:1.7;white-space:pre-wrap"><%= client.notes %></p>
+      </div>
+      <% } %>
+
+      <!-- EDIT FORM -->
+      <details style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px">
+        <summary style="font-size:.9rem;font-weight:700;color:var(--navy);cursor:pointer">Edit Client Details</summary>
+        <form method="POST" action="/admin/clients/<%= client.id %>/edit" style="margin-top:20px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Name</label><input type="text" name="customer_name" value="<%= client.customer_name %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Email</label><input type="email" name="customer_email" value="<%= client.customer_email %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Package</label><select name="package_type" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"><option value="template_launch" <%=client.package_type==='template_launch'?'selected':''%>>Template Launch</option><option value="custom_build" <%=client.package_type==='custom_build'?'selected':''%>>Custom Build</option><option value="diy" <%=client.package_type==='diy'?'selected':''%>>DIY</option></select></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Status</label><select name="status" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"><option value="active" <%=client.status==='active'?'selected':''%>>Active</option><option value="paused" <%=client.status==='paused'?'selected':''%>>Paused</option><option value="handed_off" <%=client.status==='handed_off'?'selected':''%>>Handed Off</option><option value="cancelled" <%=client.status==='cancelled'?'selected':''%>>Cancelled</option></select></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Domain</label><input type="text" name="domain_name" value="<%= client.domain_name||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Domain Renewal</label><input type="date" name="domain_renewal_date" value="<%= client.domain_renewal_date||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Railway Project Name</label><input type="text" name="railway_project_name" value="<%= client.railway_project_name||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Railway URL</label><input type="text" name="railway_project_url" value="<%= client.railway_project_url||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Railway Cost/mo ($)</label><input type="number" name="railway_monthly_cost" value="<%= client.railway_monthly_cost||5 %>" step="0.01" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Monthly Fee ($)</label><input type="number" name="monthly_fee" value="<%= client.monthly_fee||15 %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">GitHub Repo</label><input type="text" name="github_repo_url" value="<%= client.github_repo_url||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Cloudflare Zone</label><input type="text" name="cloudflare_zone" value="<%= client.cloudflare_zone||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Business Email</label><input type="text" name="professional_email" value="<%= client.professional_email||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Resend Domain</label><input type="text" name="resend_domain" value="<%= client.resend_domain||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Stripe Status</label><select name="stripe_status" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"><option value="not_started" <%=client.stripe_status==='not_started'?'selected':''%>>Not Started</option><option value="configured" <%=client.stripe_status==='configured'?'selected':''%>>Configured</option><option value="verified" <%=client.stripe_status==='verified'?'selected':''%>>Verified & Live</option><option value="not_needed" <%=client.stripe_status==='not_needed'?'selected':''%>>Not Needed</option></select></div>
+            <div><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Package Price Paid ($)</label><input type="number" name="package_price" value="<%= client.package_price||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+          </div>
+          <div style="margin-bottom:16px"><label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:4px">Internal Notes</label><textarea name="notes" rows="3" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem;resize:vertical"><%= client.notes||'' %></textarea></div>
+          <button type="submit" class="btn btn-gold btn-sm">Save Changes</button>
+        </form>
+      </details>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
