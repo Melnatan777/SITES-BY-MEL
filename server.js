@@ -25,7 +25,32 @@ app.use((req, res, next) => {
   if (req.path.startsWith('/templates/') && !req.path.match(/\.[a-z]{2,4}$/i)) return next();
   express.static(path.join(__dirname, 'public'))(req, res, next);
 });
-// Serve template previews under /preview/
+// Serve template previews under /preview/ — inject watermark into HTML pages
+app.use('/preview', (req, res, next) => {
+  const fs = require('fs');
+  const filePath = path.join(__dirname, 'public', 'templates', req.path);
+  if (!req.path.endsWith('.html') && !req.path.endsWith('/') && req.path !== '/') return next();
+  const htmlFile = req.path.endsWith('.html') ? filePath : path.join(filePath, 'index.html');
+  if (!fs.existsSync(htmlFile)) return next();
+  let html = fs.readFileSync(htmlFile, 'utf8');
+  const watermark = `
+<style>
+#sbm-watermark{position:fixed;top:0;left:0;width:100%;z-index:999999;pointer-events:none;}
+#sbm-watermark-bar{background:rgba(27,47,78,0.92);color:#C9922B;text-align:center;padding:10px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.04em;}
+#sbm-watermark-bar a{color:#C9922B;text-decoration:underline;pointer-events:all;}
+#sbm-watermark-diag{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:999998;}
+#sbm-watermark-diag::before{content:'PREVIEW ONLY — sitesbymel.com — PREVIEW ONLY — sitesbymel.com — PREVIEW ONLY — sitesbymel.com';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-35deg);font-size:1.4rem;font-weight:800;color:rgba(27,47,78,0.07);white-space:nowrap;font-family:Arial,sans-serif;letter-spacing:.1em;width:200%;text-align:center;}
+</style>
+<div id="sbm-watermark">
+  <div id="sbm-watermark-bar">
+    PREVIEW ONLY &nbsp;|&nbsp; This design is property of <a href="https://sitesbymel.com/templates" target="_blank">sitesbymel.com</a> &nbsp;|&nbsp; Purchase to use &nbsp;|&nbsp; <a href="https://sitesbymel.com/templates" target="_blank">Buy This Template &rarr;</a>
+  </div>
+</div>
+<div id="sbm-watermark-diag"></div>`;
+  html = html.replace('</body>', watermark + '\n</body>');
+  res.setHeader('Content-Type', 'text/html');
+  res.send(html);
+});
 app.use('/preview', express.static(path.join(__dirname, 'public', 'templates')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
