@@ -470,17 +470,22 @@ app.get('/order/success', async (req, res) => {
     order.download_token = token;
     // Email the customer their download link
     if (order.customer_email) {
-      await sendEmail({
-        to: order.customer_email,
-        subject: `Your download is ready — ${order.product_name}`,
-        html: autoReplyHtml(
-          order.customer_name || 'there',
-          `Thank you for purchasing <strong>${order.product_name}</strong>!`,
-          `Your personalization page and download link is ready. Click below to personalize your template with your business details and download your files.<br><br>Your link is valid for <strong>48 hours</strong>.`,
-          `${BASE_URL}/personalize/${token}`,
-          'Personalize & Download My Template'
-        )
-      });
+      try {
+        await sendEmail({
+          to: order.customer_email,
+          subject: `Your download is ready — ${order.product_name}`,
+          html: autoReplyHtml(
+            order.customer_name || 'there',
+            `Thank you for purchasing <strong>${order.product_name}</strong>!`,
+            `Your personalization page and download link is ready. Click below to personalize your template with your business details and download your files.<br><br>Your link is valid for <strong>48 hours</strong>.`,
+            `${BASE_URL}/personalize/${token}`,
+            'Personalize & Download My Template'
+          )
+        });
+        console.log('[success] email sent to', order.customer_email);
+      } catch(e) { console.error('[success] email error:', e.message); }
+    } else {
+      console.warn('[success] no customer email — skipping email send');
     }
   }
   res.redirect(`/personalize/${order.download_token}`);
