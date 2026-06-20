@@ -174,14 +174,15 @@ async function sendEmail({ to, subject, text, html }) {
   } catch(e) { console.error('[email]', e.message); }
 }
 
-function autoReplyHtml(name, heading, body) {
+function autoReplyHtml(name, heading, body, buttonUrl, buttonLabel) {
+  const btn = buttonUrl ? `<p style="margin:24px 0"><a href="${buttonUrl}" style="display:inline-block;background:#C9922B;color:#fff;padding:13px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem">${buttonLabel || 'Click Here'}</a></p>` : '';
   return `<!DOCTYPE html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4f2;padding:32px">
 <div style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e0d8">
 <div style="background:#1B2F4E;padding:28px 32px"><h1 style="color:#C9922B;font-size:1.2rem;margin:0">Sites by Mel</h1></div>
 <div style="padding:28px 32px">
 <p style="color:#1a1a1a;font-size:1rem;margin-bottom:16px">Hi ${name},</p>
 <p style="color:#333;line-height:1.7;margin-bottom:16px">${heading}</p>
-${body}
+${body}${btn}
 <p style="color:#333;margin-top:24px;line-height:1.7">Talk soon,<br><strong>Mel</strong><br><span style="color:#888;font-size:.85rem">sitesbymel.com</span></p>
 </div>
 </div></body></html>`;

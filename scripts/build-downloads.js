@@ -8,23 +8,23 @@ const archiver = require('archiver');
 const { buildInstructions } = require('./build-instructions');
 
 const TEMPLATES = [
-  { slug: 'service-pro',    name: 'ServicePro Template',    niche: 'local service business' },
-  { slug: 'table-ready',    name: 'TableReady Template',    niche: 'restaurant & food business' },
-  { slug: 'key-ready',      name: 'KeyReady Template',      niche: 'real estate agent' },
-  { slug: 'shop-front',     name: 'ShopFront Template',     niche: 'retail boutique' },
-  { slug: 'voice-first',    name: 'VoiceFirst Template',    niche: 'blogger & content creator' },
-  { slug: 'gather-here',    name: 'GatherHere Template',    niche: 'church & ministry' },
-  { slug: 'pet-shop',       name: 'PawPerfect Template',    niche: 'pet grooming & boarding' },
-  { slug: 'beauty-studio',  name: 'Glow Studio Template',   niche: 'hair salon & beauty studio' },
-  { slug: 'lens-and-light', name: 'Lens & Light Template',  niche: 'photographer & videographer' },
-  { slug: 'green-cut',      name: 'GreenCut Template',      niche: 'landscaping & lawn care' },
-  { slug: 'wellness-pro',   name: 'WellnessPro Template',   niche: 'medical & dental practice' },
-  { slug: 'fit-life',       name: 'FitLife Template',       niche: 'personal trainer & fitness studio' },
-  { slug: 'sparkle-clean',  name: 'Sparkle Clean Template', niche: 'house cleaning & commercial cleaning' },
-  { slug: 'bright-minds',   name: 'Bright Minds Template',  niche: 'tutoring & learning center' },
-  { slug: 'forever-events', name: 'Forever Events Template',niche: 'wedding & event planning' },
-  { slug: 'auto-shine',     name: 'AutoShine Template',     niche: 'auto detailing & mechanic' },
-  { slug: 'detail-pro',    name: 'DetailPro Template',     niche: 'auto detailing & mechanic' },
+  { slug: 'service-pro',    name: 'ServicePro Template',    niche: 'local service business',               primary: '#1a3d6b', accent: '#e05c1a' },
+  { slug: 'table-ready',    name: 'TableReady Template',    niche: 'restaurant & food business',           primary: '#8B1A1A', accent: '#e8a020' },
+  { slug: 'key-ready',      name: 'KeyReady Template',      niche: 'real estate agent',                    primary: '#1a4f8a', accent: '#c8880a' },
+  { slug: 'shop-front',     name: 'ShopFront Template',     niche: 'retail boutique',                      primary: '#5a2d82', accent: '#8b5cb1' },
+  { slug: 'voice-first',    name: 'VoiceFirst Template',    niche: 'blogger & content creator',            primary: '#1A1A2E', accent: '#6B4FA0' },
+  { slug: 'gather-here',    name: 'GatherHere Template',    niche: 'church & ministry',                    primary: '#3d5a8a', accent: '#e8a020' },
+  { slug: 'pet-shop',       name: 'PawPerfect Template',    niche: 'pet grooming & boarding',              primary: '#1a8a7a', accent: '#e8621a' },
+  { slug: 'beauty-studio',  name: 'Glow Studio Template',   niche: 'hair salon & beauty studio',           primary: '#5c1a3a', accent: '#c94070' },
+  { slug: 'lens-and-light', name: 'Lens & Light Template',  niche: 'photographer & videographer',          primary: '#2a2a2a', accent: '#d4af37' },
+  { slug: 'green-cut',      name: 'GreenCut Template',      niche: 'landscaping & lawn care',              primary: '#1e5c1a', accent: '#c8a61e' },
+  { slug: 'wellness-pro',   name: 'WellnessPro Template',   niche: 'medical & dental practice',            primary: '#2d7a6e', accent: '#c8a020' },
+  { slug: 'fit-life',       name: 'FitLife Template',       niche: 'personal trainer & fitness studio',    primary: '#1a3d6b', accent: '#e8520a' },
+  { slug: 'sparkle-clean',  name: 'Sparkle Clean Template', niche: 'house cleaning & commercial cleaning', primary: '#1a7ab5', accent: '#7ec832' },
+  { slug: 'bright-minds',   name: 'Bright Minds Template',  niche: 'tutoring & learning center',           primary: '#1a5c8a', accent: '#f4a020' },
+  { slug: 'forever-events', name: 'Forever Events Template',niche: 'wedding & event planning',             primary: '#6b2d82', accent: '#d4af37' },
+  { slug: 'auto-shine',     name: 'AutoShine Template',     niche: 'auto detailing & mechanic',            primary: '#1a2a5c', accent: '#e8a020' },
+  { slug: 'detail-pro',     name: 'DetailPro Template',     niche: 'auto detailing & mechanic',            primary: '#1a1a1a', accent: '#cc1a1a' },
 ];
 
 const ROOT = path.join(__dirname, '..');
@@ -54,7 +54,7 @@ function buildZip(template) {
     }
 
     // Generate and add instructions HTML
-    const instructions = buildInstructions(template.name, template.slug, template.niche);
+    const instructions = buildInstructions(template.name, template.slug, template.niche, template.primary, template.accent);
     archive.append(instructions, { name: `${template.slug}/INSTRUCTIONS.html` });
 
     archive.finalize();

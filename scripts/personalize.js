@@ -100,7 +100,9 @@ function buildPersonalizedZip(slug, templateName, niche, data, outputPath) {
 
     const rawHtml = fs.readFileSync(htmlPath, 'utf8');
     const personalizedHtml = personalizeHtml(slug, rawHtml, data);
-    const instructions = buildInstructions(templateName, slug, niche);
+    const primaryMatch = rawHtml.match(/--primary\s*:\s*(#[0-9a-fA-F]{3,6})/);
+    const accentMatch  = rawHtml.match(/--accent\s*:\s*(#[0-9a-fA-F]{3,6})/);
+    const instructions = buildInstructions(templateName, slug, niche, primaryMatch && primaryMatch[1], accentMatch && accentMatch[1]);
 
     const output = fs.createWriteStream(outputPath);
     const archive = archiver('zip', { zlib: { level: 9 } });

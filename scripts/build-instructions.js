@@ -1,7 +1,9 @@
 // Generates INSTRUCTIONS.html for each template zip
 // Called by build-downloads.js
 
-function buildInstructions(templateName, templateSlug, niche) {
+function buildInstructions(templateName, templateSlug, niche, primaryColor, accentColor) {
+  const primary = primaryColor || '#3d5a8a';
+  const accent  = accentColor  || '#e8a020';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,8 +107,8 @@ function buildInstructions(templateName, templateSlug, niche) {
     <div style="background:#1a1a2e;color:#e8e8e8;padding:16px 20px;border-radius:8px;font-family:monospace;font-size:.82rem;line-height:1.8;margin-bottom:14px;">
       <span style="color:#888">/* YOUR BRAND COLORS — change these! */</span><br/>
       :root {<br/>
-      &nbsp;&nbsp;<span style="color:#79b8ff">--primary</span>: <span style="color:#C9922B">#1a2a5c</span>;  <span style="color:#888">/* main dark color */</span><br/>
-      &nbsp;&nbsp;<span style="color:#79b8ff">--accent</span>: <span style="color:#C9922B">#e8a020</span>;   <span style="color:#888">/* highlight color */</span><br/>
+      &nbsp;&nbsp;<span style="color:#79b8ff">--primary</span>: <span style="color:#C9922B">${primary}</span>;  <span style="color:#888">/* main dark color */</span><br/>
+      &nbsp;&nbsp;<span style="color:#79b8ff">--accent</span>: <span style="color:#C9922B">${accent}</span>;   <span style="color:#888">/* highlight color */</span><br/>
       &nbsp;&nbsp;<span style="color:#79b8ff">--text</span>: <span style="color:#C9922B">#1a1a2a</span>;    <span style="color:#888">/* body text */</span><br/>
       }
     </div>
@@ -121,13 +123,13 @@ function buildInstructions(templateName, templateSlug, niche) {
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Paste your hex code in the file</strong><span>Replace the existing hex code (like <code>#1a2a5c</code>) with your new one. Save, refresh your browser — your whole site changes color instantly. Magic!</span></div>
+      <div class="step-body"><strong>Paste your hex code in the file</strong><span>Replace the existing hex code (like <code>${primary}</code>) with your new one. Save, refresh your browser — your whole site changes color instantly. Magic!</span></div>
     </div>
     <div class="fun">💡 <strong>Pro tip:</strong> Do this on index.html first to preview how your colors look. Once you're happy, use <code>Ctrl+Shift+H</code> to find and replace the old hex codes across all 5 pages at once.</div>
     <p style="font-size:.83rem;color:#555;margin-top:12px;">Here are some example color combos to get you inspired:</p>
     <div class="color-row">
-      <div class="color-chip" style="background:#1a2a5c;">Navy #1a2a5c</div>
-      <div class="color-chip" style="background:#e8a020;">Gold #e8a020</div>
+      <div class="color-chip" style="background:${primary};">Your Primary ${primary}</div>
+      <div class="color-chip" style="background:${accent};">Your Accent ${accent}</div>
       <div class="color-chip" style="background:#2d6a2d;">Forest #2d6a2d</div>
       <div class="color-chip" style="background:#8B1A1A;">Deep Red #8B1A1A</div>
       <div class="color-chip" style="background:#5c1a3a;">Plum #5c1a3a</div>
