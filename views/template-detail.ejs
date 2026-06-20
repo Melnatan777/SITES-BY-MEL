@@ -29,9 +29,9 @@
           <h2 style="font-size:1.3rem;margin-bottom:14px;">About This Template</h2>
           <p style="color:var(--gray);line-height:1.8;"><%= product.description %></p>
 
-          <div style="margin-top:28px;padding:20px;background:var(--light);border-radius:6px;">
-            <h3 style="font-size:0.95rem;margin-bottom:14px;color:var(--navy);">What's Included</h3>
-            <ul style="list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div id="addon-detail-box" style="margin-top:28px;padding:20px;background:var(--light);border-radius:6px;transition:all 0.2s;">
+            <h3 id="addon-detail-title" style="font-size:0.95rem;margin-bottom:14px;color:var(--navy);">What's Included</h3>
+            <ul id="addon-detail-list" style="list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
               <li style="font-size:0.88rem;color:var(--gray);">✓ Full HTML source files</li>
               <li style="font-size:0.88rem;color:var(--gray);">✓ CSS stylesheet</li>
               <li style="font-size:0.88rem;color:var(--gray);">✓ Mobile-responsive layout</li>
@@ -131,6 +131,50 @@
           <script>
             const prices = { none: 197, drive: 246, upload: 294, glove: 346, payment: 296 };
             const labels = { none: 'Buy & Download — $197', drive: 'Buy & Download — $246', upload: 'Buy & Download — $294', glove: 'Buy & Download — $346', payment: 'Buy & Download — $296' };
+
+            const addonDetails = {
+              none: {
+                title: "What's Included",
+                items: [
+                  '✓ Full HTML source files', '✓ CSS stylesheet',
+                  '✓ Mobile-responsive layout', '✓ Customization guide',
+                  '✓ Contact form ready', '✓ Lifetime download access'
+                ]
+              },
+              drive: {
+                title: '+ Photo Swap — What Mel Does For You',
+                items: [
+                  '✓ Everything in template', '✓ You share a Google Drive link',
+                  '✓ Mel swaps in your photos', '✓ Returned within 2 business days',
+                  '✓ Up to 5 photos placed', '✓ No back-and-forth needed'
+                ]
+              },
+              upload: {
+                title: '+ Direct Photo Upload — What Mel Does For You',
+                items: [
+                  '✓ Everything in template', '✓ Upload your photos directly',
+                  '✓ Mel embeds them on your pages', '✓ Returned within 2 business days',
+                  '✓ Up to 5 photos placed', '✓ Properly sized & optimized'
+                ]
+              },
+              glove: {
+                title: '+ White-Glove Finish — What Mel Does For You',
+                items: [
+                  '✓ Everything in template', '✓ Your photos swapped in',
+                  '✓ Text updated with your details', '✓ Colors adjusted to your brand',
+                  '✓ Full review & polish', '✓ Nearly ready to go live'
+                ]
+              },
+              payment: {
+                title: '+ Payment Button Setup — What Mel Does For You',
+                items: [
+                  '✓ Everything in template', '✓ Stripe account setup guidance',
+                  '✓ Payment button built & styled', '✓ Embedded on your site',
+                  '✓ Tested end-to-end', '✓ Customers can pay you online'
+                ]
+              }
+            };
+
             function selectOption(key) {
               ['none','drive','upload','glove','payment'].forEach(function(k) {
                 var el = document.getElementById('opt-' + k);
@@ -139,6 +183,16 @@
               });
               document.getElementById('selected-addon-input').value = key;
               document.getElementById('buy-btn').textContent = labels[key] + ' →';
+
+              // Update left panel
+              var detail = addonDetails[key];
+              document.getElementById('addon-detail-title').textContent = detail.title;
+              var list = document.getElementById('addon-detail-list');
+              list.style.gridTemplateColumns = '1fr 1fr';
+              list.innerHTML = detail.items.map(function(i) {
+                return '<li style="font-size:0.88rem;color:var(--gray);">' + i + '</li>';
+              }).join('');
+              document.getElementById('addon-detail-box').style.background = key === 'none' ? 'var(--light)' : '#f0f7ff';
             }
           </script>
 
