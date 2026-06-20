@@ -1,0 +1,44 @@
+<%- include('partials/head', { title: "We're on it! — Sites by Mel", metaDesc: "Your order is confirmed. Mel is working on your template." }) %>
+<%- include('partials/nav') %>
+
+<section style="padding:80px 0;background:#F4F2EE;min-height:80vh">
+  <div style="max-width:580px;margin:0 auto;padding:0 24px;text-align:center">
+
+    <div style="font-size:3.5rem;margin-bottom:20px">🎉</div>
+    <h1 style="font-size:2rem;font-weight:800;color:#1B2F4E;margin-bottom:12px">You're all set, <%= customerName %>!</h1>
+    <p style="color:#6B7280;font-size:1rem;line-height:1.7;margin-bottom:32px">Your payment is confirmed and Mel has everything she needs. Here's what happens next:</p>
+
+    <div style="background:#fff;border-radius:12px;border:1px solid #E5E0D8;padding:32px;text-align:left;margin-bottom:24px">
+      <div style="display:flex;gap:16px;margin-bottom:20px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:#1B2F4E;color:#fff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+        <div>
+          <strong style="display:block;color:#1B2F4E;margin-bottom:3px">Mel got your order</strong>
+          <span style="font-size:.85rem;color:#6B7280">She's been notified with all your details and your <%= addonLabel %> request.</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;margin-bottom:20px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:#1B2F4E;color:#fff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+        <div>
+          <strong style="display:block;color:#1B2F4E;margin-bottom:3px">She'll customize your <%= productName %></strong>
+          <span style="font-size:.85rem;color:#6B7280">Your template will be personalized with your details and your add-on completed within <strong>2 business days</strong>.</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:#C9922B;color:#fff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+        <div>
+          <strong style="display:block;color:#1B2F4E;margin-bottom:3px">You'll get an email with your finished files</strong>
+          <span style="font-size:.85rem;color:#6B7280">Mel will email your completed template directly to <strong><%= customerEmail %></strong> — ready to go live.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fdf6e3;border:1px solid #f0d080;border-radius:10px;padding:20px 24px;margin-bottom:32px;text-align:left">
+      <p style="font-size:.85rem;color:#7d5a00;margin:0"><strong>Questions?</strong> Just email <a href="mailto:mel@sitesbymel.com" style="color:#C9922B">mel@sitesbymel.com</a> — mention your template name (<%= productName %>) and she'll get back to you quickly.</p>
+    </div>
+
+    <a href="/" style="display:inline-block;background:#1B2F4E;color:#fff;padding:13px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem">Back to Sites by Mel</a>
+
+  </div>
+</section>
+
+<%- include('partials/footer') %>

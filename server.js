@@ -525,22 +525,33 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
   const driveLink   = req.body.drive_link || '';
   const selectedAddon = order.selected_addon || 'none';
 
-  // Build the personalized zip
-  const tmpPath = path.join(__dirname, 'downloads', `custom-${order.id}-${Date.now()}.zip`);
-  const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
-  try { await buildPersonalizedZip(product.slug, product.name, niche, data, tmpPath); } catch(e) {
-    console.error('[personalize]', e.message);
-  }
+  const addonLabel = { none:'Template Only', drive:'Photo Swap via Google Drive', upload:'Direct Photo Upload', glove:'Full White-Glove Finish', colors:'Custom Brand Colors', payment:'Payment Button & Business Email Setup' };
+  const needsManualWork = ['drive','upload','glove','colors','payment'].includes(selectedAddon);
 
-  // Email Mel with all order details so she can do the add-on work
-  const addonLabel = { none:'Template Only', drive:'Photo Swap via Google Drive', upload:'Direct Photo Upload', glove:'White-Glove Finish', colors:'Custom Brand Colors', payment:'Payment Button & Business Email Setup' };
+  // Email Mel with all order details
   await sendEmail({
     to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
     subject: `New order ready — ${product.name}${selectedAddon !== 'none' ? ' + ' + addonLabel[selectedAddon] : ''}`,
     text: `Customer: ${order.customer_name || 'unknown'}\nEmail: ${order.customer_email || 'unknown'}\nProduct: ${product.name}\nAdd-on paid: ${addonLabel[selectedAddon] || selectedAddon}\nAmount paid: $${(order.amount/100).toFixed(0)}\n\nBusiness details entered:\nName: ${data.businessName}\nPhone: ${data.phone}\nEmail: ${data.email}\nAddress: ${data.address}\nTagline: ${data.tagline}\nBrand colors: ${brandColors || 'none'}\nDrive link: ${driveLink || 'none'}`
   }).catch(e => console.error('[personalize email]', e.message));
 
-  // Deliver zip directly — everything was paid upfront
+  // Add-on orders: show "We're on it" page — Mel delivers manually
+  if (needsManualWork) {
+    return res.render('addon-pending', {
+      customerName: data.businessName || order.customer_name || 'there',
+      customerEmail: order.customer_email || data.email,
+      addonLabel: addonLabel[selectedAddon],
+      productName: product.name,
+      token: req.params.token
+    });
+  }
+
+  // DIY only: deliver zip immediately
+  const tmpPath = path.join(__dirname, 'downloads', `custom-${order.id}-${Date.now()}.zip`);
+  const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
+  try { await buildPersonalizedZip(product.slug, product.name, niche, data, tmpPath); } catch(e) {
+    console.error('[personalize]', e.message);
+  }
   db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
   const fs = require('fs');
   if (fs.existsSync(tmpPath)) {
