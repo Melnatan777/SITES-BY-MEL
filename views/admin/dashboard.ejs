@@ -230,6 +230,9 @@
       <a href="/admin/quotes" class="btn btn-gold">+ Respond to Quote</a>
       <a href="/admin/products" class="btn btn-navy">Manage Templates</a>
       <a href="/admin/messages" class="btn btn-ghost">📥 Messages</a>
+      <form method="POST" action="/admin/rebuild-downloads" style="display:inline;">
+        <button type="submit" class="btn btn-ghost" onclick="return confirm('Rebuild all 16 zips? Takes ~30 seconds.')" style="cursor:pointer;">🔄 Rebuild Zips</button>
+      </form>
     </div>
 
     <!-- STATS -->

@@ -8,8 +8,8 @@ const db = require('./database');
 const { buildAllDownloads } = require('./scripts/build-downloads');
 const { buildPersonalizedZip, PLACEHOLDERS } = require('./scripts/personalize');
 
-// Build zips on startup (skips any already built)
-buildAllDownloads().catch(e => console.error('[downloads] startup error:', e.message));
+// Build zips on startup — force rebuild every deploy so templates are always fresh
+buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e.message));
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
