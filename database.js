@@ -126,7 +126,7 @@ db.exec(`CREATE TABLE IF NOT EXISTS expenses (
   created_at   DATETIME DEFAULT CURRENT_TIMESTAMP
 )`);
 
-// ── CLIENT PROJECT UPGRADES (membership + credentials) ───────────────────────
+// ── CLIENT PROJECT UPGRADES (membership + credentials + contract) ─────────────
 try {
   db.exec(`ALTER TABLE client_projects ADD COLUMN membership_status TEXT DEFAULT 'none'`);
   db.exec(`ALTER TABLE client_projects ADD COLUMN membership_tier TEXT`);
@@ -135,7 +135,67 @@ try {
   db.exec(`ALTER TABLE client_projects ADD COLUMN credentials_notes TEXT`);
   db.exec(`ALTER TABLE client_projects ADD COLUMN hourly_rate REAL DEFAULT 75`);
   db.exec(`ALTER TABLE client_projects ADD COLUMN project_type TEXT DEFAULT 'template_launch'`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN bitwarden_folder TEXT`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN contract_status TEXT DEFAULT 'not_sent'`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN contract_sent_at TEXT`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN contract_signed_at TEXT`);
+  db.exec(`ALTER TABLE client_projects ADD COLUMN contract_notes TEXT`);
 } catch(e) {}
+
+// ── CONTRACT TEMPLATE (editable from admin) ───────────────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS contract_template (
+    id       INTEGER PRIMARY KEY,
+    content  TEXT NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+const contractExists = db.prepare("SELECT COUNT(*) as n FROM contract_template").get();
+if (contractExists.n === 0) {
+  db.prepare("INSERT INTO contract_template (id, content) VALUES (1, ?)").run(
+    JSON.stringify({
+      intro: "This Service Agreement (\"Agreement\") is entered into between Sites by Mel (\"Designer\") and the client named below (\"Client\").",
+      sections: [
+        {
+          title: "1. Services",
+          body: "Designer agrees to provide the web design services selected by Client as described in the project proposal or package chosen at time of purchase. Services may include website template customization, domain setup, professional email configuration, hosting setup, and/or any agreed add-ons. Exact scope is confirmed in writing via email prior to work beginning."
+        },
+        {
+          title: "2. Payment Terms",
+          body: "A non-refundable deposit of 50% is required before any work begins. The remaining balance is due upon project completion, before final files or live access are delivered. For Template Launch projects, full payment is collected at checkout. For Custom Build projects, a deposit invoice will be sent separately. Monthly membership fees are billed automatically via the payment method on file and are due on the same date each month."
+        },
+        {
+          title: "3. Ownership",
+          body: "Upon receipt of full payment, Client owns all website content, written copy, and design files delivered. Client owns their domain name, which is registered in their name. Designer retains ownership of underlying hosting infrastructure, server configuration, and deployment setup. Client may request transfer of all files at any time. A transfer/handoff fee of $150 applies if Client wishes to move hosting to another provider."
+        },
+        {
+          title: "4. Hosting & Maintenance",
+          body: "For Template Launch and Custom Build projects, hosting is managed by Designer on behalf of Client. Hosting is included for the first year. After year 1, hosting renews at the agreed monthly rate. If Client cancels hosting with 30 days written notice, all website files will be provided to Client within 5 business days. Designer is not responsible for downtime caused by third-party hosting providers, domain registrars, or acts outside Designer's control."
+        },
+        {
+          title: "5. Revisions & Support",
+          body: "Projects include up to 2 rounds of revisions within 14 days of delivery. Additional revisions or support requests outside this window are billed at Designer's current hourly rate. Clients on a monthly membership plan receive ongoing minor updates and support as described in their membership tier. Major changes (redesigns, new pages, new features) are quoted separately regardless of membership status."
+        },
+        {
+          title: "6. Cancellation & Refunds",
+          body: "The deposit is non-refundable once work has begun. If Client cancels mid-project, any work completed will be billed at the hourly rate and deducted from the deposit. No refunds are issued after project delivery. Monthly membership fees are non-refundable for the current billing period but may be cancelled at any time with 30 days notice to take effect the following billing cycle."
+        },
+        {
+          title: "7. Client Responsibilities",
+          body: "Client agrees to provide all content (text, photos, logos) required for the project within 14 days of project start. Delays caused by late content delivery may push the delivery timeline at no fault of Designer. Client is responsible for verifying their own identity with payment processors (e.g. Stripe) as required by those platforms."
+        },
+        {
+          title: "8. Confidentiality",
+          body: "Both parties agree to keep confidential any sensitive business information shared during the project. Designer will not share Client's business details, credentials, or personal information with any third party without written consent, except as required to complete the project (e.g. domain registrars, hosting providers)."
+        },
+        {
+          title: "9. Agreement",
+          body: "By signing below (or replying to the project proposal email with written acceptance), Client agrees to the terms of this Agreement. This Agreement is governed by the laws of the state in which Designer operates."
+        }
+      ]
+    })
+  );
+}
 
 // ── SERVICE PACKAGES (public-facing, editable from admin) ────────────────────
 db.exec(`

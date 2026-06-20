@@ -919,21 +919,21 @@ app.post('/admin/clients/:id/edit', requireAuth, (req, res) => {
     cloudflare_zone, professional_email, resend_domain, stripe_status,
     package_price, monthly_fee, notes,
     membership_status, membership_tier, membership_amount, stripe_recurring_link,
-    credentials_notes, hourly_rate } = req.body;
+    credentials_notes, hourly_rate, bitwarden_folder } = req.body;
   db.prepare(`UPDATE client_projects SET
     customer_name=?,customer_email=?,package_type=?,status=?,domain_name=?,domain_renewal_date=?,
     railway_project_name=?,railway_project_url=?,railway_monthly_cost=?,github_repo_url=?,
     cloudflare_zone=?,professional_email=?,resend_domain=?,stripe_status=?,
     package_price=?,monthly_fee=?,notes=?,
     membership_status=?,membership_tier=?,membership_amount=?,stripe_recurring_link=?,
-    credentials_notes=?,hourly_rate=? WHERE id=?`)
+    credentials_notes=?,hourly_rate=?,bitwarden_folder=? WHERE id=?`)
     .run(customer_name, customer_email, package_type, status, domain_name, domain_renewal_date,
       railway_project_name, railway_project_url, parseFloat(railway_monthly_cost)||5,
       github_repo_url, cloudflare_zone, professional_email, resend_domain, stripe_status,
       parseFloat(package_price)||0, parseFloat(monthly_fee)||15, notes,
       membership_status||'none', membership_tier, parseFloat(membership_amount)||0,
       stripe_recurring_link, credentials_notes, parseFloat(hourly_rate)||75,
-      req.params.id);
+      bitwarden_folder, req.params.id);
   res.redirect('/admin/clients/' + req.params.id);
 });
 
@@ -948,6 +948,47 @@ app.get('/admin/clients/:id/handoff', requireAuth, (req, res) => {
   const client = db.prepare('SELECT * FROM client_projects WHERE id=?').get(req.params.id);
   if (!client) return res.redirect('/admin/clients');
   res.render('admin/client-handoff', { client });
+});
+
+// Client contract
+app.get('/admin/clients/:id/contract', requireAuth, (req, res) => {
+  const client = db.prepare('SELECT * FROM client_projects WHERE id=?').get(req.params.id);
+  if (!client) return res.redirect('/admin/clients');
+  const tmpl = db.prepare('SELECT content FROM contract_template WHERE id=1').get();
+  const contract = tmpl ? JSON.parse(tmpl.content) : { intro: '', sections: [] };
+  res.render('admin/client-contract', { client, contract });
+});
+
+app.post('/admin/clients/:id/contract-status', requireAuth, (req, res) => {
+  const { contract_status, contract_notes } = req.body;
+  const now = new Date().toISOString().substring(0, 10);
+  const current = db.prepare('SELECT contract_status FROM client_projects WHERE id=?').get(req.params.id);
+  let sent_at = null, signed_at = null;
+  if (contract_status === 'sent' && current.contract_status !== 'sent') sent_at = now;
+  if (contract_status === 'signed') signed_at = now;
+  db.prepare(`UPDATE client_projects SET contract_status=?,contract_notes=?
+    ${sent_at ? ',contract_sent_at=?' : ''}
+    ${signed_at ? ',contract_signed_at=?' : ''}
+    WHERE id=?`)
+    .run(...[contract_status, contract_notes, sent_at, signed_at].filter(v=>v!==null), req.params.id);
+  res.redirect('/admin/clients/' + req.params.id);
+});
+
+// Edit contract template
+app.get('/admin/contract-template', requireAuth, (req, res) => {
+  const tmpl = db.prepare('SELECT content FROM contract_template WHERE id=1').get();
+  const contract = tmpl ? JSON.parse(tmpl.content) : { intro: '', sections: [] };
+  res.render('admin/contract-template', { contract });
+});
+
+app.post('/admin/contract-template', requireAuth, (req, res) => {
+  const { intro } = req.body;
+  const titles = Array.isArray(req.body.title) ? req.body.title : [req.body.title];
+  const bodies = Array.isArray(req.body.body) ? req.body.body : [req.body.body];
+  const sections = titles.map((t, i) => ({ title: t, body: bodies[i] || '' })).filter(s => s.title);
+  const content = JSON.stringify({ intro, sections });
+  db.prepare('UPDATE contract_template SET content=?, updated_at=CURRENT_TIMESTAMP WHERE id=1').run(content);
+  res.redirect('/admin/contract-template?saved=1');
 });
 
 // ── ADMIN PACKAGES ───────────────────────────────────────────────────────────

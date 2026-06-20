@@ -16,6 +16,7 @@
         <span style="font-size:.82rem;color:var(--gray)"><%= client.customer_email %></span>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="/admin/clients/<%= client.id %>/contract" target="_blank" class="btn btn-gold btn-sm">📋 Contract PDF</a>
         <a href="/admin/clients/<%= client.id %>/handoff" target="_blank" class="btn btn-outline btn-sm">📄 Handoff PDF</a>
         <a href="/admin/clients" class="btn btn-outline btn-sm">&larr; All Clients</a>
       </div>
@@ -158,6 +159,68 @@
         </div>
       </div>
 
+      <!-- CONTRACT STATUS -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:24px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h2 style="font-size:.95rem;font-weight:700;color:var(--navy)">Service Agreement / Contract</h2>
+          <a href="/admin/clients/<%= client.id %>/contract" target="_blank" class="btn btn-gold btn-sm">Open Contract PDF</a>
+        </div>
+        <%
+          const cStatusColors = { not_sent:'#9CA3AF', sent:'#f59e0b', signed:'#22c55e', declined:'#ef4444' };
+          const cStatusLabels = { not_sent:'Not Sent', sent:'Sent — Awaiting Signature', signed:'Signed ✓', declined:'Declined' };
+        %>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+          <div style="background:var(--light);border-radius:8px;padding:14px">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Status</div>
+            <div style="font-weight:700;color:<%= cStatusColors[client.contract_status||'not_sent'] %>"><%= cStatusLabels[client.contract_status||'not_sent'] %></div>
+          </div>
+          <div style="background:var(--light);border-radius:8px;padding:14px">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Sent</div>
+            <div style="font-weight:600;font-size:.85rem"><%= client.contract_sent_at || '—' %></div>
+          </div>
+          <div style="background:var(--light);border-radius:8px;padding:14px">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Signed</div>
+            <div style="font-weight:600;font-size:.85rem;color:#22c55e"><%= client.contract_signed_at || '—' %></div>
+          </div>
+        </div>
+        <% if (client.contract_notes) { %>
+        <p style="font-size:.82rem;color:var(--gray);margin-bottom:12px"><%= client.contract_notes %></p>
+        <% } %>
+        <form method="POST" action="/admin/clients/<%= client.id %>/contract-status" style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+          <div style="flex:1;min-width:160px">
+            <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Update Status</label>
+            <select name="contract_status" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+              <option value="not_sent" <%=client.contract_status==='not_sent'||!client.contract_status?'selected':''%>>Not Sent</option>
+              <option value="sent" <%=client.contract_status==='sent'?'selected':''%>>Sent — Awaiting Signature</option>
+              <option value="signed" <%=client.contract_status==='signed'?'selected':''%>>Signed</option>
+              <option value="declined" <%=client.contract_status==='declined'?'selected':''%>>Declined</option>
+            </select>
+          </div>
+          <div style="flex:2;min-width:200px">
+            <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Notes (e.g. "Sent via email 6/20")</label>
+            <input type="text" name="contract_notes" value="<%= client.contract_notes||'' %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem">
+          </div>
+          <button type="submit" class="btn btn-gold btn-sm" style="white-space:nowrap">Save Status</button>
+        </form>
+        <div style="margin-top:12px;padding:10px 14px;background:#f0f7ff;border-radius:6px;font-size:.78rem;color:#1e40af">
+          <strong>How to send:</strong> Click "Open Contract PDF" → Print → Save as PDF → email to client as attachment. When they reply "I agree" or sign, update status to Signed.
+        </div>
+      </div>
+
+      <!-- BITWARDEN -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:24px">
+        <h2 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:12px">🔐 Bitwarden Folder</h2>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="flex:1;background:#f9fafb;border:1px solid var(--border);border-radius:8px;padding:14px">
+            <div style="font-size:.72rem;color:var(--gray);margin-bottom:4px">Folder Name in Bitwarden</div>
+            <div style="font-weight:700;color:var(--navy);font-size:.95rem"><%= client.bitwarden_folder || 'Not set yet' %></div>
+          </div>
+          <div style="font-size:.78rem;color:var(--gray);max-width:260px;line-height:1.6">
+            Create a folder in <strong>Bitwarden</strong> named exactly this and store all passwords, API keys, and credentials for this client there.
+          </div>
+        </div>
+      </div>
+
       <!-- NOTES -->
       <% if (client.notes) { %>
       <div style="background:#fdf6e3;border:1px solid #f0d080;border-radius:10px;padding:24px;margin-bottom:24px">
@@ -205,6 +268,8 @@
               <div><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Monthly Amount ($)</label><input type="number" name="membership_amount" value="<%= client.membership_amount||'' %>" placeholder="75" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
               <div><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Hourly Rate — non-member support ($)</label><input type="number" name="hourly_rate" value="<%= client.hourly_rate||75 %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
               <div style="grid-column:span 2"><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Stripe Recurring Payment Link</label><input type="text" name="stripe_recurring_link" value="<%= client.stripe_recurring_link||'' %>" placeholder="https://buy.stripe.com/..." style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+              <div><label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px">Bitwarden Folder Name</label><input type="text" name="bitwarden_folder" value="<%= client.bitwarden_folder||'' %>" placeholder="e.g. Client — Sarah's Salon" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.88rem"></div>
+              <div></div>
               <div style="grid-column:span 2">
                 <label style="display:block;font-size:.75rem;font-weight:700;margin-bottom:4px;color:#7d5a00">🔐 Credentials & Access Notes (internal only — no actual passwords)</label>
                 <textarea name="credentials_notes" rows="4" placeholder="e.g. Domain = Namecheap under client email&#10;Stripe = hello@theirbusiness.com&#10;Railway = project 'client-name' in Mel's account&#10;GitHub = github.com/your-account/repo-name" style="width:100%;padding:8px 12px;border:1px solid #f0d080;border-radius:6px;font-size:.85rem;resize:vertical;background:#fffdf7"><%= client.credentials_notes||'' %></textarea>

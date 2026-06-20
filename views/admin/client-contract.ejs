@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Agreement — <%= client.customer_name %></title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, 'Times New Roman', serif; color: #1a1a2e; background: #fff; padding: 56px; max-width: 780px; margin: 0 auto; font-size: 14px; line-height: 1.7; }
+    .no-print { margin-bottom: 28px; display: flex; gap: 10px; }
+    @media print { .no-print { display: none; } body { padding: 32px; } }
+    .logo { font-size: 1rem; font-weight: 700; color: #1B2F4E; margin-bottom: 4px; font-family: Arial, sans-serif; }
+    .logo span { color: #C9922B; }
+    h1 { font-size: 1.4rem; color: #1B2F4E; margin: 24px 0 6px; letter-spacing: .02em; }
+    h2 { font-size: .95rem; font-weight: 700; color: #1B2F4E; margin: 24px 0 8px; font-family: Arial, sans-serif; }
+    p { margin-bottom: 12px; color: #374151; }
+    .parties { background: #f9fafb; border: 1px solid #E5E0D8; border-radius: 6px; padding: 20px 24px; margin: 20px 0 28px; font-family: Arial, sans-serif; }
+    .parties table { width: 100%; border-collapse: collapse; }
+    .parties td { padding: 6px 0; font-size: .88rem; }
+    .parties td:first-child { color: #6B7280; width: 30%; }
+    .parties td:last-child { font-weight: 600; color: #1B2F4E; }
+    .section { border-bottom: 1px solid #E5E0D8; padding-bottom: 16px; margin-bottom: 4px; }
+    .signature-block { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .sig-box { border-top: 2px solid #1B2F4E; padding-top: 12px; }
+    .sig-label { font-size: .78rem; color: #6B7280; font-family: Arial, sans-serif; }
+    .sig-name { font-size: .9rem; font-weight: 700; color: #1B2F4E; margin-top: 4px; font-family: Arial, sans-serif; }
+    .sig-line { height: 40px; border-bottom: 1px solid #9CA3AF; margin: 16px 0 8px; }
+    .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #E5E0D8; font-size: .75rem; color: #9CA3AF; font-family: Arial, sans-serif; text-align: center; }
+    .btn { display: inline-block; background: #1B2F4E; color: #fff; padding: 10px 22px; border-radius: 6px; text-decoration: none; font-size: .88rem; font-family: Arial, sans-serif; cursor: pointer; border: none; }
+    .btn-gold { background: #C9922B; }
+  </style>
+</head>
+<body>
+
+<div class="no-print">
+  <button class="btn btn-gold" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  <a href="/admin/clients/<%= client.id %>" class="btn">← Back to Client</a>
+  <a href="/admin/contract-template" class="btn" style="background:#6B7280">Edit Contract Template</a>
+</div>
+
+<div class="logo">Sites by <span>Mel</span></div>
+<h1>Web Design Service Agreement</h1>
+<p style="font-size:.82rem;color:#6B7280;font-family:Arial,sans-serif">Agreement Date: <%= new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) %></p>
+
+<div class="parties">
+  <table>
+    <tr><td>Designer</td><td>Sites by Mel &nbsp;|&nbsp; mel@sitesbymel.com &nbsp;|&nbsp; sitesbymel.com</td></tr>
+    <tr><td>Client Name</td><td><%= client.customer_name %></td></tr>
+    <tr><td>Client Email</td><td><%= client.customer_email %></td></tr>
+    <tr><td>Package</td><td><%= {template_launch:'Template Launch — $797', custom_build:'Full Custom Build — Starting at $1,500', diy:'DIY Template — $197'}[client.package_type] || client.package_type %></td></tr>
+    <% if (client.domain_name) { %><tr><td>Project Domain</td><td><%= client.domain_name %></td></tr><% } %>
+    <% if (client.membership_status === 'active') { %><tr><td>Membership</td><td><%= client.membership_tier || 'Monthly Maintenance' %> — $<%= (client.membership_amount||0).toFixed(0) %>/month</td></tr><% } %>
+  </table>
+</div>
+
+<p><%= contract.intro %></p>
+
+<% contract.sections.forEach(function(s) { %>
+<div class="section">
+  <h2><%= s.title %></h2>
+  <p><%= s.body %></p>
+</div>
+<% }); %>
+
+<div class="signature-block">
+  <div class="sig-box">
+    <div class="sig-label">Designer Signature</div>
+    <div class="sig-line"></div>
+    <div class="sig-name">Mel — Sites by Mel</div>
+    <div class="sig-label" style="margin-top:4px">Date: ___________________</div>
+  </div>
+  <div class="sig-box">
+    <div class="sig-label">Client Signature</div>
+    <div class="sig-line"></div>
+    <div class="sig-name"><%= client.customer_name %></div>
+    <div class="sig-label" style="margin-top:4px">Date: ___________________</div>
+  </div>
+</div>
+
+<p style="margin-top:28px;font-size:.8rem;color:#6B7280;font-family:Arial,sans-serif">
+  <strong>Note:</strong> A signed copy of this agreement (physical, scanned, or email reply stating "I agree to the Sites by Mel Service Agreement dated <%= new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) %>") constitutes a binding agreement.
+</p>
+
+<div class="footer">
+  Sites by Mel &nbsp;|&nbsp; mel@sitesbymel.com &nbsp;|&nbsp; sitesbymel.com<br>
+  Generated <%= new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) %>
+</div>
+
+</body>
+</html>

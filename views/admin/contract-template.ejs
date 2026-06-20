@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Contract Template — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'clients' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1>Edit Contract Template</h1>
+        <p style="font-size:.82rem;color:var(--gray);margin-top:2px">Changes here apply to all future contracts. Existing saved PDFs are not affected.</p>
+      </div>
+      <a href="/admin/clients" class="btn btn-outline btn-sm">&larr; Clients</a>
+    </div>
+    <div class="admin-content">
+
+      <% if (typeof query !== 'undefined' && query && query.saved) { %>
+      <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 20px;margin-bottom:20px;color:#15803d;font-weight:600">
+        ✓ Contract template saved successfully.
+      </div>
+      <% } %>
+
+      <form method="POST" action="/admin/contract-template" style="max-width:780px">
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:20px">
+          <label style="display:block;font-size:.82rem;font-weight:700;margin-bottom:8px">Opening Paragraph</label>
+          <textarea name="intro" rows="3" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;font-size:.88rem;resize:vertical"><%= contract.intro %></textarea>
+        </div>
+
+        <% contract.sections.forEach(function(s, i) { %>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:16px">
+          <div style="margin-bottom:12px">
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:5px">Section Title</label>
+            <input type="text" name="title" value="<%= s.title %>" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.9rem;font-weight:600">
+          </div>
+          <div>
+            <label style="display:block;font-size:.78rem;font-weight:700;margin-bottom:5px">Section Body</label>
+            <textarea name="body" rows="5" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:.87rem;resize:vertical;line-height:1.6"><%= s.body %></textarea>
+          </div>
+        </div>
+        <% }); %>
+
+        <div style="display:flex;gap:12px;margin-top:8px">
+          <button type="submit" class="btn btn-gold">Save Contract Template</button>
+          <a href="/admin/clients" class="btn btn-outline">Cancel</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--gray);margin-top:10px">Tip: After saving, open any client record and click "Contract PDF" to preview the updated contract.</p>
+      </form>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
