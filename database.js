@@ -152,6 +152,36 @@ if (count.n === 0) {
   insert.run('GatherHere Template', 'gather-here', 'Church & Ministry',
     'For churches, ministries & faith-based organizations. Service times, sermons, prayer requests & giving links.',
     19700, '/templates/gather-here/index.html', 1, 6);
+  insert.run('PawPerfect Template', 'pet-shop', 'Pet Grooming & Boarding',
+    'For pet groomers, boarders & daycares. Services grid, gallery, pricing tiers, reviews & online booking CTA.',
+    19700, '/templates/pet-shop/index.html', 1, 7);
+  insert.run('Glow Studio Template', 'beauty-studio', 'Hair Salon & Beauty',
+    'For hair salons, lash studios & beauty pros. Services, stylist bio, gallery, pricing & book now CTA.',
+    19700, '/templates/beauty-studio/index.html', 1, 8);
+  insert.run('Lens & Light Template', 'lens-and-light', 'Photography & Videography',
+    'For photographers & videographers. Portfolio grid, packages, about section, testimonials & contact form.',
+    19700, '/templates/lens-and-light/index.html', 1, 9);
+  insert.run('GreenCut Template', 'green-cut', 'Landscaping & Lawn Care',
+    'For lawn care & landscaping businesses. Services, service area map, why-choose-us, reviews & free quote form.',
+    19700, '/templates/green-cut/index.html', 1, 10);
+  insert.run('WellnessPro Template', 'wellness-pro', 'Medical & Dental Practice',
+    'For doctors, dentists & chiropractors. Accepting new patients hero, specialties, meet the doctor, insurance badges & booking.',
+    19700, '/templates/wellness-pro/index.html', 1, 11);
+  insert.run('FitLife Template', 'fit-life', 'Personal Trainer & Fitness Studio',
+    'For personal trainers & fitness studios. Programs, transformations, trainer bio, pricing tiers & free consult CTA.',
+    19700, '/templates/fit-life/index.html', 1, 12);
+  insert.run('Sparkle Clean Template', 'sparkle-clean', 'House & Commercial Cleaning',
+    'For cleaning services. Services grid, 3-step how-it-works, trust badges, reviews & book a clean form.',
+    19700, '/templates/sparkle-clean/index.html', 1, 13);
+  insert.run('Bright Minds Template', 'bright-minds', 'Tutoring & Learning Center',
+    'For tutors, learning centers & daycares. Programs, age groups, meet the teachers, parent reviews & enroll CTA.',
+    19700, '/templates/bright-minds/index.html', 1, 14);
+  insert.run('Forever Events Template', 'forever-events', 'Wedding & Event Planning',
+    'For wedding & event planners. Services, real weddings gallery, packages, planner bio, reviews & inquiry form.',
+    19700, '/templates/forever-events/index.html', 1, 15);
+  insert.run('AutoShine Template', 'auto-shine', 'Auto Detailing & Mechanic',
+    'For auto detailers & mechanics. Services, before/after gallery, trust section, reviews & appointment booking.',
+    19700, '/templates/auto-shine/index.html', 1, 16);
 }
 
 // Activate all templates if any are still inactive from old seed
@@ -162,12 +192,22 @@ db.prepare("UPDATE products SET price=19700").run();
 
 // Backfill preview_url for existing records that don't have one
 const previewUrls = [
-  ['service-pro', '/preview/service-pro/index.html'],
-  ['table-ready', '/preview/table-ready/index.html'],
-  ['key-ready',   '/preview/key-ready/index.html'],
-  ['shop-front',  '/preview/shop-front/index.html'],
-  ['voice-first', '/preview/voice-first/index.html'],
-  ['gather-here', '/preview/gather-here/index.html'],
+  ['service-pro',    '/preview/service-pro/index.html'],
+  ['table-ready',    '/preview/table-ready/index.html'],
+  ['key-ready',      '/preview/key-ready/index.html'],
+  ['shop-front',     '/preview/shop-front/index.html'],
+  ['voice-first',    '/preview/voice-first/index.html'],
+  ['gather-here',    '/preview/gather-here/index.html'],
+  ['pet-shop',       '/preview/pet-shop/index.html'],
+  ['beauty-studio',  '/preview/beauty-studio/index.html'],
+  ['lens-and-light', '/preview/lens-and-light/index.html'],
+  ['green-cut',      '/preview/green-cut/index.html'],
+  ['wellness-pro',   '/preview/wellness-pro/index.html'],
+  ['fit-life',       '/preview/fit-life/index.html'],
+  ['sparkle-clean',  '/preview/sparkle-clean/index.html'],
+  ['bright-minds',   '/preview/bright-minds/index.html'],
+  ['forever-events', '/preview/forever-events/index.html'],
+  ['auto-shine',     '/preview/auto-shine/index.html'],
 ];
 // Always update preview_url to correct paths (fixes trailing slash issue)
 const backfill = db.prepare("UPDATE products SET preview_url=? WHERE slug=?");
@@ -175,12 +215,22 @@ for (const [slug, url] of previewUrls) backfill.run(url, slug);
 
 // Wire up thumbnail images
 const thumbnails = [
-  ['service-pro', 'service-pro.jpg'],
-  ['table-ready',  'Tables.jpg'],
-  ['key-ready',    'KeyReady.jpg'],
-  ['shop-front',   'ShopReady.jpg'],
-  ['voice-first',  'ThoughtfulCreator.jpg'],
-  ['gather-here',  'Cornerstone.jpg'],
+  ['service-pro',    'service-pro.jpg'],
+  ['table-ready',    'Tables.jpg'],
+  ['key-ready',      'KeyReady.jpg'],
+  ['shop-front',     'ShopReady.jpg'],
+  ['voice-first',    'ThoughtfulCreator.jpg'],
+  ['gather-here',    'Cornerstone.jpg'],
+  ['pet-shop',       'pet-shop.jpg'],
+  ['beauty-studio',  'beauty-studio.jpg'],
+  ['lens-and-light', 'lens-and-light.jpg'],
+  ['green-cut',      'green-cut.jpg'],
+  ['wellness-pro',   'wellness-pro.jpg'],
+  ['fit-life',       'fit-life.jpg'],
+  ['sparkle-clean',  'sparkle-clean.jpg'],
+  ['bright-minds',   'bright-minds.jpg'],
+  ['forever-events', 'forever-events.jpg'],
+  ['auto-shine',     'auto-shine.jpg'],
 ];
 const setThumb = db.prepare("UPDATE products SET thumbnail=? WHERE slug=?");
 for (const [slug, file] of thumbnails) setThumb.run(file, slug);

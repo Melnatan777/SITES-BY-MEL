@@ -8,12 +8,22 @@ const archiver = require('archiver');
 const { buildInstructions } = require('./build-instructions');
 
 const TEMPLATES = [
-  { slug: 'service-pro', name: 'ServicePro Template', niche: 'local service business' },
-  { slug: 'table-ready', name: 'TableReady Template', niche: 'restaurant & food business' },
-  { slug: 'key-ready',   name: 'KeyReady Template',   niche: 'real estate agent' },
-  { slug: 'shop-front',  name: 'ShopFront Template',  niche: 'retail boutique' },
-  { slug: 'voice-first', name: 'VoiceFirst Template', niche: 'blogger & content creator' },
-  { slug: 'gather-here', name: 'GatherHere Template', niche: 'church & ministry' },
+  { slug: 'service-pro',    name: 'ServicePro Template',    niche: 'local service business' },
+  { slug: 'table-ready',    name: 'TableReady Template',    niche: 'restaurant & food business' },
+  { slug: 'key-ready',      name: 'KeyReady Template',      niche: 'real estate agent' },
+  { slug: 'shop-front',     name: 'ShopFront Template',     niche: 'retail boutique' },
+  { slug: 'voice-first',    name: 'VoiceFirst Template',    niche: 'blogger & content creator' },
+  { slug: 'gather-here',    name: 'GatherHere Template',    niche: 'church & ministry' },
+  { slug: 'pet-shop',       name: 'PawPerfect Template',    niche: 'pet grooming & boarding' },
+  { slug: 'beauty-studio',  name: 'Glow Studio Template',   niche: 'hair salon & beauty studio' },
+  { slug: 'lens-and-light', name: 'Lens & Light Template',  niche: 'photographer & videographer' },
+  { slug: 'green-cut',      name: 'GreenCut Template',      niche: 'landscaping & lawn care' },
+  { slug: 'wellness-pro',   name: 'WellnessPro Template',   niche: 'medical & dental practice' },
+  { slug: 'fit-life',       name: 'FitLife Template',       niche: 'personal trainer & fitness studio' },
+  { slug: 'sparkle-clean',  name: 'Sparkle Clean Template', niche: 'house cleaning & commercial cleaning' },
+  { slug: 'bright-minds',   name: 'Bright Minds Template',  niche: 'tutoring & learning center' },
+  { slug: 'forever-events', name: 'Forever Events Template',niche: 'wedding & event planning' },
+  { slug: 'auto-shine',     name: 'AutoShine Template',     niche: 'auto detailing & mechanic' },
 ];
 
 const ROOT = path.join(__dirname, '..');
