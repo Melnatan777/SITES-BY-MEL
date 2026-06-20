@@ -281,6 +281,29 @@ app.post('/setup/:slug', async (req, res) => {
       product ? product.id : null, product ? product.name : 'No specific template',
       name, email, phone||'', business_name||'', business_url||'', notes||'', depositAmount, session.id
     );
+    // Notify Mel
+    await sendEmail({
+      to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
+      subject: `New done-for-you setup deposit — ${business_name || name}`,
+      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone||'—'}\nBusiness: ${business_name||'—'}\nCurrent site: ${business_url||'—'}\nTemplate: ${product ? product.name : 'No specific template'}\nNotes: ${notes||'—'}\n\n$200 deposit initiated via Stripe. Check the dashboard for payment confirmation.`
+    });
+    // Auto-reply to customer
+    await sendEmail({
+      to: email,
+      subject: `Thanks for your deposit — Sites by Mel`,
+      html: autoReplyHtml(name,
+        `I received your done-for-you setup deposit — you're officially on my schedule!`,
+        `<div style="background:#f5f4f2;border-radius:8px;padding:16px 20px;margin:16px 0;font-size:.9rem;color:#333">
+          <strong>What happens next:</strong>
+          <p style="margin-top:8px;line-height:1.8">
+          1. I'll reach out within 24 hours to collect your content — logo, photos, and any text you have<br>
+          2. I'll customize your template with your branding and info<br>
+          3. You'll get a preview link to approve before anything goes live<br>
+          4. Once approved, I'll connect your domain and flip the switch — your site is live!
+          </p>
+        </div>
+        <p style="color:#555;font-size:.88rem">Questions in the meantime? Just reply to this email or reach me at <a href="mailto:mel@sitesbymel.com" style="color:#C9922B">mel@sitesbymel.com</a>.</p>`)
+    });
     res.redirect(303, session.url);
   } catch (e) {
     console.error(e);
