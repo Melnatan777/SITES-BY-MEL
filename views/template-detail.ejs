@@ -100,6 +100,16 @@
                 </div>
               </div>
 
+              <div id="opt-colors" onclick="selectOption('colors')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <div>
+                    <span style="font-size:0.88rem;font-weight:700;color:var(--navy);">+ Custom Brand Colors</span>
+                    <span style="font-size:0.75rem;color:var(--gray);display:block;margin-top:2px;">Tell Mel your colors — she swaps every button, heading &amp; accent to match your brand</span>
+                  </div>
+                  <span style="font-weight:800;color:var(--gold);font-size:1rem;">$247</span>
+                </div>
+              </div>
+
               <div id="opt-payment" onclick="selectOption('payment')" style="border:2px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                   <div>
@@ -129,8 +139,8 @@
           <% } %>
 
           <script>
-            const prices = { none: 197, drive: 246, upload: 294, glove: 346, payment: 296 };
-            const labels = { none: 'Buy & Download — $197', drive: 'Buy & Download — $246', upload: 'Buy & Download — $294', glove: 'Buy & Download — $346', payment: 'Buy & Download — $296' };
+            const prices = { none: 197, drive: 246, upload: 294, glove: 346, colors: 247, payment: 296 };
+            const labels = { none: 'Buy & Download — $197', drive: 'Buy & Download — $246', upload: 'Buy & Download — $294', glove: 'Buy & Download — $346', colors: 'Buy & Download — $247', payment: 'Buy & Download — $296' };
 
             const addonDetails = {
               none: {
@@ -165,6 +175,14 @@
                   '✓ Full review & polish', '✓ Nearly ready to go live'
                 ]
               },
+              colors: {
+                title: '+ Custom Brand Colors — What Mel Does For You',
+                items: [
+                  '✓ Everything in template', '✓ You tell Mel your brand colors',
+                  '✓ Every button & accent updated', '✓ Headings & highlights matched',
+                  '✓ Returned within 2 business days', '✓ Looks like YOUR brand, not a template'
+                ]
+              },
               payment: {
                 title: '+ Payment Button Setup — What Mel Does For You',
                 items: [
@@ -176,7 +194,7 @@
             };
 
             function selectOption(key) {
-              ['none','drive','upload','glove','payment'].forEach(function(k) {
+              ['none','drive','upload','glove','colors','payment'].forEach(function(k) {
                 var el = document.getElementById('opt-' + k);
                 if (el) el.style.borderColor = k === key ? 'var(--gold)' : 'var(--border)';
                 if (el) el.style.background = k === key ? '#fffdf7' : '';
