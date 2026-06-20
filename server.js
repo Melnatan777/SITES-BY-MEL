@@ -594,6 +594,23 @@ app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res)
     for (const f of req.files) {
       insertPhoto.run(order.id, f.filename, f.originalname, f.path);
     }
+    if (resend) {
+      resend.emails.send({
+        from: 'Sites by Mel <mel@sitesbymel.com>',
+        to: 'mel@sitesbymel.com',
+        subject: `📸 Photos uploaded — Order #${order.id} (${order.product_name})`,
+        html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
+          <h2 style="color:#1B2F4E">Customer Photos Uploaded</h2>
+          <p style="color:#374151"><strong>${order.customer_name || 'A customer'}</strong> (${order.customer_email || 'unknown'}) just uploaded <strong>${req.files.length} photo${req.files.length > 1 ? 's' : ''}</strong> for their order.</p>
+          <table style="width:100%;border-collapse:collapse;font-size:.9rem;margin:16px 0">
+            <tr><td style="padding:6px 0;color:#6B7280;width:40%">Order</td><td style="font-weight:600;color:#1B2F4E">#${order.id} — ${order.product_name}</td></tr>
+            <tr><td style="padding:6px 0;color:#6B7280">Add-On</td><td style="color:#1B2F4E">${order.selected_addon && order.selected_addon !== 'none' ? order.selected_addon : 'None'}</td></tr>
+            <tr><td style="padding:6px 0;color:#6B7280">Photos</td><td style="color:#1B2F4E">${req.files.map(f => f.originalname).join(', ')}</td></tr>
+          </table>
+          <a href="${BASE_URL}/admin/orders" style="display:inline-block;background:#1B2F4E;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.88rem">View in Admin →</a>
+        </div>`
+      }).catch(e => console.error('[photo notify]', e.message));
+    }
   }
 
   // Add-on orders: show "We're on it" page — Mel delivers manually
