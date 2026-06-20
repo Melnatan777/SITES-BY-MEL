@@ -114,6 +114,24 @@ db.exec(`
   )
 `);
 
+// ── EXPENSES (financials) ─────────────────────────────────────────────────────
+db.exec(`CREATE TABLE IF NOT EXISTS expenses (
+  id           INTEGER PRIMARY KEY AUTOINCREMENT,
+  description  TEXT NOT NULL,
+  category     TEXT NOT NULL,
+  amount       REAL NOT NULL,
+  expense_date TEXT NOT NULL,
+  created_at   DATETIME DEFAULT CURRENT_TIMESTAMP
+)`);
+
+// ── SETTINGS (key/value store for things like tax_rate) ───────────────────────
+db.exec(`CREATE TABLE IF NOT EXISTS settings (
+  key   TEXT PRIMARY KEY,
+  value TEXT NOT NULL
+)`);
+// Default tax rate
+db.prepare("INSERT OR IGNORE INTO settings (key, value) VALUES ('tax_rate', '28')").run();
+
 // ── CONTACT MESSAGES ─────────────────────────────────────────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS messages (

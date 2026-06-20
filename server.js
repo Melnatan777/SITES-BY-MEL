@@ -646,6 +646,53 @@ app.post('/admin/setups/:id/notes', requireAuth, (req, res) => {
 // Admin — Pricing Reference
 app.get('/admin/pricing', requireAuth, (req, res) => res.render('admin/pricing'));
 
+// ── FINANCIALS ────────────────────────────────────────────────────────────────
+app.get('/admin/financials', requireAuth, (req, res) => {
+  const currentYear = new Date().getFullYear();
+  const year = parseInt(req.query.year) || currentYear;
+
+  const taxRate = parseInt(db.prepare("SELECT value FROM settings WHERE key='tax_rate'").get()?.value || '28');
+
+  // Revenue by month
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const monthlyData = months.map((month, i) => {
+    const m = String(i + 1).padStart(2, '0');
+    const prefix = `${year}-${m}`;
+    const templates = db.prepare("SELECT COALESCE(SUM(amount),0) as t FROM orders WHERE status='paid' AND strftime('%Y-%m',created_at)=?").get(prefix).t / 100;
+    const setups    = db.prepare("SELECT COALESCE(SUM(amount),0) as t FROM setup_requests WHERE status IN ('paid','in_progress','completed') AND strftime('%Y-%m',created_at)=?").get(prefix).t / 100;
+    const addons    = db.prepare("SELECT COALESCE(SUM(addon_amount),0) as t FROM template_addons WHERE status IN ('paid','in_progress','completed') AND strftime('%Y-%m',created_at)=?").get(prefix).t / 100;
+    return { month, templates, setups, addons, total: templates + setups + addons };
+  });
+
+  const grossRevenue  = monthlyData.reduce((s, r) => s + r.total, 0);
+  const expenses      = db.prepare("SELECT * FROM expenses WHERE strftime('%Y',expense_date)=? ORDER BY expense_date DESC").all(String(year));
+  const totalExpenses = expenses.reduce((s, e) => s + e.amount, 0);
+  const netProfit     = grossRevenue - totalExpenses;
+  const estimatedTax  = Math.max(0, netProfit * taxRate / 100);
+  const takeHome      = netProfit - estimatedTax;
+
+  res.render('admin/financials', { year, currentYear, taxRate, grossRevenue, totalExpenses, netProfit, estimatedTax, takeHome, monthlyData, expenses });
+});
+
+app.post('/admin/financials/taxrate', requireAuth, (req, res) => {
+  const rate = Math.min(50, Math.max(0, parseInt(req.body.tax_rate) || 28));
+  db.prepare("INSERT OR REPLACE INTO settings (key, value) VALUES ('tax_rate', ?)").run(String(rate));
+  res.redirect('/admin/financials');
+});
+
+app.post('/admin/financials/expense', requireAuth, (req, res) => {
+  const { description, category, amount, expense_date } = req.body;
+  if (description && amount) {
+    db.prepare("INSERT INTO expenses (description, category, amount, expense_date) VALUES (?,?,?,?)").run(description, category, parseFloat(amount), expense_date || new Date().toISOString().slice(0,10));
+  }
+  res.redirect('/admin/financials');
+});
+
+app.post('/admin/financials/expense/:id/delete', requireAuth, (req, res) => {
+  db.prepare("DELETE FROM expenses WHERE id=?").run(req.params.id);
+  res.redirect('/admin/financials');
+});
+
 // Admin — Analytics
 app.get('/admin/analytics', requireAuth, (req, res) => {
   const days = parseInt(req.query.days || '30');

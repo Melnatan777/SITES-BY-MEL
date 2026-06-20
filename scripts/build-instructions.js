@@ -45,31 +45,47 @@ function buildInstructions(templateName, templateSlug, niche) {
   <div class="card">
     <h2>What's in this zip</h2>
     <ul class="file-list">
-      <li><span class="file-tag">HTML</span><div><strong>index.html</strong> — Your complete website. Open this in any browser to preview it right now.</div></li>
-      <li><span class="file-tag">CSS</span><div><strong>Embedded in index.html</strong> — All styles are built directly into the HTML file. No separate CSS file needed.</div></li>
-      <li><span class="file-tag">GUIDE</span><div><strong>INSTRUCTIONS.html</strong> — This file. Keep it handy.</div></li>
+      <li><span class="file-tag">HOME</span><div><strong>index.html</strong> — Your home page. Open this first to preview your site.</div></li>
+      <li><span class="file-tag">PAGE</span><div><strong>services.html</strong> — Your full services and pricing page.</div></li>
+      <li><span class="file-tag">PAGE</span><div><strong>about.html</strong> — About you / your team and your story.</div></li>
+      <li><span class="file-tag">PAGE</span><div><strong>contact.html</strong> — Contact form, hours, phone, and online booking.</div></li>
+      <li><span class="file-tag">PAGE</span><div><strong>gallery.html</strong> — Photo gallery / before-and-after showcase.</div></li>
+      <li><span class="file-tag">GUIDE</span><div><strong>INSTRUCTIONS.html</strong> — This file. Keep it handy while you set up.</div></li>
     </ul>
+    <div class="tip"><strong>All 5 pages are already linked together.</strong> The navigation menu on every page already connects to every other page — you don't need to wire anything up yourself.</div>
   </div>
 
   <div class="card">
     <h2>Step 1 — Preview your site right now</h2>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Open the zip and find index.html</strong><span>Double-click it. It opens in your browser and you'll see the full website immediately. Nothing to install.</span></div>
-    </div>
-    <div class="tip">You're looking at your real website. Everything you see is exactly what your visitors will see once it's live.</div>
-  </div>
-
-  <div class="card">
-    <h2>Step 2 — Edit your content</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">Open <code>index.html</code> in a text editor. On Windows: right-click → Open With → Notepad. On Mac: right-click → Open With → TextEdit. For a better experience, download <a href="https://code.visualstudio.com" target="_blank">VS Code</a> (free).</p>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body"><strong>Change the business name</strong><span>Press <code>Ctrl+H</code> (Find & Replace). Search for the demo business name and replace it with yours everywhere.</span></div>
+      <div class="step-body"><strong>Unzip the folder</strong><span>Right-click the zip file and choose "Extract All" (Windows) or double-click (Mac). Keep all files in the same folder — they link to each other.</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Update your phone number and address</strong><span>Search for the placeholder phone/address in the file and replace with your real info.</span></div>
+      <div class="step-body"><strong>Open index.html</strong><span>Double-click it. It opens in your browser. Click the nav links — all 5 pages work immediately, right on your computer.</span></div>
+    </div>
+    <div class="tip">You're looking at your real website. Every page, every button, every link — exactly as your visitors will see it once it's live.</div>
+  </div>
+
+  <div class="card">
+    <h2>Step 2 — Edit your content (do this on every page)</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">Open each HTML file in a text editor. On Windows: right-click → Open With → Notepad. On Mac: right-click → Open With → TextEdit. For a much better experience, download <a href="https://code.visualstudio.com" target="_blank">VS Code</a> (free) — it highlights your code and makes editing easy.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body"><strong>Replace the demo business name on every page</strong><span>In VS Code: press <code>Ctrl+Shift+H</code> to Find & Replace across ALL files at once. Search for the demo business name and replace with yours. It updates every page in one shot.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body"><strong>Update phone, email, and address</strong><span>Search for <code>(555) 000-0000</code> and replace with your real phone. Do the same for the placeholder email and address on every page.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body"><strong>Set up your contact form (free — takes 2 minutes)</strong><span>Go to <a href="https://formspree.io" target="_blank">formspree.io</a>, create a free account, and create a new form. Copy your Form ID. In contact.html, find <code>YOUR_FORM_ID</code> and replace it with your real ID. Now the form sends emails directly to you.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body"><strong>Add online booking (free — optional)</strong><span>Go to <a href="https://calendly.com" target="_blank">calendly.com</a>, create a free account, and set up your availability. Copy your Calendly link. In contact.html, find <code>YOUR_CALENDLY_LINK</code> and paste it in. Customers can book appointments directly from your site.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
