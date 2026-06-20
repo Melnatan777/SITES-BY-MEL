@@ -340,7 +340,8 @@ app.post('/quote/full', async (req, res) => {
 });
 
 // ── STRIPE CHECKOUT ───────────────────────────────────────────────────────────
-const stripe = process.env.STRIPE_SECRET_KEY ? require('stripe')(process.env.STRIPE_SECRET_KEY) : null;
+const stripeKey = process.env.STRIPE_TEST_MODE === 'true' ? process.env.STRIPE_TEST_KEY : process.env.STRIPE_SECRET_KEY;
+const stripe = stripeKey ? require('stripe')(stripeKey) : null;
 
 // Buy template
 app.post('/buy/:slug', async (req, res) => {
