@@ -33,6 +33,7 @@
             <tr>
               <th>Name</th>
               <th>Email</th>
+              <th>What They Wanted</th>
               <th>Source</th>
               <th>Date</th>
             </tr>
@@ -40,14 +41,15 @@
           <tbody>
             <% contacts.forEach(function(c) { %>
             <tr>
-              <td style="font-weight:600;color:#1B2F4E"><%= c.name || '—' %></td>
+              <td style="font-weight:600;color:#1B2F4E;white-space:nowrap"><%= c.name || '—' %></td>
               <td><a href="mailto:<%= c.email %>" style="color:var(--navy)"><%= c.email %></a></td>
+              <td style="font-size:.82rem;color:#374151;max-width:320px"><%= c.detail ? c.detail.substring(0,100) + (c.detail.length > 100 ? '…' : '') : '—' %></td>
               <td>
                 <span style="font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:4px;background:<%= c.source==='order'?'#dcfce7':c.source==='quote'?'#dbeafe':'#f3e8ff' %>;color:<%= c.source==='order'?'#166534':c.source==='quote'?'#1e40af':'#7e22ce' %>">
                   <%= c.source %>
                 </span>
               </td>
-              <td style="font-size:.82rem;color:var(--gray)"><%= c.date ? c.date.substring(0,10) : '—' %></td>
+              <td style="font-size:.82rem;color:var(--gray);white-space:nowrap"><%= c.date ? c.date.substring(0,10) : '—' %></td>
             </tr>
             <% }); %>
           </tbody>

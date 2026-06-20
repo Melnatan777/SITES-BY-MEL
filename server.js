@@ -1072,10 +1072,9 @@ app.get('/admin/intake/:token', requireAuth, (req, res) => {
 });
 
 app.get('/admin/subscribers', requireAuth, (req, res) => {
-  const orders = db.prepare("SELECT customer_name as name, customer_email as email, 'order' as source, created_at as date FROM orders WHERE customer_email IS NOT NULL AND customer_email != '' ORDER BY created_at DESC").all();
-  const quotes = db.prepare("SELECT name, email, 'quote' as source, created_at as date FROM quotes WHERE email IS NOT NULL AND email != '' ORDER BY created_at DESC").all();
-  const subs = db.prepare("SELECT NULL as name, email, 'subscriber' as source, created_at as date FROM subscribers ORDER BY created_at DESC").all();
-  // Merge and deduplicate by email, keep most recent
+  const orders = db.prepare("SELECT customer_name as name, customer_email as email, 'order' as source, created_at as date, product_name as detail FROM orders WHERE customer_email IS NOT NULL AND customer_email != '' ORDER BY created_at DESC").all();
+  const quotes = db.prepare("SELECT name, email, 'quote' as source, created_at as date, COALESCE(project_type || ' — ' || SUBSTR(description,1,80), description) as detail FROM quotes WHERE email IS NOT NULL AND email != '' ORDER BY created_at DESC").all();
+  const subs = db.prepare("SELECT NULL as name, email, 'subscriber' as source, created_at as date, 'Blog subscriber' as detail FROM subscribers ORDER BY created_at DESC").all();
   const seen = new Set();
   const contacts = [...orders, ...quotes, ...subs].filter(c => {
     if (!c.email || seen.has(c.email.toLowerCase())) return false;
