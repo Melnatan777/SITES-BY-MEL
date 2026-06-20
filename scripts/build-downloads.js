@@ -7,6 +7,16 @@ const fs = require('fs');
 const archiver = require('archiver');
 const { buildInstructions } = require('./build-instructions');
 
+// Per-template bot scripts — only loaded if the file exists
+const botScripts = {};
+try { botScripts['fit-life'] = require('./bot-fitlife').getFitLifeBotScript(); } catch(e) {}
+
+// Inject bot into an HTML string before </body>
+function injectBot(html, botScript) {
+  if (!botScript) return html;
+  return html.replace(/<\/body>/i, botScript + '\n</body>');
+}
+
 const TEMPLATES = [
   { slug: 'service-pro',    name: 'ServicePro Template',    niche: 'local service business',               primary: '#1a3d6b', accent: '#e05c1a' },
   { slug: 'table-ready',    name: 'TableReady Template',    niche: 'restaurant & food business',           primary: '#8B1A1A', accent: '#e8a020' },
@@ -47,10 +57,22 @@ function buildZip(template, overrides = {}) {
     archive.on('error', reject);
     archive.pipe(output);
 
-    // Add the template HTML file
+    // Add template files — inject bot into HTML files if one exists for this template
     const templateDir = path.join(TEMPLATES_DIR, template.slug);
+    const botScript = botScripts[template.slug] || null;
     if (fs.existsSync(templateDir)) {
-      archive.directory(templateDir, template.slug);
+      const files = fs.readdirSync(templateDir, { withFileTypes: true });
+      for (const file of files) {
+        const filePath = path.join(templateDir, file.name);
+        if (file.isDirectory()) {
+          archive.directory(filePath, `${template.slug}/${file.name}`);
+        } else if (botScript && file.name.endsWith('.html')) {
+          const html = fs.readFileSync(filePath, 'utf8');
+          archive.append(injectBot(html, botScript), { name: `${template.slug}/${file.name}` });
+        } else {
+          archive.file(filePath, { name: `${template.slug}/${file.name}` });
+        }
+      }
     }
 
     // Generate and add instructions HTML

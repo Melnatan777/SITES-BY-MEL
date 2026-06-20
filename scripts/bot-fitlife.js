@@ -1,8 +1,14 @@
 // Chat bot script for FitLife template
-// Embedded into INSTRUCTIONS.html by build-instructions.js
+// Injected into every HTML page + INSTRUCTIONS.html
+// Auto-hides when site is live online — only shows on local file://
 
 function getFitLifeBotScript() {
   return `
+<script>
+// Only show the setup bot when editing locally — hide completely when site goes live
+if (window.location.protocol === 'file:') {
+document.addEventListener('DOMContentLoaded', function() {
+  var botHTML = \`
 <style>
 #mel-bot-bubble {
   position:fixed;bottom:24px;right:24px;z-index:9999;
@@ -799,6 +805,11 @@ function melBotShow(nodeId) {
     };
     choices.appendChild(btn);
   });
+}
+
+window._melBotReady = true;
+melBotStart();
+});
 }
 <\/script>`;
 }
