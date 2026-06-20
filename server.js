@@ -361,8 +361,8 @@ app.post('/buy/:slug', async (req, res) => {
       cancel_url: `${BASE_URL}/templates/${product.slug}`,
       metadata: { product_id: product.id, product_name: product.name, type: 'template', selected_addon: selectedAddon }
     });
-    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status)
-      VALUES (?,?,?,?,'pending')`).run(product.id, product.name, totalAmount, session.id);
+    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, customer_email)
+      VALUES (?,?,?,?,'pending','')`).run(product.id, product.name, totalAmount, session.id);
     res.redirect(303, session.url);
   } catch (e) {
     console.error('[buy] Stripe error:', e.message);
