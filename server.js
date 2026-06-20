@@ -108,6 +108,7 @@ app.use('/preview', (req, res, next) => {
   const htmlFile = req.path.endsWith('.html') ? filePath : path.join(filePath, 'index.html');
   if (!fs.existsSync(htmlFile)) return next();
   let html = fs.readFileSync(htmlFile, 'utf8');
+  const slug = req.path.split('/').filter(Boolean)[0] || '';
   const watermark = `
 <style>
 #sbm-watermark{position:fixed;top:0;left:0;width:100%;z-index:999999;pointer-events:none;}
@@ -135,7 +136,7 @@ app.use('/preview', (req, res, next) => {
 </script>
 <div id="sbm-watermark">
   <div id="sbm-watermark-bar">
-    PREVIEW ONLY &nbsp;|&nbsp; This design is property of <a href="https://sitesbymel.com/templates" target="_blank">sitesbymel.com</a> &nbsp;|&nbsp; Purchase to use &nbsp;|&nbsp; <a href="https://sitesbymel.com/templates" target="_blank">Buy This Template &rarr;</a>
+    PREVIEW ONLY &nbsp;|&nbsp; This design is property of <a href="https://sitesbymel.com/templates" target="_blank">sitesbymel.com</a> &nbsp;|&nbsp; Purchase to use &nbsp;|&nbsp; <a href="https://sitesbymel.com/templates/${slug}" target="_blank">Buy This Template &rarr;</a>
   </div>
 </div>
 <div id="sbm-watermark-diag"></div>`;
