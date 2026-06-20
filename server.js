@@ -622,8 +622,8 @@ app.get('/personalize/:token', (req, res) => {
     const placeholder = PLACEHOLDERS[product.slug] || {};
     // Use template-specific intake form if available
     const templateView = `personalize-${product.slug}`;
-    const viewPath = require('path').join(__dirname, 'views', `${templateView}.ejs`);
-    const view = require('fs').existsSync(viewPath) ? templateView : 'personalize';
+    const viewPath = path.join(__dirname, 'views', `${templateView}.ejs`);
+    const view = fs.existsSync(viewPath) ? templateView : 'personalize';
     res.render(view, { token: req.params.token, product, placeholder, selectedAddon: order.selected_addon || 'none' }, (err, html) => {
       if (err) {
         console.error('[personalize] render error:', err.message, err.stack);
