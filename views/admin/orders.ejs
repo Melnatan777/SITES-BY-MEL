@@ -81,6 +81,12 @@
                   </div>
                   <span style="font-size:.72rem;color:var(--gray);display:block;margin-top:4px"><%= photos.length %> photo<%= photos.length > 1 ? 's' : '' %></span>
                 <% } %>
+                <% if (o.brand_colors) { %>
+                  <p style="font-size:.72rem;color:#C9922B;font-weight:600;margin-top:6px;max-width:200px">Colors: <%= o.brand_colors %></p>
+                <% } %>
+                <% if (o.photo_notes) { %>
+                  <p style="font-size:.72rem;color:#374151;margin-top:4px;font-style:italic;max-width:200px"><%= o.photo_notes %></p>
+                <% } %>
               </td>
               <td style="text-align:center;color:var(--gray);"><%= o.download_count || 0 %></td>
             </tr>

@@ -51,6 +51,7 @@ try { db.exec(`ALTER TABLE orders ADD COLUMN selected_addon TEXT DEFAULT 'none'`
 try { db.exec(`ALTER TABLE orders ADD COLUMN photo_notes TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN coupon_code TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN discount_amount INTEGER DEFAULT 0`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN brand_colors TEXT`); } catch(e) {}
 
 // ── COUPONS ───────────────────────────────────────────────────────────────────
 db.exec(`

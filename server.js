@@ -647,6 +647,7 @@ app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res)
     }
     const photoNotes = req.body.photo_notes || '';
     if (photoNotes) db.prepare('UPDATE orders SET photo_notes=? WHERE id=?').run(photoNotes, order.id);
+    if (brandColors) db.prepare('UPDATE orders SET brand_colors=? WHERE id=?').run(brandColors, order.id);
     sendEmail({
       to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
       subject: `Photos uploaded — Order #${order.id} (${order.product_name})`,
