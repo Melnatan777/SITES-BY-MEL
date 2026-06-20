@@ -86,6 +86,15 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 // ── MIDDLEWARE ────────────────────────────────────────────────────────────────
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// Direct image route — bypasses all middleware
+app.get('/images/:filename', (req, res) => {
+  const fs = require('fs');
+  const imgPath = path.join(__dirname, 'public', 'images', req.params.filename);
+  if (fs.existsSync(imgPath)) return res.sendFile(imgPath);
+  res.status(404).send('Image not found');
+});
+
 // Serve static files — skip /templates/* page routes, all other assets served normally
 app.use((req, res, next) => {
   if (req.path.startsWith('/templates/') && !req.path.match(/\.[a-z]{2,4}$/i)) return next();
