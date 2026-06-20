@@ -258,11 +258,11 @@ for (const [slug, url] of previewUrls) backfill.run(url, slug);
 // Wire up thumbnail images
 const thumbnails = [
   ['service-pro',    'service-pro.jpg'],
-  ['table-ready',    'Tables.jpg'],
-  ['key-ready',      'KeyReady.jpg'],
-  ['shop-front',     'ShopReady.jpg'],
-  ['voice-first',    'ThoughtfulCreator.jpg'],
-  ['gather-here',    'Cornerstone.jpg'],
+  ['table-ready',    'table-ready.jpg'],
+  ['key-ready',      'key-ready.jpg'],
+  ['shop-front',     'shop-front.jpg'],
+  ['voice-first',    'voice-first.jpg'],
+  ['gather-here',    'gather-here.jpg'],
   ['pet-shop',       'pet-shop.jpg'],
   ['beauty-studio',  'beauty-studio.jpg'],
   ['lens-and-light', 'lens-and-light.jpg'],
