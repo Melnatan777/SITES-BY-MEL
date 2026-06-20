@@ -29,9 +29,10 @@
               <th>Product</th>
               <th>Customer</th>
               <th>Amount</th>
+              <th>Add-On</th>
               <th>Status</th>
+              <th>Photos</th>
               <th>Downloads</th>
-              <th>Expires</th>
             </tr>
           </thead>
           <tbody>
@@ -39,21 +40,40 @@
             <tr>
               <td style="color:var(--gray);font-size:0.82rem;">#<%= o.id %></td>
               <td style="color:var(--gray);font-size:0.82rem;"><%= o.created_at ? o.created_at.substring(0,10) : '—' %></td>
-              <td><strong style="font-size:0.88rem;"><%= o.product_name %></strong></td>
               <td>
-                <span style="font-size:0.88rem;"><%= o.customer_name || '—' %></span><br />
-                <span style="font-size:0.78rem;color:var(--gray);"><%= o.customer_email || '' %></span>
+                <strong style="font-size:0.88rem;"><%= o.product_name %></strong><br/>
+                <span style="font-size:0.75rem;color:var(--gray);"><%= o.customer_name || '—' %></span><br/>
+                <span style="font-size:0.75rem;color:var(--gray);"><%= o.customer_email || '' %></span>
               </td>
-              <td style="font-weight:600;">$<%= ((o.amount || 0) / 100).toFixed(2) %></td>
+              <td style="font-size:.82rem;color:var(--gray)">$<%= ((o.amount || 0) / 100).toFixed(2) %></td>
+              <td>
+                <% const addonLabels = {none:'—',upload:'Photo Swap',colors:'Brand Colors',payment:'Payment+Email',glove:'White-Glove'}; %>
+                <span style="font-size:.78rem;font-weight:600;color:<%= o.selected_addon && o.selected_addon!='none' ? 'var(--gold)' : 'var(--gray)' %>">
+                  <%= addonLabels[o.selected_addon] || o.selected_addon || '—' %>
+                </span>
+              </td>
               <td><span class="badge <%= o.status === 'paid' ? 'badge-green' : o.status === 'refunded' ? 'badge-red' : 'badge-yellow' %>"><%= o.status %></span></td>
-              <td style="text-align:center;color:var(--gray);"><%= o.download_count || 0 %></td>
-              <td style="font-size:0.78rem;color:var(--gray);">
-                <% if (o.download_expires_at) { %>
-                  <%= o.download_expires_at.substring(0,16).replace('T',' ') %>
+              <td style="min-width:140px">
+                <% var photos = photosByOrder[o.id] || []; %>
+                <% if (photos.length === 0) { %>
+                  <span style="font-size:.75rem;color:#9CA3AF">No photos</span>
                 <% } else { %>
-                  —
+                  <div style="display:flex;flex-wrap:wrap;gap:6px">
+                    <% photos.forEach(function(ph) { %>
+                    <div style="position:relative">
+                      <a href="/admin/order-photo/<%= ph.id %>" target="_blank">
+                        <img src="/admin/order-photo/<%= ph.id %>" alt="<%= ph.original %>" style="width:48px;height:48px;object-fit:cover;border-radius:4px;border:1px solid var(--border)">
+                      </a>
+                      <form method="POST" action="/admin/order-photo/<%= ph.id %>/delete" style="margin:0" onsubmit="return confirm('Delete this photo?')">
+                        <button type="submit" style="position:absolute;top:-5px;right:-5px;width:16px;height:16px;border-radius:50%;background:#ef4444;color:#fff;border:none;cursor:pointer;font-size:10px;line-height:1;padding:0">×</button>
+                      </form>
+                    </div>
+                    <% }); %>
+                  </div>
+                  <span style="font-size:.72rem;color:var(--gray);display:block;margin-top:4px"><%= photos.length %> photo<%= photos.length > 1 ? 's' : '' %></span>
                 <% } %>
               </td>
+              <td style="text-align:center;color:var(--gray);"><%= o.download_count || 0 %></td>
             </tr>
             <% }) %>
           </tbody>

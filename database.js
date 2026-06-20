@@ -126,6 +126,28 @@ db.exec(`CREATE TABLE IF NOT EXISTS expenses (
   created_at   DATETIME DEFAULT CURRENT_TIMESTAMP
 )`);
 
+// ── ORDER PHOTOS (uploaded photos linked to orders) ───────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS order_photos (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id   INTEGER NOT NULL REFERENCES orders(id),
+    filename   TEXT NOT NULL,
+    original   TEXT,
+    path       TEXT NOT NULL,
+    deleted    INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
+// ── BLOG SUBSCRIBERS ─────────────────────────────────────────────────────────
+db.exec(`
+  CREATE TABLE IF NOT EXISTS subscribers (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    email      TEXT NOT NULL UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
 // ── SETTINGS (key/value store for things like tax_rate) ───────────────────────
 db.exec(`CREATE TABLE IF NOT EXISTS settings (
   key   TEXT PRIMARY KEY,

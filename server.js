@@ -4,7 +4,24 @@ const session = require('express-session');
 const path = require('path');
 const crypto = require('crypto');
 const multer = require('multer');
+const fs = require('fs');
 const db = require('./database');
+
+// Per-order photo storage
+const photoStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const token = req.params.token || 'misc';
+    const order = db.prepare('SELECT id FROM orders WHERE download_token=?').get(token);
+    const dir = path.join(__dirname, 'uploads', 'orders', String(order ? order.id : 'misc'));
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`);
+  }
+});
+const photoUpload = multer({ storage: photoStorage, limits: { files: 5, fileSize: 20 * 1024 * 1024 } });
 const { buildAllDownloads } = require('./scripts/build-downloads');
 const { buildPersonalizedZip, PLACEHOLDERS } = require('./scripts/personalize');
 
@@ -89,7 +106,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Direct image route — bypasses all middleware
 app.get('/images/:filename', (req, res) => {
-  const fs = require('fs');
+
   const imgPath = path.join(__dirname, 'public', 'images', req.params.filename);
   if (fs.existsSync(imgPath)) return res.sendFile(imgPath);
   res.status(404).send('Image not found');
@@ -102,7 +119,7 @@ app.use((req, res, next) => {
 });
 // Serve template previews under /preview/ — inject watermark into HTML pages
 app.use('/preview', (req, res, next) => {
-  const fs = require('fs');
+
   const filePath = path.join(__dirname, 'public', 'templates', req.path);
   if (!req.path.endsWith('.html') && !req.path.endsWith('/') && req.path !== '/') return next();
   const htmlFile = req.path.endsWith('.html') ? filePath : path.join(filePath, 'index.html');
@@ -235,6 +252,36 @@ app.get('/portfolio', (req, res) => { trackView(req); res.render('portfolio'); }
 
 // About page
 app.get('/about', (req, res) => { trackView(req); res.render('about'); });
+
+// Blog
+const BLOG_POSTS = [
+  { slug:'why-your-business-needs-a-website', title:'Why Every Small Business Needs a Website in 2025', category:'Business', date:'Jun 16, 2025', read:'4 min', excerpt:'If a customer can\'t find you online, they\'ll find your competitor. Here\'s why having your own website — not just a Facebook page — is the single best thing you can do for your business this year.', body:`<p>Let's be honest — if someone hears about your business and Googles you, what do they find? If the answer is "nothing" or "just my Facebook page," you're leaving money on the table every single day.</p><h3>Your website works while you sleep</h3><p>A website is the only marketing tool that works 24/7 without you lifting a finger. While you're with a customer, sleeping, or enjoying a Saturday, your website is out there answering questions, showing off your work, and convincing strangers to choose you.</p><h3>Facebook isn't enough</h3><p>Social media is rented land. The algorithm changes, your reach drops, the platform could disappear. Your website is <em>yours</em> — no one can take it away or change the rules on you.</p><h3>Customers expect it</h3><p>Over 80% of shoppers research a business online before making contact. If you don't have a website, some of those people will move on to someone who does. It's not personal — it's just how people shop now.</p><h3>The good news</h3><p>Getting online doesn't have to be expensive or complicated. A clean, professional 5-page website — home, services, about, gallery, contact — is everything most small businesses need. That's it. Start there.</p>` },
+  { slug:'seo-basics-for-small-business', title:'SEO Basics: How to Get Found on Google Without Paying for Ads', category:'SEO', date:'Jun 23, 2025', read:'5 min', excerpt:'SEO sounds technical but the basics are simple. Here\'s what actually moves the needle for a small business website — no jargon, no fluff, just what works.', body:`<p>SEO stands for Search Engine Optimization. In plain English: it's how you show up on Google when someone searches for what you do.</p><h3>Start with your Google Business Profile</h3><p>This is free and it's the single most impactful thing you can do. Go to business.google.com, claim your listing, fill in every field, and add photos. This is what shows up in the map results when someone searches "hair salon near me."</p><h3>Put your city in your website copy</h3><p>Google needs to know where you are. Say it clearly: "Nashville's best pet groomer" or "serving the Houston area since 2018." Don't make Google guess.</p><h3>Get your site indexed</h3><p>Go to Google Search Console (free), add your website, and submit your sitemap. This tells Google your site exists and to come look at it. Without this step, Google might not find you for weeks or months.</p><h3>Earn a few backlinks</h3><p>A backlink is when another website links to yours. Get listed on Yelp, your local Chamber of Commerce, and any industry directories. Each link tells Google your site is real and trustworthy.</p><h3>Be patient</h3><p>SEO takes 3–6 months to kick in. It's a long game. But once it works, it keeps working — unlike ads that stop the moment you stop paying.</p>` },
+  { slug:'how-to-choose-your-brand-colors', title:'How to Choose Brand Colors That Actually Work for Your Business', category:'Design', date:'Jun 30, 2025', read:'4 min', excerpt:'Colors aren\'t just pretty — they communicate trust, energy, and personality before a single word is read. Here\'s how to pick yours intentionally.', body:`<p>Most small business owners pick colors they personally like. That's a start — but the best brand colors are chosen strategically, not just aesthetically.</p><h3>Colors carry meaning</h3><p>Blue = trust and professionalism (banks, doctors, lawyers). Green = health, nature, growth. Black = luxury and sophistication. Pink = warmth and femininity. Orange = energy and creativity. Yellow = happiness and optimism.</p><p>What does your business want to communicate? Start there.</p><h3>Look at your competitors — then differentiate</h3><p>If every law firm in your city uses navy blue, going with a deep burgundy makes you memorable. You want to fit the industry just enough that people recognize what you do — but stand out enough to be remembered.</p><h3>Keep it simple: 2 colors max</h3><p>One primary color (your main brand color — used on headers, buttons, key elements) and one accent color (a contrasting pop — used sparingly). That's it. Two colors used consistently look more professional than five colors used randomly.</p><h3>Test before you commit</h3><p>Go to coolors.co and browse palettes. Find two colors you love together, then live with them for a day. Look at them on your phone, on a light background, on a dark background. If you still love them tomorrow, they're yours.</p>` },
+  { slug:'google-my-business-complete-guide', title:'Your Google Business Profile: The Complete Setup Guide', category:'Google', date:'Jul 7, 2025', read:'6 min', excerpt:'Your Google Business Profile is often the first thing customers see. Here\'s how to set it up properly so it actually brings in business.', body:`<p>When someone searches "coffee shop near me" or "best plumber in [your city]," Google shows a map with business listings before it shows websites. That map is powered by Google Business Profiles. If you're not on it, you're invisible for those searches.</p><h3>Step 1: Claim your profile</h3><p>Go to business.google.com. Search for your business name. If it's already there (Google sometimes auto-creates listings), claim it. If not, create a new one. You'll verify via postcard, phone, or email.</p><h3>Step 2: Fill in everything</h3><p>Don't leave anything blank. Business name, category, address (or service area if you go to customers), phone, website, hours. Every empty field is a missed opportunity.</p><h3>Step 3: Add photos</h3><p>Businesses with photos get 42% more requests for directions and 35% more clicks to their website. Add your logo, your storefront, your team, your work. Aim for at least 10 photos.</p><h3>Step 4: Collect reviews</h3><p>Reviews are the #1 ranking factor for local search. Ask every happy customer to leave one. Make it easy — send them a direct link. Respond to every review, good and bad.</p><h3>Step 5: Post regularly</h3><p>Google Business has a posts feature — use it like a mini social media feed. Post a photo, an offer, or an update once a week. Google rewards active profiles with better visibility.</p>` },
+  { slug:'what-shoppers-want-from-a-website', title:'What Shoppers Actually Want From a Small Business Website', category:'Business', date:'Jul 14, 2025', read:'4 min', excerpt:'Customers aren\'t impressed by fancy animations or stock photos. Here\'s what they actually look for — and what makes them pick up the phone or hit the contact button.', body:`<p>I've seen a lot of small business websites. The ones that convert visitors into customers aren't always the prettiest — they're the clearest.</p><h3>They want to know: can you help me?</h3><p>In the first 5 seconds of landing on your site, a visitor decides whether to stay or leave. Your homepage headline should answer: what you do, who you help, and where you are. "Nashville's trusted family dentist — accepting new patients" does that in one sentence.</p><h3>They want to see your work</h3><p>Photos of real work beat stock photos every time. Before/after photos, completed projects, happy customers, your actual space — these build trust faster than any paragraph of text.</p><h3>They want to know what it costs</h3><p>You don't have to list every price, but giving a starting point ("services from $75") removes a huge barrier. When people don't see pricing, they assume it's too expensive and leave.</p><h3>They want it to be easy to contact you</h3><p>Your phone number should be visible on every page. Your contact form should be simple — name, email, message, done. Every extra field you add loses you a percentage of people who almost contacted you.</p><h3>They want to trust you</h3><p>Reviews, testimonials, years in business, certifications, association logos — anything that answers "is this business legit?" Put these near your call to action.</p>` },
+  { slug:'klarna-stripe-for-small-business', title:'Buy Now Pay Later: Should Your Small Business Offer It?', category:'Payments', date:'Jul 21, 2025', read:'3 min', excerpt:'Klarna, Afterpay, Shop Pay — buy now pay later is everywhere. Here\'s whether it makes sense for your small business and how to set it up.', body:`<p>Buy now pay later (BNPL) lets customers split their purchase into smaller installments — usually 4 payments over 6 weeks — at no extra cost to them. You get paid in full upfront. The BNPL provider takes a small fee (typically 2–6%).</p><h3>Who it helps most</h3><p>If your services cost $200 or more, BNPL can meaningfully increase your conversion rate. Customers who might hesitate at a $400 invoice don't hesitate nearly as much at "4 payments of $100." Same price, very different psychology.</p><h3>The Stripe + Klarna option</h3><p>If you already use Stripe for payments, adding Klarna is a checkbox in your Stripe dashboard — no extra code, no separate account. Customers see it as an option at checkout automatically.</p><h3>The trade-off</h3><p>You pay a slightly higher processing fee on BNPL transactions. For most small businesses the increased conversion rate more than covers it — but it depends on your margins. If you're selling $50 services, BNPL probably isn't worth it. If you're selling $500+ packages, it very likely is.</p><h3>Bottom line</h3><p>If your customers ever comment that your prices are high or ask about payment plans, turn on Klarna. It's free to enable and you only pay when someone uses it.</p>` },
+  { slug:'website-mistakes-small-businesses-make', title:'7 Website Mistakes Small Businesses Make (And How to Fix Them)', category:'Design', date:'Jul 28, 2025', read:'5 min', excerpt:'Most small business websites lose customers before they ever make contact. Here are the most common mistakes — and the simple fixes.', body:`<p>After looking at hundreds of small business websites, the same mistakes come up over and over. The good news: every single one is fixable.</p><h3>1. No clear headline on the homepage</h3><p>Visitors give you about 5 seconds. If your homepage says "Welcome to our website" instead of "Houston's #1 rated carpet cleaning service," they're gone. Fix: write a headline that says exactly what you do and who you help.</p><h3>2. Phone number buried or missing</h3><p>Your phone number should be in the header of every page. Many customers decide to call before they decide to email. Make it click-to-call on mobile. Fix: add your number to your site header and footer.</p><h3>3. No photos of real work</h3><p>Stock photos scream "generic." Photos of your actual work, your team, your space — these build instant trust. Fix: take 10 photos with your phone this week and use them.</p><h3>4. Too much text</h3><p>Nobody reads paragraphs on a website. They scan. Use short sentences, bullet points, and headers. Fix: cut your copy in half. Then cut it in half again.</p><h3>5. Slow loading speed</h3><p>If your site takes more than 3 seconds to load, half your visitors leave. Huge image files are the #1 culprit. Fix: compress your images before uploading (use squoosh.app — free).</p><h3>6. Not mobile-friendly</h3><p>Over 60% of web traffic is on phones. If your site looks broken on mobile, you're losing the majority of your visitors. Fix: use a modern template that's built to be responsive.</p><h3>7. No call to action</h3><p>Every page should end with a clear next step: "Call now," "Book an appointment," "Get a free quote." Don't make visitors guess what to do. Fix: add a button to every page.</p>` },
+  { slug:'email-marketing-for-small-business', title:'Email Marketing: The Most Underrated Tool for Small Business Growth', category:'Marketing', date:'Aug 4, 2025', read:'4 min', excerpt:'Social media algorithms bury your posts. Email lands directly in your customer\'s inbox. Here\'s why email marketing is the best investment you\'re not making.', body:`<p>Every social media post you make reaches maybe 5% of your followers — and that number keeps shrinking. An email reaches 100% of the people on your list. That's the difference.</p><h3>Your list is yours</h3><p>If Instagram disappeared tomorrow, your followers would be gone. If your email list disappeared, you'd still have those contacts in a spreadsheet. Email is the only marketing channel you truly own.</p><h3>It works remarkably well</h3><p>Email marketing has an average ROI of $36 for every $1 spent. No other channel comes close. Why? Because the people on your list already know you and chose to hear from you.</p><h3>Start a list today</h3><p>You don't need a big fancy email platform to start. Add a simple sign-up form to your website (like the one at the bottom of this page). Offer something in return — a discount, a free guide, a helpful tip. Even getting 10 subscribers a month adds up fast.</p><h3>What to send</h3><p>Don't overthink it. One email a month with: something useful (a tip, a how-to), something personal (a behind-the-scenes moment), and a soft call to action (book a service, visit the site). That's a solid email newsletter.</p><h3>The tools</h3><p>Mailchimp is free up to 500 subscribers. ConvertKit is great for creators. For most small businesses, either one is more than enough to start.</p>` },
+];
+
+app.get('/blog', (req, res) => {
+  trackView(req);
+  const weekNum = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
+  const featured = BLOG_POSTS[weekNum % BLOG_POSTS.length];
+  res.render('blog', { posts: BLOG_POSTS, featured });
+});
+
+app.get('/blog/:slug', (req, res) => {
+  const post = BLOG_POSTS.find(p => p.slug === req.params.slug);
+  if (!post) return res.status(404).redirect('/blog');
+  trackView(req);
+  const others = BLOG_POSTS.filter(p => p.slug !== post.slug).slice(0, 3);
+  res.render('blog-post', { post, others });
+});
+
+// Upgrades / CMS features page
+app.get('/upgrades', (req, res) => { trackView(req); res.render('upgrades'); });
 
 // Contact page + form
 app.get('/contact', (req, res) => { trackView(req); res.render('contact', { success: false, error: false }); });
@@ -505,7 +552,7 @@ app.get('/personalize/:token', (req, res) => {
 });
 
 // Build personalized zip and deliver it (or route to Stripe for add-ons)
-app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
+app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res) => {
   const order = db.prepare('SELECT * FROM orders WHERE download_token=?').get(req.params.token);
   if (!order) return res.status(404).send('Order not found.');
   if (new Date(order.download_expires_at) < new Date()) return res.status(410).send('Download link expired. Contact mel@sitesbymel.com');
@@ -535,6 +582,14 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
     text: `Customer: ${order.customer_name || 'unknown'}\nEmail: ${order.customer_email || 'unknown'}\nProduct: ${product.name}\nAdd-on paid: ${addonLabel[selectedAddon] || selectedAddon}\nAmount paid: $${(order.amount/100).toFixed(0)}\n\nBusiness details entered:\nName: ${data.businessName}\nPhone: ${data.phone}\nEmail: ${data.email}\nAddress: ${data.address}\nTagline: ${data.tagline}\nBrand colors: ${brandColors || 'none'}\nDrive link: ${driveLink || 'none'}`
   }).catch(e => console.error('[personalize email]', e.message));
 
+  // Save uploaded photos to DB linked to this order
+  if (req.files && req.files.length > 0) {
+    const insertPhoto = db.prepare('INSERT INTO order_photos (order_id, filename, original, path) VALUES (?,?,?,?)');
+    for (const f of req.files) {
+      insertPhoto.run(order.id, f.filename, f.originalname, f.path);
+    }
+  }
+
   // Add-on orders: show "We're on it" page — Mel delivers manually
   if (needsManualWork) {
     return res.render('addon-pending', {
@@ -553,7 +608,7 @@ app.post('/personalize/:token', upload.array('photos', 5), async (req, res) => {
     console.error('[personalize]', e.message);
   }
   db.prepare('UPDATE orders SET download_count = download_count + 1 WHERE id=?').run(order.id);
-  const fs = require('fs');
+
   if (fs.existsSync(tmpPath)) {
     return res.download(tmpPath, `${product.slug}-sitesbymel.zip`, () => {
       try { fs.unlinkSync(tmpPath); } catch(e) {}
@@ -607,7 +662,7 @@ app.get('/download/:token', (req, res) => {
   if (!product) return res.status(404).send('Product not found. Please contact mel@sitesbymel.com');
   // Use generated zip from downloads/ folder
   const zipPath = path.join(__dirname, 'downloads', `${product.slug}.zip`);
-  const fs = require('fs');
+
   if (!fs.existsSync(zipPath)) {
     // Rebuild on demand if missing
     const { buildAllDownloads } = require('./scripts/build-downloads');
@@ -732,7 +787,44 @@ app.post('/admin/products/:id/delete', requireAuth, (req, res) => {
 // Admin — Orders
 app.get('/admin/orders', requireAuth, (req, res) => {
   const orders = db.prepare('SELECT * FROM orders ORDER BY created_at DESC').all();
-  res.render('admin/orders', { orders });
+  const photos = db.prepare('SELECT * FROM order_photos WHERE deleted=0 ORDER BY created_at DESC').all();
+  const photosByOrder = {};
+  photos.forEach(p => { (photosByOrder[p.order_id] = photosByOrder[p.order_id] || []).push(p); });
+  res.render('admin/orders', { orders, photosByOrder });
+});
+
+// Serve uploaded order photos
+app.get('/admin/order-photo/:id', requireAuth, (req, res) => {
+  const photo = db.prepare('SELECT * FROM order_photos WHERE id=? AND deleted=0').get(req.params.id);
+  if (!photo || !fs.existsSync(photo.path)) return res.status(404).send('Not found');
+  res.sendFile(photo.path);
+});
+
+// Delete uploaded photo
+app.post('/admin/order-photo/:id/delete', requireAuth, (req, res) => {
+  const photo = db.prepare('SELECT * FROM order_photos WHERE id=?').get(req.params.id);
+  if (photo) {
+    db.prepare('UPDATE order_photos SET deleted=1 WHERE id=?').run(photo.id);
+    try { if (fs.existsSync(photo.path)) fs.unlinkSync(photo.path); } catch(e) {}
+  }
+  res.redirect('/admin/orders');
+});
+
+// Blog subscribe
+app.post('/subscribe', async (req, res) => {
+  const email = (req.body.email || '').trim().toLowerCase();
+  if (!email || !email.includes('@')) return res.json({ ok: false, message: 'Please enter a valid email.' });
+  try {
+    db.prepare('INSERT OR IGNORE INTO subscribers (email) VALUES (?)').run(email);
+    await sendEmail({ to: email, subject: 'You\'re subscribed — Sites by Mel', html: autoReplyHtml('there', 'You\'re on the list!', '<p style="color:#333;line-height:1.7">Thanks for subscribing to the Sites by Mel blog. You\'ll get weekly tips on websites, SEO, Google, and growing your business online.</p>') });
+  } catch(e) { console.error('[subscribe]', e.message); }
+  res.json({ ok: true, message: 'You\'re subscribed! Check your inbox.' });
+});
+
+// Admin subscribers list
+app.get('/admin/subscribers', requireAuth, (req, res) => {
+  const subscribers = db.prepare('SELECT * FROM subscribers ORDER BY created_at DESC').all();
+  res.render('admin/subscribers', { subscribers });
 });
 
 // Admin — Setup requests
@@ -834,7 +926,7 @@ app.get('/admin/analytics', requireAuth, (req, res) => {
 
 // Admin — Check images on Railway server
 app.get('/admin/check-images', requireAuth, (req, res) => {
-  const fs = require('fs');
+
   const imgDir = path.join(__dirname, 'public', 'images');
   const files = fs.existsSync(imgDir) ? fs.readdirSync(imgDir) : [];
   const products = db.prepare('SELECT slug, thumbnail FROM products ORDER BY slug').all();

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscribers — Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'subscribers' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Blog Subscribers (<%= subscribers.length %>)</h1>
+      <form action="/admin/logout" method="POST" style="margin:0;">
+        <button class="btn btn-outline btn-sm">Sign Out</button>
+      </form>
+    </div>
+    <div class="admin-content">
+      <% if (subscribers.length === 0) { %>
+        <p style="padding:40px;text-align:center;color:var(--gray);">No subscribers yet — the subscribe form on the blog page will populate this list.</p>
+      <% } else { %>
+      <div class="admin-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Email</th>
+              <th>Subscribed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% subscribers.forEach(function(s, i) { %>
+            <tr>
+              <td style="color:var(--gray);font-size:.82rem;"><%= i + 1 %></td>
+              <td><a href="mailto:<%= s.email %>" style="color:var(--navy)"><%= s.email %></a></td>
+              <td style="font-size:.82rem;color:var(--gray)"><%= s.created_at ? s.created_at.substring(0,10) : '—' %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+</body>
+</html>
