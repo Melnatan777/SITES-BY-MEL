@@ -24,14 +24,18 @@ function buildInstructions(templateName, templateSlug, niche) {
   .step-body span{font-size:.84rem;color:#555;line-height:1.5}
   code{background:#f0f0f0;padding:2px 7px;border-radius:4px;font-size:.82rem;font-family:monospace}
   .tip{background:#fdf6e3;border-left:3px solid #C9922B;padding:12px 16px;border-radius:0 6px 6px 0;font-size:.85rem;color:#7d5a00;margin:16px 0}
+  .fun{background:#eef6ff;border-left:3px solid #1B2F4E;padding:12px 16px;border-radius:0 6px 6px 0;font-size:.85rem;color:#1B2F4E;margin:16px 0}
   .file-list{list-style:none;padding:0}
   .file-list li{padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:.88rem;display:flex;gap:12px;align-items:flex-start}
   .file-list li:last-child{border-bottom:none}
   .file-tag{background:#e8f0fe;color:#1a56a8;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;margin-top:2px}
+  .color-row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+  .color-chip{border-radius:8px;padding:10px 14px;font-size:.78rem;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.3)}
   .contact-box{background:#1B2F4E;color:#fff;padding:24px 32px;border-radius:10px;margin-top:24px}
   .contact-box h2{color:#C9922B;margin-bottom:8px}
   .contact-box p{font-size:.88rem;opacity:.85;margin-bottom:6px}
   a{color:#C9922B}
+  .oyster{font-size:1.5rem;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -39,105 +43,173 @@ function buildInstructions(templateName, templateSlug, niche) {
   <div class="header">
     <div class="badge">Sites by Mel</div>
     <h1>${templateName}</h1>
-    <p>Your complete ${niche} website template — setup guide included</p>
+    <p>Your complete ${niche} website template — ready to make it yours.</p>
   </div>
 
+  <!-- WHAT'S IN THE ZIP -->
   <div class="card">
     <h2>What's in this zip</h2>
     <ul class="file-list">
-      <li><span class="file-tag">HOME</span><div><strong>index.html</strong> — Your home page. Open this first to preview your site.</div></li>
+      <li><span class="file-tag">HOME</span><div><strong>index.html</strong> — Your home page. Open this first to see your site.</div></li>
       <li><span class="file-tag">PAGE</span><div><strong>services.html</strong> — Your full services and pricing page.</div></li>
-      <li><span class="file-tag">PAGE</span><div><strong>about.html</strong> — About you / your team and your story.</div></li>
+      <li><span class="file-tag">PAGE</span><div><strong>about.html</strong> — About you, your team, and your story.</div></li>
       <li><span class="file-tag">PAGE</span><div><strong>contact.html</strong> — Contact form, hours, phone, and online booking.</div></li>
       <li><span class="file-tag">PAGE</span><div><strong>gallery.html</strong> — Photo gallery / before-and-after showcase.</div></li>
-      <li><span class="file-tag">GUIDE</span><div><strong>INSTRUCTIONS.html</strong> — This file. Keep it handy while you set up.</div></li>
+      <li><span class="file-tag">GUIDE</span><div><strong>INSTRUCTIONS.html</strong> — This file. Keep it handy!</div></li>
     </ul>
-    <div class="tip"><strong>All 5 pages are already linked together.</strong> The navigation menu on every page already connects to every other page — you don't need to wire anything up yourself.</div>
+    <div class="tip"><strong>All 5 pages are already linked together.</strong> The navigation menu connects every page — you don't need to wire anything up yourself.</div>
   </div>
 
+  <!-- STEP 1: PREVIEW -->
   <div class="card">
     <h2>Step 1 — Preview your site right now</h2>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Unzip the folder</strong><span>Right-click the zip file and choose "Extract All" (Windows) or double-click (Mac). Keep all files in the same folder — they link to each other.</span></div>
+      <div class="step-body"><strong>Unzip the folder</strong><span>Right-click the zip file → "Extract All" (Windows) or double-click (Mac). Keep all files in the same folder — they link to each other.</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Open index.html</strong><span>Double-click it. It opens in your browser. Click the nav links — all 5 pages work immediately, right on your computer.</span></div>
+      <div class="step-body"><strong>Open index.html in your browser</strong><span>Double-click it. It opens right in your browser. Click around — all 5 pages work immediately, right on your computer. No internet needed yet!</span></div>
     </div>
     <div class="tip">You're looking at your real website. Every page, every button, every link — exactly as your visitors will see it once it's live.</div>
   </div>
 
+  <!-- STEP 2: MAKE IT YOURS -->
   <div class="card">
-    <h2>Step 2 — Edit your content (do this on every page)</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">Open each HTML file in a text editor. On Windows: right-click → Open With → Notepad. On Mac: right-click → Open With → TextEdit. For a much better experience, download <a href="https://code.visualstudio.com" target="_blank">VS Code</a> (free) — it highlights your code and makes editing easy.</p>
+    <div class="oyster">🌍</div>
+    <h2>Step 2 — The world is your oyster. Make it yours!</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:16px;">This is the fun part. Every single word, color, price, and photo in this template is yours to change. You don't need to know how to code — just find the text you want to change and type something new. Here's how to open the files:</p>
+    <div class="fun"><strong>Best tool (free):</strong> Download <a href="https://code.visualstudio.com" target="_blank">VS Code</a>. It's free, highlights your code in color, and makes everything easy to find. Once installed, go to File → Open Folder and open your unzipped template folder.</div>
+
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Replace the demo business name on every page</strong><span>In VS Code: press <code>Ctrl+Shift+H</code> to Find & Replace across ALL files at once. Search for the demo business name and replace with yours. It updates every page in one shot.</span></div>
+      <div class="step-body"><strong>Replace the business name on every page at once</strong><span>In VS Code, press <code>Ctrl+Shift+H</code> (Windows) or <code>Cmd+Shift+H</code> (Mac) to open Find &amp; Replace across ALL files. Type the demo name in the top box, your name in the bottom box, hit Replace All. Done — every page updated in one click!</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Update phone, email, and address</strong><span>Search for <code>(555) 000-0000</code> and replace with your real phone. Do the same for the placeholder email and address on every page.</span></div>
+      <div class="step-body"><strong>Update your phone, email, and address</strong><span>Search for <code>(555) 000-0000</code> and replace with your real number. Do the same for the placeholder email and address. These appear in the footer of every page.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Set up your contact form (free — takes 2 minutes)</strong><span>Go to <a href="https://formspree.io" target="_blank">formspree.io</a>, create a free account, and create a new form. Copy your Form ID. In contact.html, find <code>YOUR_FORM_ID</code> and replace it with your real ID. Now the form sends emails directly to you.</span></div>
+      <div class="step-body"><strong>Change any text you want</strong><span>Just read through the file like a document. See something that should say something different? Click on it and type your own words. Your services, your prices, your story — make it 100% you.</span></div>
     </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body"><strong>Add online booking (free — optional)</strong><span>Go to <a href="https://calendly.com" target="_blank">calendly.com</a>, create a free account, and set up your availability. Copy your Calendly link. In contact.html, find <code>YOUR_CALENDLY_LINK</code> and paste it in. Customers can book appointments directly from your site.</span></div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body"><strong>Change your colors</strong><span>Find <code>:root {</code> near the top of the file. You'll see CSS variables like <code>--navy</code> and <code>--gold</code>. Replace the hex color values with your brand colors. Use <a href="https://coolors.co" target="_blank">coolors.co</a> to find color codes.</span></div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body"><strong>Swap your photos</strong><span>Photos are referenced as background images in the CSS. If you add images: create an <code>images/</code> folder in the same directory as index.html, put your photos there, then find the image references in the HTML and change the URL to match your filenames.</span></div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-body"><strong>Update all your service/menu/product details</strong><span>Just read through the file, find any text you want to change, and type over it. The file is organized in sections — look for HTML comments like <code>&lt;!-- SERVICES --&gt;</code> to find each section.</span></div>
-    </div>
-    <div class="tip"><strong>Save often.</strong> After each change, save the file and refresh your browser to see the update. Press <code>Ctrl+S</code> to save, <code>F5</code> to refresh.</div>
+    <div class="tip"><strong>Save &amp; refresh trick:</strong> After every change, press <code>Ctrl+S</code> to save, then press <code>F5</code> in your browser to refresh. You'll see your changes instantly.</div>
   </div>
 
+  <!-- COLORS -->
   <div class="card">
-    <h2>Step 3 — Get your site live (free hosting)</h2>
+    <div class="oyster">🎨</div>
+    <h2>Change Your Colors — It's Easier Than You Think!</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:14px;">Your entire color scheme lives in ONE place at the top of each HTML file. Change it there and every button, heading, and banner on that page updates automatically.</p>
+    <p style="font-size:.88rem;color:#555;margin-bottom:10px;">In VS Code, open <code>index.html</code> and look near the very top for something like this:</p>
+    <div style="background:#1a1a2e;color:#e8e8e8;padding:16px 20px;border-radius:8px;font-family:monospace;font-size:.82rem;line-height:1.8;margin-bottom:14px;">
+      <span style="color:#888">/* YOUR BRAND COLORS — change these! */</span><br/>
+      :root {<br/>
+      &nbsp;&nbsp;<span style="color:#79b8ff">--primary</span>: <span style="color:#C9922B">#1a2a5c</span>;  <span style="color:#888">/* main dark color */</span><br/>
+      &nbsp;&nbsp;<span style="color:#79b8ff">--accent</span>: <span style="color:#C9922B">#e8a020</span>;   <span style="color:#888">/* highlight color */</span><br/>
+      &nbsp;&nbsp;<span style="color:#79b8ff">--text</span>: <span style="color:#C9922B">#1a1a2a</span>;    <span style="color:#888">/* body text */</span><br/>
+      }
+    </div>
+    <p style="font-size:.84rem;color:#555;margin-bottom:12px;">Just replace those <strong>#hex codes</strong> with your brand colors. Don't know your hex codes? No problem:</p>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body"><strong>Create a free GitHub account</strong><span>Go to <a href="https://github.com" target="_blank">github.com</a> and sign up. It's free.</span></div>
+      <div class="step-body"><strong>Go to <a href="https://coolors.co" target="_blank">coolors.co</a></strong><span>Hit the spacebar to generate beautiful color palettes. When you find colors you love, click on one to copy the hex code (it looks like #FF5733).</span></div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body"><strong>Create a new repository</strong><span>Click the + button → New repository. Name it your business name. Set it to Public. Click Create.</span></div>
+      <div class="step-body"><strong>Or Google "color picker"</strong><span>Google has a built-in color picker right in the search results. Pick any color and it shows you the hex code instantly.</span></div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body"><strong>Upload your files</strong><span>On your new repository page, click "uploading an existing file." Drag your index.html (and images/ folder if you have one) into the upload area. Click Commit changes.</span></div>
+      <div class="step-body"><strong>Paste your hex code in the file</strong><span>Replace the existing hex code (like <code>#1a2a5c</code>) with your new one. Save, refresh your browser — your whole site changes color instantly. Magic!</span></div>
+    </div>
+    <div class="fun">💡 <strong>Pro tip:</strong> Do this on index.html first to preview how your colors look. Once you're happy, use <code>Ctrl+Shift+H</code> to find and replace the old hex codes across all 5 pages at once.</div>
+    <p style="font-size:.83rem;color:#555;margin-top:12px;">Here are some example color combos to get you inspired:</p>
+    <div class="color-row">
+      <div class="color-chip" style="background:#1a2a5c;">Navy #1a2a5c</div>
+      <div class="color-chip" style="background:#e8a020;">Gold #e8a020</div>
+      <div class="color-chip" style="background:#2d6a2d;">Forest #2d6a2d</div>
+      <div class="color-chip" style="background:#8B1A1A;">Deep Red #8B1A1A</div>
+      <div class="color-chip" style="background:#5c1a3a;">Plum #5c1a3a</div>
+      <div class="color-chip" style="background:#0d3b5e;">Ocean #0d3b5e</div>
+    </div>
+  </div>
+
+  <!-- FONTS -->
+  <div class="card">
+    <div class="oyster">✍️</div>
+    <h2>Change Your Font — Also Super Easy!</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:14px;">Want a different vibe? Swap the font. Google Fonts has hundreds of beautiful free fonts.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body"><strong>Go to <a href="https://fonts.google.com" target="_blank">fonts.google.com</a></strong><span>Browse and click any font you like. Click "Get Font" then "Get embed code." Google gives you a <code>&lt;link&gt;</code> tag to copy.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body"><strong>Paste the link in your HTML file</strong><span>Open index.html in VS Code. Near the top, inside the <code>&lt;head&gt;</code> section, paste the link tag Google gave you.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body"><strong>Update the font name in the CSS</strong><span>Find <code>font-family:</code> in the CSS (near the top of the file). Replace the existing font name with your new one — exactly as Google shows it. Example: <code>font-family: 'Playfair Display', serif;</code></span></div>
+    </div>
+    <div class="fun">🔤 <strong>Popular choices:</strong> Playfair Display (elegant), Montserrat (modern), Lato (clean), Oswald (bold), Merriweather (readable). Try a few — it only takes 30 seconds to swap!</div>
+  </div>
+
+  <!-- CONTACT FORM -->
+  <div class="card">
+    <h2>Step 3 — Activate Your Contact Form (Free, 2 Minutes)</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body"><strong>Go to <a href="https://formspree.io" target="_blank">formspree.io</a> and create a free account</strong><span>Click "New Form," give it a name, and copy your Form ID (looks like <code>xabcdefg</code>).</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body"><strong>Open contact.html and find <code>YOUR_FORM_ID</code></strong><span>Replace it with your real Form ID. Now every message submitted on your site lands straight in your email inbox. No spam, no middleman.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body"><strong>Add online booking (optional but awesome)</strong><span>Go to <a href="https://calendly.com" target="_blank">calendly.com</a>, set up your availability for free, copy your link, and replace <code>YOUR_CALENDLY_LINK</code> in contact.html. Customers can book appointments directly from your website!</span></div>
+    </div>
+  </div>
+
+  <!-- GO LIVE -->
+  <div class="card">
+    <h2>Step 4 — Put Your Site on the Internet (Free!)</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body"><strong>Create a free account at <a href="https://github.com" target="_blank">github.com</a></strong><span>This is where your website files live online. Free forever.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body"><strong>Create a new repository</strong><span>Click the + button → New repository. Name it after your business. Set it to Public. Click Create repository.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body"><strong>Upload your files</strong><span>Click "uploading an existing file." Drag ALL your HTML files into the upload box. Click "Commit changes." Your files are now safely stored online.</span></div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
-      <div class="step-body"><strong>Deploy with Cloudflare Pages (free)</strong><span>Go to <a href="https://pages.cloudflare.com" target="_blank">pages.cloudflare.com</a> → Create a project → Connect to Git → Select your GitHub repo → Deploy. Your site will be live at a <code>yourname.pages.dev</code> URL within 2 minutes.</span></div>
+      <div class="step-body"><strong>Deploy free at <a href="https://pages.cloudflare.com" target="_blank">pages.cloudflare.com</a></strong><span>Create a project → Connect to Git → Select your GitHub repo → Deploy. Your site goes live at a free <code>yourname.pages.dev</code> address in under 2 minutes.</span></div>
     </div>
     <div class="step">
       <div class="step-num">5</div>
-      <div class="step-body"><strong>Connect your custom domain</strong><span>In Cloudflare Pages → Custom Domains → Add domain. Then go to wherever your domain is registered (GoDaddy, Namecheap, etc.) and add the 2 DNS records Cloudflare shows you. Your custom domain is live within an hour. Your only ongoing cost is domain renewal (~$12/yr).</span></div>
+      <div class="step-body"><strong>Connect your custom domain</strong><span>In Cloudflare Pages → Custom Domains → Add domain. Then add 2 DNS records at your domain registrar (GoDaddy, Namecheap, etc.) — Cloudflare shows you exactly what to copy. Your domain is live within an hour. Domain renewal is your only cost (~$12/yr).</span></div>
     </div>
-    <div class="tip"><strong>No monthly fees.</strong> Cloudflare Pages is free forever for static sites. You're not on Squarespace, Wix, or any platform that charges $20–$50/month. You own this completely.</div>
+    <div class="tip"><strong>No monthly platform fees.</strong> You're not on Squarespace or Wix paying $20–$50/month forever. You own this. The only ongoing cost is your domain (~$1/month).</div>
   </div>
 
+  <!-- NEED HELP -->
   <div class="card">
-    <h2>Need help? I can do it for you.</h2>
-    <p style="font-size:.88rem;color:#555;margin-bottom:12px;">If customizing or launching yourself feels like too much, I offer a done-for-you service. You send me your content (logo, photos, text, business info) and I'll customize this template, deploy it, and connect your domain — delivered in 3–5 business days.</p>
-    <p style="font-size:.88rem;color:#555;">Visit <a href="https://sitesbymel.com/services" target="_blank">sitesbymel.com/services</a> to see options and pricing.</p>
+    <h2>🙋 Rather have someone just do it for you?</h2>
+    <p style="font-size:.88rem;color:#555;margin-bottom:12px;">Zero judgment — this is exactly what Mel's done-for-you service is for! Send over your logo, photos, colors, and business info, and she'll customize every page, get it live, and connect your domain. Usually done in 3–5 business days.</p>
+    <p style="font-size:.88rem;color:#555;">👉 <a href="https://sitesbymel.com/services" target="_blank">sitesbymel.com/services</a> — see all options and pricing.</p>
   </div>
 
   <div class="contact-box">
-    <h2>Questions?</h2>
+    <h2>Questions? Just ask.</h2>
     <p>Email: <strong>mel@sitesbymel.com</strong></p>
     <p>Website: <strong><a href="https://sitesbymel.com" target="_blank" style="color:#C9922B">sitesbymel.com</a></strong></p>
-    <p style="margin-top:12px;font-size:.82rem;opacity:.6;">Thank you for your purchase. I built every pixel of this template myself and I hope it helps your business grow.</p>
+    <p style="margin-top:12px;font-size:.82rem;opacity:.6;">Thank you so much for your purchase. I built every pixel of this template myself and I genuinely hope it helps your business grow. Now go make it yours — the world is your oyster! 🌍</p>
   </div>
 </div>
 </body>
