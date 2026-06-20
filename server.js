@@ -998,6 +998,22 @@ app.post('/admin/order-photo/:id/delete', requireAuth, (req, res) => {
   res.redirect('/admin/orders');
 });
 
+// Mark order complete
+app.post('/admin/orders/:id/complete', requireAuth, (req, res) => {
+  db.prepare("UPDATE orders SET status='completed' WHERE id=?").run(req.params.id);
+  res.redirect('/admin/orders');
+});
+
+// Delete all photos for an order
+app.post('/admin/orders/:id/delete-photos', requireAuth, (req, res) => {
+  const photos = db.prepare('SELECT * FROM order_photos WHERE order_id=? AND deleted=0').all(req.params.id);
+  for (const p of photos) {
+    db.prepare('UPDATE order_photos SET deleted=1 WHERE id=?').run(p.id);
+    try { if (fs.existsSync(p.path)) fs.unlinkSync(p.path); } catch(e) {}
+  }
+  res.redirect('/admin/orders');
+});
+
 // Blog subscribe
 app.post('/subscribe', async (req, res) => {
   const email = (req.body.email || '').trim().toLowerCase();

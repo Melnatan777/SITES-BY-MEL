@@ -61,7 +61,14 @@
                   <span style="color:var(--gray);font-size:.78rem">—</span>
                 <% } %>
               </td>
-              <td><span class="badge <%= o.status === 'paid' ? 'badge-green' : o.status === 'refunded' ? 'badge-red' : 'badge-yellow' %>"><%= o.status %></span></td>
+              <td>
+                <span class="badge <%= o.status === 'completed' ? 'badge-green' : o.status === 'paid' ? 'badge-yellow' : o.status === 'refunded' ? 'badge-red' : 'badge-yellow' %>"><%= o.status %></span>
+                <% if (o.status !== 'completed') { %>
+                <form method="POST" action="/admin/orders/<%= o.id %>/complete" style="margin:4px 0 0">
+                  <button type="submit" style="font-size:.7rem;background:#1B2F4E;color:#fff;border:none;border-radius:4px;padding:3px 8px;cursor:pointer">✓ Done</button>
+                </form>
+                <% } %>
+              </td>
               <td style="min-width:140px">
                 <% var photos = photosByOrder[o.id] || []; %>
                 <% if (photos.length === 0) { %>
@@ -80,6 +87,9 @@
                     <% }); %>
                   </div>
                   <span style="font-size:.72rem;color:var(--gray);display:block;margin-top:4px"><%= photos.length %> photo<%= photos.length > 1 ? 's' : '' %></span>
+                  <form method="POST" action="/admin/orders/<%= o.id %>/delete-photos" style="margin:6px 0 0" onsubmit="return confirm('Delete all photos for this order?')">
+                    <button type="submit" style="font-size:.7rem;background:#ef4444;color:#fff;border:none;border-radius:4px;padding:3px 8px;cursor:pointer">🗑 Delete All Photos</button>
+                  </form>
                 <% } %>
                 <% if (o.brand_colors) { %>
                   <p style="font-size:.72rem;color:#C9922B;font-weight:600;margin-top:6px;max-width:200px">Colors: <%= o.brand_colors %></p>
