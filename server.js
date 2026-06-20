@@ -656,17 +656,19 @@ app.post('/personalize/:token', photoUpload.array('photos', 5), async (req, res)
     text: `Customer: ${order.customer_name || 'unknown'}\nEmail: ${order.customer_email || 'unknown'}\nProduct: ${product.name}\nAdd-on paid: ${addonLabel[selectedAddon] || selectedAddon}\nAmount paid: $${(order.amount/100).toFixed(0)}\n\nBusiness details entered:\nName: ${data.businessName}\nPhone: ${data.phone}\nEmail: ${data.email}\nAddress: ${data.address}\nTagline: ${data.tagline}\nBrand colors: ${brandColors || 'none'}\nDrive link: ${driveLink || 'none'}`
   }).catch(e => console.error('[personalize email]', e.message));
 
+  // Save text fields regardless of whether photos were uploaded
+  const gloveNotes = req.body.glove_notes || '';
+  const photoNotes = req.body.photo_notes || '';
+  if (brandColors) db.prepare('UPDATE orders SET brand_colors=? WHERE id=?').run(brandColors, order.id);
+  if (gloveNotes) db.prepare('UPDATE orders SET glove_notes=? WHERE id=?').run(gloveNotes, order.id);
+  if (photoNotes) db.prepare('UPDATE orders SET photo_notes=? WHERE id=?').run(photoNotes, order.id);
+
   // Save uploaded photos to DB linked to this order
   if (req.files && req.files.length > 0) {
     const insertPhoto = db.prepare('INSERT INTO order_photos (order_id, filename, original, path) VALUES (?,?,?,?)');
     for (const f of req.files) {
       insertPhoto.run(order.id, f.filename, f.originalname, f.path);
     }
-    const photoNotes = req.body.photo_notes || '';
-    if (photoNotes) db.prepare('UPDATE orders SET photo_notes=? WHERE id=?').run(photoNotes, order.id);
-    if (brandColors) db.prepare('UPDATE orders SET brand_colors=? WHERE id=?').run(brandColors, order.id);
-  const gloveNotes = req.body.glove_notes || '';
-  if (gloveNotes) db.prepare('UPDATE orders SET glove_notes=? WHERE id=?').run(gloveNotes, order.id);
     sendEmail({
       to: process.env.CONTACT_EMAIL || 'mbillingsley31@gmail.com',
       subject: `Photos uploaded — Order #${order.id} (${order.product_name})`,
