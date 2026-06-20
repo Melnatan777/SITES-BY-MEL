@@ -249,73 +249,200 @@ db.exec(`
   )
 `);
 
-// Seed default packages if not already there
-const pkgCount = db.prepare("SELECT COUNT(*) as n FROM service_packages").get();
-if (pkgCount.n === 0) {
-  const insertPkg = db.prepare(`INSERT INTO service_packages
-    (slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?)`);
+// Seed + force-update packages so changes in code always apply
+const upsertPkg = db.prepare(`INSERT INTO service_packages
+  (slug,name,tagline,price_display,description,bullets,cta_label,cta_url,is_featured,sort_order,internal_notes)
+  VALUES (?,?,?,?,?,?,?,?,?,?,?)
+  ON CONFLICT(slug) DO UPDATE SET
+    name=excluded.name, tagline=excluded.tagline, price_display=excluded.price_display,
+    description=excluded.description, bullets=excluded.bullets, cta_label=excluded.cta_label,
+    cta_url=excluded.cta_url, is_featured=excluded.is_featured, sort_order=excluded.sort_order,
+    internal_notes=excluded.internal_notes`);
 
-  insertPkg.run(
-    'diy',
-    'DIY Template',
-    'You customize it yourself',
-    '$197',
-    'Get a professionally designed, niche-built website template — ready to customize with your own content. Includes step-by-step instructions. Optional add-ons available on each template page.',
-    JSON.stringify([
-      'Full HTML + CSS source files',
-      'Mobile-responsive design',
-      'Niche-specific layout and sections',
-      'Step-by-step customization guide',
-      'Contact form ready to use',
-      'Lifetime download access',
-      'Optional: Photo Swap, Brand Colors, Payment Setup add-ons',
-    ]),
-    'Browse Templates', '/templates', 0, 1,
-    'Covers template download only. Customer does all setup and hosting themselves. Add-ons (photo swap, colors, payment) are extra — handled manually by Mel within 2 business days.'
-  );
+// ── PACKAGE 1: DIY TEMPLATE ───────────────────────────────────────────────────
+upsertPkg.run(
+  'diy',
+  'DIY Template',
+  'Your site, your way — we built the foundation',
+  '$197',
+  'Get a professionally designed, industry-specific website template and make it your own. Built to look great on phones, tablets, and computers right out of the box. No monthly fees — you own it forever.',
+  JSON.stringify([
+    'Professionally designed for your industry',
+    'Looks great on phones, tablets & computers',
+    'Just edit the text and photos — no coding needed',
+    'Contact form ready to receive messages',
+    'No monthly platform fees — you own the files',
+    'Instant download after purchase',
+    'Add-ons available: photo swap, brand colors, full setup',
+  ]),
+  'Browse Templates', '/templates', 0, 1,
+  `MEL INTERNAL — DIY PACKAGE ($197)
+─────────────────────────────────────
+WHAT MEL DOES:
+• Delivers ZIP file via download link (automated)
+• Nothing else — customer self-serves completely
 
-  insertPkg.run(
-    'template_launch',
-    'Template Launch',
-    'We set everything up — you just show up',
-    '$797',
-    'You pick a template, we handle everything else. Your site goes live on your own domain with a professional business email — fully set up, tested, and ready for customers. You do nothing technical.',
-    JSON.stringify([
-      'Template customized with your content',
-      'Your own domain name (1 year included)',
-      'Professional business email (you@yourdomain.com)',
-      'Site deployed and live — no free-hosting subdomain',
-      'SSL certificate (secure https)',
-      'Contact forms tested and delivering',
-      'Mobile and desktop review',
-      'Hosting included for year 1',
-      'Stripe payment button (if needed)',
-    ]),
-    'Get Started', '/contact', 1, 2,
-    'Mel handles: domain purchase (client name), Cloudflare DNS, Railway project, GitHub repo, deploy, professional email via Cloudflare routing + Resend, contact form test, Stripe setup (client must verify their own identity). Hosting = Railway $5/mo under Mel\'s account. Client charged $15/mo after year 1.'
-  );
+CUSTOMER DOES:
+• Opens HTML/CSS files in a text editor
+• Replaces placeholder text with their own
+• Swaps in their photos
+• Finds their own hosting (Netlify free tier, etc.)
+• Registers their own domain
 
-  insertPkg.run(
-    'custom_build',
-    'Full Custom Build',
-    'A website built entirely around your business',
-    'Starting at $1,500',
-    'Need something built from the ground up — custom design, advanced features, e-commerce, or booking? Let\'s talk. Every full custom build includes everything in Template Launch plus a design built specifically for your brand.',
-    JSON.stringify([
-      'Custom design — not a template',
-      'Everything in Template Launch included',
-      'SEO built in from day one',
-      'Google Analytics set up and configured',
-      'Google Search Console submitted',
-      'Advanced features: booking, e-commerce, CMS, and more',
-      'Full review and launch support',
-      'Priority support for 30 days after launch',
-    ]),
-    'Request a Quote', '/quote', 0, 3,
-    'Full custom: custom design mockup → client approves → build → deploy. SEO = meta tags, schema, Search Console, sitemap. GA4 = full setup + goals. CMS additions vary per client — price accordingly. Starting at $1,500, quote based on scope.'
-  );
-}
+ADD-ONS MEL HANDLES (ordered separately on template page):
+• Photo Swap (+$97): Customer uploads 5 photos → Mel swaps them in → returns ZIP within 2 days
+• Brand Colors (+$97): Customer shares hex codes/description → Mel updates all CSS → returns ZIP within 2 days
+• Done-For-You Template (+$400 = $597 total): See that package below
+
+COST TO MEL: $0 (automated delivery)
+TIME: 0 hours (auto) + 1-2 hrs per add-on
+PROFIT: $197 pure margin on base template`
+);
+
+// ── PACKAGE 2: DONE-FOR-YOU TEMPLATE (add-on tier, internal reference) ────────
+upsertPkg.run(
+  'done_for_you_template',
+  'Done-For-You Template',
+  'Mel customizes your template — you launch it',
+  '$597',
+  'Buy a template and let Mel do all the customization. Your photos, your brand colors, your text — all updated and polished. Includes Stripe payment button and professional business email setup. You receive the finished files ready to launch.',
+  JSON.stringify([
+    'Your photos placed in the right spots',
+    'Brand colors applied throughout',
+    'Your business text and details updated',
+    'Stripe payment button set up and ready',
+    'Professional business email configured',
+    'Full review and polish before delivery',
+    'Delivered within 3 business days',
+  ]),
+  'Browse Templates', '/templates', 0, 2,
+  `MEL INTERNAL — DONE-FOR-YOU TEMPLATE ($597 = $197 template + $400 add-on)
+─────────────────────────────────────────────────────────────────────────────
+WHAT MEL DOES (everything in the customization, nothing in hosting):
+• Swaps in customer photos (up to 5, from intake form or upload)
+• Updates ALL brand colors in CSS to match their palette
+• Replaces ALL placeholder text with their business details (name, services, about, contact)
+• Sets up Stripe payment button (Mel creates account using their email, configures products/payment links, sends them login to verify identity + add bank account)
+• Sets up professional business email (you@theirdomain.com) via Cloudflare email routing → forwards to their personal inbox
+• Full visual review on mobile + desktop
+• Returns polished ZIP file via email within 3 business days
+
+WHAT MEL DOES NOT DO IN THIS PACKAGE:
+• Does NOT purchase domain (they handle that themselves)
+• Does NOT set up hosting (they self-host or upgrade to Template Launch)
+• Does NOT deploy site live (they do it themselves or upgrade)
+• Does NOT set up Railway, GitHub, Cloudflare DNS
+
+NOTE: Business email requires customer to own their domain already. If they don't have a domain, upsell to Template Launch ($797) where domain is included.
+
+COST TO MEL: ~$0 (their domain/email uses Cloudflare free routing)
+TIME: 3-5 hours per client
+PROFIT: ~$320-360 after time cost at $75/hr`
+);
+
+// ── PACKAGE 3: TEMPLATE LAUNCH ────────────────────────────────────────────────
+upsertPkg.run(
+  'template_launch',
+  'Template Launch',
+  'Your site goes live — you do nothing technical',
+  '$797',
+  'Pick a template and Mel handles absolutely everything. Your site launches on your own domain with a professional business email, secure hosting, and working contact forms — all set up, tested, and live. You just show up.',
+  JSON.stringify([
+    'Your own domain name — included for year 1',
+    'Site fully live at yourdomain.com',
+    'Professional email: you@yourdomain.com',
+    'Secure https — the padlock customers trust',
+    'Contact forms delivering straight to your inbox',
+    'Stripe payment button live and tested',
+    'Looks great on phones, tablets & computers',
+    'Managed hosting — we handle the tech',
+    'Everything from Done-For-You Template included',
+  ]),
+  'Get Started', '/contact', 1, 3,
+  `MEL INTERNAL — TEMPLATE LAUNCH ($797)
+─────────────────────────────────────
+WHAT MEL DOES (full end-to-end launch):
+• All of Done-For-You Template (photos, colors, text, Stripe, email)
+• Purchases domain in CLIENT'S name (use their email/card or invoice them separately for domain cost ~$12-15/yr — include in $797 or charge separately)
+• Sets up Cloudflare account for the domain (DNS + free security layer + email routing)
+• Creates Railway project under Mel's account (private — client never sees Railway)
+• Creates GitHub repo under Mel's GitHub (private — client never sees GitHub)
+• Deploys site to Railway, connects GitHub auto-deploy
+• Points domain DNS to Railway
+• Verifies SSL (https green padlock)
+• Sets up professional email via Cloudflare routing → Resend → forwards to client inbox
+• Tests all contact forms end to end
+• Sets up Stripe: creates account with their email, configures products/payment links, sends them login link to verify identity + add bank account
+• Full mobile + desktop review
+• Sends client handoff email with their domain login, email login, Stripe login
+
+WHAT CLIENT DOES:
+• Verifies their Stripe identity (10 min — legal requirement, Mel cannot do this)
+• Adds their bank account to Stripe
+
+HOSTING COST TO MEL: Railway ~$5/mo
+MEL CHARGES CLIENT: $15/mo after year 1 (net $10/mo profit per client)
+TIME: 6-10 hours per client
+PROFIT: ~$200-350 after time cost at $75/hr + $10/mo recurring`
+);
+
+// ── PACKAGE 4: CUSTOM BUILD ───────────────────────────────────────────────────
+upsertPkg.run(
+  'custom_build',
+  'Full Custom Build',
+  'A website built entirely around your business',
+  'Starting at $1,500',
+  'Need something unique? A custom build means your site is designed from scratch — built around your brand, your customers, and your specific goals. No templates, no compromises.',
+  JSON.stringify([
+    '100% custom design — nobody else has your site',
+    'Built around your specific business needs',
+    'As many pages as your business requires',
+    'SEO foundation built in from day one',
+    'Google Analytics — see who visits your site',
+    'Everything in Template Launch included',
+    'Advanced features: booking, e-commerce, CMS & more',
+    'Priority support for 30 days after launch',
+  ]),
+  'Request a Quote', '/quote', 0, 4,
+  `MEL INTERNAL — FULL CUSTOM BUILD (Starting at $1,500)
+──────────────────────────────────────────────────────
+PRICING GUIDE:
+• Simple custom (5 pages, basic features): $1,500
+• Medium (8-10 pages, booking or e-commerce): $2,000-2,500
+• Complex (10+ pages, CMS, multiple features): $2,500-4,000+
+• Always take 50% deposit before starting
+
+WHAT MEL DOES (everything in Template Launch PLUS):
+• Discovery call to understand business goals and needs
+• Custom wireframe/mockup created in Canva or Figma
+• Client approves design before build starts
+• Site built from scratch (custom HTML/CSS/JS or Node.js/EJS for dynamic needs)
+• All Template Launch setup included (domain, Cloudflare, Railway, GitHub, SSL, email, Stripe)
+• SEO: meta titles + descriptions on every page
+• SEO: schema markup (LocalBusiness or relevant type)
+• SEO: sitemap.xml created and submitted to Google Search Console
+• Google Search Console: verified and site submitted for indexing
+• Google Analytics 4: full install + conversion goals configured
+• GA4 linked to Google Search Console
+• Any custom features quoted separately (booking = Calendly embed or custom, e-commerce = Stripe products, CMS = custom admin panel)
+• 2 rounds of revisions included
+• Full QA review: mobile, tablet, desktop, all browsers
+• Handoff: all logins, documentation, PDF handoff sheet
+
+MAINTENANCE OPTIONS AFTER LAUNCH:
+• Hourly rate: $75/hr for one-off updates
+• Monthly retainer: $150/mo (up to 2 hrs updates + hosting management)
+• Full maintenance plan: $250/mo (unlimited minor updates + priority support)
+
+TIME: 20-60+ hours depending on scope
+COST TO MEL: Railway $5/mo + domain ~$15/yr
+PROFIT: Depends on scope — target $50-65/hr effective rate`
+);
+
+// Add unique constraint on slug if not exists
+try { db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS idx_service_packages_slug ON service_packages(slug)`); } catch(e) {}
+// Done-For-You Template is internal reference only — hide from public services page
+try { db.prepare("UPDATE service_packages SET is_active=0 WHERE slug='done_for_you_template'").run(); } catch(e) {}
 
 // ── ORDER PHOTOS (uploaded photos linked to orders) ───────────────────────────
 db.exec(`
