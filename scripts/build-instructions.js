@@ -172,32 +172,6 @@ function buildInstructions(templateName, templateSlug, niche) {
     </div>
   </div>
 
-  <!-- GO LIVE -->
-  <div class="card">
-    <h2>Step 4 — Put Your Site on the Internet (Free!)</h2>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body"><strong>Create a free account at <a href="https://github.com" target="_blank">github.com</a></strong><span>This is where your website files live online. Free forever.</span></div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body"><strong>Create a new repository</strong><span>Click the + button → New repository. Name it after your business. Set it to Public. Click Create repository.</span></div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body"><strong>Upload your files</strong><span>Click "uploading an existing file." Drag ALL your HTML files into the upload box. Click "Commit changes." Your files are now safely stored online.</span></div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body"><strong>Deploy free at <a href="https://pages.cloudflare.com" target="_blank">pages.cloudflare.com</a></strong><span>Create a project → Connect to Git → Select your GitHub repo → Deploy. Your site goes live at a free <code>yourname.pages.dev</code> address in under 2 minutes.</span></div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-body"><strong>Connect your custom domain</strong><span>In Cloudflare Pages → Custom Domains → Add domain. Then add 2 DNS records at your domain registrar (GoDaddy, Namecheap, etc.) — Cloudflare shows you exactly what to copy. Your domain is live within an hour. Domain renewal is your only cost (~$12/yr).</span></div>
-    </div>
-    <div class="tip"><strong>No monthly platform fees.</strong> You're not on Squarespace or Wix paying $20–$50/month forever. You own this. The only ongoing cost is your domain (~$1/month).</div>
-  </div>
-
   <!-- NEED HELP -->
   <div class="card">
     <h2>🙋 Rather have someone just do it for you?</h2>
