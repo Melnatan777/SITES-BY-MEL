@@ -744,18 +744,7 @@ app.post('/personalize/:token', photoUpload.any(), async (req, res) => {
     }).catch(e => console.error('[photo notify]', e.message));
   }
 
-  // Add-on orders: show "We're on it" page — Mel delivers manually
-  if (needsManualWork) {
-    return res.render('addon-pending', {
-      customerName: data.businessName || order.customer_name || 'there',
-      customerEmail: order.customer_email || data.email,
-      addonLabel: addonLabel[selectedAddon],
-      productName: product.name,
-      token: req.params.token
-    });
-  }
-
-  // Save all intake fields to order record
+  // Save all intake fields to order record — must happen BEFORE any early returns
   const servicesJson = JSON.stringify([
     { name: data.svc1Name, price: data.svc1Price, desc: data.svc1Desc },
     { name: data.svc2Name, price: data.svc2Price, desc: data.svc2Desc },
@@ -785,6 +774,17 @@ app.post('/personalize/:token', photoUpload.any(), async (req, res) => {
     );
   } catch(e) {
     console.error('[personalize] db update error:', e.message);
+  }
+
+  // Add-on orders: show "We're on it" page — Mel delivers manually
+  if (needsManualWork) {
+    return res.render('addon-pending', {
+      customerName: data.businessName || order.customer_name || 'there',
+      customerEmail: order.customer_email || data.email,
+      addonLabel: addonLabel[selectedAddon],
+      productName: product.name,
+      token: req.params.token
+    });
   }
 
   // Show "we're preparing your site" — Mel builds and sends from admin
