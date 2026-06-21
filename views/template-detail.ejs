@@ -1,6 +1,11 @@
 <%- include('partials/head', { title: product.name, metaDesc: product.description }) %>
 <%- include('partials/nav', { activePage: 'templates' }) %>
 
+<% if (locals.query && locals.query.agree === 'required') { %>
+<div style="background:#fef2f2;border-bottom:2px solid #fca5a5;padding:14px 24px;text-align:center;font-size:.88rem;color:#991b1b;font-weight:600">
+  Please check the agreement box below before proceeding to checkout.
+</div>
+<% } %>
 <div class="page-header" style="text-align:left;padding:36px 24px;">
   <div class="container">
     <p style="font-size:0.85rem;opacity:0.65;margin-bottom:8px;"><a href="/templates" style="color:rgba(255,255,255,0.7);">Templates</a> &rsaquo; <%= product.name %></p>
@@ -82,6 +87,10 @@
             <form action="/buy/<%= product.slug %>" method="POST" id="buy-form">
               <input type="hidden" name="selected_addon" value="none">
               <input type="hidden" name="coupon_code" id="coupon-code-input" value="">
+              <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">
+                <input type="checkbox" name="agreed_to_terms" value="yes" required id="agree-checkbox" style="margin-top:3px;width:15px;height:15px;flex-shrink:0;accent-color:#C9922B;cursor:pointer">
+                <label for="agree-checkbox" style="font-size:.78rem;color:#374151;line-height:1.6;cursor:pointer">I have read and agree to the <a href="/agreement" target="_blank" style="color:#C9922B;font-weight:700;text-decoration:underline">Sites by Mel Website Design Agreement</a>. I understand that work begins after checkout and refunds are not available once work has started.</label>
+              </div>
               <button type="submit" id="buy-btn" class="btn btn-gold btn-full" style="font-size:1rem;padding:14px;">
                 Get My Website — $<%= (product.price / 100).toFixed(0) %> &rarr;
               </button>

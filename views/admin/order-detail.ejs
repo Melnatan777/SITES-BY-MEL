@@ -137,6 +137,15 @@
         </div>
         <% } %>
 
+        <!-- Agreement acceptance record -->
+        <div style="background:<%= order.agreement_accepted_at ? '#f0fdf4' : '#fef2f2' %>;border:1px solid <%= order.agreement_accepted_at ? '#86efac' : '#fecaca' %>;border-radius:10px;padding:16px 20px">
+          <% if (order.agreement_accepted_at) { %>
+          <p style="font-size:.82rem;color:#166534;margin:0"><strong>✓ Agreement Accepted</strong> — <%= new Date(order.agreement_accepted_at).toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'}) %> &nbsp;·&nbsp; IP: <%= order.agreement_accepted_ip || '—' %></p>
+          <% } else { %>
+          <p style="font-size:.82rem;color:#991b1b;margin:0"><strong>⚠ No agreement record</strong> — order placed before agreement system was added</p>
+          <% } %>
+        </div>
+
         <% if (order.extra_fields) { try { var ef = JSON.parse(order.extra_fields); } catch(e) { var ef = {}; } %>
         <% if (Object.keys(ef).length > 0) { %>
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:24px">

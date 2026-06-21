@@ -254,7 +254,7 @@ app.get('/templates/:slug', (req, res) => {
   trackView(req);
   const product = db.prepare('SELECT * FROM products WHERE slug=?').get(req.params.slug);
   if (!product) return res.redirect('/templates');
-  res.render('template-detail', { product });
+  res.render('template-detail', { product, query: req.query });
 });
 
 // Services page
@@ -435,6 +435,12 @@ app.post('/buy/:slug', async (req, res) => {
     console.error('[buy] Product not found:', req.params.slug);
     return res.redirect('/templates');
   }
+  // Require agreement checkbox
+  if (req.body.agreed_to_terms !== 'yes') {
+    return res.redirect(`/templates/${req.params.slug}?agree=required`);
+  }
+  const agreementIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket.remoteAddress || '';
+  const agreementAt = new Date().toISOString();
   try {
     const selectedAddon = req.body.selected_addon || 'none';
     const addonAmounts = { none: 0, upload: 9700, glove: 40000 };
@@ -475,8 +481,8 @@ app.post('/buy/:slug', async (req, res) => {
       cancel_url: `${BASE_URL}/templates/${product.slug}`,
       metadata: { product_id: product.id, product_name: product.name, type: 'template', selected_addon: selectedAddon }
     });
-    db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, customer_email, selected_addon, coupon_code, discount_amount)
-      VALUES (?,?,?,?,'pending','',?,?,?)`).run(product.id, product.name, totalAmount, session.id, selectedAddon, appliedCouponCode, discountAmount);
+    const insertedOrder = db.prepare(`INSERT INTO orders (product_id, product_name, amount, stripe_session_id, status, customer_email, selected_addon, coupon_code, discount_amount, agreement_accepted_at, agreement_accepted_ip)
+      VALUES (?,?,?,?,'pending','',?,?,?,?,?)`).run(product.id, product.name, totalAmount, session.id, selectedAddon, appliedCouponCode, discountAmount, agreementAt, agreementIp);
     // Increment coupon uses
     if (appliedCouponCode) db.prepare('UPDATE coupons SET uses_count=uses_count+1 WHERE code=?').run(appliedCouponCode);
     res.redirect(303, session.url);

@@ -83,6 +83,8 @@ try { db.exec(`ALTER TABLE orders ADD COLUMN calendly_link TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN stock_requests TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN netlify_url TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN extra_fields TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN agreement_accepted_at TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN agreement_accepted_ip TEXT`); } catch(e) {}
 
 // ── COUPONS ───────────────────────────────────────────────────────────────────
 db.exec(`
