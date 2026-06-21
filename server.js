@@ -5,6 +5,7 @@ const path = require('path');
 const crypto = require('crypto');
 const multer = require('multer');
 const fs = require('fs');
+const PDFDocument = require('pdfkit');
 const db = require('./database');
 
 // Per-order photo storage — use volume path so photos survive deploys
@@ -1198,6 +1199,114 @@ app.post('/admin/orders/:id/build-and-send', requireAuth, async (req, res) => {
 });
 
 // Mel downloads the ZIP to review locally
+// Generate and download agreement acceptance PDF for an order
+app.get('/admin/orders/:id/agreement-pdf', requireAuth, (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
+  if (!order) return res.status(404).send('Order not found.');
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+
+  const doc = new PDFDocument({ margin: 60, size: 'LETTER' });
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', `attachment; filename="agreement-order${order.id}.pdf"`);
+  doc.pipe(res);
+
+  const navy = '#1B2F4E';
+  const gold = '#C9922B';
+  const gray = '#6B7280';
+  const acceptedAt = order.agreement_accepted_at
+    ? new Date(order.agreement_accepted_at).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'long' })
+    : 'Not recorded';
+
+  // Header
+  doc.rect(0, 0, doc.page.width, 90).fill(navy);
+  doc.fillColor('#fff').fontSize(22).font('Helvetica-Bold').text('Sites by Mel', 60, 28);
+  doc.fillColor(gold).fontSize(11).font('Helvetica').text('Website Design & Delivery Agreement — Acceptance Record', 60, 56);
+
+  doc.moveDown(3);
+
+  // Agreement acceptance record box
+  doc.fillColor(navy).fontSize(13).font('Helvetica-Bold').text('Agreement Acceptance Record', 60, 110);
+  doc.moveDown(0.4);
+  doc.rect(60, 130, doc.page.width - 120, 130).fill('#f0fdf4').stroke('#86efac');
+
+  const boxY = 145;
+  doc.fillColor(gray).fontSize(9).font('Helvetica').text('STATUS', 80, boxY);
+  doc.fillColor('#166534').fontSize(12).font('Helvetica-Bold').text(
+    order.agreement_accepted_at ? '✓  Agreement Accepted' : '⚠  No acceptance record on file',
+    80, boxY + 14
+  );
+  doc.fillColor(gray).fontSize(9).font('Helvetica').text('DATE & TIME', 80, boxY + 40);
+  doc.fillColor(navy).fontSize(11).font('Helvetica').text(acceptedAt, 80, boxY + 54);
+  doc.fillColor(gray).fontSize(9).font('Helvetica').text('IP ADDRESS', 80, boxY + 78);
+  doc.fillColor(navy).fontSize(11).font('Helvetica').text(order.agreement_accepted_ip || '—', 80, boxY + 92);
+
+  doc.moveDown(7);
+
+  // Order details
+  doc.fillColor(navy).fontSize(13).font('Helvetica-Bold').text('Order Details', 60, 280);
+  doc.moveTo(60, 298).lineTo(doc.page.width - 60, 298).stroke(gold);
+  doc.moveDown(0.5);
+
+  const rows = [
+    ['Order #', `${order.id}`],
+    ['Customer Name', order.customer_name || '—'],
+    ['Customer Email', order.customer_email || '—'],
+    ['Template Purchased', product ? product.name : order.product_name || '—'],
+    ['Amount Paid', `$${((order.amount || 0) / 100).toFixed(2)}`],
+    ['Order Date', order.created_at ? new Date(order.created_at).toLocaleDateString('en-US', { dateStyle: 'long' }) : '—'],
+    ['Business Name', order.business_name || '—'],
+  ];
+
+  let y = 308;
+  rows.forEach(([label, value]) => {
+    doc.fillColor(gray).fontSize(9).font('Helvetica').text(label, 60, y);
+    doc.fillColor(navy).fontSize(10).font('Helvetica').text(value, 200, y);
+    y += 22;
+  });
+
+  // Divider
+  y += 10;
+  doc.moveTo(60, y).lineTo(doc.page.width - 60, y).stroke('#e5e7eb');
+  y += 20;
+
+  // Agreement summary
+  doc.fillColor(navy).fontSize(13).font('Helvetica-Bold').text('What Was Agreed To', 60, y);
+  y += 20;
+  doc.fillColor(gray).fontSize(9).font('Helvetica').text(
+    'By checking the agreement box at checkout, this customer confirmed they read and accepted the following:',
+    60, y, { width: doc.page.width - 120 }
+  );
+  y += 30;
+
+  const points = [
+    'Scope of work is limited to personalizing one 5-page HTML template with submitted business information.',
+    'Refunds are not available once work has started (immediately after form submission).',
+    'One round of revisions is included; additional rounds are $25 each.',
+    'Customer owns the delivered website files; Sites by Mel retains ownership of the template design.',
+    'Delivery is within 48 hours; download link valid for 7 days.',
+    'Domain and hosting are not included unless a Domain Setup or Template Launch package was purchased.',
+    'Limitation of liability is capped at the amount paid for this order.',
+  ];
+
+  points.forEach(point => {
+    doc.fillColor(gold).fontSize(10).font('Helvetica-Bold').text('•', 60, y);
+    doc.fillColor('#374151').fontSize(10).font('Helvetica').text(point, 78, y, { width: doc.page.width - 140 });
+    y += 28;
+  });
+
+  y += 10;
+  doc.moveTo(60, y).lineTo(doc.page.width - 60, y).stroke('#e5e7eb');
+  y += 20;
+
+  // Footer note
+  doc.fillColor(gray).fontSize(9).font('Helvetica-Oblique').text(
+    `This document was generated by Sites by Mel (sitesbymel.com) as a record of agreement acceptance for Order #${order.id}. The full agreement is available at sitesbymel.com/agreement. Generated on ${new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}.`,
+    60, y, { width: doc.page.width - 120 }
+  );
+
+  doc.end();
+});
+
 app.get('/admin/orders/:id/download-zip', requireAuth, (req, res) => {
   const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
   if (!order || !order.built_zip_path || !fs.existsSync(order.built_zip_path)) {

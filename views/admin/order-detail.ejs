@@ -140,7 +140,10 @@
         <!-- Agreement acceptance record -->
         <div style="background:<%= order.agreement_accepted_at ? '#f0fdf4' : '#fef2f2' %>;border:1px solid <%= order.agreement_accepted_at ? '#86efac' : '#fecaca' %>;border-radius:10px;padding:16px 20px">
           <% if (order.agreement_accepted_at) { %>
-          <p style="font-size:.82rem;color:#166534;margin:0"><strong>✓ Agreement Accepted</strong> — <%= new Date(order.agreement_accepted_at).toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'}) %> &nbsp;·&nbsp; IP: <%= order.agreement_accepted_ip || '—' %></p>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <p style="font-size:.82rem;color:#166534;margin:0"><strong>✓ Agreement Accepted</strong> — <%= new Date(order.agreement_accepted_at).toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'}) %> &nbsp;·&nbsp; IP: <%= order.agreement_accepted_ip || '—' %></p>
+            <a href="/admin/orders/<%= order.id %>/agreement-pdf" style="background:#166534;color:#fff;font-size:.78rem;font-weight:700;padding:7px 14px;border-radius:6px;text-decoration:none;white-space:nowrap">Download PDF</a>
+          </div>
           <% } else { %>
           <p style="font-size:.82rem;color:#991b1b;margin:0"><strong>⚠ No agreement record</strong> — order placed before agreement system was added</p>
           <% } %>
