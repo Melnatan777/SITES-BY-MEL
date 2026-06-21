@@ -657,6 +657,7 @@ const thumbnails = [
   ['bright-minds',   'bright-minds.jpg'],
   ['forever-events', 'forever-events.jpg'],
   ['auto-shine',     'auto-shine.jpg'],
+  ['detail-pro',     'detail-pro.jpg'],
 ];
 const setThumb = db.prepare("UPDATE products SET thumbnail=? WHERE slug=?");
 for (const [slug, file] of thumbnails) setThumb.run(file, slug);
