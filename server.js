@@ -700,6 +700,16 @@ app.post('/personalize/:token', photoUpload.any(), async (req, res) => {
   const stockRequests = Object.keys(req.body).filter(k => k.startsWith('mel_stock_') && req.body[k] === 'yes').map(k => k.replace('mel_stock_', ''));
   if (stockRequests.length > 0) db.prepare('UPDATE orders SET stock_requests=? WHERE id=?').run(stockRequests.join(', '), order.id);
 
+  // Save ALL extra template-specific fields as JSON so nothing is lost
+  const knownFields = new Set(['businessName','phone','email','address','tagline','city','trainerName','heroBadge','cityZip','instagram','hoursMF','hoursSat','hoursSun','bio','yearsExp','clientCount','certs','svc1Name','svc1Price','svc1Desc','svc2Name','svc2Price','svc2Desc','svc3Name','svc3Price','svc3Desc','test1Name','test1Result','test1Quote','test2Name','test2Result','test2Quote','test3Name','test3Result','test3Quote','formspreeId','calendlyLink','melNotes','brand_colors','drive_link','glove_notes','photo_notes','coupon_code']);
+  const extraFields = {};
+  for (const [key, val] of Object.entries(req.body)) {
+    if (!knownFields.has(key) && !key.startsWith('mel_stock_') && !key.startsWith('mel_') && val && val.toString().trim()) {
+      extraFields[key] = val;
+    }
+  }
+  if (Object.keys(extraFields).length > 0) db.prepare('UPDATE orders SET extra_fields=? WHERE id=?').run(JSON.stringify(extraFields), order.id);
+
   // Save notes for Mel
   if (data.melNotes) db.prepare('UPDATE orders SET glove_notes=? WHERE id=?').run(data.melNotes, order.id);
 
