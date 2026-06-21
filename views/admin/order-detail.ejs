@@ -101,6 +101,12 @@
         </div>
         <% } %>
 
+        <% if (order.stock_requests) { %>
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:24px">
+          <h2 style="font-size:.85rem;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">📷 Stock Photos Requested</h2>
+          <p style="font-size:.9rem;color:#1B2F4E;line-height:1.7;margin:0">Customer wants Mel to pick stock photos for: <strong><%= order.stock_requests %></strong></p>
+        </div>
+        <% } %>
         <% if (order.photo_notes) { %>
         <div style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:10px;padding:24px">
           <h2 style="font-size:.85rem;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Photo Notes & Requests</h2>

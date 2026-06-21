@@ -696,6 +696,9 @@ app.post('/personalize/:token', photoUpload.any(), async (req, res) => {
   if (brandColors) db.prepare('UPDATE orders SET brand_colors=? WHERE id=?').run(brandColors, order.id);
   if (gloveNotes) db.prepare('UPDATE orders SET glove_notes=? WHERE id=?').run(gloveNotes, order.id);
   if (photoNotes) db.prepare('UPDATE orders SET photo_notes=? WHERE id=?').run(photoNotes, order.id);
+  // Capture mel_stock_* checkboxes — which photo slots customer wants Mel to pick stock photos for
+  const stockRequests = Object.keys(req.body).filter(k => k.startsWith('mel_stock_') && req.body[k] === 'yes').map(k => k.replace('mel_stock_', ''));
+  if (stockRequests.length > 0) db.prepare('UPDATE orders SET stock_requests=? WHERE id=?').run(stockRequests.join(', '), order.id);
 
   // Save notes for Mel
   if (data.melNotes) db.prepare('UPDATE orders SET glove_notes=? WHERE id=?').run(data.melNotes, order.id);
