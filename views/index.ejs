@@ -2,37 +2,22 @@
 <%- include('partials/nav', { activePage: 'home' }) %>
 
 <!-- HERO -->
-<section class="hero" id="heroSection">
-  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&q=85')"></div>
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=85')"></div>
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1920&q=85')"></div>
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=85')"></div>
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=85')"></div>
-  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1529720317453-c8da503f2051?w=1920&q=85')"></div>
-  <div class="container">
-    <span class="hero-badge">&#9733; Handcrafted for Small Business Owners</span>
-    <h1>Your Business Deserves a<br><span>Website Worth Showing Off</span></h1>
-    <p>Mel builds you a beautiful, professional website — personalized for your niche, ready to launch. No tech skills needed. No monthly platform fees. Just results.</p>
-    <div class="hero-buttons">
-      <a href="/templates" class="btn btn-gold" style="font-size:1.05rem;padding:14px 34px">See the Templates &rarr;</a>
-      <a href="/services" class="btn btn-outline-gold" style="font-size:1.05rem;padding:14px 34px">How It Works</a>
+<section class="hero-v2">
+  <div class="hero-v2-img" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=85')"></div>
+  <div class="hero-v2-content">
+    <span class="hero-badge" style="margin-bottom:24px;display:inline-block">&#9733; Built for small businesses, by Mel</span>
+    <h1 class="hero-v2-h1">A website that finally<br>looks like <span style="color:var(--gold)">you mean business.</span></h1>
+    <p class="hero-v2-p">Personalized for your niche. Ready to launch in 48 hours. No subscriptions, no platform fees — just a beautiful site you own forever.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:36px">
+      <a href="/templates" class="btn btn-gold" style="font-size:1rem;padding:14px 32px">Browse Templates &rarr;</a>
+      <a href="/services" class="btn btn-outline-gold" style="font-size:1rem;padding:14px 32px">See How It Works</a>
     </div>
+    <p style="margin-top:22px;font-size:.82rem;color:rgba(255,255,255,.45)">Starting at $350 &nbsp;·&nbsp; Delivered in 48 hrs &nbsp;·&nbsp; You own every file</p>
   </div>
   <div class="hero-scroll-hint">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
 </section>
-<script>
-  (function(){
-    var slides = document.querySelectorAll('#heroSection .hero-slide');
-    var current = 0;
-    setInterval(function(){
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 4500);
-  })();
-</script>
 
 <!-- TRUST BAR -->
 <div class="container">
