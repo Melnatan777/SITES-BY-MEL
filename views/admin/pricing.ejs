@@ -280,16 +280,20 @@
         </div>
       </div>
 
-      <!-- PRICING SUMMARY TABLE -->
+      <!-- QUOTE CALCULATOR -->
       <div class="pg-section">
         <div class="pg-section-head">
           <h2>Quick Reference — What to Charge</h2>
           <span class="price-tag">Your price sheet</span>
         </div>
         <div class="pg-body">
-          <table class="cost-table">
+
+          <p style="font-size:.85rem;color:#6B7280;margin-bottom:16px">Check the services for a client and the total updates live. Copy the quote summary to paste into an email.</p>
+
+          <table class="cost-table" id="quote-table">
             <thead>
               <tr>
+                <th style="width:32px"></th>
                 <th>Service</th>
                 <th>Your Time</th>
                 <th>Your Cost (est.)</th>
@@ -299,13 +303,15 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>DIY Template</strong><br><span style="font-size:0.78rem;color:#6B7280;">Complete niche HTML site, instant download</span></td>
+                <td><input type="checkbox" class="quote-cb" data-label="Template Package" data-price="350" data-profit="340" style="width:16px;height:16px;accent-color:#C9922B;cursor:pointer"></td>
+                <td><strong>Template Package</strong><br><span style="font-size:0.78rem;color:#6B7280;">Personalized ZIP + Netlify preview, customer buys domain</span></td>
                 <td>0 hrs (after built)</td>
                 <td class="your-cost">$0.30 Stripe fee</td>
                 <td class="price">$350</td>
                 <td class="profit">~$340</td>
               </tr>
               <tr>
+                <td><input type="checkbox" class="quote-cb" data-label="Domain Setup" data-price="499" data-profit="480" style="width:16px;height:16px;accent-color:#C9922B;cursor:pointer"></td>
                 <td><strong>Domain Setup</strong><br><span style="font-size:0.78rem;color:#6B7280;">Domain purchase, DNS config, site live on custom domain</span></td>
                 <td>1–2 hrs</td>
                 <td class="your-cost">~$5–10</td>
@@ -313,41 +319,47 @@
                 <td class="profit">~$480</td>
               </tr>
               <tr>
-                <td><strong>Done-For-You HTML</strong><br><span style="font-size:0.78rem;color:#6B7280;">Template customized, domain live</span></td>
+                <td><input type="checkbox" class="quote-cb" data-label="Template Launch (Done-For-You HTML)" data-price="797" data-profit="750" style="width:16px;height:16px;accent-color:#C9922B;cursor:pointer"></td>
+                <td><strong>Template Launch — Done-For-You HTML</strong><br><span style="font-size:0.78rem;color:#6B7280;">Template customized, domain live, everything handled</span></td>
                 <td>4–6 hrs</td>
                 <td class="your-cost">~$10–20</td>
                 <td class="price">$797</td>
                 <td class="profit">~$750</td>
               </tr>
               <tr>
-                <td><strong>Full CMS Site (basic)</strong><br><span style="font-size:0.78rem;color:#6B7280;">Node.js, admin dashboard, forms, Railway</span></td>
+                <td><input type="checkbox" class="quote-cb" data-label="Full Custom Build (basic CMS)" data-price="1200" data-profit="1150" style="width:16px;height:16px;accent-color:#C9922B;cursor:pointer"></td>
+                <td><strong>Full Custom Build — Basic CMS</strong><br><span style="font-size:0.78rem;color:#6B7280;">Node.js, admin dashboard, forms, Railway — built from scratch</span></td>
                 <td>15–25 hrs</td>
                 <td class="your-cost">~$25–50</td>
                 <td class="price">$1,200–$2,000</td>
                 <td class="profit">~$1,450+</td>
               </tr>
               <tr>
-                <td><strong>Full CMS Site (complex)</strong><br><span style="font-size:0.78rem;color:#6B7280;">Store, blog, members, streaming, etc.</span></td>
+                <td><input type="checkbox" class="quote-cb" data-label="Full Custom Build (complex CMS)" data-price="2500" data-profit="2430" style="width:16px;height:16px;accent-color:#C9922B;cursor:pointer"></td>
+                <td><strong>Full Custom Build — Complex CMS</strong><br><span style="font-size:0.78rem;color:#6B7280;">Store, blog, members, streaming, etc.</span></td>
                 <td>25–40 hrs</td>
                 <td class="your-cost">~$40–70</td>
                 <td class="price">$2,500–$3,500</td>
                 <td class="profit">~$2,430+</td>
               </tr>
               <tr>
-                <td><strong>Analytics Add-On</strong><br><span style="font-size:0.78rem;color:#6B7280;">Data dashboard added to existing CMS</span></td>
+                <td><input type="checkbox" class="quote-cb" data-label="Analytics Dashboard Add-On" data-price="400" data-profit="375" style="width:16px;height:16px;accent-color:#C9922B;cursor:pointer"></td>
+                <td><strong>Analytics Dashboard Add-On</strong><br><span style="font-size:0.78rem;color:#6B7280;">Data dashboard added to existing CMS</span></td>
                 <td>8–15 hrs</td>
                 <td class="your-cost">~$15–25</td>
                 <td class="price">$400–$800</td>
                 <td class="profit">~$375–775</td>
               </tr>
               <tr>
+                <td><input type="checkbox" class="quote-cb" data-label="Copy Writing Add-On" data-price="99" data-profit="94" style="width:16px;height:16px;accent-color:#C9922B;cursor:pointer"></td>
                 <td><strong>Copy Writing Add-On</strong><br><span style="font-size:0.78rem;color:#6B7280;">About Us, service descriptions, SEO titles — written by Mel</span></td>
                 <td>1–2 hrs</td>
                 <td class="your-cost">~$5</td>
                 <td class="price">$99</td>
                 <td class="profit">~$94</td>
               </tr>
-              <tr style="background:#fdf6e3;">
+              <tr>
+                <td><input type="checkbox" class="quote-cb" data-label="Maintenance Retainer" data-price="75" data-profit="65" data-recurring="/mo" style="width:16px;height:16px;accent-color:#C9922B;cursor:pointer"></td>
                 <td><strong>Maintenance Retainer</strong><br><span style="font-size:0.78rem;color:#6B7280;">Monthly updates, backups, small changes</span></td>
                 <td>1–3 hrs/mo</td>
                 <td class="your-cost">~$5–10/mo</td>
@@ -356,11 +368,76 @@
               </tr>
             </tbody>
           </table>
-          <div class="note-box">
+
+          <!-- LIVE TOTAL BAR -->
+          <div id="quote-total-bar" style="display:none;margin-top:20px;background:#1B2F4E;border-radius:10px;padding:20px 24px">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+              <div>
+                <div style="color:rgba(255,255,255,.5);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Selected Services</div>
+                <div id="quote-items-list" style="color:#fff;font-size:.88rem;line-height:1.8"></div>
+              </div>
+              <div style="text-align:right;flex-shrink:0">
+                <div style="color:rgba(255,255,255,.5);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Quote Total</div>
+                <div id="quote-total-num" style="color:#C9922B;font-size:2rem;font-weight:800"></div>
+                <div id="quote-profit-num" style="color:#4ade80;font-size:.82rem;margin-top:2px"></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+              <button onclick="copyQuote()" style="background:#C9922B;color:#fff;border:none;padding:9px 18px;border-radius:6px;font-size:.82rem;font-weight:700;cursor:pointer">Copy Quote to Clipboard</button>
+              <button onclick="clearQuote()" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:none;padding:9px 18px;border-radius:6px;font-size:.82rem;cursor:pointer">Clear All</button>
+            </div>
+            <div id="copy-confirm" style="display:none;color:#4ade80;font-size:.78rem;margin-top:8px">✓ Copied! Paste into your email.</div>
+          </div>
+
+          <div class="note-box" style="margin-top:16px">
             <strong>Remember:</strong> You're not just selling code — you're selling your time, your expertise, and your ability to use tools like Claude to build faster than a traditional developer. That's worth charging for. These prices are <em>below</em> market rate for a professional web developer. As you build your portfolio and confidence, raise them.
           </div>
         </div>
       </div>
+
+      <script>
+        function updateQuote() {
+          const boxes = document.querySelectorAll('.quote-cb:checked');
+          const bar = document.getElementById('quote-total-bar');
+          if (boxes.length === 0) { bar.style.display = 'none'; return; }
+          bar.style.display = 'block';
+          let total = 0, profit = 0, lines = [];
+          boxes.forEach(function(cb) {
+            const p = parseInt(cb.dataset.price);
+            const pr = parseInt(cb.dataset.profit);
+            const rec = cb.dataset.recurring || '';
+            total += p; profit += pr;
+            lines.push('• ' + cb.dataset.label + ' — $' + p.toLocaleString() + rec);
+          });
+          document.getElementById('quote-items-list').innerHTML = lines.join('<br>');
+          document.getElementById('quote-total-num').textContent = '$' + total.toLocaleString();
+          document.getElementById('quote-profit-num').textContent = '~$' + profit.toLocaleString() + ' estimated profit';
+        }
+        function clearQuote() {
+          document.querySelectorAll('.quote-cb').forEach(function(cb) { cb.checked = false; });
+          document.getElementById('quote-total-bar').style.display = 'none';
+        }
+        function copyQuote() {
+          const boxes = document.querySelectorAll('.quote-cb:checked');
+          let total = 0, lines = ['Sites by Mel — Project Quote\n'];
+          boxes.forEach(function(cb) {
+            const p = parseInt(cb.dataset.price);
+            const rec = cb.dataset.recurring || '';
+            total += p;
+            lines.push('• ' + cb.dataset.label + ': $' + p.toLocaleString() + rec);
+          });
+          lines.push('\nTotal: $' + total.toLocaleString());
+          lines.push('\nQuestions? mel@sitesbymel.com');
+          navigator.clipboard.writeText(lines.join('\n')).then(function() {
+            const el = document.getElementById('copy-confirm');
+            el.style.display = 'block';
+            setTimeout(function() { el.style.display = 'none'; }, 3000);
+          });
+        }
+        document.querySelectorAll('.quote-cb').forEach(function(cb) {
+          cb.addEventListener('change', updateQuote);
+        });
+      </script>
 
     </div><!-- end admin-content -->
   </div><!-- end admin-main -->
