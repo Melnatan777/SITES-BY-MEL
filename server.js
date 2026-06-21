@@ -745,22 +745,26 @@ app.post('/personalize/:token', photoUpload.any(), async (req, res) => {
     { name: data.test2Name, result: data.test2Result, quote: data.test2Quote },
     { name: data.test3Name, result: data.test3Result, quote: data.test3Quote },
   ].filter(t => t.name));
-  db.prepare(`UPDATE orders SET
-    business_name=?, phone=?, email=?, address=?, tagline=?, city=?,
-    trainer_name=?, hero_badge=?, city_zip=?, instagram=?,
-    hours_mf=?, hours_sat=?, hours_sun=?,
-    bio=?, years_exp=?, client_count=?, certs=?,
-    services_json=?, testimonials_json=?,
-    formspree_id=?, calendly_link=?
-    WHERE id=?`).run(
-    data.businessName, data.phone, data.email, data.address, data.tagline, data.city,
-    data.trainerName, data.heroBadge, data.cityZip, data.instagram,
-    data.hoursMF, data.hoursSat, data.hoursSun,
-    data.bio, data.yearsExp, data.clientCount, data.certs,
-    servicesJson, testimonialsJson,
-    data.formspreeId, data.calendlyLink,
-    order.id
-  );
+  try {
+    db.prepare(`UPDATE orders SET
+      business_name=?, phone=?, email=?, address=?, tagline=?, city=?,
+      trainer_name=?, hero_badge=?, city_zip=?, instagram=?,
+      hours_mf=?, hours_sat=?, hours_sun=?,
+      bio=?, years_exp=?, client_count=?, certs=?,
+      services_json=?, testimonials_json=?,
+      formspree_id=?, calendly_link=?
+      WHERE id=?`).run(
+      data.businessName, data.phone, data.email, data.address, data.tagline, data.city,
+      data.trainerName, data.heroBadge, data.cityZip, data.instagram,
+      data.hoursMF, data.hoursSat, data.hoursSun,
+      data.bio, data.yearsExp, data.clientCount, data.certs,
+      servicesJson, testimonialsJson,
+      data.formspreeId, data.calendlyLink,
+      order.id
+    );
+  } catch(e) {
+    console.error('[personalize] db update error:', e.message);
+  }
 
   // Show "we're preparing your site" — Mel builds and sends from admin
   res.render('preparing', {

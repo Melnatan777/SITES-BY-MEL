@@ -58,6 +58,12 @@ try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_path TEXT`); } catch(e) {
 try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_token TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN built_zip_expires TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE order_photos ADD COLUMN field_name TEXT`); } catch(e) {}
+// Intake form fields — business details
+try { db.exec(`ALTER TABLE orders ADD COLUMN business_name TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN phone TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN email TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN address TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN tagline TEXT`); } catch(e) {}
 // FitLife extended intake fields
 try { db.exec(`ALTER TABLE orders ADD COLUMN trainer_name TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN hero_badge TEXT`); } catch(e) {}
