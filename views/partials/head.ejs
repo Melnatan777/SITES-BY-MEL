@@ -3,8 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= typeof title !== 'undefined' ? title + ' | Sites by Mel' : 'Sites by Mel — Affordable Websites for Small Businesses' %></title>
-  <meta name="description" content="<%= typeof metaDesc !== 'undefined' ? metaDesc : 'Professional website templates and done-for-you web design starting at $197. Built for small businesses by Mel.' %>" />
+
+  <% var pageTitle = typeof title !== 'undefined' ? title + ' | Sites by Mel' : 'Sites by Mel — Affordable Websites for Small Businesses'; %>
+  <% var pageDesc = typeof metaDesc !== 'undefined' ? metaDesc : 'Professional done-for-you websites for small businesses starting at $350. Personalized for your niche, delivered in 48 hours. No monthly fees.'; %>
+  <% var pageUrl = 'https://sitesbymel.com' + (typeof canonicalPath !== 'undefined' ? canonicalPath : ''); %>
+  <% var ogImage = typeof ogImg !== 'undefined' ? ogImg : 'https://sitesbymel.com/images/sitesbymellogo.png'; %>
+
+  <title><%= pageTitle %></title>
+  <meta name="description" content="<%= pageDesc %>" />
+  <link rel="canonical" href="<%= pageUrl %>" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="<%= pageTitle %>" />
+  <meta property="og:description" content="<%= pageDesc %>" />
+  <meta property="og:url" content="<%= pageUrl %>" />
+  <meta property="og:image" content="<%= ogImage %>" />
+  <meta property="og:site_name" content="Sites by Mel" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<%= pageTitle %>" />
+  <meta name="twitter:description" content="<%= pageDesc %>" />
+  <meta name="twitter:image" content="<%= ogImage %>" />
+
+  <!-- Structured Data: Local Business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Sites by Mel",
+    "url": "https://sitesbymel.com",
+    "logo": "https://sitesbymel.com/images/sitesbymellogo.png",
+    "description": "Done-for-you website design for small businesses. Personalized templates starting at $350, delivered in 48 hours.",
+    "priceRange": "$350 - $1200+",
+    "email": "mel@sitesbymel.com",
+    "areaServed": "United States",
+    "sameAs": []
+  }
+  </script>
+
+  <!-- Google Analytics -->
+  <% if (process.env.GA_MEASUREMENT_ID) { %>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= process.env.GA_MEASUREMENT_ID %>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '<%= process.env.GA_MEASUREMENT_ID %>');
+  </script>
+  <% } %>
+
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 </head>

@@ -1891,5 +1891,20 @@ app.post('/admin/messages/:id/delete', requireAuth, (req, res) => {
   res.redirect('/admin/messages');
 });
 
+
+// ── SITEMAP & ROBOTS ──────────────────────────────────────────────────────────
+app.get('/sitemap.xml', (req, res) => {
+  const products = db.prepare('SELECT slug FROM products WHERE active=1').all();
+  const statics = ['','/templates','/services','/about','/contact','/blog','/portfolio','/agreement'];
+  const all = [...statics, ...products.map(p => '/templates/' + p.slug)];
+  const urls = all.map(p => '<url><loc>https://sitesbymel.com' + p + '</loc><changefreq>weekly</changefreq><priority>' + (p===''?'1.0':'0.8') + '</priority></url>').join('');
+  res.header('Content-Type','application/xml');
+  res.send('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + '</urlset>');
+});
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /personalize\nDisallow: /download\nSitemap: https://sitesbymel.com/sitemap.xml\n');
+});
+
 // ── START ─────────────────────────────────────────────────────────────────────
 app.listen(PORT, () => console.log(`Sites by Mel running on port ${PORT}`));
