@@ -16,19 +16,32 @@
         <h1 style="margin:0">Order #<%= order.id %></h1>
         <span class="badge <%= order.status === 'completed' ? 'badge-green' : order.status === 'paid' ? 'badge-yellow' : 'badge-red' %>"><%= order.status %></span>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         <% if (locals.sent) { %>
-        <span style="background:#dcfce7;color:#166534;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:700">✓ Download link sent!</span>
+        <span style="background:#dcfce7;color:#166534;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:700">✓ Sent to customer!</span>
         <% } %>
-        <% if (locals.error) { %>
+        <% if (locals.built) { %>
+        <span style="background:#fffbeb;color:#92400e;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:700">✓ ZIP built — review below</span>
+        <% } %>
+        <% if (locals.error === 'build') { %>
         <span style="background:#fef2f2;color:#991b1b;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:700">⚠ Build failed — check logs</span>
         <% } %>
-        <form method="POST" action="/admin/orders/<%= order.id %>/build-and-send" style="margin:0" onsubmit="return confirm('Build personalized ZIP and email download link to customer?')">
-          <button type="submit" style="background:#C9922B;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:700;cursor:pointer">🚀 Build & Send to Customer</button>
+        <% if (locals.error === 'nozip') { %>
+        <span style="background:#fef2f2;color:#991b1b;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:700">⚠ Build the ZIP first</span>
+        <% } %>
+        <% if (!order.built_zip_path) { %>
+        <form method="POST" action="/admin/orders/<%= order.id %>/build-and-send" style="margin:0">
+          <button type="submit" style="background:#C9922B;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:700;cursor:pointer">⚙️ Build Personalized ZIP</button>
         </form>
+        <% } else { %>
+        <a href="/admin/orders/<%= order.id %>/download-zip" style="background:#1B2F4E;color:#fff;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:700;text-decoration:none">⬇ Download ZIP to Review</a>
+        <form method="POST" action="/admin/orders/<%= order.id %>/build-and-send" style="margin:0">
+          <button type="submit" style="background:#6B7280;color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.82rem;font-weight:600;cursor:pointer">🔄 Rebuild</button>
+        </form>
+        <% } %>
         <% if (order.status !== 'completed') { %>
         <form method="POST" action="/admin/orders/<%= order.id %>/complete" style="margin:0">
-          <button type="submit" class="btn btn-sm" style="background:#1B2F4E;color:#fff;border:none">✓ Mark Complete</button>
+          <button type="submit" class="btn btn-sm" style="background:#166534;color:#fff;border:none">✓ Mark Complete</button>
         </form>
         <% } %>
         <form method="POST" action="/admin/orders/<%= order.id %>/delete" style="margin:0" onsubmit="return confirm('Delete this order permanently?')">
@@ -39,6 +52,29 @@
         </form>
       </div>
     </div>
+
+    <!-- WORKFLOW PANEL: Review & Send -->
+    <% if (order.built_zip_path) { %>
+    <div style="background:#fffbeb;border:2px solid #C9922B;border-radius:10px;padding:24px;margin:0 0 20px">
+      <h2 style="font-size:.9rem;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.06em;margin:0 0 16px">📋 Step 2 — Review & Send to Customer</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+        <div>
+          <p style="font-size:.88rem;color:#374151;margin:0 0 12px;line-height:1.6">
+            <strong>1.</strong> Download the ZIP above and check it looks right.<br>
+            <strong>2.</strong> Drag the ZIP to <a href="https://app.netlify.com/drop" target="_blank" style="color:#C9922B;font-weight:700">app.netlify.com/drop</a> to get a live preview link.<br>
+            <strong>3.</strong> Paste the Netlify link below, then click Send.
+          </p>
+          <% if (order.netlify_url) { %>
+          <p style="font-size:.82rem;color:#166534;margin:0 0 8px">Previously sent: <a href="<%= order.netlify_url %>" target="_blank" style="color:#166534;font-weight:700"><%= order.netlify_url %></a></p>
+          <% } %>
+        </div>
+        <form method="POST" action="/admin/orders/<%= order.id %>/send-to-customer" style="margin:0;display:flex;flex-direction:column;gap:10px">
+          <input type="url" name="netlify_url" placeholder="https://your-site-name.netlify.app (optional)" value="<%= order.netlify_url || '' %>" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:.88rem;box-sizing:border-box">
+          <button type="submit" onclick="return confirm('Send to customer at <%= order.customer_email %>?')" style="background:#166534;color:#fff;border:none;border-radius:6px;padding:10px 20px;font-size:.9rem;font-weight:700;cursor:pointer;width:100%">✉️ Send to Customer</button>
+        </form>
+      </div>
+    </div>
+    <% } %>
 
     <div class="admin-content" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
 

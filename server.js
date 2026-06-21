@@ -1100,7 +1100,7 @@ app.get('/admin/orders/:id', requireAuth, (req, res) => {
   const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
   if (!order) return res.redirect('/admin/orders');
   const photos = db.prepare('SELECT * FROM order_photos WHERE order_id=? AND deleted=0 ORDER BY created_at').all(req.params.id);
-  res.render('admin/order-detail', { order, photos, sent: req.query.sent === '1', error: req.query.error || null });
+  res.render('admin/order-detail', { order, photos, sent: req.query.sent === '1', built: req.query.built === '1', error: req.query.error || null });
 });
 
 // Mark order complete
@@ -1109,25 +1109,18 @@ app.post('/admin/orders/:id/complete', requireAuth, (req, res) => {
   res.redirect('/admin/orders');
 });
 
-// Build personalized ZIP and email customer download link
-app.post('/admin/orders/:id/build-and-send', requireAuth, async (req, res) => {
-  const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
-  if (!order) return res.redirect('/admin/orders');
-  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
-  if (!product) return res.redirect(`/admin/orders/${order.id}`);
-
-  // Parse stored JSON fields
+// Helper: build data object from order record
+function orderToData(order) {
   let services = [], testimonials = [];
   try { services = JSON.parse(order.services_json || '[]'); } catch(e) {}
   try { testimonials = JSON.parse(order.testimonials_json || '[]'); } catch(e) {}
-  const data = {
+  return {
     businessName: order.business_name || '',
     phone: order.phone || '',
     email: order.email || '',
     address: order.address || '',
     tagline: order.tagline || '',
     city: order.city || '',
-    // FitLife fields
     trainerName: order.trainer_name || '',
     heroBadge: order.hero_badge || '',
     cityZip: order.city_zip || '',
@@ -1148,51 +1141,99 @@ app.post('/admin/orders/:id/build-and-send', requireAuth, async (req, res) => {
     formspreeId: order.formspree_id || '',
     calendlyLink: order.calendly_link || '',
   };
+}
 
-  const DOWNLOADS_DIR = process.env.DATABASE_PATH
-    ? path.join(path.dirname(process.env.DATABASE_PATH), 'built')
-    : path.join(__dirname, 'downloads', 'built');
-  fs.mkdirSync(DOWNLOADS_DIR, { recursive: true });
+function getBuiltDir() {
+  const base = process.env.DATABASE_PATH
+    ? path.dirname(process.env.DATABASE_PATH)
+    : path.join(__dirname, 'downloads');
+  const dir = path.join(base, 'built');
+  fs.mkdirSync(dir, { recursive: true });
+  return dir;
+}
 
+// STEP 1: Build personalized ZIP for Mel to review (does NOT email customer)
+app.post('/admin/orders/:id/build-and-send', requireAuth, async (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
+  if (!order) return res.redirect('/admin/orders');
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+  if (!product) return res.redirect(`/admin/orders/${order.id}`);
+
+  const data = orderToData(order);
   const fileName = `${product.slug}-order${order.id}-${Date.now()}.zip`;
-  const zipPath = path.join(DOWNLOADS_DIR, fileName);
+  const zipPath = path.join(getBuiltDir(), fileName);
   const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
 
   try {
     await buildPersonalizedZip(product.slug, product.name, niche, data, zipPath);
   } catch(e) {
-    console.error('[build-and-send]', e.message);
+    console.error('[build]', e.message);
     return res.redirect(`/admin/orders/${order.id}?error=build`);
   }
 
-  // Create a secure download token for this built file
+  // Save ZIP path and token but do NOT send email yet — status stays 'paid' until Mel approves
   const token = crypto.randomBytes(24).toString('hex');
-  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 7 days
-  db.prepare(`UPDATE orders SET built_zip_path=?, built_zip_token=?, built_zip_expires=?, status='completed' WHERE id=?`)
+  const expires = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(); // 14 days
+  db.prepare(`UPDATE orders SET built_zip_path=?, built_zip_token=?, built_zip_expires=? WHERE id=?`)
     .run(zipPath, token, expires, order.id);
 
-  const downloadLink = `${BASE_URL}/get-my-site/${token}`;
+  res.redirect(`/admin/orders/${order.id}?built=1`);
+});
+
+// Mel downloads the ZIP to review locally
+app.get('/admin/orders/:id/download-zip', requireAuth, (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
+  if (!order || !order.built_zip_path || !fs.existsSync(order.built_zip_path)) {
+    return res.status(404).send('ZIP not built yet.');
+  }
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+  res.download(order.built_zip_path, `${product ? product.slug : 'template'}-order${order.id}.zip`);
+});
+
+// STEP 2: Mel approves and sends to customer (with optional Netlify URL)
+app.post('/admin/orders/:id/send-to-customer', requireAuth, async (req, res) => {
+  const order = db.prepare('SELECT * FROM orders WHERE id=?').get(req.params.id);
+  if (!order) return res.redirect('/admin/orders');
+  const product = db.prepare('SELECT * FROM products WHERE id=?').get(order.product_id);
+
+  if (!order.built_zip_path || !fs.existsSync(order.built_zip_path)) {
+    return res.redirect(`/admin/orders/${order.id}?error=nozip`);
+  }
+
+  const netlifyUrl = (req.body.netlify_url || '').trim();
+  const downloadLink = `${BASE_URL}/get-my-site/${order.built_zip_token}`;
   const customerEmail = order.customer_email || order.email || '';
+  const data = orderToData(order);
+
+  // Save netlify URL to order
+  if (netlifyUrl) db.prepare('UPDATE orders SET netlify_url=? WHERE id=?').run(netlifyUrl, order.id);
+  db.prepare(`UPDATE orders SET status='completed' WHERE id=?`).run(order.id);
 
   await sendEmail({
     to: customerEmail,
-    subject: `Your ${product.name} is ready! 🎉`,
+    subject: `Your ${product ? product.name : 'website'} is ready! 🎉`,
     html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px">
       <div style="background:#1B2F4E;padding:24px;border-radius:10px 10px 0 0;text-align:center">
         <p style="color:#C9922B;font-size:.8rem;font-weight:700;letter-spacing:.1em;margin:0 0 6px">SITES BY MEL</p>
         <h1 style="color:#fff;font-size:1.4rem;margin:0">Your site is ready!</h1>
       </div>
       <div style="background:#fff;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 10px 10px;padding:28px">
-        <p style="color:#374151;font-size:.95rem;line-height:1.7">Hi ${data.businessName || order.customer_name || 'there'}! 👋</p>
-        <p style="color:#374151;font-size:.95rem;line-height:1.7">Your <strong>${product.name}</strong> is ready with your business information already filled in. Just click below to download your files.</p>
-        <div style="text-align:center;margin:28px 0">
-          <a href="${downloadLink}" style="background:#C9922B;color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem;display:inline-block">⬇ Download My Site</a>
+        <p style="color:#374151;font-size:.95rem;line-height:1.7">Hi ${data.businessName || order.customer_name || 'there'}!</p>
+        <p style="color:#374151;font-size:.95rem;line-height:1.7">Your <strong>${product ? product.name : 'website'}</strong> is personalized and ready to go!</p>
+        ${netlifyUrl ? `
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:16px 20px;margin:20px 0;text-align:center">
+          <p style="margin:0 0 10px;font-weight:700;color:#166534;font-size:.9rem">🌐 Your Live Preview</p>
+          <a href="${netlifyUrl}" style="color:#1B2F4E;font-weight:700;font-size:1rem;word-break:break-all">${netlifyUrl}</a>
+          <p style="margin:8px 0 0;font-size:.8rem;color:#6B7280">Click to see your site live — this is a free preview link. You can connect your own domain anytime.</p>
+        </div>` : ''}
+        <div style="text-align:center;margin:24px 0">
+          <a href="${downloadLink}" style="background:#C9922B;color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem;display:inline-block">⬇ Download My Site Files</a>
         </div>
-        <p style="color:#6B7280;font-size:.82rem;line-height:1.6">This link expires in <strong>7 days</strong>. Once downloaded, unzip the folder and drag it onto <a href="https://app.netlify.com/drop" style="color:#1B2F4E">app.netlify.com/drop</a> to go live for free.</p>
+        <p style="color:#6B7280;font-size:.82rem;line-height:1.6">Your ZIP file contains all your website files. To go live on your own domain, unzip and drag to <a href="https://app.netlify.com/drop" style="color:#1B2F4E">app.netlify.com/drop</a>. Download link expires in 7 days.</p>
         <p style="color:#6B7280;font-size:.82rem;margin-top:20px">Questions? Just reply to this email — I'm happy to help.<br><strong>— Mel</strong></p>
       </div>
     </div>`
-  }).catch(e => console.error('[build-and-send email]', e.message));
+  }).catch(e => console.error('[send-to-customer email]', e.message));
 
   res.redirect(`/admin/orders/${order.id}?sent=1`);
 });

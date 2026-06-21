@@ -81,6 +81,7 @@ try { db.exec(`ALTER TABLE orders ADD COLUMN testimonials_json TEXT`); } catch(e
 try { db.exec(`ALTER TABLE orders ADD COLUMN formspree_id TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN calendly_link TEXT`); } catch(e) {}
 try { db.exec(`ALTER TABLE orders ADD COLUMN stock_requests TEXT`); } catch(e) {}
+try { db.exec(`ALTER TABLE orders ADD COLUMN netlify_url TEXT`); } catch(e) {}
 
 // ── COUPONS ───────────────────────────────────────────────────────────────────
 db.exec(`
