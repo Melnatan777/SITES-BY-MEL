@@ -1892,6 +1892,11 @@ app.post('/admin/messages/:id/delete', requireAuth, (req, res) => {
 });
 
 
+app.get('/google3e9f0e2c1e1d4922.html', (req, res) => {
+  res.type('text/html');
+  res.send('google-site-verification: google3e9f0e2c1e1d4922.html');
+});
+
 // ── SITEMAP & ROBOTS ──────────────────────────────────────────────────────────
 app.get('/sitemap.xml', (req, res) => {
   const products = db.prepare('SELECT slug FROM products WHERE active=1').all();
