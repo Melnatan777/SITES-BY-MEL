@@ -303,6 +303,7 @@ app.get('/upgrades', (req, res) => { trackView(req); res.render('upgrades'); });
 
 // Contact page + form
 app.get('/contact', (req, res) => { trackView(req); res.render('contact', { success: false, error: false }); });
+app.get('/agreement', (req, res) => { trackView(req); res.render('agreement'); });
 app.post('/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
   if (!name || !email || !message) return res.render('contact', { success: false, error: 'Please fill in all required fields.' });
