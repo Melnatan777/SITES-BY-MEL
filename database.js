@@ -471,7 +471,7 @@ upsertPkg(
   'custom_build',
   'Full Custom Build',
   'A website built entirely around your business',
-  'Starting at $1,500',
+  'Starting at $1,200',
   'Need something unique? A custom build means your site is designed from scratch — built around your brand, your customers, and your specific goals. No templates, no compromises.',
   JSON.stringify([
     '100% custom design — nobody else has your site',
