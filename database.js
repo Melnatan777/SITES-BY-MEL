@@ -384,6 +384,41 @@ TIME: 3-5 hours per client
 PROFIT: ~$320-360 after time cost at $75/hr`
 );
 
+// ── PACKAGE 2B: DOMAIN SETUP ──────────────────────────────────────────────────
+upsertPkg(
+  'domain_setup',
+  'Domain Setup',
+  'Your template live on your own domain',
+  '$499',
+  'Everything in the Template Package plus Mel purchases your domain, configures DNS, and gets your site fully live at www.yourbusiness.com. You walk away with a real website at your own address — no tech work required.',
+  JSON.stringify([
+    'Everything in the Template Package included',
+    'Mel purchases your domain name for you',
+    'DNS configured and live at yourdomain.com',
+    'Secure https — the padlock customers trust',
+    'Contact form tested and working',
+    'Mobile + desktop reviewed before delivery',
+    'You own the domain and files forever',
+  ]),
+  'Get Started', '/contact', 0, 2,
+  `MEL INTERNAL — DOMAIN SETUP ($499)
+─────────────────────────────────────
+WHAT MEL DOES:
+• Everything in Template Package (personalize all 5 pages)
+• Purchase domain in client's name (~$12-15/yr — included in $499 or charge separately year 2+)
+• Deploy to Netlify (free hosting forever)
+• Connect domain DNS to Netlify
+• Verify SSL (green padlock)
+• Test contact form end to end
+• Send client their domain login credentials
+
+WHAT CLIENT DOES:
+• Nothing technical — just fill out the intake form
+
+TIME: 2-3 hrs per client
+PROFIT: ~$460 after domain cost`
+);
+
 // ── PACKAGE 3: TEMPLATE LAUNCH ────────────────────────────────────────────────
 upsertPkg(
   'template_launch',
