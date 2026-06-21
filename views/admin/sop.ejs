@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build SOP — Sites by Mel Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .sop-section { background:#fff; border:1px solid #E5E0D8; border-radius:10px; margin-bottom:28px; overflow:hidden; }
+    .sop-head { padding:16px 24px; display:flex; align-items:center; gap:14px; }
+    .sop-head h2 { font-size:1.05rem; font-weight:800; color:#fff; margin:0; }
+    .sop-head .tier-price { background:rgba(255,255,255,.15); color:#fff; font-size:.8rem; font-weight:700; padding:4px 14px; border-radius:100px; margin-left:auto; white-space:nowrap; }
+    .sop-body { padding:0; }
+    .step-row { display:flex; gap:0; border-bottom:1px solid #F4F2EE; }
+    .step-row:last-child { border-bottom:none; }
+    .step-num-col { width:52px; min-width:52px; display:flex; align-items:flex-start; justify-content:center; padding:18px 0 18px; }
+    .step-bubble { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:800; color:#fff; flex-shrink:0; margin-top:2px; }
+    .step-content { padding:16px 24px 16px 0; flex:1; }
+    .step-title { font-size:.92rem; font-weight:700; color:#1B2F4E; margin-bottom:4px; }
+    .step-desc { font-size:.83rem; color:#6B7280; line-height:1.65; }
+    .step-desc code { background:#F4F2EE; padding:1px 6px; border-radius:4px; font-size:.82rem; color:#C9922B; font-family:monospace; }
+    .step-desc a { color:#C9922B; font-weight:600; }
+    .tip-box { background:#fdf6e3; border-left:3px solid #C9922B; padding:10px 14px; border-radius:0 6px 6px 0; font-size:.82rem; color:#7d5a00; line-height:1.6; margin-top:8px; }
+    .tip-box strong { color:#92540a; }
+    .warn-box { background:#fef2f2; border-left:3px solid #f87171; padding:10px 14px; border-radius:0 6px 6px 0; font-size:.82rem; color:#991b1b; line-height:1.6; margin-top:8px; }
+    .green-box { background:#f0fdf4; border-left:3px solid #4ade80; padding:10px 14px; border-radius:0 6px 6px 0; font-size:.82rem; color:#166534; line-height:1.6; margin-top:8px; }
+    .sop-tabs { display:flex; gap:8px; flex-wrap:wrap; padding:20px 24px 0; border-bottom:1px solid #F4F2EE; }
+    .sop-tab { padding:8px 18px; border-radius:6px 6px 0 0; font-size:.82rem; font-weight:700; cursor:pointer; border:none; background:#F4F2EE; color:#6B7280; }
+    .sop-tab.active { background:#1B2F4E; color:#fff; }
+    .sop-panel { display:none; }
+    .sop-panel.active { display:block; }
+    .checklist-item { display:flex; gap:12px; align-items:flex-start; padding:13px 24px; border-bottom:1px solid #F4F2EE; }
+    .checklist-item:last-child { border-bottom:none; }
+    .cb-wrap { margin-top:2px; flex-shrink:0; }
+    .cb-wrap input[type=checkbox] { width:17px; height:17px; accent-color:#C9922B; cursor:pointer; }
+    .cb-label { font-size:.88rem; color:#1B2F4E; line-height:1.55; }
+    .cb-sub { font-size:.78rem; color:#6B7280; margin-top:3px; line-height:1.5; }
+    .tag { display:inline-block; font-size:.68rem; font-weight:700; padding:2px 8px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+    .tag-you { background:#e8f0fe; color:#1a56a8; }
+    .tag-free { background:#e6f4ec; color:#1a7a3c; }
+    .tag-5min { background:#fdf6e3; color:#92540a; }
+  </style>
+</head>
+<body>
+<div class="admin-wrap">
+  <%- include('../partials/admin-nav', { activePage: 'sop' }) %>
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1>Build Checklist &amp; SOPs</h1>
+      <span style="font-size:.82rem;color:#6B7280">Step-by-step instructions for every tier — what YOU do for each order</span>
+    </div>
+    <div class="admin-content">
+
+      <!-- FORMSPREE HOW-TO -->
+      <div class="sop-section">
+        <div class="sop-head" style="background:#0f4c35">
+          <h2>How to Get a Formspree ID <span style="font-weight:400;opacity:.7">(do this for every order)</span></h2>
+          <span class="tier-price">~3 minutes · Free</span>
+        </div>
+        <div class="sop-body">
+          <div style="padding:16px 24px 8px">
+            <div class="tip-box"><strong>Why:</strong> Formspree makes the contact form on the delivered website actually send emails to the client. Without it, the form silently does nothing. You set this up using THEIR email so submissions go straight to them — they never have to touch Formspree themselves.</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num-col"><div class="step-bubble" style="background:#0f4c35">1</div></div>
+            <div class="step-content">
+              <div class="step-title">Go to formspree.io and sign up with THEIR email</div>
+              <div class="step-desc">Use the client's email address (the one they gave you on their order form) — not yours. This way form submissions land in their inbox, not yours.<br><a href="https://formspree.io/register" target="_blank">formspree.io/register →</a></div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num-col"><div class="step-bubble" style="background:#0f4c35">2</div></div>
+            <div class="step-content">
+              <div class="step-title">Click "New Form" and name it after their business</div>
+              <div class="step-desc">Example: <code>Sally's Cleaning Co — Contact</code>. The name is just for you to recognize it later. Click Create.</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num-col"><div class="step-bubble" style="background:#0f4c35">3</div></div>
+            <div class="step-content">
+              <div class="step-title">Copy the Form ID from the URL or the integration snippet</div>
+              <div class="step-desc">After creating the form, you'll see a page with code like:<br><br>
+              <code>&lt;form action="https://formspree.io/f/<strong>xabcdefg</strong>"&gt;</code><br><br>
+              The Form ID is that 8-character code after <code>/f/</code> — example: <code>xabcdefg</code>. Copy just that part, not the full URL.</div>
+              <div class="tip-box"><strong>Tip:</strong> You can also find it in the URL bar when viewing the form — it's the last segment: <code>formspree.io/forms/<strong>XXXXXXXX</strong></code></div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num-col"><div class="step-bubble" style="background:#0f4c35">4</div></div>
+            <div class="step-content">
+              <div class="step-title">Paste it into the template's contact form action</div>
+              <div class="step-desc">In the template HTML, find the contact form tag. It looks like:<br><br>
+              <code>&lt;form action="https://formspree.io/f/PLACEHOLDER"&gt;</code><br><br>
+              Replace <code>PLACEHOLDER</code> with their real ID. The personalize script does this automatically if the order has a <code>formspreeId</code> — but since we now handle it ourselves, just do it manually in the HTML before zipping.</div>
+              <div class="green-box">✓ Once you paste their ID in and deliver the ZIP, their contact form works immediately. Formspree sends a confirmation email to them the first time someone submits.</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num-col"><div class="step-bubble" style="background:#0f4c35">5</div></div>
+            <div class="step-content">
+              <div class="step-title">Tell the client to check their email and confirm Formspree</div>
+              <div class="step-desc">Formspree will send a verification email to their address. They just need to click "Confirm email" once — otherwise forms go to spam. Add this to your delivery email: <em>"Check your inbox for a verification email from Formspree and click confirm — this activates your contact form."</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 1 CHECKLIST -->
+      <div class="sop-section">
+        <div class="sop-head" style="background:#1B2F4E">
+          <h2>Tier 1 — Template Package Checklist</h2>
+          <span class="tier-price">$350</span>
+        </div>
+        <div class="sop-body">
+          <div style="padding:14px 24px 4px">
+            <div class="tip-box">Customer fills out personalize form → you get notified → follow these steps → deliver ZIP + Netlify link.</div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Open the order in admin and read ALL their answers carefully <span class="tag tag-5min">2 min</span></div><div class="cb-sub">Note their business name, email, phone, services, hours, and any "Let Mel handle this" fields.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Go to formspree.io → create account with THEIR email → create new form → copy the Form ID <span class="tag tag-free">Free</span> <span class="tag tag-5min">3 min</span></div><div class="cb-sub">See the Formspree instructions above. Save the ID — you'll paste it into the HTML.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Click "Build Personalized ZIP" on the order page <span class="tag tag-you">CMS button</span></div><div class="cb-sub">This auto-fills their business info into the template. Wait for the green confirmation.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Download the ZIP and open the contact page HTML</div><div class="cb-sub">Find the <code>&lt;form action="..."&gt;</code> tag and replace the placeholder with their real Formspree ID.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Review the site — check all 5 pages for typos, broken placeholders, and missing info <span class="tag tag-5min">10 min</span></div><div class="cb-sub">Look for any text still reading "BUSINESS_NAME" or "YOUR_PHONE". Check mobile view by resizing browser.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Drag the ZIP folder to Netlify Drop and copy the live preview URL <span class="tag tag-free">Free</span> <span class="tag tag-5min">2 min</span></div><div class="cb-sub"><a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a> — drag and drop the unzipped folder. Copy the generated URL (looks like random-words-123.netlify.app).</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Paste the Netlify URL into the order and click "Send to Customer" <span class="tag tag-you">CMS button</span></div><div class="cb-sub">This emails the customer their preview link + ZIP download. They also get a reminder to confirm their Formspree email.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Mark order as Delivered in admin <span class="tag tag-you">CMS</span></div><div class="cb-sub">Done! One revision round is included if they email back with changes.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 2 CHECKLIST -->
+      <div class="sop-section">
+        <div class="sop-head" style="background:#C9922B">
+          <h2>Tier 2 — Domain Setup Checklist</h2>
+          <span class="tier-price">$499</span>
+        </div>
+        <div class="sop-body">
+          <div style="padding:14px 24px 4px">
+            <div class="tip-box">Everything in Tier 1 PLUS you buy their domain and connect it. Collect payment before buying the domain.</div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Complete all Tier 1 steps first (build ZIP, Formspree, review, Netlify preview)</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Confirm payment of $499 has cleared in Stripe before buying anything</div><div class="cb-sub">Check your Stripe dashboard. Never spend money on a domain until payment is confirmed.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Buy their domain at Namecheap or Porkbun <span class="tag tag-5min">~$10–15/yr out of pocket</span></div><div class="cb-sub"><a href="https://www.namecheap.com" target="_blank">namecheap.com</a> or <a href="https://porkbun.com" target="_blank">porkbun.com</a> (cheaper). Use their business name. Example: <code>sallyscleaningco.com</code>. Buy with YOUR card — it's a business expense you're billing for.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">In Netlify — go to your site settings → Domain management → Add custom domain</div><div class="cb-sub">Type in the domain you just bought. Netlify will show you the DNS records you need to add.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Log into Namecheap/Porkbun → DNS settings → add the records Netlify gave you</div><div class="cb-sub">Usually 2 records: an A record pointing to Netlify's IP, and a CNAME for www. Copy them exactly. Takes 5 minutes to add, up to 24 hours to propagate.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Wait for DNS to propagate — check at <a href="https://dnschecker.org" target="_blank">dnschecker.org</a></div><div class="cb-sub">Type their domain in. When you see green checkmarks globally, the domain is live. Usually 15 min–2 hours.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Confirm SSL is active in Netlify (should say "Certificate active") and test the live URL</div><div class="cb-sub">Visit their domain in a browser. Should load with a green padlock. If it shows "Not secure" wait another hour.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Email the client their live domain URL and domain login credentials</div><div class="cb-sub">Send them: the live URL, the domain registrar login (email + password you used), and Netlify login if they want access. Document this in the order notes.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 3 CHECKLIST -->
+      <div class="sop-section">
+        <div class="sop-head" style="background:#1a5276">
+          <h2>Tier 3 — Template Launch Checklist</h2>
+          <span class="tier-price">$797</span>
+        </div>
+        <div class="sop-body">
+          <div style="padding:14px 24px 4px">
+            <div class="tip-box">Everything in Tier 1 + 2 PLUS email setup. Most hands-on tier. Collect full payment or 50% deposit before starting.</div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Complete all Tier 1 and Tier 2 steps</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Set up their professional email address <span class="tag tag-5min">~15 min</span></div><div class="cb-sub">Options: (1) <strong>Cloudflare Email Routing</strong> — free, forwards name@theirdomain.com to their Gmail. Go to Cloudflare → their domain → Email → Email Routing → Add address. (2) <strong>Google Workspace</strong> — $6/mo, they get a real Gmail with their domain. Recommend Cloudflare routing for budget clients.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Test the email forwarding works — send a test email to their business address</div><div class="cb-sub">Send an email to <code>hello@theirdomain.com</code> (or whatever you set up). Confirm it arrives in their personal inbox.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Update the contact page in their website to use the new business email</div><div class="cb-sub">Replace any placeholder or personal email in the template with their new business address.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Do a final walkthrough of all 5 pages on both desktop and mobile</div><div class="cb-sub">Resize your browser to 375px wide for mobile. Check nav menu, images load, contact form submits, phone number is clickable.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Send the client a "your site is live" email with everything they need</div><div class="cb-sub">Include: live URL, domain registrar login, Netlify login, business email address + how it works, Formspree note (they'll get a confirm email), and your support email for questions.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIER 4 CHECKLIST -->
+      <div class="sop-section">
+        <div class="sop-head" style="background:#4a235a">
+          <h2>Tier 4 — Full Custom Build Checklist</h2>
+          <span class="tier-price">$1,200+</span>
+        </div>
+        <div class="sop-body">
+          <div style="padding:14px 24px 4px">
+            <div class="warn-box"><strong>Collect 50% deposit before starting.</strong> This tier involves significant hours. Never begin custom work without a signed agreement and deposit in hand.</div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Discovery call or detailed intake — understand exactly what they need</div><div class="cb-sub">What pages, what features (contact form, booking, store, blog, gallery?), what colors/branding, do they have a logo, what's the deadline.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Send them the agreement and collect 50% deposit via Stripe invoice</div><div class="cb-sub">Don't start until both are confirmed. The agreement protects you on scope creep.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Build the site locally with Node.js + Express + EJS + SQLite (use Claude to help)</div><div class="cb-sub">Start with the sitesbymel.com codebase as a reference. Ask Claude to scaffold each section. Push code to a new GitHub repo named after their business.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Deploy to Railway — create new project, connect GitHub repo, add DATABASE_PATH env variable</div><div class="cb-sub">Go to railway.app → New Project → Deploy from GitHub. Add env var: <code>DATABASE_PATH=/data/site.sqlite</code>. Add a Volume at /data so the database survives deploys.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Point their domain to Railway (not Netlify for custom builds)</div><div class="cb-sub">In Railway: Settings → Networking → Add custom domain. Copy the CNAME record Railway gives you. Add it in their domain registrar's DNS settings.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Set up Resend for email notifications on their site</div><div class="cb-sub">Go to resend.com → Add domain → follow DNS verification steps. Add <code>RESEND_API_KEY</code> env variable in Railway. Free tier handles most small businesses.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Send preview link, collect feedback, do revision round</div><div class="cb-sub">One revision round is included. Scope additional requests and quote them separately before doing them.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Collect remaining 50% balance before final handoff</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Hand off credentials: Railway login, GitHub repo, domain registrar, Resend, admin panel password</div><div class="cb-sub">Document everything in a "Your Website Guide" email. Include how to log into their admin panel, what each login is for, and your support email.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COPYWRITING ADD-ON -->
+      <div class="sop-section">
+        <div class="sop-head" style="background:#1a7a3c">
+          <h2>Copy Writing Add-On <span style="font-weight:400;opacity:.8">— what to do</span></h2>
+          <span class="tier-price">+$99</span>
+        </div>
+        <div class="sop-body">
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Read their order form answers and note their tone, niche, and any specific words they used</div><div class="cb-sub">Their "About" blurb or notes often contain the best copy seeds. Match their voice.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Use Claude to write: About Us section, 3 service descriptions, homepage tagline, meta description</div><div class="cb-sub">Prompt Claude: "Write an About Us for [business name], a [niche] in [city]. Owner is [name]. Tone: [friendly/professional]. Key details: [their info]."</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Read the copy out loud — does it sound like a real local business owner, not a corporate robot?</div><div class="cb-sub">Edit anything that sounds too generic. Add specific details (years in business, city name, specialty) to make it feel personal.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Drop the copy into the template and build the ZIP as normal</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
