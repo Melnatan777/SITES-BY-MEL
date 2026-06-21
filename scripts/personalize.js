@@ -306,7 +306,150 @@ function personalizeFitLife(html, data) {
   return out;
 }
 
-function buildPersonalizedZip(slug, templateName, niche, data, outputPath) {
+// Maps each template slug → photo field name → placeholder Unsplash URL used in that template's HTML.
+// When a customer uploads a photo, we look up this map to find which URL to replace in the HTML.
+// Only includes confident mappings. The same URL may appear across pages — we replace all occurrences.
+const PHOTO_MAP = {
+  'service-pro': {
+    photoHero:    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80',
+    photoTeam:    'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80',
+    photoBefore1: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80',
+    photoAfter1:  'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=800&q=80',
+    photoBefore2: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80',
+    photoAfter2:  'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&q=80',
+  },
+  'table-ready': {
+    photoHero:     'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80',
+    photoFood1:    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
+    photoFood2:    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80',
+    photoFood3:    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80',
+    photoInterior: 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=800&q=80',
+    photoChef:     'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80',
+  },
+  'key-ready': {
+    photoHeadshot:    'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80',
+    photoListing1:    'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80',
+    photoListing2:    'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80',
+    photoListing3:    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',
+    photoNeighborhood:'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80',
+  },
+  'shop-front': {
+    photoHero:     'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80',
+    photoInterior: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80',
+    photoProduct1: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80',
+    photoProduct2: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80',
+    photoProduct3: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&q=80',
+    photoOwner:    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
+  },
+  'voice-first': {
+    photoHero:     'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1600&q=80',
+    photoHeadshot: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=800&q=80',
+    photoStudio:   'https://images.unsplash.com/photo-1485579149621-3123dd979885?w=800&q=80',
+    photoSpeaking: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80',
+  },
+  'gather-here': {
+    photoHero:   'https://images.unsplash.com/photo-1519677584237-752f8853252e?w=1600&q=80',
+    photoTeam:   'https://images.unsplash.com/photo-1438032005730-c779502df39b?w=800&q=80',
+    photoBar:    'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
+    photoCrowd:  'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80',
+    photoFood:   'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80',
+  },
+  'pet-shop': {
+    photoHero:       'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1600&q=80',
+    photoGrooming:   'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=800&q=80',
+    photoHappyPet1:  'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800&q=80',
+    photoHappyPet2:  'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=800&q=80',
+    photoStore:      'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80',
+    photoTeam:       'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=800&q=80',
+  },
+  'beauty-studio': {
+    photoHero:     'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1600&q=80',
+    photoHeadshot: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=800&q=80',
+    photoWork1:    'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80',
+    photoWork2:    'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&q=80',
+    photoWork3:    'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80',
+    photoInterior: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&q=80',
+  },
+  'lens-and-light': {
+    photoHero:       'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1600&q=80',
+    photoPortfolio1: 'https://images.unsplash.com/photo-1554080353-a576cf803bda?w=800&q=80',
+    photoPortfolio2: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=80',
+    photoPortfolio3: 'https://images.unsplash.com/photo-1542038374-668d2e0e2ded?w=800&q=80',
+    photoPortfolio4: 'https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?w=800&q=80',
+    photoPortfolio5: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80',
+    photoPortfolio6: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
+    photoHeadshot:   'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=80',
+  },
+  'green-cut': {
+    photoHero:      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=80',
+    photoBefore:    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+    photoAfter:     'https://images.unsplash.com/photo-1599598425947-5202edd56fdc?w=800&q=80',
+    photoTeam:      'https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=800&q=80',
+    photoEquipment: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80',
+  },
+  'wellness-pro': {
+    photoHero:      'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80',
+    photoHeadshot:  'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80',
+    photoInterior:  'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&q=80',
+    photoTeam:      'https://images.unsplash.com/photo-1588776814546-1ffbb2b6f1f0?w=800&q=80',
+  },
+  'fit-life': {
+    photoHero:      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80',
+    photoClass:     'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80&fit=crop',
+    photoNutrition: 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=80&fit=crop',
+    photoAboutMain: 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=800&q=80&fit=crop&crop=top',
+    photoBA1:       'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80&fit=crop',
+    photoBA2:       'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80&fit=crop',
+    photoBA3:       'https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=600&q=80&fit=crop',
+    photoGallery1:  'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80&fit=crop',
+    photoGallery2:  'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600&q=80&fit=crop',
+    photoGallery3:  'https://images.unsplash.com/photo-1581009137042-c552e485697a?w=600&q=80&fit=crop',
+    photoGallery4:  'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80&fit=crop',
+    photoHIIT:      'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=900&q=80&fit=crop',
+    photoStrength:  'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80&fit=crop',
+    photoTrainer1:  'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80&fit=crop',
+    photoTrainer2:  'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=80&fit=crop',
+    photoTrainer3:  'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80&fit=crop',
+  },
+  'sparkle-clean': {
+    photoHero:      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80',
+    photoTeam:      'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=800&q=80',
+    photoKitchen:   'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80',
+    photoBathroom:  'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800&q=80',
+    photoSupplies:  'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=800&q=80',
+  },
+  'bright-minds': {
+    photoHero:        'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&q=80',
+    photoDirector:    'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80',
+    photoTutorStudent:'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80',
+    photoStudySpace:  'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80',
+  },
+  'forever-events': {
+    photoHero:      'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1600&q=80',
+    photoCeremony:  'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
+    photoReception: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80',
+    photoPortrait:  'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80',
+    photoEvent2:    'https://images.unsplash.com/photo-1507504031003-b417219a0fde?w=800&q=80',
+    photoFloral:    'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=800&q=80',
+  },
+  'auto-shine': {
+    photoHero:      'https://images.unsplash.com/photo-1507136566006-cfc505b114fc?w=1600&q=80',
+    photoInterior:  'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80',
+    photoBA1Before: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80',
+    photoBA1After:  'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80',
+    photoTeam:      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
+  },
+  'detail-pro': {
+    photoHero:      'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1600&q=80',
+    photoTeam:      'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80',
+    photoBABefore:  'https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=800&q=80',
+    photoBAAfter:   'https://images.unsplash.com/photo-1507136566006-cfc505b114fc?w=800&q=80',
+    photoCeramic:   'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+    photoInterior:  'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80',
+  },
+};
+
+function buildPersonalizedZip(slug, templateName, niche, data, outputPath, photos = []) {
   return new Promise((resolve, reject) => {
     const templateDir = path.join(__dirname, '..', 'public', 'templates', slug);
     const indexPath = path.join(templateDir, 'index.html');
@@ -317,6 +460,36 @@ function buildPersonalizedZip(slug, templateName, niche, data, outputPath) {
     const primaryMatch = indexHtml.match(/--primary\s*:\s*(#[0-9a-fA-F]{3,6})/);
     const accentMatch  = indexHtml.match(/--accent\s*:\s*(#[0-9a-fA-F]{3,6})/);
     const instructions = buildInstructions(templateName, slug, niche, primaryMatch && primaryMatch[1], accentMatch && accentMatch[1]);
+
+    // Build photo replacement map: { unsplashUrl -> 'images/fieldName.ext' }
+    const urlReplacements = {};
+    const photoEntries = []; // { fieldName, ext, diskPath }
+    const slugPhotoMap = PHOTO_MAP[slug] || {};
+
+    for (const photo of photos) {
+      if (!photo.field_name || !photo.path) continue;
+      if (!fs.existsSync(photo.path)) continue; // skip missing uploads
+
+      const ext = path.extname(photo.original || photo.filename || '').toLowerCase() || '.jpg';
+      const destName = `images/${photo.field_name}${ext}`;
+      photoEntries.push({ fieldName: photo.field_name, ext, diskPath: photo.path, destName });
+
+      const placeholderUrl = slugPhotoMap[photo.field_name];
+      if (placeholderUrl) {
+        // The same photo ID appears at multiple query-string sizes in the HTML.
+        // Extract just the photo ID portion so we can replace all size variants.
+        urlReplacements[placeholderUrl] = destName;
+      }
+    }
+
+    function applyPhotoReplacements(html) {
+      let out = html;
+      for (const [unsplashUrl, destName] of Object.entries(urlReplacements)) {
+        // Replace the exact URL as-is (covers all occurrences across the file)
+        out = out.split(unsplashUrl).join(destName);
+      }
+      return out;
+    }
 
     const output = fs.createWriteStream(outputPath);
     const archive = archiver('zip', { zlib: { level: 9 } });
@@ -334,11 +507,17 @@ function buildPersonalizedZip(slug, templateName, niche, data, outputPath) {
           archive.directory(filePath, `${slug}/${entry.name}`);
         } else if (entry.name.endsWith('.html')) {
           const raw = fs.readFileSync(filePath, 'utf8');
-          archive.append(personalizeHtml(slug, raw, data), { name: `${slug}/${entry.name}` });
+          const personalized = personalizeHtml(slug, raw, data);
+          archive.append(applyPhotoReplacements(personalized), { name: `${slug}/${entry.name}` });
         } else {
           archive.file(filePath, { name: `${slug}/${entry.name}` });
         }
       }
+    }
+
+    // Add customer photos to the ZIP under {slug}/images/
+    for (const p of photoEntries) {
+      archive.file(p.diskPath, { name: `${slug}/${p.destName}` });
     }
 
     // Add instructions

@@ -51,6 +51,22 @@
     </div>
     <div class="admin-content">
 
+      <!-- PHOTO AUTO-INSERT NOTE -->
+      <div style="background:#fef2f2;border:2px solid #fca5a5;border-radius:10px;padding:20px 24px;margin-bottom:24px">
+        <p style="font-size:.95rem;font-weight:800;color:#991b1b;margin-bottom:8px">⚠ If Customer Photos Did NOT Auto-Insert into the ZIP</p>
+        <p style="font-size:.83rem;color:#7f1d1d;line-height:1.6;margin-bottom:12px">The build system tries to automatically place customer-uploaded photos into the correct spots in the template. If it fails (photo missing, upload error, or an unmapped slot), here's how to do it manually:</p>
+        <ol style="font-size:.83rem;color:#7f1d1d;line-height:1.9;margin:0 0 0 18px;padding:0">
+          <li>Go to the order in admin — scroll to the <strong>Customer Photos</strong> section and download each photo. Note the field name shown (e.g. <em>photoHero</em>, <em>photoTeam</em>).</li>
+          <li>Unzip the delivered ZIP file on your computer.</li>
+          <li>Open the template folder — find the <code style="background:#fecaca;padding:1px 5px;border-radius:3px">images/</code> subfolder (or create one if it doesn't exist).</li>
+          <li>Rename the customer's photo to match the slot — e.g. <code style="background:#fecaca;padding:1px 5px;border-radius:3px">photoHero.jpg</code> — and drop it into the images folder.</li>
+          <li>Open the HTML file where that photo should appear (usually <code style="background:#fecaca;padding:1px 5px;border-radius:3px">index.html</code> for hero, <code style="background:#fecaca;padding:1px 5px;border-radius:3px">gallery.html</code> for gallery photos, <code style="background:#fecaca;padding:1px 5px;border-radius:3px">about.html</code> for headshots).</li>
+          <li>Find the Unsplash URL (looks like <code style="background:#fecaca;padding:1px 5px;border-radius:3px">https://images.unsplash.com/photo-XXXXXXXXX...</code>) for that slot and replace it with <code style="background:#fecaca;padding:1px 5px;border-radius:3px">images/photoHero.jpg</code> (or whatever the filename is).</li>
+          <li>Re-zip the folder and deliver as normal.</li>
+        </ol>
+        <p style="font-size:.78rem;color:#991b1b;margin-top:10px;font-style:italic">Tip: The order detail page shows which photos the customer uploaded and their field names. Use that as your reference map.</p>
+      </div>
+
       <!-- FORMSPREE HOW-TO -->
       <div class="sop-section">
         <div class="sop-head" style="background:#0f4c35">

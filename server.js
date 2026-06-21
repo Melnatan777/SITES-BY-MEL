@@ -1182,8 +1182,10 @@ app.post('/admin/orders/:id/build-and-send', requireAuth, async (req, res) => {
   const zipPath = path.join(getBuiltDir(), fileName);
   const niche = (PLACEHOLDERS[product.slug] || {}).niche || product.category;
 
+  const orderPhotos = db.prepare('SELECT * FROM order_photos WHERE order_id=? AND deleted=0').all(order.id);
+
   try {
-    await buildPersonalizedZip(product.slug, product.name, niche, data, zipPath);
+    await buildPersonalizedZip(product.slug, product.name, niche, data, zipPath, orderPhotos);
   } catch(e) {
     console.error('[build]', e.message);
     return res.redirect(`/admin/orders/${order.id}?error=build`);
