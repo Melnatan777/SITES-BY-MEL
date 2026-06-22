@@ -1573,15 +1573,15 @@ if (window.location.protocol === 'file:') {
     '</style>';
 
   var html =
-    '<button id="mel-bot-bubble" title="Get help">&#x1F916;</button>' +
+    '<button id="mel-bot-bubble" title="Get help"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><line x1="12" y1="7" x2="12" y2="11"/><line x1="8" y1="15" x2="8" y2="15" stroke-width="3"/><line x1="16" y1="15" x2="16" y2="15" stroke-width="3"/></svg></button>' +
     '<div id="mel-bot-window">' +
       '<div id="mel-bot-header">' +
         '<div><span>Mel's Setup Assistant</span><small>I'll walk you through every step</small></div>' +
-        '<button id="mel-bot-close" style="margin-left:auto;background:none;border:none;color:#fff;font-size:1.1rem;cursor:pointer">&#x2715;</button>' +
+        '<button id="mel-bot-close" style="margin-left:auto;background:none;border:none;color:#fff;font-size:1.1rem;cursor:pointer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
       '</div>' +
       '<div id="mel-bot-messages"></div>' +
       '<div id="mel-bot-choices"></div>' +
-      '<div id="mel-bot-restart">&#x21A9; Start over</div>' +
+      '<div id="mel-bot-restart"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg> Start over</div>' +
     '</div>';
 
   var el = document.createElement('div');
@@ -1590,7 +1590,7 @@ if (window.location.protocol === 'file:') {
 
   var BOT = {
     welcome: {
-      msg: "Hi! &#x1F44B; I'm Mel's setup assistant and I'm going to walk you through every single step.<br><br><b>Quick tip before we start:</b> Keep this browser window open while you work. Open your page in <b>Notepad</b> to edit, and keep the <b>browser</b> open to preview and get help from me. I'll be right here!<br><br>What do you want to do first?",
+      msg: "Hi! I'm Mel's setup assistant and I'm going to walk you through every single step.<br><br><b>Quick tip before we start:</b> Keep this browser window open while you work. Open your page in <b>Notepad</b> to edit, and keep the <b>browser</b> open to preview and get help from me. I'll be right here!<br><br>What do you want to do first?",
       choices: [
         { label: "✏️ Edit my business name & text", next: "edit_which_page" },
         { label: "📸 Swap out the photos", next: "photos_intro" },
