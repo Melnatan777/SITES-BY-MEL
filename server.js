@@ -409,7 +409,7 @@ app.post('/quote/full', async (req, res) => {
 });
 
 // ── STRIPE CHECKOUT ───────────────────────────────────────────────────────────
-const stripeKey = process.env.STRIPE_TEST_KEY || process.env.STRIPE_SECRET_KEY;
+const stripeKey = process.env.STRIPE_SECRET_KEY || process.env.STRIPE_TEST_KEY;
 const stripe = stripeKey ? require('stripe')(stripeKey) : null;
 console.log('[stripe] key starts:', stripeKey ? stripeKey.slice(0,12) : 'MISSING');
 
