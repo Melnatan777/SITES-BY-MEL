@@ -51,13 +51,36 @@ buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e
   } catch(e) { console.error('[seed] detail-pro error:', e.message); }
 })();
 
+// Seed Chief Cornerstone — SaaS template with full CMS
+(function seedChiefCornerstone() {
+  try {
+    const exists = db.prepare('SELECT id FROM products WHERE slug=?').get('chief-cornerstone');
+    if (!exists) {
+      const maxOrder = db.prepare('SELECT MAX(sort_order) as m FROM products').get().m || 0;
+      db.prepare(`INSERT INTO products (name, slug, category, description, price, thumbnail, preview_url, active, sort_order)
+        VALUES (?,?,?,?,?,?,?,1,?)`)
+        .run(
+          'Chief Cornerstone — Landscaping + Full CMS',
+          'chief-cornerstone',
+          'Landscaping & Lawn Care',
+          'The most complete landscaping business template available. Stunning 5-page website with sliding hero photos PLUS a full business CMS: client manager, job scheduler, employee tracker, expense dashboard, weather alerts by ZIP, soil data by area, gallery manager, and quote request inbox. Your name and photos replace ours. $99/month includes hosting and support.',
+          9900,
+          'chief-cornerstone.jpg',
+          '/preview/chief-cornerstone/',
+          maxOrder + 1
+        );
+      console.log('[seed] Added chief-cornerstone product');
+    }
+  } catch(e) { console.error('[seed] chief-cornerstone error:', e.message); }
+})();
+
 // Ensure ALL templates have preview_url set
 (function fixPreviewUrls() {
   const slugs = [
     'service-pro','table-ready','key-ready','shop-front','voice-first',
     'gather-here','pet-shop','beauty-studio','lens-and-light','green-cut',
     'wellness-pro','fit-life','sparkle-clean','bright-minds','forever-events',
-    'auto-shine','detail-pro'
+    'auto-shine','detail-pro','chief-cornerstone'
   ];
   try {
     for (const slug of slugs) {
@@ -95,9 +118,10 @@ buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e
     { slug: 'fit-life',       thumbnail: 'fit-life.jpg' },
     { slug: 'sparkle-clean',  thumbnail: 'sparkle-clean.jpg' },
     { slug: 'bright-minds',   thumbnail: 'bright-minds.jpg' },
-    { slug: 'forever-events', thumbnail: 'forever-events.jpg' },
-    { slug: 'auto-shine',     thumbnail: 'auto-shine.jpg' },
-    { slug: 'detail-pro',     thumbnail: 'detail-pro.jpg' },
+    { slug: 'forever-events',      thumbnail: 'forever-events.jpg' },
+    { slug: 'auto-shine',          thumbnail: 'auto-shine.jpg' },
+    { slug: 'detail-pro',          thumbnail: 'detail-pro.jpg' },
+    { slug: 'chief-cornerstone',   thumbnail: 'chief-cornerstone.jpg' },
   ];
   try {
     for (const t of thumbs) {
@@ -255,6 +279,9 @@ app.get('/templates/:slug', (req, res) => {
   trackView(req);
   const product = db.prepare('SELECT * FROM products WHERE slug=?').get(req.params.slug);
   if (!product) return res.redirect('/templates');
+  if (req.params.slug === 'chief-cornerstone') {
+    return res.render('template-detail-chief-cornerstone', { product, query: req.query });
+  }
   res.render('template-detail', { product, query: req.query });
 });
 
