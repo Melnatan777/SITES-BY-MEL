@@ -281,6 +281,94 @@
       </div>
     </div>
 
+    <!-- CUSTOM ADD-ONS CHECKLIST -->
+    <div style="background:#1B2F4E;border-radius:10px;padding:20px 24px;margin-bottom:24px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <span style="color:rgba(255,255,255,.5);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase">🔧 Custom Add-Ons — Per Client Quote</span>
+        <span style="color:rgba(255,255,255,.25);font-size:.7rem">Check boxes to note what a client has requested — save via Stripe later</span>
+      </div>
+      <p style="color:rgba(255,255,255,.3);font-size:.75rem;margin-bottom:16px">These are not included in the standard $99/mo plan. Each is custom-quoted and billed separately. Check the box when a client requests it, then create a Stripe payment link for the amount.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px" id="addonGrid">
+
+        <label style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;cursor:pointer;display:block;transition:background .15s" onclick="toggleAddon(this)">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <input type="checkbox" style="margin-top:2px;accent-color:#8BC34A;width:15px;height:15px;flex-shrink:0">
+            <div>
+              <div style="color:white;font-size:.85rem;font-weight:700;margin-bottom:3px">📍 Route Density & Map Profitability</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.75rem;line-height:1.5">Which ZIP codes are most profitable after travel time? Requires Google Maps API integration.</div>
+              <div style="color:#D4A227;font-size:.72rem;font-weight:700;margin-top:6px">~$30–50/mo add-on · Custom Quote</div>
+            </div>
+          </div>
+        </label>
+
+        <label style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;cursor:pointer;display:block;transition:background .15s" onclick="toggleAddon(this)">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <input type="checkbox" style="margin-top:2px;accent-color:#8BC34A;width:15px;height:15px;flex-shrink:0">
+            <div>
+              <div style="color:white;font-size:.85rem;font-weight:700;margin-bottom:3px">🚜 Equipment ROI Tracker</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.75rem;line-height:1.5">Fuel, maintenance, and depreciation allocated per job type. Know exactly what each machine earns.</div>
+              <div style="color:#D4A227;font-size:.72rem;font-weight:700;margin-top:6px">$150–300 setup · Custom Quote</div>
+            </div>
+          </div>
+        </label>
+
+        <label style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;cursor:pointer;display:block;transition:background .15s" onclick="toggleAddon(this)">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <input type="checkbox" style="margin-top:2px;accent-color:#8BC34A;width:15px;height:15px;flex-shrink:0">
+            <div>
+              <div style="color:white;font-size:.85rem;font-weight:700;margin-bottom:3px">📊 QuickBooks Sync</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.75rem;line-height:1.5">Two-way sync with QuickBooks Online. Invoices, expenses, payroll — no double entry.</div>
+              <div style="color:#D4A227;font-size:.72rem;font-weight:700;margin-top:6px">$500 setup + $25/mo</div>
+            </div>
+          </div>
+        </label>
+
+        <label style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;cursor:pointer;display:block;transition:background .15s" onclick="toggleAddon(this)">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <input type="checkbox" style="margin-top:2px;accent-color:#8BC34A;width:15px;height:15px;flex-shrink:0">
+            <div>
+              <div style="color:white;font-size:.85rem;font-weight:700;margin-bottom:3px">🔗 Jobber / ServiceTitan Sync</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.75rem;line-height:1.5">Client already uses field service software? Pull that data into this CMS dashboard.</div>
+              <div style="color:#D4A227;font-size:.72rem;font-weight:700;margin-top:6px">$500 setup + $25/mo</div>
+            </div>
+          </div>
+        </label>
+
+        <label style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;cursor:pointer;display:block;transition:background .15s" onclick="toggleAddon(this)">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <input type="checkbox" style="margin-top:2px;accent-color:#8BC34A;width:15px;height:15px;flex-shrink:0">
+            <div>
+              <div style="color:white;font-size:.85rem;font-weight:700;margin-bottom:3px">📱 Lead Channel Conversion Tracking</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.75rem;line-height:1.5">Track Google Ads, yard signs, referrals separately. Know true cost per acquisition per channel.</div>
+              <div style="color:#D4A227;font-size:.72rem;font-weight:700;margin-top:6px">$150 setup (one-time)</div>
+            </div>
+          </div>
+        </label>
+
+        <label style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;cursor:pointer;display:block;transition:background .15s" onclick="toggleAddon(this)">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <input type="checkbox" style="margin-top:2px;accent-color:#8BC34A;width:15px;height:15px;flex-shrink:0">
+            <div>
+              <div style="color:white;font-size:.85rem;font-weight:700;margin-bottom:3px">⚡ Response Time Automation</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.75rem;line-height:1.5">Auto-log time from lead inquiry to first response. Responding in 5 min = 21x more likely to close.</div>
+              <div style="color:#D4A227;font-size:.72rem;font-weight:700;margin-top:6px">Custom Quote</div>
+            </div>
+          </div>
+        </label>
+
+      </div>
+      <div style="margin-top:12px;padding:10px 14px;background:rgba(139,195,74,.08);border-radius:8px;font-size:.75rem;color:rgba(139,195,74,.7)">
+        ✓ Checkboxes save in your browser. When a client requests an add-on, check it, create the Stripe link for the quoted amount, and add it to your client notes.
+      </div>
+    </div>
+    <script>
+    function toggleAddon(label) {
+      const checked = label.querySelector('input[type=checkbox]').checked;
+      label.style.background = checked ? 'rgba(139,195,74,.12)' : 'rgba(255,255,255,.04)';
+      label.style.borderColor = checked ? 'rgba(139,195,74,.4)' : 'rgba(255,255,255,.08)';
+    }
+    </script>
+
     <!-- PRICING QUICK REFERENCE -->
     <div style="background:#1B2F4E;border-radius:10px;padding:20px 24px;margin-bottom:24px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
