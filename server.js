@@ -66,10 +66,16 @@ buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e
           '17-page landscaping website + full business CMS. Client manager, job scheduler, P&L financials, weather alerts by ZIP, soil data, analytics & maps, customer & employee inboxes, gallery, and quote requests. Data Analytics add-on available. $797 setup + $99/month hosting & support.',
           9900,
           'chief-cornerstone.jpg',
-          '/preview/chief-cornerstone/',
+          'https://chief-cornerstone-production.up.railway.app',
           maxOrder + 1
         );
       console.log('[seed] Added chief-cornerstone product');
+    } else {
+      db.prepare("UPDATE products SET preview_url=?, description=?, name=? WHERE slug='chief-cornerstone'")
+        .run('https://chief-cornerstone-production.up.railway.app',
+             '17-page landscaping website + full business CMS. Client manager, job scheduler, P&L financials, weather alerts by ZIP, soil data, analytics & maps, customer & employee inboxes, gallery, and quote requests. Data Analytics add-on available. $797 setup + $99/month hosting & support.',
+             'Chief Cornerstone — Landscaping + Full CMS');
+      console.log('[seed] Updated chief-cornerstone preview URL');
     }
   } catch(e) { console.error('[seed] chief-cornerstone error:', e.message); }
 })();
