@@ -297,6 +297,193 @@
         </div>
       </div>
 
+      <!-- CHIEF CORNERSTONE CMS DEPLOYMENT -->
+      <div class="sop-section">
+        <div class="sop-head" style="background:#1B3A1B">
+          <h2>Chief Cornerstone CMS — New Client Deployment</h2>
+          <span class="tier-price">$797 setup + $99/mo</span>
+        </div>
+        <div class="sop-body">
+          <div style="padding:14px 24px 8px">
+            <div class="tip-box"><strong>Important:</strong> Every client gets their OWN GitHub repo and their OWN Railway project. Their data never touches anyone else's. The demo site (chief-cornerstone-production.up.railway.app) is YOUR sales tool only — never hand that URL to a paying client as their site.</div>
+          </div>
+
+          <!-- PHASE 1: INTAKE -->
+          <div style="padding:14px 24px 4px;border-top:2px solid #f0f4f0;margin-top:4px">
+            <div style="font-size:.72rem;font-weight:800;color:#1B3A1B;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Phase 1 — Collect This From the Client Before You Start</div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Business name (exactly as they want it on the website)</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Business phone number and email address</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Business address and primary service ZIP code</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">List of services they offer (to match to the 6 service pages)</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">5+ hero photos for the slider (landscape format, high quality — 1920×1080 minimum)</div><div class="cb-sub">Tell them: "Send me at least 5 of your best job photos. Horizontal orientation, no blurry or dark shots. These go on your homepage slider."</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Brand colors if they have them (or pick forest green + gold as default)</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Logo file (PNG with transparent background preferred)</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Confirm $797 setup fee payment has cleared in Stripe before starting</div><div class="cb-sub">Never begin deployment work without payment confirmed. Check Stripe dashboard.</div></div>
+          </div>
+
+          <!-- PHASE 2: GITHUB -->
+          <div style="padding:14px 24px 4px;border-top:2px solid #f0f4f0;margin-top:4px">
+            <div style="font-size:.72rem;font-weight:800;color:#1B3A1B;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Phase 2 — Clone the Repo on GitHub <span class="tag tag-5min">5 min</span></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Go to github.com → Melnatan777/CHIEF-CORNERSTONE</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Click the green "Use this template" button → "Create a new repository"</div><div class="cb-sub">Name it after their business. Example: <code>CHIEF-CORNERSTONE-SMITHLANDSCAPING</code>. Set to Private. Click Create.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Go to Settings → Pages or confirm the repo is private — their code should not be public</div></div>
+          </div>
+
+          <!-- PHASE 3: RAILWAY -->
+          <div style="padding:14px 24px 4px;border-top:2px solid #f0f4f0;margin-top:4px">
+            <div style="font-size:.72rem;font-weight:800;color:#1B3A1B;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Phase 3 — Deploy on Railway <span class="tag tag-5min">10 min</span></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Go to railway.app → New Project → Deploy from GitHub repo</div><div class="cb-sub">Select their new repo (e.g. CHIEF-CORNERSTONE-SMITHLANDSCAPING). Railway will start building automatically.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Add a Volume — click "+ New" → Volume → mount path: <code>/app/data</code></div><div class="cb-sub">This is where the SQLite database lives. Without this, all data is lost every deploy. This step is critical.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Add these Environment Variables in Railway → Variables tab:</div>
+              <div class="cb-sub" style="margin-top:6px">
+                <code>DB_PATH = /app/data/data.db</code><br>
+                <code>SESSION_SECRET = </code>(any long random string — type 30+ random characters)<br>
+                <code>ADMIN_USER = admin</code><br>
+                <code>ADMIN_PASS = </code>(create a strong unique password for this client)<br>
+                <code>PORT = 3000</code>
+              </div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Wait for the deploy to finish (green checkmark in Deployments tab) then visit the Railway URL</div><div class="cb-sub">Railway auto-generates a URL like: <code>their-project-name.up.railway.app</code>. Visit it to confirm the site loads.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Log into /admin with the credentials you set → go to Settings → enter their business info</div><div class="cb-sub">Fill in: business name, phone, email, address, ZIP. This populates throughout the CMS immediately.</div></div>
+          </div>
+
+          <!-- PHASE 4: CUSTOMIZE -->
+          <div style="padding:14px 24px 4px;border-top:2px solid #f0f4f0;margin-top:4px">
+            <div style="font-size:.72rem;font-weight:800;color:#1B3A1B;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Phase 4 — Customize the Public Website <span class="tag tag-5min">1–2 hrs</span></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Open the cloned repo in VS Code (or ask Claude to make edits)</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Replace the 5 hero photos in <code>public/images/</code> with their photos (name them hero1.jpg through hero5.jpg)</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Update <code>views/home.ejs</code> — replace "Chief Cornerstone" with their business name, update tagline and faith statement if needed</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Update <code>views/about.ejs</code> — their company story, who they are, years in business, city</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Update service pages with their actual service names and descriptions (in <code>views/services/</code>)</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">If their brand colors differ from forest green, update <code>public/css/public.css</code> — change the green hex values</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Push all changes to GitHub → Railway auto-deploys → verify the live URL looks correct</div><div class="cb-sub">git add -A → git commit -m "Customize for [client name]" → git push origin main</div></div>
+          </div>
+
+          <!-- PHASE 5: DOMAIN -->
+          <div style="padding:14px 24px 4px;border-top:2px solid #f0f4f0;margin-top:4px">
+            <div style="font-size:.72rem;font-weight:800;color:#1B3A1B;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Phase 5 — Connect Their Domain <span class="tag tag-5min">15 min + DNS wait</span></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">In Railway → their project → Settings → Networking → Add custom domain</div><div class="cb-sub">Type their domain (e.g. <code>smithlandscaping.com</code>). Railway shows you the CNAME record to add.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">In their domain registrar (Namecheap, GoDaddy, etc.) → DNS settings → add the CNAME Railway gave you</div><div class="cb-sub">Also add a CNAME for <code>www</code> pointing to the same Railway URL. DNS propagation takes 15 min–24 hrs.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Verify at dnschecker.org then test the live domain in a browser — confirm green padlock (SSL)</div></div>
+          </div>
+
+          <!-- PHASE 6: HANDOFF -->
+          <div style="padding:14px 24px 4px;border-top:2px solid #f0f4f0;margin-top:4px">
+            <div style="font-size:.72rem;font-weight:800;color:#1B3A1B;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Phase 6 — Client Handoff</div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Set up their Stripe recurring charge for $99/mo — send them the monthly payment link</div><div class="cb-sub">Payment link: <a href="https://buy.stripe.com/eVqcN4609aera8ka8g24001" target="_blank">buy.stripe.com (Monthly $99)</a> — or create a new one for them in Stripe if you want it tied to their name.</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Send the client a "Your site is live" email with:</div>
+              <div class="cb-sub" style="margin-top:4px">
+                ✓ Their live website URL<br>
+                ✓ Their CMS URL (/admin)<br>
+                ✓ Their admin username and password<br>
+                ✓ What each CMS section does (in plain English)<br>
+                ✓ Your support email for questions<br>
+                ✓ Reminder: $99/mo billed monthly, cancel with 30 days notice
+              </div>
+            </div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Add them to Active Setups in this CMS so you can track their monthly plan</div></div>
+          </div>
+          <div class="checklist-item">
+            <div class="cb-wrap"><input type="checkbox"></div>
+            <div><div class="cb-label">Document their credentials in your records: Railway project name, GitHub repo, domain registrar, admin password</div><div class="cb-sub">Keep this somewhere safe — you'll need it every time they request a content change.</div></div>
+          </div>
+
+          <!-- RESETTING DEMO -->
+          <div style="padding:14px 24px 14px;border-top:2px solid #f0f4f0;margin-top:4px">
+            <div style="font-size:.72rem;font-weight:800;color:#1B3A1B;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">How to Reset the Demo Site for New Prospects</div>
+            <div class="tip-box">The demo at <strong>chief-cornerstone-production.up.railway.app</strong> uses sample data (the Pattersons, Oak Creek HOA, etc.). If a prospect accidentally deletes or adds data, tell Claude: "Re-enable the seed route on Chief Cornerstone and I'll reset the demo." It takes 5 minutes. The demo database is separate from any real client deployment.</div>
+          </div>
+
+        </div>
+      </div>
+
       <!-- COPYWRITING ADD-ON -->
       <div class="sop-section">
         <div class="sop-head" style="background:#1a7a3c">
