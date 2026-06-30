@@ -39,7 +39,11 @@
           </div>
           <div class="card-footer">
             <% if (p.active) { %>
-              <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">View & Buy</a>
+              <% if (p.slug === 'chief-cornerstone') { %>
+                <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">Get Started</a>
+              <% } else { %>
+                <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">View & Buy</a>
+              <% } %>
             <% } else { %>
               <span class="btn btn-sm" style="background:var(--border);color:var(--gray);cursor:default;">Coming Soon</span>
             <% } %>
