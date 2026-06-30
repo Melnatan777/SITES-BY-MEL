@@ -63,7 +63,7 @@ buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e
           'Chief Cornerstone — Landscaping + Full CMS',
           'chief-cornerstone',
           'Landscaping & Lawn Care',
-          'The most complete landscaping business template available. Stunning 5-page website with sliding hero photos PLUS a full business CMS: client manager, job scheduler, employee tracker, expense dashboard, weather alerts by ZIP, soil data by area, gallery manager, and quote request inbox. Your name and photos replace ours. $99/month includes hosting and support.',
+          '17-page landscaping website + full business CMS. Client manager, job scheduler, P&L financials, weather alerts by ZIP, soil data, analytics & maps, customer & employee inboxes, gallery, and quote requests. Data Analytics add-on available. $797 setup + $99/month hosting & support.',
           9900,
           'chief-cornerstone.jpg',
           '/preview/chief-cornerstone/',
