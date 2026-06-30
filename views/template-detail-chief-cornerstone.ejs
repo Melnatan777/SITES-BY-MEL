@@ -1,9 +1,23 @@
-<%- include('partials/head', { title: 'Chief Cornerstone — Landscaping Website + Full CMS', metaDesc: 'A stunning 5-page landscaping website with a complete business CMS. Client manager, job scheduler, expense tracker, weather alerts, soil data, and more. $99/month.' }) %>
+<%- include('partials/head', { title: 'Chief Cornerstone — Landscaping Website + Full Business CMS', metaDesc: 'A complete landscaping business platform. 17-page website, full CMS with dispatch board, KPI dashboard, job costing, client manager, expense tracker, weather center, and more. $797 setup + $99/month.' }) %>
 <%- include('partials/nav', { activePage: 'templates' }) %>
 
 <div class="page-header">
   <h1>Chief Cornerstone</h1>
-  <p>Landscaping & Lawn Care — Website + Full Business CMS — $99/month</p>
+  <p>Landscaping & Lawn Care — Complete Business Platform — $797 setup + $99/mo</p>
+</div>
+
+<!-- LIVE DEMO BAR -->
+<div style="background:#1A2E1A;padding:12px 0;text-align:center;border-bottom:1px solid rgba(139,195,74,.2)">
+  <span style="color:rgba(255,255,255,.5);font-size:.82rem;margin-right:12px">See the real thing before you decide:</span>
+  <a href="https://chief-cornerstone-production.up.railway.app" target="_blank" rel="noopener"
+     style="background:#228B22;color:white;padding:6px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none;margin-right:8px">
+    🌐 View Live Website
+  </a>
+  <a href="https://chief-cornerstone-production.up.railway.app/admin" target="_blank" rel="noopener"
+     style="background:#D4A227;color:white;padding:6px 16px;border-radius:6px;font-size:.82rem;font-weight:700;text-decoration:none">
+    📊 Explore the CMS Demo
+  </a>
+  <span style="color:rgba(255,255,255,.3);font-size:.72rem;margin-left:12px">Demo login: admin / ChiefAdmin2026!</span>
 </div>
 
 <section class="section">
@@ -11,182 +25,347 @@
 
     <!-- Website Preview -->
     <div style="margin-bottom:16px">
-      <div style="font-size:.78rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">The Public Website</div>
+      <div style="font-size:.75rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">The Public Website — Your Customers See This</div>
       <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.15);border:1px solid var(--border)">
-        <% if (true) { %>
         <img src="/images/chief-cornerstone.jpg" alt="Chief Cornerstone Website Preview"
           style="width:100%;display:block"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div style="display:none;height:320px;background:#f4f2f8;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#9a9ab0">
+        <div style="display:none;height:320px;background:#f0f7e8;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#9a9ab0">
           <span style="font-size:3rem">🌿</span>
-          <span style="font-weight:600">Chief Cornerstone Website Preview</span>
-          <span style="font-size:.85rem">Screenshot coming soon</span>
+          <span style="font-weight:600">Chief Cornerstone Website</span>
+          <a href="https://chief-cornerstone-production.up.railway.app" target="_blank" style="color:#228B22;font-size:.88rem;font-weight:700">View Live →</a>
         </div>
-        <% } %>
       </div>
     </div>
 
     <!-- CMS Preview -->
     <div style="margin-bottom:48px">
-      <div style="font-size:.78rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">The Business CMS Dashboard — Tailored to Your Business</div>
+      <div style="font-size:.75rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">The Business CMS — You See This (Password Protected)</div>
       <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.15);border:1px solid var(--border)">
-        <img src="/images/chief-cornerstone-cms.jpg" alt="Chief Cornerstone CMS Dashboard Preview"
+        <img src="/images/chief-cornerstone-cms.jpg" alt="Chief Cornerstone CMS Dashboard"
           style="width:100%;display:block"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div style="display:none;height:280px;background:#1A2E1A;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,.6)">
           <span style="font-size:3rem">📊</span>
-          <span style="font-weight:600;color:white">Your Business Dashboard</span>
-          <span style="font-size:.85rem">CMS screenshot coming soon</span>
+          <span style="font-weight:600;color:white">Business Dashboard</span>
+          <a href="https://chief-cornerstone-production.up.railway.app/admin" target="_blank" style="color:#8BC34A;font-size:.88rem;font-weight:700">Explore Live Demo →</a>
         </div>
       </div>
       <div style="background:#f0f7e8;border:1px solid #c8e6c9;border-radius:10px;padding:14px 18px;margin-top:12px;font-size:.88rem;color:#1A2E1A">
-        <strong>Every CMS is tailored to you.</strong> Your business name, your services, your team. We set it up to match your operation — not a generic template.
+        <strong>Every CMS is customized to your business.</strong> Your name, your crew, your services, your area. We set it up before you ever log in.
       </div>
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 360px;gap:48px;align-items:start">
 
-      <!-- Left: Details -->
+      <!-- LEFT COLUMN -->
       <div>
-        <div style="background:#f0f7e8;border-left:4px solid #4CAF50;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:32px;font-size:.95rem;color:#1A2E1A;font-weight:600">
-          This is not just a website template — it's a complete business platform built specifically for landscaping companies.
+
+        <div style="background:#f0f7e8;border-left:4px solid #228B22;border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:32px;font-size:.95rem;color:#1A2E1A;font-weight:600;line-height:1.6">
+          This is not a website template you fill in. It is a complete business platform built specifically for landscaping companies — website, CMS, KPI tracking, and operations tools all in one.
         </div>
 
-        <h2 style="font-size:1.5rem;margin-bottom:16px">What's Included</h2>
+        <!-- PUBLIC WEBSITE -->
+        <h2 style="font-size:1.4rem;font-weight:800;color:#1A2E1A;margin-bottom:16px">What You Get</h2>
 
-        <h3 style="color:#1A2E1A;margin-bottom:12px;margin-top:24px">🌿 5-Page Public Website</h3>
-        <ul style="padding-left:20px;line-height:2.2;color:#555;font-size:.92rem">
-          <li>Home — full-screen sliding hero with 5 photos, services preview, faith statement</li>
-          <li>Services — 6 individual service pages each with hero photo and full detail</li>
-          <li>About — company story, values, and scripture</li>
-          <li>Gallery — project photos managed from your CMS</li>
-          <li>Contact — quote request form that feeds straight to your dashboard</li>
-        </ul>
-
-        <h3 style="color:#1A2E1A;margin-bottom:12px;margin-top:28px">📊 Full Business CMS Dashboard</h3>
-        <ul style="padding-left:20px;line-height:2.2;color:#555;font-size:.92rem">
-          <li><strong>Client Manager</strong> — track every client by name, address, ZIP, and service type</li>
-          <li><strong>Job Scheduler</strong> — schedule and track every job, status, and price</li>
-          <li><strong>Employee Tracker</strong> — manage crew, roles, and hourly rates</li>
-          <li><strong>Expense Dashboard</strong> — log fuel, equipment, and overhead by category</li>
-          <li><strong>Weather by ZIP</strong> — 7-10 day forecasts so you know before a rain day hits</li>
-          <li><strong>Soil Data by Area</strong> — USDA soil type data before you quote a new client</li>
-          <li><strong>Gallery Manager</strong> — upload and manage project photos</li>
-          <li><strong>Quote Request Inbox</strong> — every contact form submission in one place</li>
-        </ul>
-
-        <!-- Data Analytics Upsell -->
-        <div style="background:linear-gradient(135deg,#1A2E1A,#2E4A2E);border-radius:14px;padding:28px;margin-top:36px;color:white">
-          <div style="color:#8BC34A;font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">📈 Add-On Available</div>
-          <h3 style="color:white;margin-bottom:12px">Data Analytics Dashboard</h3>
-          <p style="color:rgba(255,255,255,.8);font-size:.92rem;line-height:1.75;margin-bottom:16px">Turn your business data into decisions. We build a custom analytics layer on top of your CMS — tailored to your specific metrics.</p>
-          <ul style="list-style:none;padding:0;margin-bottom:20px">
-            <% [
-              'Revenue trends by month and service type',
-              'Top clients by lifetime value',
-              'Lead source tracking — where your quotes come from',
-              'Job completion rates and average price per service',
-              'Expense breakdowns by category',
-              'Employee productivity metrics',
-              'Seasonal demand forecasting'
-            ].forEach(function(item) { %>
-            <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.88rem;color:rgba(255,255,255,.85);display:flex;align-items:center;gap:8px">
-              <span style="color:#8BC34A;font-weight:700">✓</span> <%= item %>
-            </li>
-            <% }) %>
-          </ul>
-          <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 16px;font-size:.85rem;color:rgba(255,255,255,.7);font-style:italic">
-            Analytics are built specifically for your business — not a generic dashboard. Ask us about adding this to your plan.
+        <h3 style="color:#1A2E1A;font-size:1rem;margin-bottom:12px;margin-top:8px;display:flex;align-items:center;gap:8px">
+          <span style="background:#228B22;color:white;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:20px">17 PAGES</span>
+          🌿 The Public Website
+        </h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px">
+          <% [
+            ['Home','Full-screen 5-photo hero slider, services grid, faith statement, contact CTA'],
+            ['Services Overview','Grid of all 6 service types with photos and descriptions'],
+            ['Lawn Maintenance','Dedicated page with hero photo, service details, quote form'],
+            ['Landscape Design','Dedicated page with hero photo, service details, quote form'],
+            ['Tree Trimming','Dedicated page with hero photo, service details, quote form'],
+            ['Irrigation','Dedicated page with hero photo, service details, quote form'],
+            ['Hardscaping','Dedicated page with hero photo, service details, quote form'],
+            ['Seasonal Cleanup','Dedicated page with hero photo, service details, quote form'],
+            ['About','Company story, mission, values, and scripture'],
+            ['Gallery','Project photos managed directly from the CMS'],
+            ['Contact','Quote request form — feeds straight to your dashboard'],
+            ['Testimonials','Client review showcase page'],
+            ['FAQ','Frequently asked questions page'],
+            ['Service Area','Coverage area and cities served'],
+            ['Blog','Articles to help with local SEO'],
+            ['Privacy Policy','Required legal page'],
+            ['Terms of Service','Required legal page'],
+          ].forEach(function(pg) { %>
+          <div style="background:#f8fbf8;border:1px solid #dde8dd;border-radius:8px;padding:10px 12px">
+            <div style="font-weight:700;font-size:.82rem;color:#1A2E1A;margin-bottom:2px"><%= pg[0] %></div>
+            <div style="font-size:.75rem;color:#6B7280;line-height:1.4"><%= pg[1] %></div>
           </div>
+          <% }) %>
         </div>
 
-        <h3 style="color:#1A2E1A;margin-bottom:12px;margin-top:36px">✅ What We Customize For You</h3>
-        <ul style="padding-left:20px;line-height:2.2;color:#555;font-size:.92rem">
-          <li>Your business name replaces "Chief Cornerstone"</li>
-          <li>Your logo and brand colors</li>
-          <li>Your phone number and email</li>
-          <li>Your service area and city</li>
-          <li>Your own photos in the hero slider and gallery</li>
-          <li>Your services list and pricing structure</li>
-        </ul>
+        <!-- CMS SECTIONS -->
+        <h3 style="color:#1A2E1A;font-size:1rem;margin-bottom:14px;margin-top:32px;display:flex;align-items:center;gap:8px">
+          <span style="background:#1A2E1A;color:white;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:20px">17 SECTIONS</span>
+          📊 The Business CMS
+        </h3>
 
-        <!-- Data Intelligence Feature -->
-        <div style="background:linear-gradient(135deg,#1A2E1A,#2E4A2E);border-radius:14px;padding:28px;margin-top:36px;color:white">
-          <div style="color:#8BC34A;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">📊 Built-In Data Intelligence</div>
-          <h3 style="color:white;margin-bottom:12px">Your Business Data — All In One Place</h3>
-          <p style="color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.75;margin-bottom:18px">Chief Cornerstone doesn't just manage your business — it analyzes it. Four dedicated intelligence dashboards show you exactly what's working, where your clients are, and when to schedule.</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <!-- OPERATIONS GROUP -->
+        <div style="margin-bottom:20px">
+          <div style="font-size:.7rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">Daily Operations</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
             <% [
-              ['💰 Revenue Analytics','Monthly revenue vs expenses, profit trends, avg job value'],
-              ['👥 Lead & Client Intel','Top clients by revenue, service type breakdown, conversion data'],
-              ['📍 Area Performance','Client map across Texas, ZIP code revenue, city coverage'],
-              ['🌤️ Weather Patterns','Best days to schedule, seasonal risk charts, rain correlation']
-            ].forEach(function(f){ %>
-            <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:14px">
-              <div style="font-weight:700;color:white;font-size:.85rem;margin-bottom:4px"><%= f[0] %></div>
-              <div style="font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.5"><%= f[1] %></div>
+              ['📋 Dispatch Board','Today\'s jobs, tomorrow\'s jobs, rest of week — all in one view. Start jobs and mark them done with one click. New leads are flagged the moment they come in.'],
+              ['👥 Client Manager','Every client\'s name, address, ZIP code, service type, and history. Filter by status or service. Add notes to each record.'],
+              ['🌿 Job Scheduler','Create and track every job — client, service type, scheduled date, price, status. Estimated and actual hours tracked per job for cost analysis.'],
+              ['👷 Crew Manager','Track every employee — role, phone, email, hourly rate. Active/inactive status. Ties into payroll reporting.'],
+              ['💸 Expense Tracker','Log every expense by category — fuel, labor, equipment, materials, overhead. Ties into your P&L and financial reports automatically.'],
+            ].forEach(function(item) { %>
+            <div style="display:flex;gap:12px;padding:12px 14px;background:white;border:1px solid #e8f0e8;border-radius:10px">
+              <div style="font-size:1.2rem;flex-shrink:0;margin-top:1px"><%= item[0].split(' ')[0] %></div>
+              <div>
+                <div style="font-weight:700;font-size:.88rem;color:#1A2E1A;margin-bottom:3px"><%= item[0].slice(3) %></div>
+                <div style="font-size:.8rem;color:#6B7280;line-height:1.5"><%= item[1] %></div>
+              </div>
             </div>
             <% }) %>
           </div>
-          <div style="background:rgba(139,195,74,.15);border-radius:8px;padding:10px 14px;font-size:.82rem;color:#8BC34A;font-style:italic">
-            "Before I had this, I was guessing. Now I know exactly which ZIP codes make me the most money and what days to avoid scheduling." — How your clients will feel.
+        </div>
+
+        <!-- KPI DASHBOARD - BUILT IN -->
+        <div style="background:linear-gradient(135deg,#1A2E1A,#2a421a);border-radius:14px;padding:26px;margin-bottom:20px;color:white">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <span style="background:#228B22;color:white;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.5px">INCLUDED</span>
+            <span style="color:#8BC34A;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">KPI Dashboard — Built In</span>
+          </div>
+          <h3 style="color:white;font-size:1.05rem;margin-bottom:10px">Know Your Numbers. Beat the Industry Average.</h3>
+          <p style="color:rgba(255,255,255,.7);font-size:.85rem;line-height:1.7;margin-bottom:18px">The average landscaping business earns a 13% net profit margin — but most owners have no idea where they stand. Chief Cornerstone calculates your real numbers and benchmarks them against the industry every time you log in.</p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+            <% [
+              ['Net Profit Margin','Your bottom line vs 13% industry avg (IBISWorld 2025)'],
+              ['Gross Profit Margin','Revenue minus direct costs vs 45–55% benchmark'],
+              ['Overhead Ratio','Keep it under 35% — we show you where you are'],
+              ['Labor Cost %','Industry avg is 35% of revenue — track yours per job'],
+              ['Revenue per Employee','Your number vs $164,125 industry avg (Kentley 2025)'],
+              ['Client Retention Rate','Are you hitting the 90–95% top-performer benchmark?'],
+              ['Average Job Value','Track against the $2,600–$13,700 industry range'],
+              ['Job Completion Rate','On-time completion as a trackable percentage'],
+            ].forEach(function(k) { %>
+            <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:10px 12px">
+              <div style="font-weight:700;color:white;font-size:.8rem;margin-bottom:2px"><%= k[0] %></div>
+              <div style="font-size:.72rem;color:rgba(255,255,255,.55);line-height:1.4"><%= k[1] %></div>
+            </div>
+            <% }) %>
+          </div>
+
+          <div style="background:rgba(139,195,74,.12);border:1px solid rgba(139,195,74,.3);border-radius:8px;padding:12px 14px;font-size:.82rem;color:#8BC34A">
+            Every KPI shows green, yellow, or red — so you know at a glance whether you're ahead of or behind the industry benchmark.
           </div>
         </div>
 
-        <div style="background:#fff8e6;border:2px solid #D4A227;border-radius:12px;padding:24px;margin-top:36px">
-          <div style="font-weight:800;color:#8a6200;font-size:1rem;margin-bottom:8px">💡 Why Monthly?</div>
-          <p style="color:#5a4000;font-size:.92rem;line-height:1.75">Your $99/month includes hosting, updates, support, and new features as they're added. You're not buying a frozen website. You're getting a living business tool that gets better over time — and you never have to touch a server.</p>
+        <!-- EVA COSTING - BUILT IN -->
+        <div style="background:white;border:1px solid #e8f0e8;border-radius:12px;padding:20px;margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <span style="background:#228B22;color:white;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:20px">INCLUDED</span>
+            <span style="font-weight:700;color:#1A2E1A;font-size:.9rem">⏱️ Estimated vs. Actual Labor (EVA Job Costing)</span>
+          </div>
+          <p style="font-size:.85rem;color:#555;line-height:1.6;margin-bottom:10px">The #1 profitability gap in landscaping is inaccurate labor bids. When you schedule a job, enter your estimated hours. When the crew finishes, enter actual hours. The KPI dashboard automatically shows you where you're on budget — and where crews are running over.</p>
+          <div style="display:flex;gap:16px;font-size:.8rem;color:#6B7280">
+            <span style="color:#228B22;font-weight:700">✓ Tracks variance per job</span>
+            <span style="color:#228B22;font-weight:700">✓ Grouped by service type</span>
+            <span style="color:#228B22;font-weight:700">✓ Flags over-budget patterns</span>
+          </div>
         </div>
+
+        <!-- INTELLIGENCE GROUP -->
+        <div style="margin-bottom:20px">
+          <div style="font-size:.7rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">Intelligence Tools</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <% [
+              ['📈 Analytics & Maps','Revenue vs expenses by month, service mix profitability, client map across Texas with ZIP code revenue breakdown. Built with Chart.js and Leaflet.js.'],
+              ['🌤️ Weather Center','Enter any ZIP code and get a 7-day forecast. Rain alerts, best scheduling days, and Texas city quick lookup. Know before you dispatch.'],
+              ['🌱 Soil Data','USDA soil type lookup by area. Know the ground conditions before you quote a new client on irrigation or landscaping design work.'],
+            ].forEach(function(item) { %>
+            <div style="display:flex;gap:12px;padding:12px 14px;background:white;border:1px solid #e8f0e8;border-radius:10px">
+              <div style="font-size:1.2rem;flex-shrink:0;margin-top:1px"><%= item[0].split(' ')[0] %></div>
+              <div>
+                <div style="font-weight:700;font-size:.88rem;color:#1A2E1A;margin-bottom:3px"><%= item[0].slice(3) %></div>
+                <div style="font-size:.8rem;color:#6B7280;line-height:1.5"><%= item[1] %></div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- FINANCIALS GROUP -->
+        <div style="margin-bottom:20px">
+          <div style="font-size:.7rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">Financial Reporting</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <% [
+              ['📊 P&L Overview','Full profit and loss statement — revenue from completed jobs vs total expenses. Expense breakdown pie chart. Estimated tax calculation (SE tax + federal). Printable report.'],
+              ['👷 Payroll Report','Employee hours and compensation summary. Total payroll cost. Labor burden calculation to show true cost per hour including taxes and benefits.'],
+              ['🏢 Overhead Report','Non-labor, non-material expenses — rent, insurance, software, admin. Overhead as a percentage of revenue tracked against the 20–35% benchmark.'],
+              ['📋 Tax Summary','Estimated quarterly tax liability. Self-employment tax (15.3%) and estimated federal income tax (22%). Not a substitute for a CPA — but shows you the ballpark before the bill arrives.'],
+            ].forEach(function(item) { %>
+            <div style="display:flex;gap:12px;padding:12px 14px;background:white;border:1px solid #e8f0e8;border-radius:10px">
+              <div style="font-size:1.2rem;flex-shrink:0;margin-top:1px"><%= item[0].split(' ')[0] %></div>
+              <div>
+                <div style="font-weight:700;font-size:.88rem;color:#1A2E1A;margin-bottom:3px"><%= item[0].slice(3) %></div>
+                <div style="font-size:.8rem;color:#6B7280;line-height:1.5"><%= item[1] %></div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- INBOX + WEBSITE TOOLS -->
+        <div style="margin-bottom:32px">
+          <div style="font-size:.7rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">Inbox & Website Tools</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <% [
+              ['📬 Customer Inbox','Log every customer message — phone calls, voicemails, texts. Unread badges on the dashboard. Reply text and reply date tracked per message.'],
+              ['📱 Employee Inbox','Crew communications log — call-outs, schedule requests, field notes, equipment issues. Each message type is color-coded and categorized.'],
+              ['📷 Gallery Manager','Upload and manage project photos. Set published status and sort order. Feeds directly to the public gallery page.'],
+              ['📋 Quote Request Inbox','Every contact form submission lands here. Name, phone, email, ZIP, service type, message. Status tracking from New to Closed.'],
+              ['⚙️ Settings','Update your business name, phone, email, address, and service area. Changes reflect across the entire CMS immediately.'],
+            ].forEach(function(item) { %>
+            <div style="display:flex;gap:12px;padding:12px 14px;background:white;border:1px solid #e8f0e8;border-radius:10px">
+              <div style="font-size:1.2rem;flex-shrink:0;margin-top:1px"><%= item[0].split(' ')[0] %></div>
+              <div>
+                <div style="font-weight:700;font-size:.88rem;color:#1A2E1A;margin-bottom:3px"><%= item[0].slice(3) %></div>
+                <div style="font-size:.8rem;color:#6B7280;line-height:1.5"><%= item[1] %></div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- CUSTOMIZATION -->
+        <h3 style="color:#1A2E1A;font-size:1rem;margin-bottom:12px">✅ What We Customize For You</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:32px">
+          <% [
+            'Your business name throughout the entire site',
+            'Your logo and brand colors',
+            'Your phone number, email, and address',
+            'Your service area, city, and state',
+            'Your own hero photos in the slider',
+            'Your services and pricing structure',
+            'Your crew and job types pre-loaded',
+            'Admin login credentials — yours only',
+          ].forEach(function(item) { %>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:#374151;padding:6px 0">
+            <span style="color:#228B22;font-weight:700;flex-shrink:0">✓</span><%= item %>
+          </div>
+          <% }) %>
+        </div>
+
+        <!-- ADD-ONS AVAILABLE -->
+        <div style="background:#f8f6f0;border:1px solid #e8e0d0;border-radius:12px;padding:22px;margin-bottom:24px">
+          <div style="font-size:.72rem;font-weight:700;color:#92400e;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">Available Add-Ons — Custom Quote</div>
+          <p style="font-size:.83rem;color:#555;line-height:1.6;margin-bottom:14px">These features are not included in the standard plan. They require additional setup and are priced per client. Ask us when you're ready.</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <% [
+              ['📍 Route Density & Map Profitability','Which ZIP codes make you the most money after travel time? ~$30–50/mo add-on. Requires Google Maps API.'],
+              ['🚜 Equipment ROI Tracker','Allocate fuel, maintenance, and depreciation per job type. Know what each machine actually costs per hour.','$150–300 setup'],
+              ['📊 QuickBooks Sync','Two-way sync — invoices, expenses, payroll. No double entry.','$500 setup + $25/mo'],
+              ['🔗 Jobber / ServiceTitan Sync','Already using field service software? Pull that data in.','$500 setup + $25/mo'],
+              ['📱 Lead Channel Conversion Tracking','Google Ads vs yard signs vs referrals — track cost per acquisition per channel.','$150 setup'],
+            ].forEach(function(item) { %>
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 12px;background:white;border:1px solid #e8e0d0;border-radius:8px">
+              <div style="font-size:1.1rem;flex-shrink:0"><%= item[0].split(' ')[0] %></div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:.83rem;color:#1A2E1A"><%= item[0].slice(3) %></div>
+                <div style="font-size:.77rem;color:#6B7280;line-height:1.4;margin-top:2px"><%= item[1] %></div>
+              </div>
+              <% if (item[2]) { %>
+              <div style="font-size:.72rem;font-weight:700;color:#D4A227;white-space:nowrap"><%= item[2] %></div>
+              <% } else { %>
+              <div style="font-size:.72rem;font-weight:700;color:#D4A227;white-space:nowrap">Custom Quote</div>
+              <% } %>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- WHY MONTHLY -->
+        <div style="background:#fff8e6;border:2px solid #D4A227;border-radius:12px;padding:22px">
+          <div style="font-weight:800;color:#8a6200;font-size:.95rem;margin-bottom:8px">💡 Why $99 a Month?</div>
+          <p style="color:#5a4000;font-size:.88rem;line-height:1.75">Your $99/month covers hosting on a dedicated server, SSL certificate, up to 2 content updates per month, and support when you need it. You're not buying a frozen website you have to manage yourself. You're getting a living business tool that stays maintained, stays online, and gets better as we add features — without you touching a thing. No contract. Cancel with 30 days written notice.</p>
+        </div>
+
       </div>
 
-      <!-- Right: Pricing + CTA -->
+      <!-- RIGHT COLUMN — PRICING CARD -->
       <div style="position:sticky;top:24px">
-        <div style="background:white;border:2px solid #e8e0d0;border-radius:16px;padding:32px;box-shadow:0 4px 20px rgba(0,0,0,.08)">
-          <div style="text-align:center;margin-bottom:8px">
-            <div style="font-size:1rem;font-weight:700;color:#1A2E1A;margin-bottom:4px">Setup Fee</div>
+        <div style="background:white;border:2px solid #e8e0d0;border-radius:16px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,.08)">
+
+          <div style="text-align:center;margin-bottom:16px">
+            <div style="font-size:.78rem;font-weight:700;color:#9a9ab0;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">One-Time Setup Fee</div>
             <div style="font-size:2.8rem;font-weight:800;color:#1A2E1A;line-height:1">$797</div>
-            <div style="color:#7a7a6a;font-size:.82rem;margin-bottom:14px">one-time — customization & deployment</div>
-            <div style="border-top:1px solid #e8e0d0;padding-top:14px">
-              <div style="font-size:.9rem;font-weight:700;color:#1A2E1A;margin-bottom:2px">then</div>
-              <div style="font-size:2.2rem;font-weight:800;color:#228B22;line-height:1">$99<span style="font-size:1rem;font-weight:600;color:#7a7a6a">/mo</span></div>
-              <div style="color:#9a9a8a;font-size:.75rem;margin-top:4px">Hosting & support included. No contract.</div>
+            <div style="color:#7a7a6a;font-size:.8rem;margin-top:4px;margin-bottom:14px">Customization, branding & deployment</div>
+            <div style="border-top:2px solid #f0ebe0;padding-top:14px">
+              <div style="font-size:.82rem;color:#9a9a8a;margin-bottom:4px">then every month</div>
+              <div style="font-size:2.4rem;font-weight:800;color:#228B22;line-height:1">$99<span style="font-size:1rem;font-weight:600;color:#9a9a8a">/mo</span></div>
+              <div style="color:#9a9a8a;font-size:.72rem;margin-top:5px">Hosting, maintenance & support. No contract.</div>
             </div>
           </div>
 
-          <div style="border-top:1px solid #f5f0e8;margin:20px 0"></div>
+          <div style="border-top:1px solid #f5f0e8;margin:16px 0"></div>
 
-          <ul style="list-style:none;margin-bottom:28px;padding:0">
+          <div style="font-size:.72rem;font-weight:700;color:#9a9ab0;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Everything Included</div>
+          <ul style="list-style:none;padding:0;margin-bottom:22px">
             <% [
-              '5-page professional website',
+              '17-page professional website',
+              'Home hero slider with your photos',
               '6 individual service pages',
-              'Full business CMS dashboard',
-              'Client & job management',
-              'Expense & fuel tracking',
-              'Weather alerts by ZIP code',
+              'Dispatch board & job scheduler',
+              'Client & crew manager',
+              'Expense & fuel tracker',
+              'KPI dashboard with benchmarks',
+              'EVA job costing (est vs actual hrs)',
+              'P&L, payroll & tax summary',
+              'Customer & employee inboxes',
+              'Weather center by ZIP code',
               'Soil data by area',
-              'Gallery & quote management',
-              'Hosting included',
-              'Updates & support included',
-              'No setup fee. No contract.'
+              'Analytics & client map',
+              'Gallery manager',
+              'Quote request inbox',
+              'Hosting & SSL included',
+              'Up to 2 content updates/mo',
+              'No contract — 30-day cancel',
             ].forEach(function(item) { %>
-            <li style="padding:7px 0;border-bottom:1px solid #f5f0e8;font-size:.88rem;display:flex;align-items:center;gap:10px">
-              <span style="color:#228B22;font-weight:700">✓</span> <%= item %>
+            <li style="padding:6px 0;border-bottom:1px solid #f5f0e8;font-size:.83rem;display:flex;align-items:center;gap:9px;color:#374151">
+              <span style="color:#228B22;font-weight:700;flex-shrink:0">✓</span><%= item %>
             </li>
             <% }) %>
           </ul>
 
-          <a href="/contact?service=Chief+Cornerstone+Landscaping+Platform" class="btn btn-gold" style="width:100%;justify-content:center;padding:16px;font-size:1rem">Get Started — Contact Us</a>
-          <div style="text-align:center;margin-top:10px;font-size:.78rem;color:#9a9a8a">We'll reach out within 24 hours to get you set up.</div>
+          <a href="/contact?service=Chief+Cornerstone+Landscaping+Platform"
+             class="btn btn-gold"
+             style="width:100%;justify-content:center;padding:15px;font-size:.95rem;display:flex;text-decoration:none">
+            Get Started — Contact Us
+          </a>
+          <div style="text-align:center;margin-top:8px;font-size:.75rem;color:#9a9a8a">We'll reach out within 24 hours.</div>
 
-          <div style="border-top:1px solid #f5f0e8;margin-top:20px;padding-top:16px;text-align:center">
-            <div style="font-size:.8rem;color:#5a5a4a;font-weight:600;margin-bottom:6px">Want Analytics Too?</div>
-            <a href="/contact" style="font-size:.82rem;color:#228B22;font-weight:600;text-decoration:none">Ask about our Data Analytics Add-On →</a>
+          <div style="border-top:1px solid #f5f0e8;margin-top:16px;padding-top:14px">
+            <div style="font-size:.8rem;color:#1A2E1A;font-weight:700;margin-bottom:6px">Want to explore first?</div>
+            <a href="https://chief-cornerstone-production.up.railway.app" target="_blank" rel="noopener"
+               style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f0f7e8;border-radius:8px;text-decoration:none;margin-bottom:6px">
+              <span style="font-size:.8rem;color:#1A2E1A;font-weight:600">🌐 Live Website</span>
+              <span style="font-size:.75rem;color:#228B22;font-weight:700">View →</span>
+            </a>
+            <a href="https://chief-cornerstone-production.up.railway.app/admin" target="_blank" rel="noopener"
+               style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#1A2E1A;border-radius:8px;text-decoration:none">
+              <span style="font-size:.8rem;color:white;font-weight:600">📊 CMS Demo</span>
+              <span style="font-size:.75rem;color:#8BC34A;font-weight:700">Explore →</span>
+            </a>
           </div>
         </div>
 
-        <div style="background:#1A2E1A;border-radius:12px;padding:20px;margin-top:16px;text-align:center">
-          <div style="color:#8BC34A;font-style:italic;font-size:.88rem;line-height:1.7">"Unless the Lord builds the house, the builders labor in vain."</div>
-          <div style="color:rgba(255,255,255,.4);font-size:.72rem;margin-top:8px">— Psalm 127:1</div>
+        <div style="background:#1A2E1A;border-radius:12px;padding:18px;margin-top:14px;text-align:center">
+          <div style="color:#8BC34A;font-style:italic;font-size:.85rem;line-height:1.7">"Unless the Lord builds the house, the builders labor in vain."</div>
+          <div style="color:rgba(255,255,255,.35);font-size:.7rem;margin-top:6px">— Psalm 127:1</div>
+        </div>
+
+        <div style="margin-top:14px;padding:14px;background:#f8f6f0;border:1px solid #e8e0d0;border-radius:10px;font-size:.78rem;color:#6B7280;line-height:1.6">
+          <strong style="color:#1A2E1A">Extra change requests:</strong> $75/hr beyond 2/month.<br>
+          <strong style="color:#1A2E1A">Data analytics add-ons</strong> (route density, QuickBooks sync, etc.) are custom quoted separately.
         </div>
       </div>
 
