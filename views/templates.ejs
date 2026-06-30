@@ -30,7 +30,13 @@
           <div class="card-category"><%= p.category %></div>
           <h3 class="card-title"><%= p.name %></h3>
           <p class="card-desc"><%= p.description %></p>
-          <div class="card-price">$<%= (p.price / 100).toFixed(0) %></div>
+          <div class="card-price">
+            <% if (p.slug === 'chief-cornerstone') { %>
+              $797 <span style="font-size:.75rem;font-weight:500;color:var(--gray)">+ $99/mo</span>
+            <% } else { %>
+              $<%= (p.price / 100).toFixed(0) %>
+            <% } %>
+          </div>
           <div class="card-footer">
             <% if (p.active) { %>
               <a href="/templates/<%= p.slug %>" class="btn btn-navy btn-sm">View & Buy</a>
