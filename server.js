@@ -93,11 +93,12 @@ buildAllDownloads(true).catch(e => console.error('[downloads] startup error:', e
   } catch(e) { console.error('[seed] fixPreviewUrls error:', e.message); }
 })();
 
-// Update all template prices to $350 (35000 cents)
+// Update all template prices to $350 (35000 cents) — except Chief Cornerstone (monthly $99)
 (function updateTemplatePrices() {
   try {
-    db.prepare('UPDATE products SET price=35000 WHERE price < 35000 AND active=1').run();
-    console.log('[seed] Template prices updated to $350');
+    db.prepare("UPDATE products SET price=35000 WHERE price < 35000 AND active=1 AND slug != 'chief-cornerstone'").run();
+    db.prepare("UPDATE products SET price=9900 WHERE slug='chief-cornerstone'").run();
+    console.log('[seed] Template prices updated');
   } catch(e) { console.error('[seed] price update error:', e.message); }
 })();
 

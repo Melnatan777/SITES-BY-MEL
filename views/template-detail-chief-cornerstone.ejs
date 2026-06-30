@@ -1,17 +1,47 @@
-<%- include('partials/head', { title: 'Chief Cornerstone — Landscaping + Full CMS', metaDesc: 'A stunning 5-page landscaping website with a complete business CMS. Client manager, job scheduler, expense tracker, weather alerts, soil data, and more.' }) %>
+<%- include('partials/head', { title: 'Chief Cornerstone — Landscaping Website + Full CMS', metaDesc: 'A stunning 5-page landscaping website with a complete business CMS. Client manager, job scheduler, expense tracker, weather alerts, soil data, and more. $99/month.' }) %>
 <%- include('partials/nav', { activePage: 'templates' }) %>
 
 <div class="page-header">
   <h1>Chief Cornerstone</h1>
-  <p>Landscaping & Lawn Care — Website + Full Business CMS</p>
+  <p>Landscaping & Lawn Care — Website + Full Business CMS — $99/month</p>
 </div>
 
 <section class="section">
   <div class="container">
 
-    <!-- Hero Preview -->
-    <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.15);margin-bottom:48px">
-      <img src="/images/chief-cornerstone.jpg" alt="Chief Cornerstone Template Preview" style="width:100%;display:block">
+    <!-- Website Preview -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:.78rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">The Public Website</div>
+      <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.15);border:1px solid var(--border)">
+        <% if (true) { %>
+        <img src="/images/chief-cornerstone.jpg" alt="Chief Cornerstone Website Preview"
+          style="width:100%;display:block"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div style="display:none;height:320px;background:#f4f2f8;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:#9a9ab0">
+          <span style="font-size:3rem">🌿</span>
+          <span style="font-weight:600">Chief Cornerstone Website Preview</span>
+          <span style="font-size:.85rem">Screenshot coming soon</span>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- CMS Preview -->
+    <div style="margin-bottom:48px">
+      <div style="font-size:.78rem;font-weight:700;color:#9a9ab0;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">The Business CMS Dashboard — Tailored to Your Business</div>
+      <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.15);border:1px solid var(--border)">
+        <img src="/images/chief-cornerstone-cms.jpg" alt="Chief Cornerstone CMS Dashboard Preview"
+          style="width:100%;display:block"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div style="display:none;height:280px;background:#1A2E1A;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:rgba(255,255,255,.6)">
+          <span style="font-size:3rem">📊</span>
+          <span style="font-weight:600;color:white">Your Business Dashboard</span>
+          <span style="font-size:.85rem">CMS screenshot coming soon</span>
+        </div>
+      </div>
+      <div style="background:#f0f7e8;border:1px solid #c8e6c9;border-radius:10px;padding:14px 18px;margin-top:12px;font-size:.88rem;color:#1A2E1A">
+        <strong>Every CMS is tailored to you.</strong> Your business name, your services, your team. We set it up to match your operation — not a generic template.
+      </div>
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 360px;gap:48px;align-items:start">
@@ -22,55 +52,85 @@
           This is not just a website template — it's a complete business platform built specifically for landscaping companies.
         </div>
 
-        <h2 style="font-size:1.6rem;margin-bottom:16px">What's Included</h2>
+        <h2 style="font-size:1.5rem;margin-bottom:16px">What's Included</h2>
 
         <h3 style="color:#1A2E1A;margin-bottom:12px;margin-top:24px">🌿 5-Page Public Website</h3>
-        <ul style="padding-left:20px;line-height:2;color:#555">
+        <ul style="padding-left:20px;line-height:2.2;color:#555;font-size:.92rem">
           <li>Home — full-screen sliding hero with 5 photos, services preview, faith statement</li>
-          <li>Services — detailed service cards with descriptions</li>
-          <li>About — company story, values, scripture</li>
-          <li>Gallery — before/after project photos managed from CMS</li>
+          <li>Services — 6 individual service pages each with hero photo and full detail</li>
+          <li>About — company story, values, and scripture</li>
+          <li>Gallery — project photos managed from your CMS</li>
           <li>Contact — quote request form that feeds straight to your dashboard</li>
         </ul>
 
         <h3 style="color:#1A2E1A;margin-bottom:12px;margin-top:28px">📊 Full Business CMS Dashboard</h3>
-        <ul style="padding-left:20px;line-height:2;color:#555">
-          <li><strong>Client Manager</strong> — add and track every client by name, address, ZIP, and service type</li>
-          <li><strong>Job Scheduler</strong> — schedule jobs, track status, log completion and price</li>
-          <li><strong>Employee Tracker</strong> — manage your crew, roles, and hourly rates</li>
-          <li><strong>Expense Dashboard</strong> — log fuel, equipment, overhead, and labor by category</li>
-          <li><strong>Weather by ZIP</strong> — 7-10 day forecasts so you know before a rain day hits your schedule</li>
-          <li><strong>Soil Data by Area</strong> — USDA soil type data so you know what you're quoting before you arrive</li>
-          <li><strong>Gallery Manager</strong> — upload and manage project photos from the admin panel</li>
-          <li><strong>Quote Request Inbox</strong> — every contact form submission goes straight to your dashboard</li>
+        <ul style="padding-left:20px;line-height:2.2;color:#555;font-size:.92rem">
+          <li><strong>Client Manager</strong> — track every client by name, address, ZIP, and service type</li>
+          <li><strong>Job Scheduler</strong> — schedule and track every job, status, and price</li>
+          <li><strong>Employee Tracker</strong> — manage crew, roles, and hourly rates</li>
+          <li><strong>Expense Dashboard</strong> — log fuel, equipment, and overhead by category</li>
+          <li><strong>Weather by ZIP</strong> — 7-10 day forecasts so you know before a rain day hits</li>
+          <li><strong>Soil Data by Area</strong> — USDA soil type data before you quote a new client</li>
+          <li><strong>Gallery Manager</strong> — upload and manage project photos</li>
+          <li><strong>Quote Request Inbox</strong> — every contact form submission in one place</li>
         </ul>
 
-        <h3 style="color:#1A2E1A;margin-bottom:12px;margin-top:28px">✅ What Gets Customized For You</h3>
-        <ul style="padding-left:20px;line-height:2;color:#555">
+        <!-- Data Analytics Upsell -->
+        <div style="background:linear-gradient(135deg,#1A2E1A,#2E4A2E);border-radius:14px;padding:28px;margin-top:36px;color:white">
+          <div style="color:#8BC34A;font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">📈 Add-On Available</div>
+          <h3 style="color:white;margin-bottom:12px">Data Analytics Dashboard</h3>
+          <p style="color:rgba(255,255,255,.8);font-size:.92rem;line-height:1.75;margin-bottom:16px">Turn your business data into decisions. We build a custom analytics layer on top of your CMS — tailored to your specific metrics.</p>
+          <ul style="list-style:none;padding:0;margin-bottom:20px">
+            <% [
+              'Revenue trends by month and service type',
+              'Top clients by lifetime value',
+              'Lead source tracking — where your quotes come from',
+              'Job completion rates and average price per service',
+              'Expense breakdowns by category',
+              'Employee productivity metrics',
+              'Seasonal demand forecasting'
+            ].forEach(function(item) { %>
+            <li style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.88rem;color:rgba(255,255,255,.85);display:flex;align-items:center;gap:8px">
+              <span style="color:#8BC34A;font-weight:700">✓</span> <%= item %>
+            </li>
+            <% }) %>
+          </ul>
+          <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 16px;font-size:.85rem;color:rgba(255,255,255,.7);font-style:italic">
+            Analytics are built specifically for your business — not a generic dashboard. Ask us about adding this to your plan.
+          </div>
+        </div>
+
+        <h3 style="color:#1A2E1A;margin-bottom:12px;margin-top:36px">✅ What We Customize For You</h3>
+        <ul style="padding-left:20px;line-height:2.2;color:#555;font-size:.92rem">
           <li>Your business name replaces "Chief Cornerstone"</li>
           <li>Your logo and brand colors</li>
           <li>Your phone number and email</li>
           <li>Your service area and city</li>
           <li>Your own photos in the hero slider and gallery</li>
+          <li>Your services list and pricing structure</li>
         </ul>
 
         <div style="background:#fff8e6;border:2px solid #D4A227;border-radius:12px;padding:24px;margin-top:36px">
-          <div style="font-weight:800;color:#8a6200;font-size:1rem;margin-bottom:8px">💡 Why Monthly Instead of One-Time?</div>
-          <p style="color:#5a4000;font-size:.92rem;line-height:1.75">Your $99/month includes hosting, updates, support, and new features as they're added — weather alerts, soil data, and more coming. You're not buying a frozen website. You're getting a living business tool that gets better over time.</p>
+          <div style="font-weight:800;color:#8a6200;font-size:1rem;margin-bottom:8px">💡 Why Monthly?</div>
+          <p style="color:#5a4000;font-size:.92rem;line-height:1.75">Your $99/month includes hosting, updates, support, and new features as they're added. You're not buying a frozen website. You're getting a living business tool that gets better over time — and you never have to touch a server.</p>
         </div>
       </div>
 
       <!-- Right: Pricing + CTA -->
       <div style="position:sticky;top:24px">
         <div style="background:white;border:2px solid #e8e0d0;border-radius:16px;padding:32px;box-shadow:0 4px 20px rgba(0,0,0,.08)">
-          <div style="text-align:center;margin-bottom:24px">
+          <div style="text-align:center;margin-bottom:8px">
             <div style="font-size:3rem;font-weight:800;color:#1A2E1A">$99</div>
-            <div style="color:#7a7a6a;font-size:.88rem;font-weight:600">/month — includes hosting & support</div>
+            <div style="color:#7a7a6a;font-size:.88rem;font-weight:600">/month</div>
+            <div style="color:#9a9a8a;font-size:.78rem;margin-top:4px">Hosting & support included. No contract.</div>
           </div>
 
-          <ul style="list-style:none;margin-bottom:28px">
+          <div style="border-top:1px solid #f5f0e8;margin:20px 0"></div>
+
+          <ul style="list-style:none;margin-bottom:28px;padding:0">
             <% [
               '5-page professional website',
+              '6 individual service pages',
               'Full business CMS dashboard',
               'Client & job management',
               'Expense & fuel tracking',
@@ -80,20 +140,25 @@
               'Hosting included',
               'Updates & support included',
               'No setup fee. No contract.'
-            ].forEach(item => { %>
-            <li style="padding:8px 0;border-bottom:1px solid #f5f0e8;font-size:.9rem;display:flex;align-items:center;gap:10px">
-              <span style="color:#4CAF50;font-weight:700">✓</span> <%= item %>
+            ].forEach(function(item) { %>
+            <li style="padding:7px 0;border-bottom:1px solid #f5f0e8;font-size:.88rem;display:flex;align-items:center;gap:10px">
+              <span style="color:#228B22;font-weight:700">✓</span> <%= item %>
             </li>
             <% }) %>
           </ul>
 
           <a href="/contact" class="btn btn-gold" style="width:100%;justify-content:center;padding:16px;font-size:1rem">Get Started Today</a>
-          <div style="text-align:center;margin-top:12px;font-size:.8rem;color:#9a9a8a">We'll reach out within 24 hours to get you set up.</div>
+          <div style="text-align:center;margin-top:10px;font-size:.78rem;color:#9a9a8a">We'll reach out within 24 hours.</div>
+
+          <div style="border-top:1px solid #f5f0e8;margin-top:20px;padding-top:16px;text-align:center">
+            <div style="font-size:.8rem;color:#5a5a4a;font-weight:600;margin-bottom:6px">Want Analytics Too?</div>
+            <a href="/contact" style="font-size:.82rem;color:#228B22;font-weight:600;text-decoration:none">Ask about our Data Analytics Add-On →</a>
+          </div>
         </div>
 
         <div style="background:#1A2E1A;border-radius:12px;padding:20px;margin-top:16px;text-align:center">
-          <div style="color:#8BC34A;font-style:italic;font-size:.9rem;line-height:1.7">"Unless the Lord builds the house, the builders labor in vain."</div>
-          <div style="color:rgba(255,255,255,.5);font-size:.75rem;margin-top:8px">— Psalm 127:1</div>
+          <div style="color:#8BC34A;font-style:italic;font-size:.88rem;line-height:1.7">"Unless the Lord builds the house, the builders labor in vain."</div>
+          <div style="color:rgba(255,255,255,.4);font-size:.72rem;margin-top:8px">— Psalm 127:1</div>
         </div>
       </div>
 
