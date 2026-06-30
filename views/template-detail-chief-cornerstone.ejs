@@ -110,6 +110,29 @@
           <li>Your services list and pricing structure</li>
         </ul>
 
+        <!-- Data Intelligence Feature -->
+        <div style="background:linear-gradient(135deg,#1A2E1A,#2E4A2E);border-radius:14px;padding:28px;margin-top:36px;color:white">
+          <div style="color:#8BC34A;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">📊 Built-In Data Intelligence</div>
+          <h3 style="color:white;margin-bottom:12px">Your Business Data — All In One Place</h3>
+          <p style="color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.75;margin-bottom:18px">Chief Cornerstone doesn't just manage your business — it analyzes it. Four dedicated intelligence dashboards show you exactly what's working, where your clients are, and when to schedule.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+            <% [
+              ['💰 Revenue Analytics','Monthly revenue vs expenses, profit trends, avg job value'],
+              ['👥 Lead & Client Intel','Top clients by revenue, service type breakdown, conversion data'],
+              ['📍 Area Performance','Client map across Texas, ZIP code revenue, city coverage'],
+              ['🌤️ Weather Patterns','Best days to schedule, seasonal risk charts, rain correlation']
+            ].forEach(function(f){ %>
+            <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:14px">
+              <div style="font-weight:700;color:white;font-size:.85rem;margin-bottom:4px"><%= f[0] %></div>
+              <div style="font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.5"><%= f[1] %></div>
+            </div>
+            <% }) %>
+          </div>
+          <div style="background:rgba(139,195,74,.15);border-radius:8px;padding:10px 14px;font-size:.82rem;color:#8BC34A;font-style:italic">
+            "Before I had this, I was guessing. Now I know exactly which ZIP codes make me the most money and what days to avoid scheduling." — How your clients will feel.
+          </div>
+        </div>
+
         <div style="background:#fff8e6;border:2px solid #D4A227;border-radius:12px;padding:24px;margin-top:36px">
           <div style="font-weight:800;color:#8a6200;font-size:1rem;margin-bottom:8px">💡 Why Monthly?</div>
           <p style="color:#5a4000;font-size:.92rem;line-height:1.75">Your $99/month includes hosting, updates, support, and new features as they're added. You're not buying a frozen website. You're getting a living business tool that gets better over time — and you never have to touch a server.</p>
