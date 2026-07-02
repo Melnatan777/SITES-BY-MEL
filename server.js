@@ -1727,6 +1727,7 @@ app.post('/admin/setups/:id/notes', requireAuth, (req, res) => {
 // Admin — Pricing Reference
 app.get('/admin/pricing', requireAuth, (req, res) => res.render('admin/pricing'));
 app.get('/admin/sop', requireAuth, (req, res) => res.render('admin/sop'));
+app.get('/admin/analytics-package', requireAuth, (req, res) => res.render('admin/analytics-package'));
 
 // ── FINANCIALS ────────────────────────────────────────────────────────────────
 app.get('/admin/financials', requireAuth, (req, res) => {

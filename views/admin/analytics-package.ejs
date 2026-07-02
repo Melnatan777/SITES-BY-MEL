@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Analytics Package — Sites by Mel Admin</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .ap-section { background:#fff; border:1px solid #E5E0D8; border-radius:10px; margin-bottom:28px; overflow:hidden; }
+    .ap-head { padding:16px 24px; display:flex; align-items:center; gap:14px; }
+    .ap-head h2 { font-size:1.05rem; font-weight:800; color:#fff; margin:0; }
+    .ap-head .price-tag { background:rgba(255,255,255,.18); color:#fff; font-size:.85rem; font-weight:800; padding:4px 16px; border-radius:100px; margin-left:auto; white-space:nowrap; }
+    .ap-body { padding:20px 24px; }
+    .checklist { list-style:none; padding:0; margin:0; }
+    .checklist li { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid #f4f2ee; font-size:.9rem; color:#374151; }
+    .checklist li:last-child { border-bottom:none; }
+    .checklist li input[type=checkbox] { margin-top:2px; flex-shrink:0; accent-color:#1B2F4E; width:16px; height:16px; cursor:pointer; }
+    .step-grid { display:grid; grid-template-columns:36px 1fr; gap:0; }
+    .step-num { background:#1B2F4E; color:#D4A227; font-weight:800; font-size:.85rem; display:flex; align-items:center; justify-content:center; padding:14px 0; border-right:1px solid #E5E0D8; }
+    .step-content { padding:14px 18px; border-bottom:1px solid #f4f2ee; }
+    .step-content:last-child { border-bottom:none; }
+    .step-content h4 { font-size:.88rem; font-weight:800; color:#1B2F4E; margin:0 0 4px; }
+    .step-content p { font-size:.82rem; color:#6b7280; margin:0; line-height:1.6; }
+    .step-content .you-do { display:inline-block; margin-top:6px; background:#fef9c3; color:#713f12; font-size:.72rem; font-weight:700; padding:2px 10px; border-radius:100px; }
+    .step-content .i-do { display:inline-block; margin-top:6px; background:#ede9fe; color:#4c1d95; font-size:.72rem; font-weight:700; padding:2px 10px; border-radius:100px; }
+    .client-input-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+    .client-input-row input, .client-input-row select, .client-input-row textarea { border:1px solid #d1d5db; border-radius:6px; padding:8px 12px; font-size:.85rem; font-family:inherit; width:100%; box-sizing:border-box; }
+    .info-box { background:#f0f9ff; border:1px solid #bae6fd; border-radius:8px; padding:14px 18px; font-size:.83rem; color:#0c4a6e; margin-bottom:16px; }
+    .warn-box { background:#fef9c3; border:1px solid #fde047; border-radius:8px; padding:14px 18px; font-size:.83rem; color:#713f12; margin-bottom:16px; }
+    .deliverable-badge { display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:8px 14px; font-size:.82rem; color:#065f46; font-weight:600; margin:4px; }
+  </style>
+</head>
+<body class="admin-body">
+<%- include('../partials/admin-nav', { activePage: 'analytics-package' }) %>
+<div class="admin-main">
+  <div class="admin-topbar">
+    <h1 class="admin-page-title">📊 Data Analytics Package</h1>
+    <a href="https://buy.stripe.com/5kQ00i3S1cmz0xK94c24005" target="_blank" class="btn btn-gold btn-sm">💳 Send Payment Link — $750</a>
+  </div>
+  <div class="admin-content">
+
+    <!-- What's Included -->
+    <div class="ap-section">
+      <div class="ap-head" style="background:linear-gradient(135deg,#1B2F4E,#2a4570)">
+        <span style="font-size:1.3rem">📦</span>
+        <h2>What's Included — $750 One-Time</h2>
+        <span class="price-tag">$750</span>
+      </div>
+      <div class="ap-body">
+        <p style="font-size:.85rem;color:#6b7280;margin:0 0 16px">Everything below is built and delivered to the client's website. They don't need to touch any code.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:20px">
+          <span class="deliverable-badge">✅ Google Analytics 4 wired in</span>
+          <span class="deliverable-badge">✅ Google Search Console connected</span>
+          <span class="deliverable-badge">✅ Custom analytics dashboard page in CMS</span>
+          <span class="deliverable-badge">✅ Traffic stats &amp; top pages chart</span>
+          <span class="deliverable-badge">✅ Lead / quote request tracking</span>
+          <span class="deliverable-badge">✅ Visitor trend charts (Chart.js)</span>
+          <span class="deliverable-badge">✅ Monthly report setup instructions</span>
+          <span class="deliverable-badge">✅ GA4 property creation walkthrough</span>
+        </div>
+        <div class="info-box">
+          💡 <strong>This is a one-time setup fee.</strong> After delivery, the client owns their GA4 property and Search Console account — no recurring charge for analytics itself. Monthly hosting ($99/mo) covers keeping the CMS and site running.
+        </div>
+      </div>
+    </div>
+
+    <!-- What You Need From the Client -->
+    <div class="ap-section">
+      <div class="ap-head" style="background:linear-gradient(135deg,#713f12,#92400e)">
+        <span style="font-size:1.3rem">📋</span>
+        <h2>What You Need From the Client</h2>
+      </div>
+      <div class="ap-body">
+        <div class="warn-box">⚠️ Collect this info BEFORE starting the build. You can't wire GA4 without the Measurement ID.</div>
+        <div class="client-input-row">
+          <div>
+            <label style="font-size:.75rem;font-weight:700;color:#6b7280;display:block;margin-bottom:4px">Client Name / Business</label>
+            <input type="text" placeholder="e.g. Kingdom Exterior Solutions">
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:700;color:#6b7280;display:block;margin-bottom:4px">Website URL</label>
+            <input type="text" placeholder="e.g. https://kingdomexterior.com">
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:700;color:#6b7280;display:block;margin-bottom:4px">Google Account Email (for GA4)</label>
+            <input type="email" placeholder="client@gmail.com">
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:700;color:#6b7280;display:block;margin-bottom:4px">GA4 Measurement ID (after they create property)</label>
+            <input type="text" placeholder="G-XXXXXXXXXX">
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:700;color:#6b7280;display:block;margin-bottom:4px">Domain Registrar (for Search Console verification)</label>
+            <select>
+              <option value="">Select...</option>
+              <option>GoDaddy</option>
+              <option>Namecheap</option>
+              <option>Cloudflare</option>
+              <option>Google Domains</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.75rem;font-weight:700;color:#6b7280;display:block;margin-bottom:4px">Key Business Goals (what to track)</label>
+            <input type="text" placeholder="e.g. quote form submissions, phone clicks">
+          </div>
+        </div>
+        <p style="font-size:.78rem;color:#9ca3af;margin:0">Note: These fields are for your reference only — they save in your browser while you work. Client data lives in their accounts, not here.</p>
+      </div>
+    </div>
+
+    <!-- Step-by-Step Delivery Process -->
+    <div class="ap-section">
+      <div class="ap-head" style="background:linear-gradient(135deg,#065f46,#047857)">
+        <span style="font-size:1.3rem">🚀</span>
+        <h2>Delivery Process — Step by Step</h2>
+      </div>
+      <div class="ap-body" style="padding:0">
+        <div class="step-grid">
+
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Client Creates GA4 Property</h4>
+            <p>Send them this: Go to analytics.google.com → Admin → Create Property → enter business name + website URL → copy the Measurement ID (starts with G-). Send that ID to Mel.</p>
+            <span class="you-do">👤 Client does this — 5 minutes</span>
+          </div>
+
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Wire GA4 into the Site Header</h4>
+            <p>Add the GA4 snippet to the site's head partial using the Measurement ID they provided. Set GA_MEASUREMENT_ID as an environment variable on Railway (or inject directly for static sites).</p>
+            <span class="i-do">🛠️ Mel builds this</span>
+          </div>
+
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Set Up Google Search Console</h4>
+            <p>Go to search.google.com/search-console → Add Property → choose "Domain" type → copy the TXT verification record → add it to their DNS (GoDaddy, Cloudflare, etc.) → click Verify. Connect to their GA4 property inside Search Console settings.</p>
+            <span class="you-do">👤 Client verifies DNS — 5 minutes</span>
+            <span class="i-do">🛠️ Mel sets up &amp; connects</span>
+          </div>
+
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Build Custom Analytics Dashboard in CMS</h4>
+            <p>Add a dedicated Analytics page to their CMS admin showing: total page views, top pages, traffic by source, visitor trend chart, lead/quote form submissions, and a monthly summary. Pulls from GA4 API or page_views table depending on setup.</p>
+            <span class="i-do">🛠️ Mel builds this</span>
+          </div>
+
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Wire Lead / Quote Tracking</h4>
+            <p>Track contact form submissions and quote requests as GA4 events so the client can see exactly how many leads their site generates each month.</p>
+            <span class="i-do">🛠️ Mel builds this</span>
+          </div>
+
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Test &amp; Verify Everything Is Firing</h4>
+            <p>Use GA4 DebugView to confirm page views and events are coming in. Check Search Console is showing the domain as verified. Walk through the CMS dashboard to confirm charts render correctly.</p>
+            <span class="i-do">🛠️ Mel verifies</span>
+          </div>
+
+          <div class="step-num">7</div>
+          <div class="step-content">
+            <h4>Client Handoff</h4>
+            <p>Send client a short loom or written summary: here's your analytics dashboard link, here's how to read it, here's what each number means. Give them view access to their GA4 property.</p>
+            <span class="you-do">👤 Mel delivers handoff</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery Checklist -->
+    <div class="ap-section">
+      <div class="ap-head" style="background:linear-gradient(135deg,#4c1d95,#6d28d9)">
+        <span style="font-size:1.3rem">✅</span>
+        <h2>Delivery Checklist — Per Client</h2>
+      </div>
+      <div class="ap-body">
+        <ul class="checklist">
+          <li><input type="checkbox"> Collected GA4 Measurement ID from client</li>
+          <li><input type="checkbox"> GA4 snippet added to site header</li>
+          <li><input type="checkbox"> GA4 property receiving traffic (confirmed in DebugView)</li>
+          <li><input type="checkbox"> Search Console property created</li>
+          <li><input type="checkbox"> DNS TXT verification record added by client</li>
+          <li><input type="checkbox"> Search Console verified and connected to GA4</li>
+          <li><input type="checkbox"> Custom analytics dashboard built in client CMS</li>
+          <li><input type="checkbox"> Page views chart showing correct data</li>
+          <li><input type="checkbox"> Lead/quote form submissions tracked as GA4 events</li>
+          <li><input type="checkbox"> Client given view access to GA4 property</li>
+          <li><input type="checkbox"> Handoff summary sent to client</li>
+          <li><input type="checkbox"> $750 payment received (Stripe confirmed)</li>
+        </ul>
+        <p style="font-size:.75rem;color:#9ca3af;margin-top:12px">Checkboxes save in your browser while you work this client's build.</p>
+      </div>
+    </div>
+
+    <!-- Upsell / Future -->
+    <div class="ap-section">
+      <div class="ap-head" style="background:linear-gradient(135deg,#C9922B,#D4A227)">
+        <span style="font-size:1.3rem">💡</span>
+        <h2>Upsell Opportunities</h2>
+      </div>
+      <div class="ap-body">
+        <ul class="checklist">
+          <li><input type="checkbox"> <strong>Monthly Analytics Report — $49/mo:</strong> Pull their GA4 data once a month and email them a plain-English summary: top pages, leads, traffic trend, what to improve.</li>
+          <li><input type="checkbox"> <strong>Competitor Analysis — $150 one-time:</strong> Pull their top 3 competitors' keyword rankings from Search Console and show where they're beating you and where you can win.</li>
+          <li><input type="checkbox"> <strong>Ad Tracking Setup — $200:</strong> Wire up UTM parameters for their Facebook/Google ads so they can see exactly which ads bring real leads.</li>
+          <li><input type="checkbox"> <strong>Full CMS KPI Dashboard (Chief Cornerstone style) — custom quote:</strong> Full business metrics — revenue, jobs, leads, traffic all in one screen. Built for their specific industry.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
